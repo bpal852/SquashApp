@@ -1,0 +1,645 @@
+
+# Imports
+import requests
+from bs4 import BeautifulSoup
+import numpy as np
+import pandas as pd
+from collections import Counter
+from collections import defaultdict
+import time
+from datetime import datetime
+
+pd.set_option("display.max_columns", None)
+
+year = "2023-2024"
+
+# League Simulation
+home_advantage_factor = 0.06
+unpredictability_factor = 0  # Adjust this value as needed
+num_simulations = 9999
+
+# Inputs
+divisions = {
+    "1": 379,
+    "2": 380,
+    "3": 381,
+    "4": 382,
+    "5": 383,
+    "7": 384,
+    "8": 385,
+    "10": 386,
+    "11": 387,
+    "12B": 388,
+    "12A": 389,
+    "13": 390,
+    "14": 391,
+    "15": 392,
+    "16": 394,
+    "17A": 395,
+    "17B": 396,
+    "18": 397,
+    "19": 398,
+    "M1": 399,
+    "M2": 400,
+    "M3": 401,
+    "L1": 402,
+    "L2": 403,
+    "L3": 404
+    }
+
+monday = {
+    "2": 380,
+    "4": 382,
+    "8": 385,
+    "10": 386
+}
+
+tuesday = {
+    "3": 381,
+    "5": 383,
+    "15": 392,
+    "L2": 403
+}
+
+wednesday = {
+    "11": 387,
+    "13": 390,
+    "16": 394,
+    "M1": 399
+}
+
+thursday = {
+    "1": 379,
+    "14": 391,
+    "M2": 400,
+    "M3": 401,
+    "L1": 402
+}
+
+friday = {
+    "7": 384,
+    "12B": 388,
+    "12A": 389,
+    "17A": 395,
+    "17B": 396,
+    "L3": 404
+}
+
+saturday = {
+    "18": 397,
+    "19": 398
+}
+
+
+def parse_result(result):
+    """
+    Function to parse the 'result' string
+    """
+    overall, rubbers = result.split('(')
+    rubbers = rubbers.strip(')').split(',')
+    return overall, rubbers
+
+
+def split_overall_score(score):
+    """
+    Function to split the overall score and return home and away scores
+    """
+    home_score, away_score = map(int, score.split('-'))
+    return home_score, away_score
+
+
+def determine_winner(rubber_score, home_team, away_team):
+    """
+    Function to determine the winner of a rubber
+    """
+    if pd.isna(rubber_score) or rubber_score in ['CR', 'WO']:
+        return pd.NA
+    home_score, away_score = map(int, rubber_score.split('-'))
+    return home_team if home_score > away_score else away_team
+
+
+def count_valid_matches(df, rubber_index):
+    """
+    Function to count matches excluding 'NA', 'CR', and 'WO'
+    """
+    valid_matches_count = {}
+    for _, row in df.iterrows():
+        if (rubber_index < len(row['Rubbers']) and
+            pd.notna(row['Rubbers'][rubber_index]) and
+                row['Rubbers'][rubber_index] not in ['CR', 'WO']):
+            valid_matches_count[row['Home Team']] = valid_matches_count.get(row['Home Team'], 0) + 1
+            valid_matches_count[row['Away Team']] = valid_matches_count.get(row['Away Team'], 0) + 1
+    return valid_matches_count
+
+
+def simulate_rubber(home_team, away_team, rubber_index, combined, home_advantage_factor, unpredictability_factor):
+    """
+    A function to simulate the results of a rubber based on each team's previous win percentage,
+    factoring in home advantage and unpredictability.
+    """
+    # Original win probabilities
+    original_home_prob = combined.loc[home_team, f'Rubber {rubber_index} Win %'] / 100
+    original_away_prob = combined.loc[away_team, f'Rubber {rubber_index} Win %'] / 100
+
+    # Handle the case when both probabilities are zero
+    if original_home_prob == 0 and original_away_prob == 0:
+        original_home_prob = 0.5
+        original_away_prob = 0.5
+
+    # Adjust for home advantage
+    adjusted_home_prob = original_home_prob * (1 + home_advantage_factor)
+    adjusted_away_prob = original_away_prob * (1 - home_advantage_factor)
+
+    # Apply unpredictability factor
+    final_home_prob = unpredictability_factor * 0.5 + (1 - unpredictability_factor) * adjusted_home_prob
+    final_away_prob = unpredictability_factor * 0.5 + (1 - unpredictability_factor) * adjusted_away_prob
+
+    # Normalize the final probabilities to sum up to 1
+    final_total_prob = final_home_prob + final_away_prob
+    final_home_prob /= final_total_prob
+    final_away_prob /= final_total_prob
+
+    # Choose the winner based on the adjusted probabilities
+    return np.random.choice([home_team, away_team], p=[final_home_prob, final_away_prob])
+
+
+def simulate_match(home_team, away_team, max_rubbers, combined, home_advantage_factor, unpredictability_factor):
+    """
+    A function that applies the simulate_rubber function to all rubbers in a given match
+    """
+    results = []
+    for i in range(1, max_rubbers + 1):
+        winner = simulate_rubber(home_team, away_team, i, combined, home_advantage_factor, unpredictability_factor)
+        results.append(winner)
+    return results
+
+
+def calculate_match_points(match_result, home_team, away_team):
+    """
+    A function that calculates the results of a match
+    """
+    counter = Counter(match_result)
+
+    # If all rubbers are won by one team
+    if len(counter) == 1:
+        winner = counter.most_common(1)[0][0]
+        winner_points = counter[winner] + 1  # Bonus point for winning
+        # Identify the loser as the team that is not the winner
+        loser = home_team if winner != home_team else away_team
+        loser_points = 0
+        return winner, winner_points, loser, loser_points
+
+    # Normal case with at least one rubber won by each team
+    elif len(counter) >= 2:
+        winner = counter.most_common(1)[0][0]
+        loser = counter.most_common(2)[1][0]
+        winner_points = counter[winner] + 1  # Bonus point for winning
+        loser_points = counter[loser]
+        return winner, winner_points, loser, loser_points
+
+    # If unable to determine winner and loser
+    return None
+
+
+def simulate_league(df_fixtures, summary_df, num_simulations, max_rubbers, combined, home_advantage_factor,
+                    unpredictability_factor):
+    """
+    A function to simulate the remaining fixtures in a league,
+    using the simulate_rubber, simulate_match, and calculate_match_points functions
+    """
+    # Convert 'Team' column to string in summary_df
+    summary_df['Team'] = summary_df['Team'].astype(str)
+
+    # Initialize columns if not present
+    for column in ['Played', 'Won', 'Lost', 'Points']:
+        if column not in summary_df.columns:
+            summary_df[column] = 0
+        else:
+            summary_df[column] = summary_df[column].astype(int)
+
+    # Initialize list to store simulated league tables
+    final_tables = []
+
+    # Dictionary to track position counts for each team
+    position_counts = defaultdict(lambda: defaultdict(int))
+
+    # Dictionary to store total points gained in each fixture
+    fixture_points = defaultdict(lambda: defaultdict(int))
+
+    # Start total runtime timer
+    total_start_time = time.time()
+
+    for simulation in range(num_simulations):
+
+        league_table = summary_df.copy()
+        league_table['Simulated Points'] = 0
+        league_table['Simulated Played'] = 0
+        league_table['Simulated Won'] = 0
+        league_table['Simulated Lost'] = 0
+
+        for index, match in df_fixtures.iterrows():
+            home_team = match['Home Team']
+            away_team = match['Away Team']
+
+            # Check if both teams are in the combined data
+            if home_team in combined.index and away_team in combined.index:
+                match_result = simulate_match(home_team, away_team, max_rubbers, combined,
+                                              home_advantage_factor, unpredictability_factor)
+                points_result = calculate_match_points(match_result, home_team, away_team)
+
+                # Update simulated results
+                if points_result:
+                    winner, winner_points, loser, loser_points = points_result
+                    league_table.loc[
+                        league_table['Team'] == winner, ['Simulated Points', 'Simulated Won', 'Simulated Played']] += [
+                        winner_points, 1, 1]
+                    league_table.loc[
+                        league_table['Team'] == loser, ['Simulated Points', 'Simulated Lost', 'Simulated Played']] += [
+                        loser_points, 1, 1]
+                    fixture_points[index]['Home'] += winner_points if match['Home Team'] == winner else loser_points
+                    fixture_points[index]['Away'] += loser_points if match['Home Team'] == winner else winner_points
+
+        # Sum the simulated results with the actual results
+        league_table['Played'] += league_table['Simulated Played']
+        league_table['Won'] += league_table['Simulated Won']
+        league_table['Lost'] += league_table['Simulated Lost']
+        league_table['Points'] += league_table['Simulated Points']
+
+        # Sort the league table based on 'Simulated Points' and use 'Simulated Won' as a tiebreaker
+        league_table.sort_values(by=['Points', 'Won'], ascending=[False, False], inplace=True)
+        league_table.reset_index(drop=True, inplace=True)
+
+        # Track the final position of each team in this simulation
+        for position, row in league_table.iterrows():
+            position_counts[row['Team']][position + 1] += 1
+
+        final_tables.append(league_table)
+
+    # Calculate average points per fixture
+    for index in fixture_points:
+        total_simulations = num_simulations
+        fixture_points[index]['Home'] = fixture_points[index]['Home'] / total_simulations
+        fixture_points[index]['Away'] = fixture_points[index]['Away'] / total_simulations
+
+    # Add average points to df_fixtures (outside the simulation loop)
+    df_fixtures['Avg Simulated Home Points'] = df_fixtures.index.map(lambda x: fixture_points[x]['Home'])
+    df_fixtures['Avg Simulated Away Points'] = df_fixtures.index.map(lambda x: fixture_points[x]['Away'])
+
+    total_end_time = time.time()  # End total runtime timer
+    run_time = total_end_time - total_start_time
+
+    # Format runtime output
+    if run_time > 60:
+        minutes = int(run_time // 60)
+        seconds = int(run_time % 60)
+        print(f"Total simulation runtime: {minutes} minutes and {seconds} seconds.")
+    else:
+        print(f"Total simulation runtime: {run_time:.2f} seconds.")
+
+    aggregated_table = pd.concat(final_tables).groupby('Team', as_index=False).mean()
+
+    # Convert 'Team' column to string in aggregated_table
+    aggregated_table['Team'] = aggregated_table['Team'].astype(str)
+
+    # Merge aggregated results with summary_df
+    summary_df = summary_df.merge(aggregated_table, on='Team', how='left', suffixes=('', '_sim'))
+
+    # Sum the simulated results with the actual results
+    summary_df['Played'] += summary_df['Simulated Played']
+    summary_df['Won'] += summary_df['Simulated Won']
+    summary_df['Lost'] += summary_df['Simulated Lost']
+    summary_df['Points'] += summary_df['Simulated Points']
+
+    # Drop the redundant '_sim' columns
+    summary_df.drop(columns=['Played_sim', 'Won_sim', 'Lost_sim', 'Points_sim',
+                             'Simulated Points', 'Simulated Played',
+                             'Simulated Won', 'Simulated Lost'], inplace=True)
+
+    summary_df["Played"] = summary_df["Played"].astype(int)
+    summary_df["Won"] = summary_df["Won"]
+    summary_df["Lost"] = summary_df["Lost"]
+    summary_df["Points"] = summary_df["Points"]
+
+    # Calculate the percentage chance of each team finishing in each position
+    for team in position_counts:
+        total = sum(position_counts[team].values())
+        for position in position_counts[team]:
+            position_counts[team][position] = (position_counts[team][position] / total) * 100
+
+    # Convert position_counts to DataFrame
+    position_percentage_df = pd.DataFrame.from_dict(position_counts, orient='index').fillna(0)
+
+    # Sort position columns numerically
+    position_cols = sorted(position_percentage_df.columns, key=int)
+    position_percentage_df = position_percentage_df[position_cols]
+
+    # Calculate the 'Playoffs' probability (sum of positions 1 to 4)
+    position_percentage_df['Playoffs'] = position_percentage_df[[1, 2, 3, 4]].sum(axis=1)
+
+    # Add the 'Team' column for merging
+    position_percentage_df.reset_index(inplace=True)
+    position_percentage_df.rename(columns={'index': 'Team'}, inplace=True)
+
+    # Merge with summary_df
+    summary_df = summary_df.merge(position_percentage_df, on='Team', how='left')
+
+    # Reorder final DataFrame columns
+    standard_columns = ['Team', 'Played', 'Won', 'Lost', 'Points', 'Playoffs']
+    final_column_order = standard_columns + position_cols
+    summary_df = summary_df[final_column_order]
+
+    # Sort the DataFrame based on 'Points' and 'Won' as a tiebreaker in descending order
+    summary_df.sort_values(by=['Points', "Won", 1], ascending=[False, False, False], inplace=True)
+
+    # Return the updated league table
+    return summary_df, df_fixtures
+
+
+def scrape_team_summary_page(league_id, year):
+    """
+    Function to scrape the Team Summary page on Hk squash website and store the data in a dataframe
+    """
+    summary_url = f"https://www.hksquash.org.hk/public/index.php/leagues/team_summery/id/{league_id}/league/Squash/year/{year}/pages_id/25.html"
+    response = requests.get(summary_url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+
+    # Find the league table data
+    summary_rows = soup.find_all("div", class_="clearfix teamSummary-content-list")
+
+    # Extract the league table table data from summary_rows soup element
+    summary_data_rows = []
+
+    for row in summary_rows:
+        columns = row.find_all("div", recursive=False)
+        row_data = [col.text.strip() for col in columns if col.text.strip()]
+        if row_data and len(row_data) > 1:  # To skip header rows and empty rows
+            summary_data_rows.append(row_data)
+
+    # Create dataframe from list of lists
+    summary_df = pd.DataFrame(summary_data_rows[1:], columns=["Team", "Played", "Won", "Lost", "Points"])
+
+    return summary_df
+
+
+def scrape_teams_page(league_id, year):
+    """
+    Function to scrape the Teams page on HK squash website and store the data in a dataframe
+    """
+    teams_url = f"https://www.hksquash.org.hk/public/index.php/leagues/teams/id/{league_id}/league/Squash/year/{year}/pages_id/25.html"
+    response = requests.get(teams_url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+
+    # Find the team data
+    team_rows = soup.find_all("div", class_="teams-content-list")
+
+    # Initialize a list to hold all the data rows
+    team_data_rows = []
+
+    # Iterate over the rows and extract data
+    for row in team_rows:
+        columns = row.find_all("div", recursive=False)
+        row_data = [col.text.strip() for col in columns if col.text.strip()]
+        team_data_rows.append(row_data)
+
+    # Create dataframe from list of lists
+    teams_df = pd.DataFrame(team_data_rows, columns=["Team Name", "Home", "Convenor", "Email"])
+
+    return teams_df
+
+
+def scrape_schedules_and_results_page(league_id, year):
+    """
+    Function to scrape Schedules and Results page from HK squash website and store data in a dataframe
+    """
+    schedule_url = f"https://www.hksquash.org.hk/public/index.php/leagues/results_schedules/id/{league_id}/league/Squash/year/{year}/pages_id/25.html"
+    response = requests.get(schedule_url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+
+    # Initialize a list to hold all the data rows
+    data_rows = []
+
+    # Iterate over each section in the schedule
+    sections = soup.find_all('div', class_='results-schedules-content')
+    for section in sections:
+        # Extract the match week and date from the title
+        title_div = section.find_previous_sibling('div', class_='clearfix results-schedules-title')
+        if title_div:
+            match_week_and_date = title_div.text.strip()
+            match_week_str, date = match_week_and_date.split(' - ')
+            # Extract just the number from the match week string
+            match_week = ''.join(filter(str.isdigit, match_week_str))
+        else:
+            match_week, date = None, None
+
+        # Find all 'div' elements with the class 'results-schedules-list' in the section
+        schedule_rows = section.find_all('div', class_='results-schedules-list')
+
+        # Skip the first row as it's the header
+        for row in schedule_rows[1:]:
+            columns = row.find_all('div', recursive=False)
+            row_data = [col.text.strip() for col in columns]
+
+            # Ensure the correct number of columns (add empty result if missing)
+            if len(row_data) == 5:  # Missing result
+                row_data.append('')  # Add empty result
+
+            # Add match week and date to each row
+            row_data.extend([match_week, date])
+            data_rows.append(row_data)
+
+    # Create a DataFrame from the scraped schedule data
+    column_names = ['Home Team', 'vs', 'Away Team', 'Venue', 'Time', 'Result', 'Match Week', 'Date']
+    df = pd.DataFrame(data_rows, columns=column_names)
+
+    return df
+
+
+# Change dictionary if you want specific week
+for div in thursday.keys():
+    league_id = f"D00{divisions[div]}"
+
+    # Scrape Team Summary Page
+    summary_df = scrape_team_summary_page(league_id, year)
+
+    # Scrape Teams Page
+    teams_df = scrape_teams_page(league_id, year)
+
+    # Scrape Schedules and Results Page
+    schedules_df = scrape_schedules_and_results_page(league_id, year)
+
+    # Create Results Dataframe
+
+    # Drop unnecessary columns
+    schedules_df.drop(columns=['vs', 'Venue', 'Time'], inplace=True)
+
+    # Exclude rows where 'Away Team' is '[BYE]' (indicative of a bye week)
+    results_df = schedules_df[schedules_df['Away Team'] != '[BYE]']
+
+    # Replace NaN values in 'Result' with an empty string before applying str.contains
+    results_df['Result'] = results_df['Result'].fillna('')
+
+    # Keep rows where 'Result' contains brackets (indicative of a played match)
+    results_df = results_df[results_df['Result'].str.contains(r'\(')]
+
+    # Apply the function to the 'Result' column
+    results_df[['Overall Score', 'Rubbers']] = results_df['Result'].apply(lambda x: pd.Series(parse_result(x)))
+
+    # Drop the original 'Result' column
+    results_df.drop(columns=['Result'], inplace=True)
+
+    # Replace 'CR' with NaN
+    results_df.replace('CR', np.nan, inplace=True)
+    results_df.replace('WO', np.nan, inplace=True)
+
+    # Create Remaining Fixtures Dataframe
+
+    # Filter out rows where Venue is null
+    # df_remaining_fixtures = schedules_df[schedules_df["Venue"].notnull()] not necessary?
+
+    # Filter out rows where 'Result' is not empty and does not contain placeholder text
+    # Keep rows where 'Result' is empty (None or empty string)
+    df_remaining_fixtures = schedules_df[
+        (schedules_df['Result'].isna()) |
+        (schedules_df['Result'] == '')
+        ]
+
+    # Filter out rows with byes
+    df_remaining_fixtures = df_remaining_fixtures[df_remaining_fixtures["Away Team"] != "[BYE]"]
+
+    # Filter out redundant Results column
+    df_remaining_fixtures = df_remaining_fixtures[["Home Team", "Away Team", "Match Week", "Date"]]
+
+    # Convert the 'Date' column to datetime if it's not already
+    df_remaining_fixtures['Date'] = pd.to_datetime(df_remaining_fixtures['Date'], dayfirst=True)
+
+    # Filter rows where the 'Date' is earlier than today to create awaiting_results dataframe
+    today = pd.Timestamp(datetime.now().date())
+    awaiting_results_df = df_remaining_fixtures[df_remaining_fixtures['Date'] < today]
+    awaiting_results_df.to_csv(f'awaiting_results/{div}_awaiting_results.csv', index=False)
+
+    # Calculate Home vs Away
+
+    # Apply the function to 'Overall Score' column
+    results_df[['Home Overall Score', 'Away Overall Score']] = results_df['Overall Score'].apply(
+        lambda x: pd.Series(split_overall_score(x)))
+
+    # Calculate the average score for home and away teams
+    average_home_overall_score = results_df['Home Overall Score'].mean()
+    average_away_overall_score = results_df['Away Overall Score'].mean()
+
+    # Calculate home win percentage
+    home_win_perc = len(results_df[results_df["Home Overall Score"] > results_df["Away Overall Score"]]) / len(results_df)
+
+    # Save average_home_overall_score, average_away_overall_score, and home_win_perc
+    with open(f'home_away_data/{div}_overall_scores.csv', 'w') as f:
+        f.write(f"{average_home_overall_score},{average_away_overall_score},{home_win_perc}\n")
+
+    # Calculate average home score for each home team
+    average_home_scores = results_df.groupby('Home Team')['Home Overall Score'].mean().rename('Average Home Score')
+
+    # Calculate average away score for each away team
+    average_away_scores = results_df.groupby('Away Team')['Away Overall Score'].mean().rename('Average Away Score')
+
+    # Combine the two Series into one DataFrame
+    team_average_scores = pd.concat([average_home_scores, average_away_scores], axis=1)
+
+    # Calculate the difference in home and away scores for each team
+    team_average_scores["home_away_diff"] = team_average_scores["Average Home Score"] - team_average_scores[
+        "Average Away Score"]
+
+    # Merge with teams_df to get home venue info
+    team_average_scores = team_average_scores.merge(teams_df[["Team Name", "Home"]],
+                                                    left_on=team_average_scores.index, right_on="Team Name",
+                                                    how="inner")
+
+    # Reorganise columns and show teams in order of home/away split
+    team_average_scores = team_average_scores[
+        ["Team Name", "Home", "Average Home Score", "Average Away Score", "home_away_diff"]].sort_values(
+        "home_away_diff", ascending=False)
+
+    # Save team_average_scores to csv
+    team_average_scores.to_csv(f'home_away_data/{div}_team_average_scores.csv', index=False)
+
+    # Show home/away split by venue
+    venue_split = pd.pivot_table(data=team_average_scores,
+                                 index="Home",
+                                 values="home_away_diff").sort_values("home_away_diff", ascending=False)
+
+    # Analyze Teams by Rubber
+
+    # Find the maximum number of rubbers in any match
+    max_rubbers = results_df['Rubbers'].apply(len).max()
+
+    # Apply the function to each rubber in the list
+    for i in range(1, max_rubbers + 1):
+        rubber_column = f'Rubber {i}'
+        results_df[f'Winner {rubber_column}'] = results_df.apply(
+            lambda row: determine_winner(row['Rubbers'][i - 1] if i <= len(row['Rubbers']) else pd.NA,
+                                         row['Home Team'], row['Away Team']), axis=1)
+
+    # Aggregate the number of wins for each team in each rubber
+    aggregate_wins = pd.DataFrame()
+    for i in range(1, max_rubbers + 1):
+        rubber_column = f'Rubber {i}'
+        winner_column = f'Winner {rubber_column}'
+        wins = results_df[winner_column].value_counts().rename(f'Wins in {rubber_column}')
+        aggregate_wins = pd.concat([aggregate_wins, wins], axis=1)
+
+    # Fill NaN values in aggregate wins with zeros
+    aggregate_wins.fillna(0, inplace=True)
+
+    # Convert wins to integer type
+    aggregate_wins = aggregate_wins.astype(int)
+
+    # Calculate total matches for each rubber excluding 'NA', 'CR', and 'WO'
+    total_matches_per_rubber = {f'Rubber {i}': count_valid_matches(results_df, i - 1) for i in range(1, max_rubbers + 1)}
+
+    # Convert the dictionary to a DataFrame with teams as index
+    total_matches_df = pd.DataFrame(total_matches_per_rubber)
+
+    # Properly merge total matches and aggregate wins based on team names
+    combined = aggregate_wins.merge(total_matches_df, left_index=True, right_index=True, how='outer')
+
+    # Replace NaN in wins and total matches with 0
+    combined.fillna(0, inplace=True)
+
+    # Calculate win percentage
+    for i in range(1, max_rubbers + 1):
+        rubber_column = f'Rubber {i}'
+        combined[f'{rubber_column} Win %'] = (combined[f'Wins in {rubber_column}'] / combined[rubber_column]) * 100
+
+    # Replace NaN in win % columns 0
+    combined.fillna(0, inplace=True)
+
+    # Calculate average win percentage
+    combined["avg_win_perc"] = combined[[f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)]].mean(axis=1)
+
+    # Sort by total wins
+    combined_sorted = combined.sort_values("avg_win_perc", ascending=False)
+
+    # Reset the index
+    combined_sorted = combined_sorted.reset_index().rename(columns={'index': 'Team'})
+
+    # Filter out unnecessary columns
+    keep_columns = ["Team"] + [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] + ['avg_win_perc']
+
+    # Select only the win percentage columns and the avg_win_perc column
+    win_percentage_df = combined_sorted[keep_columns]
+
+    # Save combined_sorted to csv
+    win_percentage_df.to_csv(f'team_win_percentage_breakdown/{div}_team_win_percentage_breakdown.csv',
+                           index=False)
+
+    projected_final_table, projected_fixtures = simulate_league(df_remaining_fixtures,
+                                                                summary_df,
+                                                                num_simulations,
+                                                                max_rubbers,
+                                                                combined,
+                                                                home_advantage_factor,
+                                                                unpredictability_factor)
+
+    # Save the results
+    projected_final_table.to_csv(f"simulated_tables/{div}_proj_final_table.csv", index=False)
+    projected_fixtures.to_csv(f"simulated_fixtures/{div}_proj_fixtures.csv", index=False)
+
+    print(div)
