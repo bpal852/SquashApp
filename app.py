@@ -65,7 +65,7 @@ def main():
     st.title("HK Squash League App")
 
     # Use columns to control the width of the dropdown boxes
-    col1, col2 = st.columns([1, 3])  # Adjust the ratio as needed
+    col1, col2 = st.columns([1, 2])  # Adjust the ratio as needed
 
     with col1:
         division = st.selectbox("Select a Division:", list(divisions.keys()))
