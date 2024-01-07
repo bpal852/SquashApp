@@ -65,7 +65,7 @@ def main():
     st.title("HK Squash League App")
 
     # Use columns to control the width of the dropdown boxes
-    col1, col2 = st.columns([1, 5])  # Adjust the ratio as needed
+    col1, col2 = st.columns([1, 3])  # Adjust the ratio as needed
 
     with col1:
         division = st.selectbox("Select a Division:", list(divisions.keys()))
@@ -258,7 +258,7 @@ def main():
             if not simulated_table.empty:
                 # Line break
                 st.write('<br>', unsafe_allow_html=True)
-                st.write("Simulated Final Table:")
+                st.write("Projected Final Table:")
 
                 # Convert 'Played' column to integers
                 if 'Played' in simulated_table.columns:
