@@ -8,6 +8,7 @@ import matplotlib.font_manager as fm
 st.set_page_config(
     page_title="HK Squash App",
     page_icon="🇭🇰",
+    layout="wide"
 )
 
 today = pd.Timestamp(datetime.now().date())
