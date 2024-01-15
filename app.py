@@ -73,20 +73,26 @@ def load_csvs(division):
 def main():
     st.title("HK Squash League App")
 
-    # Use columns to control the width of the dropdown boxes
-    col1, col2 = st.columns([1, 2])  # Adjust the ratio as needed
-
-    with col1:
+    with st.sidebar:
         division = st.selectbox("**Select a Division:**", list(divisions.keys()))
 
-    sections = [
-        "Home/Away Splits",
-        "Rubber Win Percentage",
-        "Projections"
-    ]
+        sections = [
+            "Home/Away Splits",
+            "Rubber Win Percentage",
+            "Projections"
+        ]
 
-    with col1:
         sections_box = st.selectbox("**Select a section:**", sections)
+
+        about = st.expander("**About**")
+        about.write(
+            """The aim of this application is to take publicly available data from 
+            [hksquash.org.hk](https://www.hksquash.org.hk/public/index.php/leagues/index/league/Squash/pages_id/25.html)
+            and provide insights to players and convenors involved in the Hong Kong Squash League.
+            \nThis application is not affiliated with the Squash Association of Hong Kong, China.""")
+
+        contact = st.expander("**Contact**")
+        contact.write("For any queries, email bpalitherland@gmail.com")
 
     if 'data_loaded' not in st.session_state or st.session_state['current_division'] != division:
         # Load data and store in session state
@@ -103,6 +109,8 @@ def main():
     # team_win_breakdown_away, team_win_breakdown_delta, awaiting_results = load_csvs(division)
 
     if sections_box == "Home/Away Splits":
+        # Header
+        st.header("Home/Away Splits")
         # Load and display overall scores
         overall_home_away = load_overall_home_away_data(division)
 
@@ -183,21 +191,36 @@ def main():
             return val
 
         # Apply the format to the 'Home', 'Away', and 'Difference' columns
-        columns_to_format = ['Home', 'Away', 'Difference']
-        for col in columns_to_format:
-            if col in home_away_df.columns:
-                home_away_df[col] = home_away_df[col].apply(format_float)
+        #columns_to_format = ['Home', 'Away', 'Difference']
+        #for col in columns_to_format:
+        #    if col in home_away_df.columns:
+        #        home_away_df[col] = home_away_df[col].apply(format_float)
+
+        # Ensure that the 'Home' and 'Away' columns are numeric
+        home_away_df[['Home', 'Away', "Difference"]] = (home_away_df[['Home', 'Away', "Difference"]]
+                                                        .apply(pd.to_numeric, errors='coerce'))
+
+        # Determine the range for the colormap
+        vmin = home_away_df[['Home', 'Away']].min().min()
+        vmax = home_away_df[['Home', 'Away']].max().max()
 
         # Apply a color gradient using 'Blues' colormap to 'Home' and 'Away' columns
         colormap_blues = 'Blues'
-        styled_home_away_df = home_away_df.style.background_gradient(cmap=colormap_blues, subset=['Home', 'Away']) \
-            .set_properties(subset=['Home', 'Away'], **{'text-align': 'right'})
+        styled_home_away_df = (home_away_df.style.background_gradient(
+            cmap=colormap_blues,
+            vmin=vmin,
+            vmax=vmax,
+            subset=['Home', 'Away']
+        ).set_properties(subset=['Home', 'Away'], **{'text-align': 'right'})
+                               .format("{:.2f}", subset=['Home', 'Away', 'Difference']))
 
         # Apply a color gradient using 'OrRd' colormap to 'Difference' column
         colormap_orrd = 'OrRd'
         if 'Difference' in home_away_df.columns:
-            styled_home_away_df = styled_home_away_df.background_gradient(cmap=colormap_orrd, subset=['Difference']) \
-                .set_properties(subset=['Difference'], **{'text-align': 'right'})
+            styled_home_away_df = (styled_home_away_df.background_gradient(
+                cmap=colormap_orrd,
+                subset=['Difference']
+            ).set_properties(subset=['Difference'], **{'text-align': 'right'}))
 
         # Hide the index
         styled_home_away_df = styled_home_away_df.hide(axis='index')
@@ -214,21 +237,58 @@ def main():
 
     elif sections_box == "Rubber Win Percentage":
 
+        # Header
+        st.header("Rubber Win Percentage")
+
         # Function to apply common formatting
         def format_dataframe(df):
             if df is not None and not df.empty:
-                numeric_cols = df.select_dtypes(include=['float', 'int']).columns
-                df[numeric_cols] = df[numeric_cols].applymap(lambda x: f'{x:.1f}')
+
+                # Rename avg_win_perc column
+                df = df.rename(columns={"avg_win_perc": "Average"})
+                # Select only numeric columns for vmin and vmax calculation
+                numeric_cols_raw = [col for col in df.columns if 'Win' in col]
+
+                # Convert these columns to numeric type, handling non-numeric values
+                for col in numeric_cols_raw:
+                    df[col] = pd.to_numeric(df[col], errors='coerce')
+
+                # Determine the range for the colormap
+                vmin = df[numeric_cols_raw].min().min()
+                vmax = df[numeric_cols_raw].max().max()
+
+                # Format numeric columns for display
+                def format_float(x):
+                    try:
+                        return f'{float(x):.1f}'
+                    except ValueError:
+                        return x
+
+                df[numeric_cols_raw + ["Average"]] = df[numeric_cols_raw + ["Average"]].applymap(format_float)
+
+                # Check if "Total Rubbers" is in the DataFrame and format it as integer
+                if 'Total Rubbers' in df.columns:
+                    df['Total Rubbers'] = df['Total Rubbers'].astype(int)
 
                 colormap_blues = 'Blues'
-                cols_for_blues_gradient = [col for col in numeric_cols if col != 'avg_win_perc']
-                styled_df = df.style.background_gradient(cmap=colormap_blues, subset=cols_for_blues_gradient) \
-                    .set_properties(subset=cols_for_blues_gradient, **{'text-align': 'right'})
+                cols_for_blues_gradient = numeric_cols_raw
+                styled_df = df.style.background_gradient(
+                    cmap=colormap_blues,
+                    vmin=vmin,
+                    vmax=vmax,
+                    subset=cols_for_blues_gradient
+                ).set_properties(subset=cols_for_blues_gradient, **{'text-align': 'right'})
+
+                # Set right alignment for "Total Rubbers"
+                if 'Total Rubbers' in df.columns:
+                    styled_df = styled_df.set_properties(subset=['Total Rubbers'], **{'text-align': 'right'})
 
                 colormap_oranges = 'OrRd'
-                if 'avg_win_perc' in df.columns:
-                    styled_df = styled_df.background_gradient(cmap=colormap_oranges, subset=['avg_win_perc']) \
-                        .set_properties(subset=['avg_win_perc'], **{'text-align': 'right'})
+                if 'Average' in df.columns:
+                    styled_df = styled_df.background_gradient(
+                        cmap=colormap_oranges,
+                        subset=['Average']
+                    ).set_properties(subset=['Average'], **{'text-align': 'right'})
 
                 styled_df = styled_df.hide(axis='index')
                 return styled_df
@@ -261,6 +321,12 @@ def main():
             "**Note:**  \nOnly rubbers that were played are included. Conceded Rubbers and Walkovers are ignored.")
 
     elif sections_box == "Projections":
+        # Load and display overall scores
+        overall_home_away = load_overall_home_away_data(division)
+        date = pd.to_datetime(overall_home_away[3]).strftime('%Y-%m-%d')
+
+        st.header("Projections")
+        st.write(f"**Date of last simulation:** {date}")
 
         if len(awaiting_results) > 0:
             # Line break
@@ -268,6 +334,8 @@ def main():
             st.subheader("Still awaiting these results:")
             styled_awaiting_results = awaiting_results.style.hide(axis='index')
             st.write(styled_awaiting_results.to_html(escape=False), unsafe_allow_html=True)
+            st.write('<br>', unsafe_allow_html=True)
+            st.write('<br>', unsafe_allow_html=True)
 
         # Convert the "Match Week" column to integers
         simulated_fixtures['Match Week'] = simulated_fixtures['Match Week'].astype(int)
@@ -287,26 +355,45 @@ def main():
         simulated_fixtures[numeric_cols_simulated_fixtures] = simulated_fixtures[
             numeric_cols_simulated_fixtures].applymap(lambda x: f'{x:.2f}')
 
-        # Create dataframe to show next round of fixtures
-        next_round_of_fixtures = simulated_fixtures[
-            simulated_fixtures["Date"] > today.date() + pd.Timedelta(days=-1)].head(len(simulated_table) // 2)
+        # Ensure the columns are numeric for vmin and vmax calculation
+        simulated_fixtures_numeric = simulated_fixtures.copy()
+        simulated_fixtures_numeric[numeric_cols_simulated_fixtures] = simulated_fixtures_numeric[
+            numeric_cols_simulated_fixtures].apply(pd.to_numeric, errors='coerce')
 
-        # Apply a color gradient using a colormap to numeric columns except for "Match Week"
-        colormap = 'Blues'
-        styled_next_round_of_fixtures = (
-            next_round_of_fixtures.style.background_gradient(
-                cmap=colormap,
+        # Get the range of match weeks
+        min_week = simulated_fixtures_numeric['Match Week'].min()
+        max_week = simulated_fixtures_numeric['Match Week'].max()
+
+        # Create a slider for match weeks
+        col1, col2 = st.columns([1, 2])  # Adjust the ratio as needed
+        with col1:
+            selected_week = st.slider("**Select Match Week:**", min_week, max_week, value=min_week, step=1)
+
+        # Filter the fixtures based on the selected match week
+        filtered_fixtures = simulated_fixtures_numeric[simulated_fixtures_numeric["Match Week"] == selected_week]
+
+        # Determine the range for the colormap
+        vmin = filtered_fixtures[["Proj. Home Pts", "Proj. Away Pts"]].min().min()
+        vmax = filtered_fixtures[["Proj. Home Pts", "Proj. Away Pts"]].max().max()
+
+        # Apply styling to the filtered DataFrame
+        styled_filtered_fixtures = (
+            filtered_fixtures.style.background_gradient(
+                cmap='Blues',
+                vmin=vmin,
+                vmax=vmax,
                 subset=numeric_cols_simulated_fixtures)
             .set_properties(subset=numeric_cols_simulated_fixtures, **{'text-align': 'right'})
+            .format("{:.2f}", subset=["Proj. Home Pts", "Proj. Away Pts"])
             .hide(axis='index'))
 
         # Display the styled DataFrame in Streamlit
-        st.write('<br>', unsafe_allow_html=True)
-        st.subheader("Projected Next Round of Fixtures:")
-        st.write(styled_next_round_of_fixtures.to_html(escape=False), unsafe_allow_html=True)
+        # st.write('<br>', unsafe_allow_html=True)
+        st.subheader(f"Projected Fixtures for Match Week {selected_week}:")
+        st.write(styled_filtered_fixtures.to_html(escape=False), unsafe_allow_html=True)
 
         if not simulated_table.empty:
-            # Line break
+            # Line break and subheader
             st.write('<br>', unsafe_allow_html=True)
             st.subheader("Projected Final Table:")
 
@@ -317,24 +404,42 @@ def main():
             # Round values in simulated_table DataFrame except for 'Played'
             numeric_cols_simulated_table = simulated_table.select_dtypes(include=['float', 'int']).columns
             cols_to_round = numeric_cols_simulated_table.drop('Played')
-            simulated_table[cols_to_round] = simulated_table[cols_to_round].applymap(lambda x: f'{x:.1f}')
 
             # Columns to exclude from gradient formatting
             cols_to_exclude = {'Played', 'Won', 'Lost', 'Points', 'Playoffs'}
             cols_for_blues_gradient = [col for col in cols_to_round if col not in cols_to_exclude]
 
+            # Determine the range for the colormap
+            vmin = simulated_table[cols_for_blues_gradient].min().min()
+            vmax = simulated_table[cols_for_blues_gradient].max().max()
+
             # Apply a color gradient using 'Blues' colormap to selected numeric columns
-            colormap_blues = 'Blues'
-            styled_simulated_table = simulated_table.style.background_gradient(cmap=colormap_blues,
-                                                                               subset=cols_for_blues_gradient) \
-                .set_properties(subset=cols_for_blues_gradient, **{'text-align': 'right'})
+            styled_simulated_table = simulated_table.style.background_gradient(
+                cmap='Blues',
+                vmin=vmin,
+                vmax=vmax,
+                subset=cols_for_blues_gradient
+            ).set_properties(subset=cols_for_blues_gradient + ["Played", "Won", "Lost"], **{'text-align': 'right'})
 
             # Apply a color gradient using 'OrRd' colormap to 'Playoffs' column
-            colormap_orrd = 'OrRd'
             if 'Playoffs' in simulated_table.columns:
-                styled_simulated_table = styled_simulated_table.background_gradient(cmap=colormap_orrd,
-                                                                                    subset=['Playoffs']) \
-                    .set_properties(subset=['Playoffs'], **{'text-align': 'right'})
+                styled_simulated_table = styled_simulated_table.background_gradient(
+                    cmap='OrRd', subset=['Playoffs']
+                ).set_properties(subset=['Playoffs'], **{'text-align': 'right'})
+
+            # Apply bar chart formatting to the 'Points' column
+            styled_simulated_table = styled_simulated_table.bar(
+                subset=['Points'], color='#87CEEB'
+            )
+
+            # Round all numeric columns
+            styled_simulated_table = styled_simulated_table.format("{:.1f}", subset=cols_to_round)
+
+            # Apply custom formatting for zero values in cols_for_blues_gradient
+            styled_simulated_table = styled_simulated_table.format(
+                lambda x: f"<span style='color: #f7fbff;'>{x:.1f}</span>" if x == 0 else f"{x:.1f}",
+                subset=cols_for_blues_gradient
+            )
 
             # Hide the index
             styled_simulated_table = styled_simulated_table.hide(axis='index')

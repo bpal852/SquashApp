@@ -201,12 +201,14 @@ def calculate_match_points(match_result, home_team, away_team):
     return None
 
 
-def simulate_league(df_fixtures, summary_df, num_simulations, max_rubbers, combined, home_advantage_factor,
-                    unpredictability_factor):
+def simulate_league(df_fixtures, summary_df, num_simulations, max_rubbers, combined, HOME_ADVANTAGE_FACTOR,
+                    unpredictability_factor, neutral_fixtures_df):
     """
     A function to simulate the remaining fixtures in a league,
-    using the simulate_rubber, simulate_match, and calculate_match_points functions
+    using the simulate_rubber, simulate_match, and calculate_match_points
+    functions
     """
+
     # Convert 'Team' column to string in summary_df
     summary_df['Team'] = summary_df['Team'].astype(str)
 
@@ -217,7 +219,6 @@ def simulate_league(df_fixtures, summary_df, num_simulations, max_rubbers, combi
         else:
             summary_df[column] = summary_df[column].astype(int)
 
-    # Initialize list to store simulated league tables
     final_tables = []
 
     # Dictionary to track position counts for each team
@@ -241,10 +242,19 @@ def simulate_league(df_fixtures, summary_df, num_simulations, max_rubbers, combi
             home_team = match['Home Team']
             away_team = match['Away Team']
 
+            # Filter the neutral_fixtures_df for rows where both home and away teams match
+            filtered_df = neutral_fixtures_df[(neutral_fixtures_df['Home Team'] == home_team) &
+                                              (neutral_fixtures_df['Away Team'] == away_team)]
+
+            # Check if the filtered dataframe is empty
+            is_neutral_fixture = not filtered_df.empty
+
             # Check if both teams are in the combined data
             if home_team in combined.index and away_team in combined.index:
-                match_result = simulate_match(home_team, away_team, max_rubbers, combined,
-                                              home_advantage_factor, unpredictability_factor)
+                # Adjust HOME_ADVANTAGE_FACTOR for neutral fixtures
+                adjusted_home_advantage = 0 if is_neutral_fixture else HOME_ADVANTAGE_FACTOR
+                match_result = simulate_match(home_team, away_team, max_rubbers, combined, adjusted_home_advantage,
+                                              unpredictability_factor)
                 points_result = calculate_match_points(match_result, home_team, away_team)
 
                 # Update simulated results
@@ -275,11 +285,11 @@ def simulate_league(df_fixtures, summary_df, num_simulations, max_rubbers, combi
 
         final_tables.append(league_table)
 
-    # Calculate average points per fixture
+    # Calculate average points per fixtures
     for index in fixture_points:
         total_simulations = num_simulations
-        fixture_points[index]['Home'] = fixture_points[index]['Home'] / total_simulations
-        fixture_points[index]['Away'] = fixture_points[index]['Away'] / total_simulations
+        fixture_points[index]['Home'] = round(fixture_points[index]['Home'] / total_simulations, 2)
+        fixture_points[index]['Away'] = round(fixture_points[index]['Away'] / total_simulations, 2)
 
     # Add average points to df_fixtures (outside the simulation loop)
     df_fixtures['Avg Simulated Home Points'] = df_fixtures.index.map(lambda x: fixture_points[x]['Home'])
@@ -316,15 +326,15 @@ def simulate_league(df_fixtures, summary_df, num_simulations, max_rubbers, combi
                              'Simulated Won', 'Simulated Lost'], inplace=True)
 
     summary_df["Played"] = summary_df["Played"].astype(int)
-    summary_df["Won"] = summary_df["Won"]
-    summary_df["Lost"] = summary_df["Lost"]
-    summary_df["Points"] = summary_df["Points"]
+    summary_df["Won"] = round(summary_df["Won"], 1)
+    summary_df["Lost"] = round(summary_df["Lost"], 1)
+    summary_df["Points"] = round(summary_df["Points"], 1)
 
     # Calculate the percentage chance of each team finishing in each position
     for team in position_counts:
         total = sum(position_counts[team].values())
         for position in position_counts[team]:
-            position_counts[team][position] = (position_counts[team][position] / total) * 100
+            position_counts[team][position] = round((position_counts[team][position] / total) * 100, 1)
 
     # Convert position_counts to DataFrame
     position_percentage_df = pd.DataFrame.from_dict(position_counts, orient='index').fillna(0)
@@ -334,7 +344,7 @@ def simulate_league(df_fixtures, summary_df, num_simulations, max_rubbers, combi
     position_percentage_df = position_percentage_df[position_cols]
 
     # Calculate the 'Playoffs' probability (sum of positions 1 to 4)
-    position_percentage_df['Playoffs'] = position_percentage_df[[1, 2, 3, 4]].sum(axis=1)
+    position_percentage_df['Playoffs'] = round(position_percentage_df[[1, 2, 3, 4]].sum(axis=1), 1)
 
     # Add the 'Team' column for merging
     position_percentage_df.reset_index(inplace=True)
@@ -513,7 +523,7 @@ def aggregate_wins_away(team, results_df):
 
 
 # Change dictionary if you want specific week
-for div in tuesday.keys():
+for div in friday.keys():
     league_id = f"D00{divisions[div]}"
 
     # Scrape Team Summary Page
@@ -531,7 +541,7 @@ for div in tuesday.keys():
     schedules_df.drop(columns=['vs', 'Time'], inplace=True)
 
     # Exclude rows where 'Away Team' is '[BYE]' (indicative of a bye week)
-    results_df = schedules_df[schedules_df['Away Team'] != '[BYE]']
+    results_df = schedules_df[schedules_df['Away Team'] != '[BYE]'].copy()
 
     # Replace NaN values in 'Result' with an empty string before applying str.contains
     results_df['Result'] = results_df['Result'].fillna('')
@@ -585,7 +595,6 @@ for div in tuesday.keys():
     neutral_fixtures_df = df_remaining_fixtures[
         df_remaining_fixtures.apply(lambda row: team_home_venues.get(row["Away Team"]) == row["Venue"], axis=1)].copy()
 
-
     # Calculate Home vs Away
 
     # Apply the function to 'Overall Score' column
@@ -599,9 +608,9 @@ for div in tuesday.keys():
     # Calculate home win percentage
     home_win_perc = len(results_df[results_df["Home Overall Score"] > results_df["Away Overall Score"]]) / len(results_df)
 
-    # Save average_home_overall_score, average_away_overall_score, and home_win_perc
+    # Save average_home_overall_score, average_away_overall_score, home_win_perc, and date
     with open(f'home_away_data/{div}_overall_scores.csv', 'w') as f:
-        f.write(f"{average_home_overall_score},{average_away_overall_score},{home_win_perc}\n")
+        f.write(f"{average_home_overall_score},{average_away_overall_score},{home_win_perc}, {today}\n")
 
     # Calculate average home score for each home team
     average_home_scores = results_df.groupby('Home Team')['Home Overall Score'].mean().rename('Average Home Score')
@@ -676,6 +685,9 @@ for div in tuesday.keys():
         # Convert the dictionary to a DataFrame
         total_home_matches_df = pd.DataFrame(total_home_matches_per_rubber, index=[team])
 
+        # Calculate total games played by summing all the rubber matches for each team
+        total_rubbers_played = total_home_matches_df.sum(axis=1)
+
         # Merge with aggregate wins for the team's home fixtures and calculate win percentages
         team_combined_home = aggregate_wins_home(team, results_df).merge(total_home_matches_df, left_index=True,
                                                                          right_index=True, how='outer')
@@ -690,6 +702,9 @@ for div in tuesday.keys():
         team_combined_home["avg_win_perc"] = team_combined_home[
             [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)]].mean(axis=1)
 
+        # Add the total rubbers played to the DataFrame
+        team_combined_home["Total Rubbers"] = total_rubbers_played
+
         # Append the team's results to the list
         home_results_list.append(team_combined_home)
 
@@ -701,10 +716,12 @@ for div in tuesday.keys():
     home_results_sorted = home_results_sorted.reset_index().rename(columns={'index': 'Team'})
 
     # Selecting and displaying the required columns
-    keep_columns_home = ["Team"] + [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] + ['avg_win_perc']
+    keep_columns_home = (["Team"] +
+                         [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] +
+                          ['avg_win_perc', "Total Rubbers"])
     win_percentage_home_df = home_results_sorted[keep_columns_home]
 
-    # Save win_percentage_away_df to csv
+    # Save win_percentage_home_df to csv
     win_percentage_home_df.to_csv(
         f'team_win_percentage_breakdown/Home/{div}_team_win_percentage_breakdown_home.csv',
         index=False)
@@ -725,6 +742,9 @@ for div in tuesday.keys():
         # Convert the dictionary to a DataFrame
         total_away_matches_df = pd.DataFrame(total_away_matches_per_rubber, index=[team])
 
+        # Calculate total games played by summing all the rubber matches for each team
+        total_rubbers_played = total_away_matches_df.sum(axis=1)
+
         # Merge with aggregate wins for the team's away fixtures and calculate win percentages
         team_combined_away = aggregate_wins_away(team, results_df).merge(total_away_matches_df, left_index=True,
                                                                          right_index=True, how='outer')
@@ -739,6 +759,9 @@ for div in tuesday.keys():
         team_combined_away["avg_win_perc"] = team_combined_away[
             [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)]].mean(axis=1)
 
+        # Add the total rubbers played to the DataFrame
+        team_combined_away["Total Rubbers"] = total_rubbers_played
+
         # Append the team's results to the list
         away_results_list.append(team_combined_away)
 
@@ -750,7 +773,9 @@ for div in tuesday.keys():
     away_results_sorted = away_results_sorted.reset_index().rename(columns={'index': 'Team'})
 
     # Selecting and displaying the required columns
-    keep_columns_away = ["Team"] + [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] + ['avg_win_perc']
+    keep_columns_away = (["Team"] +
+                         [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] +
+                         ['avg_win_perc', "Total Rubbers"])
     win_percentage_away_df = away_results_sorted[keep_columns_away]
 
     # Save win_percentage_away_df to csv
@@ -808,6 +833,9 @@ for div in tuesday.keys():
     # Calculate average win percentage
     combined["avg_win_perc"] = combined[[f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)]].mean(axis=1)
 
+    # Calculate total games played by summing all the rubber matches for each team
+    combined["Total Rubbers"] = total_matches_df.sum(axis=1)
+
     # Sort by total wins
     combined_sorted = combined.sort_values("avg_win_perc", ascending=False)
 
@@ -815,7 +843,9 @@ for div in tuesday.keys():
     combined_sorted = combined_sorted.reset_index().rename(columns={'index': 'Team'})
 
     # Filter out unnecessary columns
-    keep_columns = ["Team"] + [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] + ['avg_win_perc']
+    keep_columns = (["Team"] +
+                    [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] +
+                    ['avg_win_perc', "Total Rubbers"])
 
     # Select only the win percentage columns and the avg_win_perc column
     win_percentage_df = combined_sorted[keep_columns]
@@ -830,7 +860,8 @@ for div in tuesday.keys():
                                                                 max_rubbers,
                                                                 combined,
                                                                 home_advantage_factor,
-                                                                unpredictability_factor)
+                                                                unpredictability_factor,
+                                                                neutral_fixtures_df)
 
     # Save the results
     projected_final_table.to_csv(f"simulated_tables/{div}_proj_final_table.csv", index=False)
