@@ -523,7 +523,7 @@ def aggregate_wins_away(team, results_df):
 
 
 # Change dictionary if you want specific week
-for div in tuesday.keys():
+for div in monday.keys():
     league_id = f"D00{divisions[div]}"
 
     # Scrape Team Summary Page
