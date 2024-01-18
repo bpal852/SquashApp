@@ -295,6 +295,61 @@ def main():
             else:
                 return "DataFrame is empty or not loaded."
 
+
+        def format_dataframe_delta(df):
+            if df is not None and not df.empty:
+
+                # Rename avg_win_perc column
+                df = df.rename(columns={"avg_win_perc": "Average"})
+                # Select only numeric columns for vmin and vmax calculation
+                numeric_cols_raw = [col for col in df.columns if 'Win' in col]
+
+                # Convert these columns to numeric type, handling non-numeric values
+                for col in numeric_cols_raw:
+                    df[col] = pd.to_numeric(df[col], errors='coerce')
+
+                # Determine the range for the colormap
+                vmin = df[numeric_cols_raw].min().min()
+                vmax = df[numeric_cols_raw].max().max()
+
+                # Format numeric columns for display
+                def format_float(x):
+                    try:
+                        return f'{float(x):.1f}'
+                    except ValueError:
+                        return x
+
+                df[numeric_cols_raw + ["Average"]] = df[numeric_cols_raw + ["Average"]].applymap(format_float)
+
+                # Check if "Total Rubbers" is in the DataFrame and format it as integer
+                if 'Total Rubbers' in df.columns:
+                    df['Total Rubbers'] = df['Total Rubbers'].astype(int)
+
+                colormap_blues = 'RdYlBu'
+                cols_for_blues_gradient = numeric_cols_raw
+                styled_df = df.style.background_gradient(
+                    cmap=colormap_blues,
+                    vmin=vmin,
+                    vmax=vmax,
+                    subset=cols_for_blues_gradient
+                ).set_properties(subset=cols_for_blues_gradient, **{'text-align': 'right'})
+
+                # Set right alignment for "Total Rubbers"
+                if 'Total Rubbers' in df.columns:
+                    styled_df = styled_df.set_properties(subset=['Total Rubbers'], **{'text-align': 'right'})
+
+                colormap_oranges = 'RdYlBu'
+                if 'Average' in df.columns:
+                    styled_df = styled_df.background_gradient(
+                        cmap=colormap_oranges,
+                        subset=['Average']
+                    ).set_properties(subset=['Average'], **{'text-align': 'right'})
+
+                styled_df = styled_df.hide(axis='index')
+                return styled_df
+            else:
+                return "DataFrame is empty or not loaded."
+
         # Radio button for user to choose the DataFrame
         option = st.radio("Select Team Win Breakdown View:", ['Overall', 'Home', 'Away', 'H/A Delta'], horizontal=True)
 
@@ -311,7 +366,10 @@ def main():
 
         selected_df = dataframes.get(option)
         if selected_df is not None:
-            st.write(format_dataframe(selected_df).to_html(escape=False), unsafe_allow_html=True)
+            if selected_df is team_win_breakdown_delta:
+                st.write(format_dataframe_delta(selected_df).to_html(escape=False), unsafe_allow_html=True)
+            else:
+                st.write(format_dataframe(selected_df).to_html(escape=False), unsafe_allow_html=True)
         else:
             st.error("Selected DataFrame is not available.")
 

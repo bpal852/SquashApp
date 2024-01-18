@@ -523,7 +523,7 @@ def aggregate_wins_away(team, results_df):
 
 
 # Change dictionary if you want specific week
-for div in friday.keys():
+for div in tuesday.keys():
     league_id = f"D00{divisions[div]}"
 
     # Scrape Team Summary Page
@@ -674,9 +674,9 @@ for div in friday.keys():
     home_results_list = []
 
     # Iterate through each team in the "Home Team" column
-    for team in results_df['Home Team'].unique():
+    for team in valid_matches_df['Home Team'].unique():
         # Filter for matches where the current team is playing at home
-        team_home_fixtures = results_df[results_df['Home Team'] == team]
+        team_home_fixtures = valid_matches_df[valid_matches_df['Home Team'] == team]
 
         # Calculate total matches for each rubber for the team's home fixtures
         total_home_matches_per_rubber = {f'Rubber {i}': count_valid_matches(team_home_fixtures, i - 1) for i in
@@ -689,7 +689,7 @@ for div in friday.keys():
         total_rubbers_played = total_home_matches_df.sum(axis=1)
 
         # Merge with aggregate wins for the team's home fixtures and calculate win percentages
-        team_combined_home = aggregate_wins_home(team, results_df).merge(total_home_matches_df, left_index=True,
+        team_combined_home = aggregate_wins_home(team, valid_matches_df).merge(total_home_matches_df, left_index=True,
                                                                          right_index=True, how='outer')
         team_combined_home.fillna(0, inplace=True)
 
@@ -731,9 +731,9 @@ for div in friday.keys():
     away_results_list = []
 
     # Iterate through each team in the "Away Team" column
-    for team in results_df['Away Team'].unique():
+    for team in valid_matches_df['Away Team'].unique():
         # Filter for matches where the current team is playing away
-        team_away_fixtures = results_df[results_df['Away Team'] == team]
+        team_away_fixtures = valid_matches_df[valid_matches_df['Away Team'] == team]
 
         # Calculate total matches for each rubber for the team's away fixtures
         total_away_matches_per_rubber = {f'Rubber {i}': count_valid_matches(team_away_fixtures, i - 1) for i in
@@ -746,7 +746,7 @@ for div in friday.keys():
         total_rubbers_played = total_away_matches_df.sum(axis=1)
 
         # Merge with aggregate wins for the team's away fixtures and calculate win percentages
-        team_combined_away = aggregate_wins_away(team, results_df).merge(total_away_matches_df, left_index=True,
+        team_combined_away = aggregate_wins_away(team, valid_matches_df).merge(total_away_matches_df, left_index=True,
                                                                          right_index=True, how='outer')
         team_combined_away.fillna(0, inplace=True)
 
