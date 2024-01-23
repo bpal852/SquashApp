@@ -90,6 +90,17 @@ saturday = {
     "19": 398
 }
 
+weekend = {
+    "7": 384,
+    "12B": 388,
+    "12A": 389,
+    "17A": 395,
+    "17B": 396,
+    "L3": 404,
+    "18": 397,
+    "19": 398
+}
+
 
 def parse_result(result):
     """
@@ -523,7 +534,7 @@ def aggregate_wins_away(team, results_df):
 
 
 # Change dictionary if you want specific week
-for div in wednesday.keys():
+for div in weekend.keys():
     league_id = f"D00{divisions[div]}"
 
     # Scrape Team Summary Page
