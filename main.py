@@ -16,7 +16,7 @@ year = "2023-2024"
 # League Simulation
 home_advantage_factor = 0.06
 unpredictability_factor = 0.1  # Adjust this value as needed
-num_simulations = 9999
+num_simulations = 5000
 
 # Inputs
 divisions = {
@@ -534,7 +534,7 @@ def aggregate_wins_away(team, results_df):
 
 
 # Change dictionary if you want specific week
-for div in weekend.keys():
+for div in monday.keys():
     league_id = f"D00{divisions[div]}"
 
     # Scrape Team Summary Page
