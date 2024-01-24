@@ -264,7 +264,7 @@ def main():
                     except ValueError:
                         return x
 
-                df[numeric_cols_raw + ["Average"]] = df[numeric_cols_raw + ["Average"]].applymap(format_float)
+                df[numeric_cols_raw + ["Average"]] = df[numeric_cols_raw + ["Average"]].map(format_float)
 
                 # Check if "Total Rubbers" is in the DataFrame and format it as integer
                 if 'Total Rubbers' in df.columns:
@@ -319,7 +319,7 @@ def main():
                     except ValueError:
                         return x
 
-                df[numeric_cols_raw + ["Average"]] = df[numeric_cols_raw + ["Average"]].applymap(format_float)
+                df[numeric_cols_raw + ["Average"]] = df[numeric_cols_raw + ["Average"]].map(format_float)
 
                 # Check if "Total Rubbers" is in the DataFrame and format it as integer
                 if 'Total Rubbers' in df.columns:
@@ -411,7 +411,7 @@ def main():
         numeric_cols_simulated_fixtures = simulated_fixtures.select_dtypes(include=['float', 'int']).columns.drop(
             'Match Week')
         simulated_fixtures[numeric_cols_simulated_fixtures] = simulated_fixtures[
-            numeric_cols_simulated_fixtures].applymap(lambda x: f'{x:.2f}')
+            numeric_cols_simulated_fixtures].map(lambda x: f'{x:.2f}')
 
         # Ensure the columns are numeric for vmin and vmax calculation
         simulated_fixtures_numeric = simulated_fixtures.copy()
@@ -508,7 +508,7 @@ def main():
 
 def generate_styled_html(df, numeric_cols, blues_cols, orrd_cols):
     styled_df = df.copy()
-    styled_df[numeric_cols] = styled_df[numeric_cols].applymap(lambda x: f'{x:.2f}')
+    styled_df[numeric_cols] = styled_df[numeric_cols].map(lambda x: f'{x:.2f}')
 
     # Apply 'Blues' gradient
     styled_df = styled_df.style.background_gradient(cmap='Blues', subset=blues_cols) \

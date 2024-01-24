@@ -299,8 +299,8 @@ def simulate_league(df_fixtures, summary_df, num_simulations, max_rubbers, combi
     # Calculate average points per fixtures
     for index in fixture_points:
         total_simulations = num_simulations
-        fixture_points[index]['Home'] = round(fixture_points[index]['Home'] / total_simulations, 2)
-        fixture_points[index]['Away'] = round(fixture_points[index]['Away'] / total_simulations, 2)
+        fixture_points[index]['Home'] = fixture_points[index]['Home'] / total_simulations
+        fixture_points[index]['Away'] = fixture_points[index]['Away'] / total_simulations
 
     # Add average points to df_fixtures (outside the simulation loop)
     df_fixtures['Avg Simulated Home Points'] = df_fixtures.index.map(lambda x: fixture_points[x]['Home'])
@@ -337,15 +337,12 @@ def simulate_league(df_fixtures, summary_df, num_simulations, max_rubbers, combi
                              'Simulated Won', 'Simulated Lost'], inplace=True)
 
     summary_df["Played"] = summary_df["Played"].astype(int)
-    summary_df["Won"] = round(summary_df["Won"], 1)
-    summary_df["Lost"] = round(summary_df["Lost"], 1)
-    summary_df["Points"] = round(summary_df["Points"], 1)
 
     # Calculate the percentage chance of each team finishing in each position
     for team in position_counts:
         total = sum(position_counts[team].values())
         for position in position_counts[team]:
-            position_counts[team][position] = round((position_counts[team][position] / total) * 100, 1)
+            position_counts[team][position] = (position_counts[team][position] / total) * 100
 
     # Convert position_counts to DataFrame
     position_percentage_df = pd.DataFrame.from_dict(position_counts, orient='index').fillna(0)
@@ -355,7 +352,7 @@ def simulate_league(df_fixtures, summary_df, num_simulations, max_rubbers, combi
     position_percentage_df = position_percentage_df[position_cols]
 
     # Calculate the 'Playoffs' probability (sum of positions 1 to 4)
-    position_percentage_df['Playoffs'] = round(position_percentage_df[[1, 2, 3, 4]].sum(axis=1), 1)
+    position_percentage_df['Playoffs'] = position_percentage_df[[1, 2, 3, 4]].sum(axis=1)
 
     # Add the 'Team' column for merging
     position_percentage_df.reset_index(inplace=True)
@@ -534,7 +531,7 @@ def aggregate_wins_away(team, results_df):
 
 
 # Change dictionary if you want specific week
-for div in thursday.keys():
+for div in divisions.keys():
     league_id = f"D00{divisions[div]}"
 
     # Scrape Team Summary Page
