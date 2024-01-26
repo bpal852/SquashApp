@@ -50,6 +50,7 @@ def load_overall_home_away_data(division):
 
 def load_csvs(division):
     try:
+        overall_home_away = pd.read_csv(f"home_away_data/{division}_overall_scores.csv", header=None)
         final_table = pd.read_csv(f"simulated_tables/{division}_proj_final_table.csv")
         fixtures = pd.read_csv(f"simulated_fixtures/{division}_proj_fixtures.csv")
         home_away_df = pd.read_csv(f"home_away_data/{division}_team_average_scores.csv")
@@ -62,12 +63,16 @@ def load_csvs(division):
         team_win_breakdown_delta = pd.read_csv(
             f"team_win_percentage_breakdown/Delta/{division}_team_win_percentage_breakdown_delta.csv")
         awaiting_results = pd.read_csv(f"awaiting_results/{division}_awaiting_results.csv")
+        detailed_league_table = pd.read_csv(f"detailed_league_tables/{division}_detailed_league_table.csv")
         return (final_table, fixtures, home_away_df, team_win_breakdown_overall, team_win_breakdown_home,
-                team_win_breakdown_away, team_win_breakdown_delta, awaiting_results)
+                team_win_breakdown_away, team_win_breakdown_delta, awaiting_results, detailed_league_table,
+                overall_home_away
+                )
     except FileNotFoundError as e:
         st.error(f"Data not found for division {division}. Error: {e}")
         return pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), \
-            pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame()
+            pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), \
+            pd.DataFrame(), pd.DataFrame()
 
 
 def main():
@@ -77,6 +82,7 @@ def main():
         division = st.selectbox("**Select a Division:**", list(divisions.keys()))
 
         sections = [
+            "Detailed Division Table",
             "Home/Away Splits",
             "Rubber Win Percentage",
             "Projections"
@@ -102,13 +108,51 @@ def main():
 
     # Retrieve data from session state
     simulated_table, simulated_fixtures, home_away_df, team_win_breakdown_overall, team_win_breakdown_home, \
-        team_win_breakdown_away, team_win_breakdown_delta, awaiting_results = st.session_state['data']
+        team_win_breakdown_away, team_win_breakdown_delta, awaiting_results, \
+        detailed_league_table, overall_home_away = st.session_state['data']
 
-    # if st.button("**Load Data**"):
-    # simulated_table, simulated_fixtures, home_away_df, team_win_breakdown_overall, team_win_breakdown_home, \
-    # team_win_breakdown_away, team_win_breakdown_delta, awaiting_results = load_csvs(division)
+    #overall_home_away = load_overall_home_away_data(division)
+    print(overall_home_away)
+    print(overall_home_away.iloc[0, 0])
+    simulation_date = pd.to_datetime(overall_home_away.iloc[1, 0]).strftime('%Y-%m-%d')
+    date = pd.to_datetime(overall_home_away.iloc[0, 3]).strftime('%Y-%m-%d')
 
-    if sections_box == "Home/Away Splits":
+    if sections_box == "Detailed Division Table":
+        # Header
+        st.header("Detailed Division Table")
+        st.write(f"Last updated: {date}")
+
+        if len(awaiting_results) > 0:
+            # Line break
+            st.write('<br>', unsafe_allow_html=True)
+            st.subheader("Still awaiting these results:")
+            styled_awaiting_results = awaiting_results.style.hide(axis='index')
+            st.write(styled_awaiting_results.to_html(escape=False), unsafe_allow_html=True)
+            st.write('<br>', unsafe_allow_html=True)
+
+        # Line break
+        st.write('<br>', unsafe_allow_html=True)
+
+        # Display the styled DataFrame in Streamlit
+        # st.write(detailed_league_table.to_html(escape=False), unsafe_allow_html=True)
+
+        # Apply styles to the DataFrame
+        styled_df = detailed_league_table.style.set_properties(**{'text-align': 'right'}).hide(axis='index')
+        styled_df = styled_df.set_properties(subset=['Team'], **{'text-align': 'left'})
+
+        # Convert styled DataFrame to HTML
+        html = styled_df.to_html(escape=False)
+
+        # Display in Streamlit
+        st.write(html, unsafe_allow_html=True)
+
+        # Note
+        st.write('<br>', unsafe_allow_html=True)
+        st.write("**Note:**  \nCR stands for Conceded Rubber.  \nWO stands for Walkover. Teams are penalized \
+                 one point for each walkover given.")
+
+    elif sections_box == "Home/Away Splits":
+
         # Header
         st.header("Home/Away Splits")
         # Load and display overall scores
@@ -379,12 +423,10 @@ def main():
             "**Note:**  \nOnly rubbers that were played are included. Conceded Rubbers and Walkovers are ignored.")
 
     elif sections_box == "Projections":
-        # Load and display overall scores
-        overall_home_away = load_overall_home_away_data(division)
-        date = pd.to_datetime(overall_home_away[3]).strftime('%Y-%m-%d')
 
+        # Load and display overall scores
         st.header("Projections")
-        st.write(f"**Date of last simulation:** {date}")
+        st.write(f"**Date of last simulation:** {simulation_date}")
 
         if len(awaiting_results) > 0:
             # Line break

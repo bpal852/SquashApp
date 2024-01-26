@@ -17,6 +17,7 @@ year = "2023-2024"
 home_advantage_factor = 0.06
 unpredictability_factor = 0.1  # Adjust this value as needed
 num_simulations = 5000
+run_projections = 1  # toggle 1/0 to run projections
 
 # Inputs
 divisions = {
@@ -530,6 +531,52 @@ def aggregate_wins_away(team, results_df):
     return pd.DataFrame(wins, index=[team])
 
 
+def update_rubbers(row):
+    """
+    Function to count rubbers for and against for each team
+    """
+    # Update for home team
+    rubbers_won[row['Home Team']] = rubbers_won.get(row['Home Team'], 0) + row['Home Score']
+    rubbers_conceded[row['Home Team']] = rubbers_conceded.get(row['Home Team'], 0) + row['Away Score']
+
+    # Update for away team
+    rubbers_won[row['Away Team']] = rubbers_won.get(row['Away Team'], 0) + row['Away Score']
+    rubbers_conceded[row['Away Team']] = rubbers_conceded.get(row['Away Team'], 0) + row['Home Score']
+
+
+def update_counts(row):
+    """
+    Function to count CRs and WOs For and Against
+    """
+    home_score, away_score = map(int, row['Overall Score'].split('-'))
+    home_wins = away_wins = 0
+
+    for rubber in row['Rubbers']:
+        if rubber == 'CR':
+            # Count CRs
+            if home_wins < home_score:
+                cr_given_count[row['Away Team']] = cr_given_count.get(row['Away Team'], 0) + 1
+                cr_received_count[row['Home Team']] = cr_received_count.get(row['Home Team'], 0) + 1
+            else:
+                cr_given_count[row['Home Team']] = cr_given_count.get(row['Home Team'], 0) + 1
+                cr_received_count[row['Away Team']] = cr_received_count.get(row['Away Team'], 0) + 1
+        elif rubber == 'WO':
+            # Count WOs
+            if home_wins < home_score:
+                wo_given_count[row['Away Team']] = wo_given_count.get(row['Away Team'], 0) + 1
+                wo_received_count[row['Home Team']] = wo_received_count.get(row['Home Team'], 0) + 1
+            else:
+                wo_given_count[row['Home Team']] = wo_given_count.get(row['Home Team'], 0) + 1
+                wo_received_count[row['Away Team']] = wo_received_count.get(row['Away Team'], 0) + 1
+        else:
+            # Count the rubbers won by each team
+            rubber_home, rubber_away = map(int, rubber.split('-'))
+            if rubber_home > rubber_away:
+                home_wins += 1
+            elif rubber_away > rubber_home:
+                away_wins += 1
+
+
 # Change dictionary if you want specific week
 for div in divisions.keys():
     league_id = f"D00{divisions[div]}"
@@ -566,6 +613,60 @@ for div in divisions.keys():
     # Replace 'CR' with NaN
     results_df.replace('CR', np.nan, inplace=True)
     results_df.replace('WO', np.nan, inplace=True)
+
+    # Count the number of Rubbers For and Against for each team
+
+    # Splitting the 'Overall Score' into two separate columns
+    results_df[['Home Score', 'Away Score']] = results_df['Overall Score'].str.split('-', expand=True).astype(int)
+
+    # Initialize dictionaries to keep track of won and conceded rubbers
+    rubbers_won = {}
+    rubbers_conceded = {}
+
+    # Apply the function to each row
+    results_df.apply(update_rubbers, axis=1)
+
+    # Convert the dictionaries to DataFrames
+    df_rubbers_won = pd.DataFrame(list(rubbers_won.items()), columns=['Team', 'Rubbers For'])
+    df_rubbers_conceded = pd.DataFrame(list(rubbers_conceded.items()), columns=['Team', 'Rubbers Against'])
+
+    # Merge the DataFrames on Team
+    rubbers_df = pd.merge(df_rubbers_won, df_rubbers_conceded, on='Team')
+
+    # Count the number Conceded Rubbers and Walkovers
+
+    # Initialize dictionaries to keep track of conceded rubbers and walkovers
+    cr_given_count = {}
+    cr_received_count = {}
+    wo_given_count = {}
+    wo_received_count = {}
+
+    # Apply the function to each row
+    results_df.apply(update_counts, axis=1)
+
+    # Ensure all teams are included in all counts
+    all_teams = set(results_df['Home Team']).union(set(results_df['Away Team']))
+    for team in all_teams:
+        cr_given_count.setdefault(team, 0)
+        cr_received_count.setdefault(team, 0)
+        wo_given_count.setdefault(team, 0)
+        wo_received_count.setdefault(team, 0)
+
+    # Convert the dictionaries to DataFrames
+    df_cr_given_count = pd.DataFrame(list(cr_given_count.items()), columns=['Team', 'CRs Given'])
+    df_cr_received_count = pd.DataFrame(list(cr_received_count.items()), columns=['Team', 'CRs Received'])
+    df_wo_given_count = pd.DataFrame(list(wo_given_count.items()), columns=['Team', 'WOs Given'])
+    df_wo_received_count = pd.DataFrame(list(wo_received_count.items()), columns=['Team', 'WOs Received'])
+
+    # Merge the DataFrames on Team
+    detailed_table_df = pd.merge(df_cr_given_count, df_cr_received_count, on='Team')
+    detailed_table_df = pd.merge(detailed_table_df, df_wo_given_count, on='Team')
+    detailed_table_df = pd.merge(detailed_table_df, df_wo_received_count, on='Team')
+    summary_df = pd.merge(summary_df, rubbers_df, on="Team")
+    detailed_table_df = pd.merge(summary_df, detailed_table_df, on="Team")
+
+    # Save to csv
+    detailed_table_df.to_csv(f'detailed_league_tables/{div}_detailed_league_table.csv', index=False)
 
     # Create Remaining Fixtures Dataframe
 
@@ -862,17 +963,22 @@ for div in divisions.keys():
     win_percentage_df.to_csv(f'team_win_percentage_breakdown/Overall/{div}_team_win_percentage_breakdown.csv',
                            index=False)
 
-    projected_final_table, projected_fixtures = simulate_league(df_remaining_fixtures,
-                                                                summary_df,
-                                                                num_simulations,
-                                                                max_rubbers,
-                                                                combined,
-                                                                home_advantage_factor,
-                                                                unpredictability_factor,
-                                                                neutral_fixtures_df)
+    # Use run_projections to determine whether to run projections or not
+    if run_projections == 1:
+        projected_final_table, projected_fixtures = simulate_league(df_remaining_fixtures,
+                                                                    summary_df,
+                                                                    num_simulations,
+                                                                    max_rubbers,
+                                                                    combined,
+                                                                    home_advantage_factor,
+                                                                    unpredictability_factor,
+                                                                    neutral_fixtures_df)
 
-    # Save the results
-    projected_final_table.to_csv(f"simulated_tables/{div}_proj_final_table.csv", index=False)
-    projected_fixtures.to_csv(f"simulated_fixtures/{div}_proj_fixtures.csv", index=False)
+        # Save the results
+        projected_final_table.to_csv(f"simulated_tables/{div}_proj_final_table.csv", index=False)
+        projected_fixtures.to_csv(f"simulated_fixtures/{div}_proj_fixtures.csv", index=False)
+        # Append today's date to the overall_scores_file
+        with open(f'home_away_data/{div}_overall_scores.csv', 'a') as f:
+            f.write(f"{today}\n")
 
     print(div)
