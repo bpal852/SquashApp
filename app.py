@@ -114,7 +114,7 @@ def main():
     #overall_home_away = load_overall_home_away_data(division)
     print(overall_home_away)
     print(overall_home_away.iloc[0, 0])
-    simulation_date = pd.to_datetime(overall_home_away.iloc[1, 0]).strftime('%Y-%m-%d')
+    simulation_date = pd.to_datetime(overall_home_away.iloc[0, 4]).strftime('%Y-%m-%d')
     date = pd.to_datetime(overall_home_away.iloc[0, 3]).strftime('%Y-%m-%d')
 
     if sections_box == "Detailed Division Table":
@@ -547,6 +547,12 @@ def main():
             # Display the styled DataFrame in Streamlit
             st.write(styled_simulated_table.to_html(escape=False), unsafe_allow_html=True)
 
+            # Note
+            st.write('<br>', unsafe_allow_html=True)
+            st.write("**Note:**  \nThe projected final table is the average result of simulating the remaining \
+                     fixtures 5,000 times.  \nFixtures are simulated using teams' average rubber win percentage, \
+                     factoring in home advantage.")
+
 
 def generate_styled_html(df, numeric_cols, blues_cols, orrd_cols):
     styled_df = df.copy()
@@ -563,7 +569,6 @@ def generate_styled_html(df, numeric_cols, blues_cols, orrd_cols):
 
     styled_df = styled_df.hide(axis='index')
     return styled_df.to_html(escape=False)
-
 
 if __name__ == "__main__":
     main()

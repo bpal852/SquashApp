@@ -8,6 +8,7 @@ from collections import Counter
 from collections import defaultdict
 import time
 from datetime import datetime
+import os
 
 pd.set_option("display.max_columns", None)
 
@@ -717,9 +718,18 @@ for div in divisions.keys():
     # Calculate home win percentage
     home_win_perc = len(results_df[results_df["Home Overall Score"] > results_df["Away Overall Score"]]) / len(results_df)
 
+    # Path to the overall scores CSV file
+    overall_scores_file = f'home_away_data/{div}_overall_scores.csv'
+
+    # Read the existing data from the CSV file into a DataFrame
+    if os.path.exists(overall_scores_file):
+        overall_scores_df = pd.read_csv(overall_scores_file, header=None)
+    else:
+        overall_scores_df = pd.DataFrame()
+
     # Save average_home_overall_score, average_away_overall_score, home_win_perc, and date
-    with open(f'home_away_data/{div}_overall_scores.csv', 'w') as f:
-        f.write(f"{average_home_overall_score},{average_away_overall_score},{home_win_perc}, {today}\n")
+    #with open(f'home_away_data/{div}_overall_scores.csv', 'w') as f:
+    #   f.write(f"{average_home_overall_score},{average_away_overall_score},{home_win_perc}, {today}\n")
 
     # Calculate average home score for each home team
     average_home_scores = results_df.groupby('Home Team')['Home Overall Score'].mean().rename('Average Home Score')
@@ -963,6 +973,25 @@ for div in divisions.keys():
     win_percentage_df.to_csv(f'team_win_percentage_breakdown/Overall/{div}_team_win_percentage_breakdown.csv',
                            index=False)
 
+    # Check if run_projections is set to 1
+    if run_projections == 1:
+        # If it's set to 1, update or add the simulation date
+        if overall_scores_df.shape[1] == 5:
+            # Update the existing simulation date
+            overall_scores_df.iloc[0, 4] = today
+        else:
+            # Append the simulation date if it's not already there
+            overall_scores_df[4] = today
+
+    # Update the first four columns with the latest values
+    overall_scores_df.iloc[0, 0] = average_home_overall_score
+    overall_scores_df.iloc[0, 1] = average_away_overall_score
+    overall_scores_df.iloc[0, 2] = home_win_perc
+    overall_scores_df.iloc[0, 3] = today
+
+    # Write the updated DataFrame back to the CSV file
+    overall_scores_df.to_csv(overall_scores_file, index=False, header=None)
+
     # Use run_projections to determine whether to run projections or not
     if run_projections == 1:
         projected_final_table, projected_fixtures = simulate_league(df_remaining_fixtures,
@@ -978,7 +1007,7 @@ for div in divisions.keys():
         projected_final_table.to_csv(f"simulated_tables/{div}_proj_final_table.csv", index=False)
         projected_fixtures.to_csv(f"simulated_fixtures/{div}_proj_fixtures.csv", index=False)
         # Append today's date to the overall_scores_file
-        with open(f'home_away_data/{div}_overall_scores.csv', 'a') as f:
-            f.write(f"{today}\n")
+        #with open(f'home_away_data/{div}_overall_scores.csv', 'a') as f:
+         #   f.write(f"{today}\n")
 
     print(div)
