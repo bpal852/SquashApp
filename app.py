@@ -120,7 +120,7 @@ def main():
     if sections_box == "Detailed Division Table":
         # Header
         st.header("Detailed Division Table")
-        st.write(f"Last updated: {date}")
+        st.write(f"**Last updated:** {date}")
 
         if len(awaiting_results) > 0:
             # Line break
@@ -420,7 +420,9 @@ def main():
         # Note
         st.write('<br>', unsafe_allow_html=True)
         st.write(
-            "**Note:**  \nOnly rubbers that were played are included. Conceded Rubbers and Walkovers are ignored.")
+            "**Note:**  \nOnly rubbers that were played are included. Conceded Rubbers \
+            and Walkovers are ignored.  \nMatches where the home team and away team share \
+             a home venue are ignored in the Home and Away tables.")
 
     elif sections_box == "Projections":
 

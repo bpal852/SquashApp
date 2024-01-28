@@ -214,7 +214,7 @@ def calculate_match_points(match_result, home_team, away_team):
     return None
 
 
-def simulate_league(df_fixtures, summary_df, num_simulations, max_rubbers, combined, HOME_ADVANTAGE_FACTOR,
+def simulate_league(df_fixtures, summary_df, num_simulations, max_rubbers, combined, home_advantage_factor,
                     unpredictability_factor, neutral_fixtures_df):
     """
     A function to simulate the remaining fixtures in a league,
@@ -264,8 +264,8 @@ def simulate_league(df_fixtures, summary_df, num_simulations, max_rubbers, combi
 
             # Check if both teams are in the combined data
             if home_team in combined.index and away_team in combined.index:
-                # Adjust HOME_ADVANTAGE_FACTOR for neutral fixtures
-                adjusted_home_advantage = 0 if is_neutral_fixture else HOME_ADVANTAGE_FACTOR
+                # Adjust home_advantage_factor for neutral fixtures
+                adjusted_home_advantage = 0 if is_neutral_fixture else home_advantage_factor
                 match_result = simulate_match(home_team, away_team, max_rubbers, combined, adjusted_home_advantage,
                                               unpredictability_factor)
                 points_result = calculate_match_points(match_result, home_team, away_team)
@@ -379,7 +379,9 @@ def scrape_team_summary_page(league_id, year):
     """
     Function to scrape the Team Summary page on Hk squash website and store the data in a dataframe
     """
-    summary_url = f"https://www.hksquash.org.hk/public/index.php/leagues/team_summery/id/{league_id}/league/Squash/year/{year}/pages_id/25.html"
+    summary_url = (f"https://www.hksquash.org.hk/public/index.php/leagues/team_summery/"
+                   f"id/{league_id}/league/Squash/year/{year}/pages_id/25.html"
+                   )
     response = requests.get(summary_url)
     soup = BeautifulSoup(response.content, 'html.parser')
 
@@ -405,7 +407,9 @@ def scrape_teams_page(league_id, year):
     """
     Function to scrape the Teams page on HK squash website and store the data in a dataframe
     """
-    teams_url = f"https://www.hksquash.org.hk/public/index.php/leagues/teams/id/{league_id}/league/Squash/year/{year}/pages_id/25.html"
+    teams_url = (f"https://www.hksquash.org.hk/public/index.php/leagues/teams/"
+                 f"id/{league_id}/league/Squash/year/{year}/pages_id/25.html"
+                 )
     response = requests.get(teams_url)
     soup = BeautifulSoup(response.content, 'html.parser')
 
@@ -431,7 +435,10 @@ def scrape_schedules_and_results_page(league_id, year):
     """
     Function to scrape Schedules and Results page from HK squash website and store data in a dataframe
     """
-    schedule_url = f"https://www.hksquash.org.hk/public/index.php/leagues/results_schedules/id/{league_id}/league/Squash/year/{year}/pages_id/25.html"
+    schedule_url = (
+        f"https://www.hksquash.org.hk/public/index.php/leagues/results_schedules/"
+        f"id/{league_id}/league/Squash/year/{year}/pages_id/25.html"
+    )
     response = requests.get(schedule_url)
     soup = BeautifulSoup(response.content, 'html.parser')
 
@@ -716,7 +723,8 @@ for div in divisions.keys():
     average_away_overall_score = results_df['Away Overall Score'].mean()
 
     # Calculate home win percentage
-    home_win_perc = len(results_df[results_df["Home Overall Score"] > results_df["Away Overall Score"]]) / len(results_df)
+    home_win_perc = len(
+        results_df[results_df["Home Overall Score"] > results_df["Away Overall Score"]]) / len(results_df)
 
     # Path to the overall scores CSV file
     overall_scores_file = f'home_away_data/{div}_overall_scores.csv'
@@ -726,10 +734,6 @@ for div in divisions.keys():
         overall_scores_df = pd.read_csv(overall_scores_file, header=None)
     else:
         overall_scores_df = pd.DataFrame()
-
-    # Save average_home_overall_score, average_away_overall_score, home_win_perc, and date
-    #with open(f'home_away_data/{div}_overall_scores.csv', 'w') as f:
-    #   f.write(f"{average_home_overall_score},{average_away_overall_score},{home_win_perc}, {today}\n")
 
     # Calculate average home score for each home team
     average_home_scores = results_df.groupby('Home Team')['Home Overall Score'].mean().rename('Average Home Score')
@@ -808,8 +812,9 @@ for div in divisions.keys():
         total_rubbers_played = total_home_matches_df.sum(axis=1)
 
         # Merge with aggregate wins for the team's home fixtures and calculate win percentages
-        team_combined_home = aggregate_wins_home(team, valid_matches_df).merge(total_home_matches_df, left_index=True,
-                                                                         right_index=True, how='outer')
+        team_combined_home = aggregate_wins_home(
+            team, valid_matches_df).merge(total_home_matches_df, left_index=True,
+                                          right_index=True, how='outer')
         team_combined_home.fillna(0, inplace=True)
 
         for i in range(1, max_rubbers + 1):
@@ -836,8 +841,7 @@ for div in divisions.keys():
 
     # Selecting and displaying the required columns
     keep_columns_home = (["Team"] +
-                         [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] +
-                          ['avg_win_perc', "Total Rubbers"])
+                         [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] + ['avg_win_perc', "Total Rubbers"])
     win_percentage_home_df = home_results_sorted[keep_columns_home]
 
     # Save win_percentage_home_df to csv
@@ -865,8 +869,9 @@ for div in divisions.keys():
         total_rubbers_played = total_away_matches_df.sum(axis=1)
 
         # Merge with aggregate wins for the team's away fixtures and calculate win percentages
-        team_combined_away = aggregate_wins_away(team, valid_matches_df).merge(total_away_matches_df, left_index=True,
-                                                                         right_index=True, how='outer')
+        team_combined_away = aggregate_wins_away(
+            team, valid_matches_df).merge(total_away_matches_df, left_index=True,
+                                          right_index=True, how='outer')
         team_combined_away.fillna(0, inplace=True)
 
         for i in range(1, max_rubbers + 1):
@@ -925,12 +930,13 @@ for div in divisions.keys():
 
     # Save win_percentage_delta_df to csv
     win_percentage_delta_df.to_csv(
-        f'team_win_percentage_breakdown/Delta/{div}_team_win_percentage_breakdown_delta.csv',
-                             index=False)
+        f'team_win_percentage_breakdown/Delta/{div}_team_win_percentage_breakdown_delta.csv', index=False)
 
     # Create overall Win Percentage by Rubber dataframe
     # Calculate total matches for each rubber excluding 'NA', 'CR', and 'WO'
-    total_matches_per_rubber = {f'Rubber {i}': count_valid_matches(results_df, i - 1) for i in range(1, max_rubbers + 1)}
+    total_matches_per_rubber = {
+        f'Rubber {i}': count_valid_matches(results_df, i - 1) for i in range(1, max_rubbers + 1)
+    }
 
     # Convert the dictionary to a DataFrame with teams as index
     total_matches_df = pd.DataFrame(total_matches_per_rubber)
@@ -971,7 +977,7 @@ for div in divisions.keys():
 
     # Save win_percentage_df to csv
     win_percentage_df.to_csv(f'team_win_percentage_breakdown/Overall/{div}_team_win_percentage_breakdown.csv',
-                           index=False)
+                             index=False)
 
     # Check if run_projections is set to 1
     if run_projections == 1:
@@ -1006,8 +1012,5 @@ for div in divisions.keys():
         # Save the results
         projected_final_table.to_csv(f"simulated_tables/{div}_proj_final_table.csv", index=False)
         projected_fixtures.to_csv(f"simulated_fixtures/{div}_proj_fixtures.csv", index=False)
-        # Append today's date to the overall_scores_file
-        #with open(f'home_away_data/{div}_overall_scores.csv', 'a') as f:
-         #   f.write(f"{today}\n")
 
     print(div)
