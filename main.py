@@ -18,7 +18,7 @@ year = "2023-2024"
 home_advantage_factor = 0.06
 unpredictability_factor = 0.1  # Adjust this value as needed
 num_simulations = 5000
-run_projections = 0  # toggle 1/0 to run projections
+run_projections = 1  # toggle 1/0 to run projections
 
 # Inputs
 divisions = {
@@ -586,7 +586,7 @@ def update_counts(row):
 
 
 # Change dictionary if you want specific week
-for div in divisions.keys():
+for div in friday.keys():
     league_id = f"D00{divisions[div]}"
 
     # Scrape Team Summary Page

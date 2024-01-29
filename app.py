@@ -111,9 +111,6 @@ def main():
         team_win_breakdown_away, team_win_breakdown_delta, awaiting_results, \
         detailed_league_table, overall_home_away = st.session_state['data']
 
-    #overall_home_away = load_overall_home_away_data(division)
-    print(overall_home_away)
-    print(overall_home_away.iloc[0, 0])
     simulation_date = pd.to_datetime(overall_home_away.iloc[0, 4]).strftime('%Y-%m-%d')
     date = pd.to_datetime(overall_home_away.iloc[0, 3]).strftime('%Y-%m-%d')
 
