@@ -4,6 +4,7 @@ import pandas as pd
 from datetime import datetime
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
+import re
 
 st.set_page_config(
     page_title="HK Squash App",
@@ -64,15 +65,31 @@ def load_csvs(division):
             f"team_win_percentage_breakdown/Delta/{division}_team_win_percentage_breakdown_delta.csv")
         awaiting_results = pd.read_csv(f"awaiting_results/{division}_awaiting_results.csv")
         detailed_league_table = pd.read_csv(f"detailed_league_tables/{division}_detailed_league_table.csv")
+        summarized_players = pd.read_csv(f"summarized_player_tables/{division}_summarized_players.csv")
+
         return (final_table, fixtures, home_away_df, team_win_breakdown_overall, team_win_breakdown_home,
                 team_win_breakdown_away, team_win_breakdown_delta, awaiting_results, detailed_league_table,
-                overall_home_away
+                overall_home_away, summarized_players
                 )
+
     except FileNotFoundError as e:
         st.error(f"Data not found for division {division}. Error: {e}")
         return pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), \
             pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), \
-            pd.DataFrame(), pd.DataFrame()
+            pd.DataFrame(), pd.DataFrame(), pd.DataFrame()
+
+def load_txts(division):
+
+    unbeaten_file_path = f"unbeaten_players/{division}.txt"
+    every_game_file_path = f"played_every_game/{division}.txt"
+
+    with open(unbeaten_file_path, "r") as file:
+        unbeaten_players = [line.strip() for line in file]
+
+    with open(every_game_file_path, "r") as file:
+        played_every_game = [line.strip() for line in file]
+
+    return unbeaten_players, played_every_game
 
 
 def main():
@@ -84,8 +101,9 @@ def main():
         sections = [
             "Detailed Division Table",
             "Home/Away Splits",
-            "Rubber Win Percentage",
-            "Projections"
+            "Player Stats",
+            "Projections",
+            "Rubber Win Percentage"
         ]
 
         sections_box = st.selectbox("**Select a section:**", sections)
@@ -106,10 +124,13 @@ def main():
         st.session_state['data_loaded'] = True
         st.session_state['current_division'] = division
 
+    # Load TXTs
+    unbeaten_players, played_every_game = load_txts(division)
+
     # Retrieve data from session state
     simulated_table, simulated_fixtures, home_away_df, team_win_breakdown_overall, team_win_breakdown_home, \
         team_win_breakdown_away, team_win_breakdown_delta, awaiting_results, \
-        detailed_league_table, overall_home_away = st.session_state['data']
+        detailed_league_table, overall_home_away, summarized_players = st.session_state['data']
 
     simulation_date = pd.to_datetime(overall_home_away.iloc[0, 4]).strftime('%Y-%m-%d')
     date = pd.to_datetime(overall_home_away.iloc[0, 3]).strftime('%Y-%m-%d')
@@ -129,9 +150,6 @@ def main():
 
         # Line break
         st.write('<br>', unsafe_allow_html=True)
-
-        # Display the styled DataFrame in Streamlit
-        # st.write(detailed_league_table.to_html(escape=False), unsafe_allow_html=True)
 
         # Apply styles to the DataFrame
         styled_df = detailed_league_table.style.set_properties(**{'text-align': 'right'}).hide(axis='index')
@@ -275,6 +293,13 @@ def main():
         # Note
         st.write("**Note:**  \nMatches where the home team and away team share a \
         home venue are ignored in the calculation")
+
+        st.write(
+            """
+            Since 2016-17 (ignoring the incomplete 2019-20 and 2021-22 seasons), 
+            the overall home advantage factor is 0.5294, meaning that in a best-of-5-rubber division
+            teams win an average of 2.65 rubbers at home compared to 2.35 away.
+            """)
 
     elif sections_box == "Rubber Win Percentage":
 
@@ -551,6 +576,83 @@ def main():
             st.write("**Note:**  \nThe projected final table is the average result of simulating the remaining \
                      fixtures 5,000 times.  \nFixtures are simulated using teams' average rubber win percentage, \
                      factoring in home advantage.")
+
+    elif sections_box == "Player Stats":
+
+        # Function to extract names from the cell
+        def extract_names(cell_value):
+            # Using regex to extract names before parentheses or commas
+            names = re.findall(r"([\w\s]+)(?=\s\(|,|$)", cell_value)
+            return set(names)
+
+        # Custom styling function
+        def highlight_row_if_same_player(row):
+            # Extract player names from each column
+            games_names = extract_names(row["Most Games"])
+            wins_names = extract_names(row["Most Wins"])
+            win_percentage_names = extract_names(row["Highest Win Percentage"])
+
+            # Highlight color
+            highlight_color = 'background-color: #FFF2CC'
+            # Default color
+            default_color = ''  # or 'background-color: none'
+
+            # Check if each column has exactly one name and it's the same across all three columns
+            unique_names = games_names.union(wins_names).union(win_percentage_names)
+            if len(unique_names) == 1 and len(games_names) == len(wins_names) == len(win_percentage_names) == 1:
+                # The set union of all names will have exactly one element if all columns have the same single name
+                return [
+                    highlight_color if col in ["Most Games", "Most Wins", "Highest Win Percentage"] else default_color
+                    for col in row.index]
+            else:
+                # Return default color for all columns if the condition is not met
+                return [default_color for _ in row.index]
+
+        # Load and display overall scores
+        st.header("Player Stats")
+        st.write(f"**Last Updated:** {date}")
+
+        styled_df = summarized_players.style.set_properties(**{'text-align': 'left'}).hide(axis='index')
+
+        # Apply the styling function to the DataFrame
+        styled_df = styled_df.apply(highlight_row_if_same_player, axis=1)
+
+        # Convert styled DataFrame to HTML
+        html = styled_df.to_html(escape=False)
+
+        st.write(html, unsafe_allow_html=True)
+
+        # Line break
+        st.write('<br>', unsafe_allow_html=True)
+
+        # Show list of unbeaten players
+        unbeaten_players_list = '<br>'.join(unbeaten_players)
+
+        if len(unbeaten_players) == 0:
+            st.write("**There are no unbeaten players.**")
+        elif len(unbeaten_players) == 1:
+            st.write(f"**The following player is unbeaten:**  \n{', '.join(unbeaten_players)}")
+        else:
+            st.markdown(f"**The following players "
+                        f"are unbeaten:**<br>{unbeaten_players_list}", unsafe_allow_html=True)
+
+        # Show list of players who have played in every game for their team
+        every_game_list = '<br>'.join(played_every_game)
+
+        if len(played_every_game) == 0:
+            st.write("No player has played in all of their team's games")
+        elif len(played_every_game) == 1:
+            st.write(f"**The following player has played in all of their "
+                     f"team's games:**  \n{', '.join(played_every_game)}")
+        else:
+            st.markdown(f"**The following players "
+                        f"have played every game:**<br>{every_game_list}", unsafe_allow_html=True)
+
+        # Line break
+        # st.write('<br>', unsafe_allow_html=True)
+        st.write("**Note:** Players must have played 5+ games to qualify.")
+
+
 
 
 def generate_styled_html(df, numeric_cols, blues_cols, orrd_cols):

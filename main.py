@@ -379,9 +379,11 @@ def scrape_team_summary_page(league_id, year):
     """
     Function to scrape the Team Summary page on Hk squash website and store the data in a dataframe
     """
-    summary_url = (f"https://www.hksquash.org.hk/public/index.php/leagues/team_summery/"
-                   f"id/{league_id}/league/Squash/year/{year}/pages_id/25.html"
-                   )
+    summary_url = (
+        f"https://www.hksquash.org.hk/public/index.php/leagues/team_summery/"
+        f"id/{league_id}/league/Squash/year/{year}/pages_id/25.html"
+    )
+
     response = requests.get(summary_url)
     soup = BeautifulSoup(response.content, 'html.parser')
 
@@ -407,9 +409,11 @@ def scrape_teams_page(league_id, year):
     """
     Function to scrape the Teams page on HK squash website and store the data in a dataframe
     """
-    teams_url = (f"https://www.hksquash.org.hk/public/index.php/leagues/teams/"
-                 f"id/{league_id}/league/Squash/year/{year}/pages_id/25.html"
-                 )
+    teams_url = (
+        f"https://www.hksquash.org.hk/public/index.php/leagues/teams/"
+        f"id/{league_id}/league/Squash/year/{year}/pages_id/25.html"
+    )
+
     response = requests.get(teams_url)
     soup = BeautifulSoup(response.content, 'html.parser')
 
@@ -439,6 +443,7 @@ def scrape_schedules_and_results_page(league_id, year):
         f"https://www.hksquash.org.hk/public/index.php/leagues/results_schedules/"
         f"id/{league_id}/league/Squash/year/{year}/pages_id/25.html"
     )
+
     response = requests.get(schedule_url)
     soup = BeautifulSoup(response.content, 'html.parser')
 
@@ -585,18 +590,140 @@ def update_counts(row):
                 away_wins += 1
 
 
+def find_max_players(df, team, column):
+    """
+    Function to find players with max value in a column, handling ties
+    """
+    max_value = df[df['Team'] == team][column].max()
+    players = df[(df['Team'] == team) & (df[column] == max_value)]['Name of Player']
+    return ", ".join(players) + f" ({max_value})"
+
+
+def find_max_win_percentage(df, team):
+    """
+    Function to find players with max win percentage, handling ties
+    """
+    max_value = df[df['Team'] == team]['Win Percentage'].max()
+    players = df[(df['Team'] == team) & (df['Win Percentage'] == max_value)]['Name of Player']
+    return ", ".join(players) + f" ({max_value * 100:.1f}%)"
+
+def scrape_ranking_page(league_id, year):
+    """
+    Function to scrape the Ranking page and process into a dataframe
+    """
+    ranking_url = (
+        f"https://www.hksquash.org.hk/public/index.php/leagues/ranking/id/{league_id}/"
+        f"league/Squash/year/{year}/pages_id/25.html"
+    )
+    response = requests.get(ranking_url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+
+    ranking_rows = soup.find_all("div", class_="clearfix ranking-content-list")
+    ranking_data_rows = []
+
+    for row in ranking_rows:
+        columns = row.find_all("div", recursive=False)
+
+        # Check if the first column (position) is numeric, if not break the loop
+        first_col_text = columns[0].text.strip()
+        if not first_col_text.isnumeric():
+            break
+
+        row_data = [col.text.strip() for col in columns]
+        ranking_data_rows.append(row_data)
+
+    # Create DataFrame
+    df = pd.DataFrame(ranking_data_rows, columns=['Position', 'Name of Player', 'Team', 'Average Points',
+                                                  'Total Game Points', 'Games Played', 'Won', 'Lost'])
+
+    # Get Division Name
+
+    # Extracting the division name from the soup
+    full_division_name = soup.find('a', href=lambda href: href and "leagues/detail/id" in href).text.strip()
+
+    # Extracting just the part after "Division "
+    division_number = full_division_name.split("Division ")[-1]
+
+    # Adding the extracted division number as a new column to the DataFrame
+    df['Division'] = division_number
+
+    # Convert columns to floats and integers
+
+    # Convert 'Total Game Points' to float first, then to int
+    df['Total Game Points'] = df['Total Game Points'].astype(float).astype(int)
+
+    # Convert the other columns
+    df['Position'] = df['Position'].astype(int)
+    df['Games Played'] = df['Games Played'].astype(int)
+    df['Won'] = df['Won'].astype(int)
+    df['Lost'] = df['Lost'].astype(int)
+
+    # Convert 'Average Points' to float
+    df['Average Points'] = df['Average Points'].astype(float)
+
+    # Create Win Percentage column
+    df["Win Percentage"] = df["Won"] / df["Games Played"]
+
+    # Creating the summarized DataFrame
+    teams = df['Team'].unique()
+    summary_data = {
+        'Team': [],
+        'Most Games': [],
+        'Most Wins': [],
+        'Highest Win Percentage': []
+    }
+
+    for team in teams:
+        summary_data['Team'].append(team)
+        summary_data['Most Games'].append(find_max_players(df, team, 'Games Played'))
+        summary_data['Most Wins'].append(find_max_players(df, team, 'Won'))
+        summary_data['Highest Win Percentage'].append(find_max_win_percentage(df, team))
+
+    summarized_df = pd.DataFrame(summary_data).sort_values("Team")
+
+    # Get list of unbeaten players
+    unbeaten_list = df[df["Lost"] == 0].apply(lambda row: f"{row['Name of Player']} ({row['Team']})", axis=1).tolist()
+
+    return df, summarized_df, unbeaten_list
+
+
 # Change dictionary if you want specific week
-for div in divisions.keys():
+for div in saturday.keys():
     league_id = f"D00{divisions[div]}"
 
-    # Scrape Team Summary Page
+    # Scrape Team Summary page
     summary_df = scrape_team_summary_page(league_id, year)
 
-    # Scrape Teams Page
+    # Scrape Teams page
     teams_df = scrape_teams_page(league_id, year)
 
-    # Scrape Schedules and Results Page
+    # Scrape Schedules and Results page
     schedules_df = scrape_schedules_and_results_page(league_id, year)
+
+    # Scrape Ranking page and create summarized_df
+    ranking_df, summarized_df, unbeaten_list = scrape_ranking_page(league_id, year)
+
+    # Get list of players who have played every possible game
+    merged_ranking_df = ranking_df.merge(summary_df[["Team", "Played"]], on="Team", how="inner")
+    merged_ranking_df = merged_ranking_df.rename(columns={"Played": "Team Games Played"})
+    merged_ranking_df["Team Games Played"] = merged_ranking_df["Team Games Played"].astype(int)
+    played_every_game_list = merged_ranking_df[
+        (merged_ranking_df["Games Played"] == merged_ranking_df["Team Games Played"])].apply(
+        lambda row: f"{row['Name of Player']} ({row['Team']})", axis=1
+    ).tolist()
+
+    # Save summarized player tables to CSV
+    summarized_df.to_csv(f"summarized_player_tables/{div}_summarized_players.csv", index=False)
+
+    # Save list of unbeaten players
+    with open(f"unbeaten_players/{div}.txt", "w") as file:
+        for item in unbeaten_list:
+            file.write(f"{item}\n")
+
+    # Save list of players who have played every game
+    with open(f"played_every_game/{div}.txt", "w") as file:
+        for item in played_every_game_list:
+            file.write(f"{item}\n")
 
     # Create Results Dataframe
 
@@ -677,10 +804,6 @@ for div in divisions.keys():
     detailed_table_df.to_csv(f'detailed_league_tables/{div}_detailed_league_table.csv', index=False)
 
     # Create Remaining Fixtures Dataframe
-
-    # Filter out rows where Venue is null
-    # df_remaining_fixtures = schedules_df[schedules_df["Venue"].notnull()] not necessary?
-
     # Filter out rows where 'Result' is not empty and does not contain placeholder text
     # Keep rows where 'Result' is empty (None or empty string)
     df_remaining_fixtures = schedules_df[
@@ -755,8 +878,8 @@ for div in divisions.keys():
 
     # Reorganise columns and show teams in order of home/away split
     team_average_scores = team_average_scores[
-        ["Team Name", "Home", "Average Home Score", "Average Away Score", "home_away_diff"]].sort_values(
-        "home_away_diff", ascending=False)
+        ["Team Name", "Home", "Average Home Score", "Average Away Score", "home_away_diff"]
+    ].sort_values("home_away_diff", ascending=False)
 
     # Save team_average_scores to csv
     team_average_scores.to_csv(f'home_away_data/{div}_team_average_scores.csv', index=False)
@@ -813,8 +936,9 @@ for div in divisions.keys():
 
         # Merge with aggregate wins for the team's home fixtures and calculate win percentages
         team_combined_home = aggregate_wins_home(
-            team, valid_matches_df).merge(total_home_matches_df, left_index=True,
-                                          right_index=True, how='outer')
+            team, valid_matches_df
+        ).merge(total_home_matches_df, left_index=True, right_index=True, how='outer')
+
         team_combined_home.fillna(0, inplace=True)
 
         for i in range(1, max_rubbers + 1):
@@ -840,8 +964,9 @@ for div in divisions.keys():
     home_results_sorted = home_results_sorted.reset_index().rename(columns={'index': 'Team'})
 
     # Selecting and displaying the required columns
-    keep_columns_home = (["Team"] +
-                         [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] + ['avg_win_perc', "Total Rubbers"])
+    keep_columns_home = (
+            ["Team"] + [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] + ['avg_win_perc', "Total Rubbers"]
+    )
     win_percentage_home_df = home_results_sorted[keep_columns_home]
 
     # Save win_percentage_home_df to csv
@@ -870,8 +995,9 @@ for div in divisions.keys():
 
         # Merge with aggregate wins for the team's away fixtures and calculate win percentages
         team_combined_away = aggregate_wins_away(
-            team, valid_matches_df).merge(total_away_matches_df, left_index=True,
-                                          right_index=True, how='outer')
+            team, valid_matches_df
+        ).merge(total_away_matches_df, left_index=True, right_index=True, how='outer')
+
         team_combined_away.fillna(0, inplace=True)
 
         for i in range(1, max_rubbers + 1):
@@ -897,9 +1023,12 @@ for div in divisions.keys():
     away_results_sorted = away_results_sorted.reset_index().rename(columns={'index': 'Team'})
 
     # Selecting and displaying the required columns
-    keep_columns_away = (["Team"] +
-                         [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] +
-                         ['avg_win_perc', "Total Rubbers"])
+    keep_columns_away = (
+            ["Team"] +
+            [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] +
+            ['avg_win_perc', "Total Rubbers"]
+    )
+
     win_percentage_away_df = away_results_sorted[keep_columns_away]
 
     # Save win_percentage_away_df to csv
@@ -968,9 +1097,11 @@ for div in divisions.keys():
     combined_sorted = combined_sorted.reset_index().rename(columns={'index': 'Team'})
 
     # Filter out unnecessary columns
-    keep_columns = (["Team"] +
-                    [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] +
-                    ['avg_win_perc', "Total Rubbers"])
+    keep_columns = (
+            ["Team"] +
+            [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] +
+            ['avg_win_perc', "Total Rubbers"]
+    )
 
     # Select only the win percentage columns and the avg_win_perc column
     win_percentage_df = combined_sorted[keep_columns]
@@ -997,6 +1128,9 @@ for div in divisions.keys():
 
     # Write the updated DataFrame back to the CSV file
     overall_scores_df.to_csv(overall_scores_file, index=False, header=None)
+
+    # Wait so as not to get a connection error
+    time.sleep(5)
 
     # Use run_projections to determine whether to run projections or not
     if run_projections == 1:
