@@ -154,6 +154,7 @@ def main():
         # Apply styles to the DataFrame
         styled_df = detailed_league_table.style.set_properties(**{'text-align': 'right'}).hide(axis='index')
         styled_df = styled_df.set_properties(subset=['Team'], **{'text-align': 'left'})
+        styled_df = styled_df.bar(subset=['Points'], color='#87CEEB', vmin=0)
 
         # Convert styled DataFrame to HTML
         html = styled_df.to_html(escape=False)
@@ -461,60 +462,67 @@ def main():
             st.write('<br>', unsafe_allow_html=True)
             st.write('<br>', unsafe_allow_html=True)
 
-        # Convert the "Match Week" column to integers
-        simulated_fixtures['Match Week'] = simulated_fixtures['Match Week'].astype(int)
+        if simulated_fixtures.empty:
+            st.write("No more remaining fixtures!")
+        else:
+            # Convert the "Match Week" column to integers
+            simulated_fixtures['Match Week'] = simulated_fixtures['Match Week'].astype(int)
 
-        # Adjust the "Date" column format
-        simulated_fixtures['Date'] = pd.to_datetime(simulated_fixtures['Date']).dt.date
+            # Adjust the "Date" column format
+            simulated_fixtures['Date'] = pd.to_datetime(simulated_fixtures['Date']).dt.date
 
-        # Rename columns
-        simulated_fixtures = simulated_fixtures.rename(columns={
-            "Avg Simulated Home Points": "Proj. Home Pts",
-            "Avg Simulated Away Points": "Proj. Away Pts"
-        })
+            # Rename columns
+            simulated_fixtures = simulated_fixtures.rename(columns={
+                "Avg Simulated Home Points": "Proj. Home Pts",
+                "Avg Simulated Away Points": "Proj. Away Pts"
+            })
 
-        # Round values in simulated_fixtures DataFrame except for "Match Week"
-        numeric_cols_simulated_fixtures = simulated_fixtures.select_dtypes(include=['float', 'int']).columns.drop(
-            'Match Week')
-        simulated_fixtures[numeric_cols_simulated_fixtures] = simulated_fixtures[
-            numeric_cols_simulated_fixtures].map(lambda x: f'{x:.2f}')
+            # Round values in simulated_fixtures DataFrame except for "Match Week"
+            numeric_cols_simulated_fixtures = simulated_fixtures.select_dtypes(include=['float', 'int']).columns.drop(
+                'Match Week')
+            simulated_fixtures[numeric_cols_simulated_fixtures] = simulated_fixtures[
+                numeric_cols_simulated_fixtures].map(lambda x: f'{x:.2f}')
 
-        # Ensure the columns are numeric for vmin and vmax calculation
-        simulated_fixtures_numeric = simulated_fixtures.copy()
-        simulated_fixtures_numeric[numeric_cols_simulated_fixtures] = simulated_fixtures_numeric[
-            numeric_cols_simulated_fixtures].apply(pd.to_numeric, errors='coerce')
+            # Ensure the columns are numeric for vmin and vmax calculation
+            simulated_fixtures_numeric = simulated_fixtures.copy()
+            simulated_fixtures_numeric[numeric_cols_simulated_fixtures] = simulated_fixtures_numeric[
+                numeric_cols_simulated_fixtures].apply(pd.to_numeric, errors='coerce')
 
-        # Get the range of match weeks
-        min_week = simulated_fixtures_numeric['Match Week'].min()
-        max_week = simulated_fixtures_numeric['Match Week'].max()
+            # Get the range of match weeks
+            min_week = simulated_fixtures_numeric['Match Week'].min()
+            max_week = simulated_fixtures_numeric['Match Week'].max()
 
-        # Create a slider for match weeks
-        col1, col2 = st.columns([1, 2])  # Adjust the ratio as needed
-        with col1:
-            selected_week = st.slider("**Select Match Week:**", min_week, max_week, value=min_week, step=1)
+            # Create columns for the slider or display the week directly if only one is available
+            col1, col2 = st.columns([1, 2])  # Adjust the ratio as needed
+            with col1:
+                if min_week < max_week:
+                    selected_week = st.slider("**Select Match Week:**", min_week, max_week, value=min_week, step=1)
+                else:
+                    selected_week = min_week
+                    st.write(f"**Match Week:** {selected_week}")  # Display the week directly without a slider
 
-        # Filter the fixtures based on the selected match week
-        filtered_fixtures = simulated_fixtures_numeric[simulated_fixtures_numeric["Match Week"] == selected_week]
+            # Filter the fixtures based on the selected match week
+            filtered_fixtures = simulated_fixtures_numeric[simulated_fixtures_numeric["Match Week"] == selected_week]
 
-        # Determine the range for the colormap
-        vmin = filtered_fixtures[["Proj. Home Pts", "Proj. Away Pts"]].min().min()
-        vmax = filtered_fixtures[["Proj. Home Pts", "Proj. Away Pts"]].max().max()
+            # Determine the range for the colormap
+            vmin = filtered_fixtures[["Proj. Home Pts", "Proj. Away Pts"]].min().min()
+            vmax = filtered_fixtures[["Proj. Home Pts", "Proj. Away Pts"]].max().max()
 
-        # Apply styling to the filtered DataFrame
-        styled_filtered_fixtures = (
-            filtered_fixtures.style.background_gradient(
-                cmap='Blues',
-                vmin=vmin,
-                vmax=vmax,
-                subset=numeric_cols_simulated_fixtures)
-            .set_properties(subset=numeric_cols_simulated_fixtures, **{'text-align': 'right'})
-            .format("{:.2f}", subset=["Proj. Home Pts", "Proj. Away Pts"])
-            .hide(axis='index'))
+            # Apply styling to the filtered DataFrame
+            styled_filtered_fixtures = (
+                filtered_fixtures.style.background_gradient(
+                    cmap='Blues',
+                    vmin=vmin,
+                    vmax=vmax,
+                    subset=numeric_cols_simulated_fixtures)
+                .set_properties(subset=['Match Week', 'Proj. Home Pts', 'Proj. Away Pts'], **{'text-align': 'right'})
+                .format("{:.2f}", subset=["Proj. Home Pts", "Proj. Away Pts"])
+                .hide(axis='index'))
 
-        # Display the styled DataFrame in Streamlit
-        # st.write('<br>', unsafe_allow_html=True)
-        st.subheader(f"Projected Fixtures for Match Week {selected_week}:")
-        st.write(styled_filtered_fixtures.to_html(escape=False), unsafe_allow_html=True)
+            # Display the styled DataFrame in Streamlit
+            # st.write('<br>', unsafe_allow_html=True)
+            st.subheader(f"Projected Fixtures for Match Week {selected_week}:")
+            st.write(styled_filtered_fixtures.to_html(escape=False), unsafe_allow_html=True)
 
         if not simulated_table.empty:
             # Line break and subheader

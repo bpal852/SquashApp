@@ -652,8 +652,7 @@ def scrape_ranking_page(league_id, year):
     # Convert 'Total Game Points' to float first, then to int
     df['Total Game Points'] = df['Total Game Points'].astype(float).astype(int)
 
-    # Convert the other columns
-    df['Position'] = df['Position'].astype(int)
+    # Convert the other columns except Position
     df['Games Played'] = df['Games Played'].astype(int)
     df['Won'] = df['Won'].astype(int)
     df['Lost'] = df['Lost'].astype(int)
@@ -663,6 +662,8 @@ def scrape_ranking_page(league_id, year):
 
     # Create Win Percentage column
     df["Win Percentage"] = df["Won"] / df["Games Played"]
+
+    ranking_df_filtered = df[df["Games Played"] >= 5]
 
     # Creating the summarized DataFrame
     teams = df['Team'].unique()
@@ -675,16 +676,17 @@ def scrape_ranking_page(league_id, year):
 
     for team in teams:
         summary_data['Team'].append(team)
-        summary_data['Most Games'].append(find_max_players(df, team, 'Games Played'))
-        summary_data['Most Wins'].append(find_max_players(df, team, 'Won'))
-        summary_data['Highest Win Percentage'].append(find_max_win_percentage(df, team))
+        summary_data['Most Games'].append(find_max_players(ranking_df_filtered, team, 'Games Played'))
+        summary_data['Most Wins'].append(find_max_players(ranking_df_filtered, team, 'Won'))
+        summary_data['Highest Win Percentage'].append(find_max_win_percentage(ranking_df_filtered, team))
 
     summarized_df = pd.DataFrame(summary_data).sort_values("Team")
 
     # Get list of unbeaten players
-    unbeaten_list = df[df["Lost"] == 0].apply(lambda row: f"{row['Name of Player']} ({row['Team']})", axis=1).tolist()
+    unbeaten_list = ranking_df_filtered[
+        ranking_df_filtered["Lost"] == 0].apply(lambda row: f"{row['Name of Player']} ({row['Team']})", axis=1).tolist()
 
-    return df, summarized_df, unbeaten_list
+    return df, summarized_df, unbeaten_list, ranking_df_filtered
 
 
 # Change dictionary if you want specific week
@@ -693,18 +695,26 @@ for div in saturday.keys():
 
     # Scrape Team Summary page
     summary_df = scrape_team_summary_page(league_id, year)
+    summary_df.to_csv(f"summary_df/{div}_summary_df.csv")
+    time.sleep(10)
 
     # Scrape Teams page
     teams_df = scrape_teams_page(league_id, year)
+    teams_df.to_csv(f"teams_df/{div}_teams_df.csv")
+    time.sleep(10)
 
     # Scrape Schedules and Results page
     schedules_df = scrape_schedules_and_results_page(league_id, year)
+    schedules_df.to_csv(f"schedules_df/{div}_schedules_df.csv")
+    time.sleep(10)
 
     # Scrape Ranking page and create summarized_df
-    ranking_df, summarized_df, unbeaten_list = scrape_ranking_page(league_id, year)
+    ranking_df, summarized_df, unbeaten_list, ranking_df_filtered = scrape_ranking_page(league_id, year)
+    ranking_df.to_csv(f"ranking_df/{div}_ranking_df.csv")
+    time.sleep(10)
 
     # Get list of players who have played every possible game
-    merged_ranking_df = ranking_df.merge(summary_df[["Team", "Played"]], on="Team", how="inner")
+    merged_ranking_df = ranking_df_filtered.merge(summary_df[["Team", "Played"]], on="Team", how="inner")
     merged_ranking_df = merged_ranking_df.rename(columns={"Played": "Team Games Played"})
     merged_ranking_df["Team Games Played"] = merged_ranking_df["Team Games Played"].astype(int)
     played_every_game_list = merged_ranking_df[
@@ -1130,7 +1140,7 @@ for div in saturday.keys():
     overall_scores_df.to_csv(overall_scores_file, index=False, header=None)
 
     # Wait so as not to get a connection error
-    time.sleep(5)
+    time.sleep(10)
 
     # Use run_projections to determine whether to run projections or not
     if run_projections == 1:
