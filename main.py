@@ -18,7 +18,7 @@ year = "2023-2024"
 home_advantage_factor = 0.06
 unpredictability_factor = 0.1  # Adjust this value as needed
 num_simulations = 5000
-run_projections = 1  # toggle 1/0 to run projections
+run_projections = 0  # toggle 1/0 to run projections
 
 # Inputs
 divisions = {
@@ -623,12 +623,6 @@ def scrape_ranking_page(league_id, year):
 
     for row in ranking_rows:
         columns = row.find_all("div", recursive=False)
-
-        # Check if the first column (position) is numeric, if not break the loop
-        first_col_text = columns[0].text.strip()
-        if not first_col_text.isnumeric():
-            break
-
         row_data = [col.text.strip() for col in columns]
         ranking_data_rows.append(row_data)
 
@@ -647,12 +641,16 @@ def scrape_ranking_page(league_id, year):
     # Adding the extracted division number as a new column to the DataFrame
     df['Division'] = division_number
 
+    # Replace empty values with zero
+    df["Average Points"] = df["Average Points"].replace('', 0)
+    df["Total Game Points"] = df["Total Game Points"].replace('', 0)
+
     # Convert columns to floats and integers
 
     # Convert 'Total Game Points' to float first, then to int
     df['Total Game Points'] = df['Total Game Points'].astype(float).astype(int)
 
-    # Convert the other columns except Position
+    # Convert the other columns to integer except Position
     df['Games Played'] = df['Games Played'].astype(int)
     df['Won'] = df['Won'].astype(int)
     df['Lost'] = df['Lost'].astype(int)
@@ -663,6 +661,7 @@ def scrape_ranking_page(league_id, year):
     # Create Win Percentage column
     df["Win Percentage"] = df["Won"] / df["Games Played"]
 
+    # Create filtered dataframe
     ranking_df_filtered = df[df["Games Played"] >= 5]
 
     # Creating the summarized DataFrame
@@ -690,7 +689,7 @@ def scrape_ranking_page(league_id, year):
 
 
 # Change dictionary if you want specific week
-for div in saturday.keys():
+for div in divisions.keys():
     league_id = f"D00{divisions[div]}"
 
     # Scrape Team Summary page
