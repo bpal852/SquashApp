@@ -99,10 +99,12 @@ def load_player_rankings():
     """
 
     files = glob.glob('C:/Users/bpali/PycharmProjects/SquashApp/ranking_df/*')
+    print(f"Found files: {files}")  # Debugging: Check if files are being detected
 
     dataframes = []
     for file in files:
         df = pd.read_csv(file)
+        print(f"Loaded DataFrame with shape {df.shape} from {file}")  # Debugging: Confirm each DataFrame is loaded
         dataframes.append(df)
 
     all_rankings_df = pd.concat(dataframes)
