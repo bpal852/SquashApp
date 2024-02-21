@@ -18,7 +18,7 @@ year = "2023-2024"
 home_advantage_factor = 0.06
 unpredictability_factor = 0.1  # Adjust this value as needed
 num_simulations = 5000
-run_projections = 0  # toggle 1/0 to run projections
+run_projections = 1  # toggle 1/0 to run projections
 
 # Inputs
 divisions = {
@@ -689,27 +689,27 @@ def scrape_ranking_page(league_id, year):
 
 
 # Change dictionary if you want specific week
-for div in divisions.keys():
+for div in monday.keys():
     league_id = f"D00{divisions[div]}"
 
     # Scrape Team Summary page
     summary_df = scrape_team_summary_page(league_id, year)
-    summary_df.to_csv(f"summary_df/{div}_summary_df.csv")
+    summary_df.to_csv(f"summary_df/{div}_summary_df.csv", index=False)
     time.sleep(10)
 
     # Scrape Teams page
     teams_df = scrape_teams_page(league_id, year)
-    teams_df.to_csv(f"teams_df/{div}_teams_df.csv")
+    teams_df.to_csv(f"teams_df/{div}_teams_df.csv", index=False)
     time.sleep(10)
 
     # Scrape Schedules and Results page
     schedules_df = scrape_schedules_and_results_page(league_id, year)
-    schedules_df.to_csv(f"schedules_df/{div}_schedules_df.csv")
+    schedules_df.to_csv(f"schedules_df/{div}_schedules_df.csv", index=False)
     time.sleep(10)
 
     # Scrape Ranking page and create summarized_df
     ranking_df, summarized_df, unbeaten_list, ranking_df_filtered = scrape_ranking_page(league_id, year)
-    ranking_df.to_csv(f"ranking_df/{div}_ranking_df.csv")
+    ranking_df.to_csv(f"ranking_df/{div}_ranking_df.csv", index=False)
     time.sleep(10)
 
     # Get list of players who have played every possible game
