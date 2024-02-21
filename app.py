@@ -5,6 +5,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import re
+import glob
 
 st.set_page_config(
     page_title="HK Squash App",
@@ -92,25 +93,78 @@ def load_txts(division):
     return unbeaten_players, played_every_game
 
 
+def load_player_rankings():
+    """
+    Function to load player rankings CSVs and add club information
+    """
+
+    files = glob.glob('C:/Users/bpali/PycharmProjects/SquashApp/ranking_df/*')
+
+    dataframes = []
+    for file in files:
+        df = pd.read_csv(file)
+        dataframes.append(df)
+
+    all_rankings_df = pd.concat(dataframes)
+
+    # List of clubs
+    clubs = [
+        "Hong Kong Cricket Club", "Hong Kong Football Club", "Kowloon Cricket Club",
+        "Ladies Recreation Club", "Royal Hong Kong Yacht Club", "United Services Recreation Club",
+        "Fusion Squash Club", "Sha Tin Squash Rackets Club", "X-Alpha", "TNG", "RELAY", "YLJR",
+        "i-Mask Advance Squash Club", "Vitality Squash", "Twister", "Friend Club",
+        "North District Sports Association", "Physical Chess", "Electrify Squash", "Global Squash",
+        "Squashathon", "Hong Kong Racketlon Association", "The Squash Club", "Happy Squash",
+        "Star River", "Kinetic", "Smart Squash", "The Hong Kong Jockey Club", "Young Player",
+        "Hong Kong Club", "8 Virtues"
+    ]
+
+    def determine_club(team_name):
+        """
+        Function to create club column from team name
+        """
+        # Check for the specific case
+        if team_name == "FC 3":
+            return "Friend Club"
+
+        # Existing logic for other cases
+        for club in clubs:
+            if club.lower() in team_name.lower():
+                return club
+        return team_name
+
+    # Apply the function to the 'Team' column
+    all_rankings_df['Club'] = all_rankings_df['Team'].apply(determine_club)
+
+    return all_rankings_df
+
+
 def main():
     st.title("HK Squash League App")
 
     with st.sidebar:
-        division = st.selectbox("**Select a Division:**", list(divisions.keys()))
+        division_selection = st.radio("**Select View**:", ["Select a Division", "All Divisions"])
+        division = None  # Initialize division
 
-        sections = [
-            "Detailed Division Table",
-            "Home/Away Splits",
-            "Player Stats",
-            "Projections",
-            "Rubber Win Percentage"
-        ]
+        if division_selection == "Select a Division":
+            division = st.selectbox("**Select a Division:**", list(divisions.keys()))
+            sections = [
+                "Detailed Division Table",
+                "Home/Away Splits",
+                "Division Player Stats",
+                "Projections",
+                "Rubber Win Percentage"
+            ]
+        else:
+            division = "All"  # Handle the "All Divisions" case
+            sections = [
+                "Player Info"
+            ]
 
         sections_box = st.selectbox("**Select a section:**", sections)
 
         about = st.expander("**About**")
-        about.write(
-            """The aim of this application is to take publicly available data from 
+        about.write("""The aim of this application is to take publicly available data from 
             [hksquash.org.hk](https://www.hksquash.org.hk/public/index.php/leagues/index/league/Squash/pages_id/25.html)
             and provide insights to players and convenors involved in the Hong Kong Squash League.
             \nThis application is not affiliated with the Squash Association of Hong Kong, China.""")
@@ -118,14 +172,23 @@ def main():
         contact = st.expander("**Contact**")
         contact.write("For any queries, email bpalitherland@gmail.com")
 
-    if 'data_loaded' not in st.session_state or st.session_state['current_division'] != division:
-        # Load data and store in session state
-        st.session_state['data'] = load_csvs(division)
-        st.session_state['data_loaded'] = True
-        st.session_state['current_division'] = division
+    # Only attempt to load division-specific data if a specific division is selected
+    if division != "All":
+        if 'data_loaded' not in st.session_state or st.session_state.get('current_division') != division:
+            # Load CSVs and store in session state for a specific division
+            st.session_state['data'] = load_csvs(division)
+            st.session_state['data_loaded'] = True
+            st.session_state['current_division'] = division
 
-    # Load TXTs
-    unbeaten_players, played_every_game = load_txts(division)
+        # Load TXTs only for a specific division
+        unbeaten_players, played_every_game = load_txts(division)
+        # Additional processing for a specific division goes here
+
+    else:
+        # Handle the "All Divisions" case separately
+        # Load all_rankings_df
+        all_rankings_df = load_player_rankings()
+        pass
 
     # Retrieve data from session state
     simulated_table, simulated_fixtures, home_away_df, team_win_breakdown_overall, team_win_breakdown_home, \
@@ -585,7 +648,7 @@ def main():
                      fixtures 5,000 times.  \nFixtures are simulated using teams' average rubber win percentage, \
                      factoring in home advantage.")
 
-    elif sections_box == "Player Stats":
+    elif sections_box == "Division Player Stats":
 
         # Function to extract names from the cell
         def extract_names(cell_value):
@@ -660,7 +723,88 @@ def main():
         # st.write('<br>', unsafe_allow_html=True)
         st.write("**Note:** Players must have played 5+ games to qualify.")
 
+    elif sections_box == "Player Info":
 
+        aggregated_df = all_rankings_df.groupby(['Name of Player', 'Club']).agg({
+            'Division': lambda x: ', '.join(sorted(set(str(d) for d in x))),  # Aggregate divisions
+            'Average Points': 'mean',  # Calculate the mean of average points
+            'Total Game Points': 'sum',  # Sum of total game points
+            'Games Played': 'sum',  # Sum of games played
+            'Won': 'sum',  # Sum of games won
+            'Lost': 'sum',  # Sum of games lost
+        }).reset_index()
+
+        # Calculate Win Percentage
+        aggregated_df['Win Percentage'] = aggregated_df.apply(
+            lambda x: (x['Won'] / x['Games Played']) * 100 if x['Games Played'] > 0 else 0, axis=1)
+
+        aggregated_df_reduced = aggregated_df[[
+            "Name of Player", "Club", "Division", "Games Played", "Won", "Lost", "Win Percentage"]
+        ]
+
+        aggregated_df_reduced = aggregated_df_reduced.rename(columns={"Name of Player": "Player",
+                                                                      "Games Played": "Games",
+                                                                      "Win Percentage": "Win %"})
+
+        # List of clubs
+        clubs = ["Overall"] + sorted([
+            "Hong Kong Cricket Club", "Hong Kong Football Club", "Kowloon Cricket Club",
+            "Ladies Recreation Club", "Royal Hong Kong Yacht Club", "United Services Recreation Club",
+            "Fusion Squash Club", "Sha Tin Squash Rackets Club", "X-Alpha", "TNG", "RELAY", "YLJR",
+            "i-Mask Advance Squash Club", "Vitality Squash", "Twister", "Friend Club",
+            "North District Sports Association", "Physical Chess", "Electrify Squash", "Global Squash",
+            "Squashathon", "Hong Kong Racketlon Association", "The Squash Club", "Happy Squash",
+            "Star River", "Kinetic", "Smart Squash", "The Hong Kong Jockey Club", "Young Player",
+            "Hong Kong Club", "8 Virtues"
+        ])
+
+        # Title
+        st.title("**Player Rankings**")
+
+        # Line break
+        st.write('<br>', unsafe_allow_html=True)
+
+        # Adjust the fractions to control the width of each column
+        col1, col2 = st.columns([1, 3])
+
+        # Find the index for "Hong Kong Cricket Club"
+        default_club_index = clubs.index("Hong Kong Cricket Club")
+
+        # Plotting the chart in the first column
+        with col1:
+            club = st.selectbox("**Select club:**", clubs, index=default_club_index)
+
+        # Sort functionality
+        with col1:
+            sort_column = st.selectbox("**Sort by:**", aggregated_df_reduced.columns,
+                                       index=aggregated_df_reduced.columns.get_loc("Games"))
+        sort_order = st.radio("**Sort order**", ["Ascending", "Descending"], index=1)
+
+        # Sort the DataFrame based on user selection
+        if sort_order == "Ascending":
+            sorted_df = aggregated_df_reduced.sort_values(by=sort_column, ascending=True)
+        else:
+            sorted_df = aggregated_df_reduced.sort_values(by=sort_column, ascending=False)
+
+        # If a specific club is selected (not "Overall"), filter the DataFrame by that club
+        if club != "Overall":
+            sorted_df = sorted_df[sorted_df["Club"] == club]
+            # Drop Club column
+            sorted_df = sorted_df.drop(columns='Club')
+
+        sorted_df = sorted_df.style.set_properties(
+            subset=['Player', "Division"], **{'text-align': 'left'}).hide(axis="index")
+        sorted_df = sorted_df.set_properties(subset=['Games', "Won", "Lost", "Win %"], **{'text-align': 'right'})
+        sorted_df = sorted_df.format("{:.1f}", subset=["Win %"])
+
+        # Convert DataFrame to HTML, hide the index, and apply minimal styling for spacing
+        html = sorted_df.to_html()
+
+        # Line break
+        st.write('<br>', unsafe_allow_html=True)
+
+        # Display the sorted DataFrame
+        st.write(html, unsafe_allow_html=True)
 
 
 def generate_styled_html(df, numeric_cols, blues_cols, orrd_cols):
