@@ -18,7 +18,7 @@ year = "2023-2024"
 home_advantage_factor = 0.06
 unpredictability_factor = 0.1  # Adjust this value as needed
 num_simulations = 5000
-run_projections = 0  # toggle 1/0 to run projections
+run_projections = 1  # toggle 1/0 to run projections
 
 # Inputs
 divisions = {
