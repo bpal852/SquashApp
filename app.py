@@ -746,6 +746,43 @@ def main():
                                                                       "Games Played": "Games",
                                                                       "Win Percentage": "Win %"})
 
+
+        def aggregate_club(x):
+            """
+            Function to aggregate clubs in Club column
+            """
+            unique_clubs = x.unique()
+            if len(unique_clubs) == 1:  # If only one unique club
+                return unique_clubs[0]
+            else:
+                return ', '.join(sorted(unique_clubs))  # Join multiple club names with commas
+
+        # Adjusted DataFrame aggregation
+        aggregated_overall_df = all_rankings_df.groupby('Name of Player').agg({
+            'Club': aggregate_club,  # Use the custom aggregation for clubs
+            'Division': lambda x: ', '.join(sorted(set(x.astype(str)))),  # Aggregate divisions
+            'Average Points': 'mean',  # Calculate the mean of average points
+            'Total Game Points': 'sum',  # Sum of total game points
+            'Games Played': 'sum',  # Sum of games played
+            'Won': 'sum',  # Sum of games won
+            'Lost': 'sum',  # Sum of games lost
+        }).reset_index()
+
+        # Calculate Win Percentage
+        aggregated_overall_df['Win Percentage'] = aggregated_overall_df.apply(
+            lambda x: (x['Won'] / x['Games Played']) * 100 if x['Games Played'] > 0 else 0, axis=1)
+
+        # Optionally, sort the DataFrame based on a column like "Games Played"
+        aggregated_overall_df = aggregated_overall_df.sort_values("Games Played", ascending=False)
+
+        aggregated_overall_df = aggregated_overall_df[[
+            "Name of Player", "Club", "Division", "Games Played", "Won", "Lost", "Win Percentage"]
+        ]
+
+        aggregated_overall_df = aggregated_overall_df.rename(columns={"Name of Player": "Player",
+                                                                      "Games Played": "Games",
+                                                                      "Win Percentage": "Win %"})
+
         # List of clubs
         clubs = ["Overall"] + sorted([
             "Hong Kong Cricket Club", "Hong Kong Football Club", "Kowloon Cricket Club",
@@ -780,17 +817,19 @@ def main():
                                        index=aggregated_df_reduced.columns.get_loc("Games"))
         sort_order = st.radio("**Sort order**", ["Ascending", "Descending"], index=1)
 
-        # Sort the DataFrame based on user selection
-        if sort_order == "Ascending":
-            sorted_df = aggregated_df_reduced.sort_values(by=sort_column, ascending=True)
-        else:
-            sorted_df = aggregated_df_reduced.sort_values(by=sort_column, ascending=False)
-
         # If a specific club is selected (not "Overall"), filter the DataFrame by that club
         if club != "Overall":
-            sorted_df = sorted_df[sorted_df["Club"] == club]
+            sorted_df = aggregated_df_reduced[aggregated_df_reduced["Club"] == club]
             # Drop Club column
             sorted_df = sorted_df.drop(columns='Club')
+        else:
+            sorted_df = aggregated_overall_df
+
+        # Sort the DataFrame based on user selection
+        if sort_order == "Ascending":
+            sorted_df = sorted_df.sort_values(by=sort_column, ascending=True)
+        else:
+            sorted_df = sorted_df.sort_values(by=sort_column, ascending=False)
 
         sorted_df = sorted_df.style.set_properties(
             subset=['Player', "Division"], **{'text-align': 'left'}).hide(axis="index")
