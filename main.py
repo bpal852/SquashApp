@@ -689,7 +689,7 @@ def scrape_ranking_page(league_id, year):
 
 
 # Change dictionary if you want specific week
-for div in friday.keys():
+for div in saturday.keys():
     league_id = f"D00{divisions[div]}"
 
     # Scrape Team Summary page
