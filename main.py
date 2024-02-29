@@ -689,7 +689,7 @@ def scrape_ranking_page(league_id, year):
 
 
 # Change dictionary if you want specific week
-for div in monday.keys():
+for div in tuesday.keys():
     league_id = f"D00{divisions[div]}"
 
     # Scrape Team Summary page
@@ -1139,7 +1139,7 @@ for div in monday.keys():
     overall_scores_df.to_csv(overall_scores_file, index=False, header=None)
 
     # Wait so as not to get a connection error
-    time.sleep(10)
+    time.sleep(15)
 
     # Use run_projections to determine whether to run projections or not
     if run_projections == 1:
