@@ -18,7 +18,7 @@ year = "2023-2024"
 home_advantage_factor = 0.06
 unpredictability_factor = 0.1  # Adjust this value as needed
 num_simulations = 5000
-run_projections = 1  # toggle 1/0 to run projections
+run_projections = 0  # toggle 1/0 to run projections
 
 # Inputs
 divisions = {
@@ -101,6 +101,14 @@ weekend = {
     "L3": 404,
     "18": 397,
     "19": 398
+}
+
+remaining = {
+    "M2": 400,
+    "M3": 401,
+    "L1": 402,
+    "L2": 403,
+    "L3": 404
 }
 
 
@@ -688,8 +696,56 @@ def scrape_ranking_page(league_id, year):
     return df, summarized_df, unbeaten_list, ranking_df_filtered
 
 
+def scrape_players_page(league_id, year):
+    players_url = (f"https://www.hksquash.org.hk/public/index.php/"
+                   f"leagues/players/id/{league_id}/league/Squash/year/{year}/pages_id/25.html")
+    response = requests.get(players_url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+
+    # Dictionary to store the dataframes
+    team_dataframes = []
+
+    # Loop through each team's container
+    for team_container in soup.find_all("div", class_="players-container"):
+        # Extract team name
+        team_name = team_container.find("div", string="team name:").find_next_sibling().get_text(strip=True)
+
+        # Initialize a list to store each player's data for this team
+        players_data = []
+
+        # Extract player data
+        for player in team_container.find_all("div", class_="players-content-list"):
+            # Retrieve data from both 'col-xs-2' and 'col-xs-4' classes
+            order_rank_points = [div.get_text(strip=True) for div in player.find_all("div", class_="col-xs-2")]
+            player_name = [div.get_text(strip=True) for div in player.find_all("div", class_="col-xs-4")]
+            player_data = order_rank_points[:1] + player_name + order_rank_points[1:]
+            players_data.append(player_data)
+
+        # Create DataFrame
+        df = pd.DataFrame(players_data, columns=["Order", "Name of Players", "HKS No.", "Ranking", "Points"])
+
+        # Convert columns to the correct data types
+        df['Order'] = pd.to_numeric(df['Order'], errors='coerce').fillna(0).astype(int)
+        df['HKS No.'] = pd.to_numeric(df['HKS No.'], errors='coerce').fillna(0).astype(int)
+        df['Ranking'] = pd.to_numeric(df['Ranking'], errors='coerce').fillna(0).astype(int)
+        df['Points'] = pd.to_numeric(df['Points'], errors='coerce').fillna(0.0).astype(float)
+        df['Team'] = team_name
+
+        # Rename column
+        df = df.rename(columns={"Name of Players": "Player"})
+
+        # Add dataframe to dictionary
+        team_dataframes.append(df)
+
+        time.sleep(5)
+
+    df = pd.concat(team_dataframes)
+
+    return df
+
+
 # Change dictionary if you want specific week
-for div in tuesday.keys():
+for div in remaining.keys():
     league_id = f"D00{divisions[div]}"
 
     # Scrape Team Summary page
@@ -710,6 +766,11 @@ for div in tuesday.keys():
     # Scrape Ranking page and create summarized_df
     ranking_df, summarized_df, unbeaten_list, ranking_df_filtered = scrape_ranking_page(league_id, year)
     ranking_df.to_csv(f"ranking_df/{div}_ranking_df.csv", index=False)
+    time.sleep(10)
+
+    # Scrape Players page
+    players_df = scrape_players_page(league_id, year)
+    players_df.to_csv(f"players_df/{div}_players_df.csv", index=False)
     time.sleep(10)
 
     # Get list of players who have played every possible game
