@@ -16,7 +16,7 @@ year = "2023-2024"
 
 # League Simulation
 home_advantage_factor = 0.06
-unpredictability_factor = 0.1  # Adjust this value as needed
+unpredictability_factor = 0.05  # Adjust this value as needed
 num_simulations = 5000
 run_projections = 0  # toggle 1/0 to run projections
 
