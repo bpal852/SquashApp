@@ -10,14 +10,12 @@ import time
 from datetime import datetime
 import os
 
-pd.set_option("display.max_columns", None)
-
 year = "2023-2024"
 
 # League Simulation
 home_advantage_factor = 0.06
-unpredictability_factor = 0.05  # Adjust this value as needed
-num_simulations = 5000
+unpredictability_factor = 0.01  # Adjust this value as needed
+num_simulations = 9999
 run_projections = 1  # toggle 1/0 to run projections
 
 # Inputs
@@ -101,14 +99,6 @@ weekend = {
     "L3": 404,
     "18": 397,
     "19": 398
-}
-
-remaining = {
-    "M2": 400,
-    "M3": 401,
-    "L1": 402,
-    "L2": 403,
-    "L3": 404
 }
 
 
@@ -296,8 +286,8 @@ def simulate_league(df_fixtures, summary_df, num_simulations, max_rubbers, combi
         league_table['Lost'] += league_table['Simulated Lost']
         league_table['Points'] += league_table['Simulated Points']
 
-        # Sort the league table based on 'Simulated Points' and use 'Simulated Won' as a tiebreaker
-        league_table.sort_values(by=['Points', 'Won'], ascending=[False, False], inplace=True)
+        # Sort the league table based on Points, with Won and Rubbers For as tiebreakers
+        league_table.sort_values(by=['Points', 'Won', 'Rubbers For'], ascending=[False, False, False], inplace=True)
         league_table.reset_index(drop=True, inplace=True)
 
         # Track the final position of each team in this simulation
