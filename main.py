@@ -735,7 +735,7 @@ def scrape_players_page(league_id, year):
 
 
 # Change dictionary if you want specific week
-for div in divisions.keys():
+for div in friday.keys():
     league_id = f"D00{divisions[div]}"
 
     # Scrape Team Summary page

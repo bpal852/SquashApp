@@ -659,7 +659,7 @@ def main():
             # Note
             st.write('<br>', unsafe_allow_html=True)
             st.write("**Note:**  \nThe projected final table is the average result of simulating the remaining \
-                     fixtures 5,000 times.  \nFixtures are simulated using teams' average rubber win percentage, \
+                     fixtures 10,000 times.  \nFixtures are simulated using teams' average rubber win percentage, \
                      factoring in home advantage.")
 
     elif sections_box == "Division Player Stats":
@@ -816,9 +816,12 @@ def main():
         # Now calculate 'Win Percentage' outside the aggregation step
         aggregated_df['Win Percentage'] = (aggregated_df['Won'] / aggregated_df['Games Played'] * 100).fillna(0)
 
+        # Create Avg Pts column
+        aggregated_df['Avg Pts'] = (aggregated_df['Total Game Points'] / aggregated_df['Games Played']).fillna(0)
+
         # Continue with your reduced dataframe and further logic
         aggregated_df_reduced = aggregated_df[[
-            "Name of Player", "Club", "Division", "Games Played", "Won", "Lost", "Win Percentage"
+            "Name of Player", "Club", "Division", "Games Played", "Won", "Lost", "Win Percentage", "Avg Pts"
         ]].rename(columns={"Name of Player": "Player", "Games Played": "Games", "Win Percentage": "Win %"})
 
         # Sort functionality
@@ -847,8 +850,10 @@ def main():
         # Apply styles and formatting to sorted_df
         sorted_df = sorted_df.style.set_properties(
             subset=['Player', "Division"], **{'text-align': 'left'}).hide(axis="index")
-        sorted_df = sorted_df.set_properties(subset=['Games', "Won", "Lost", "Win %"], **{'text-align': 'right'})
-        sorted_df = sorted_df.format("{:.1f}", subset=["Win %"])
+        sorted_df = sorted_df.set_properties(
+            subset=['Games', "Won", "Lost", "Win %", "Avg Pts"], **{'text-align': 'right'}
+        )
+        sorted_df = sorted_df.format("{:.1f}", subset=["Win %", "Avg Pts"])
 
         # Convert DataFrame to HTML, hide the index, and apply minimal styling for spacing
         html = sorted_df.to_html()
