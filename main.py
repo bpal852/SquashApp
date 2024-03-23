@@ -13,7 +13,7 @@ import os
 year = "2023-2024"
 
 # League Simulation
-home_advantage_factor = 0.06
+home_advantage_factor = 0.05
 unpredictability_factor = 0.01  # Adjust this value as needed
 num_simulations = 9999
 run_projections = 1  # toggle 1/0 to run projections
@@ -735,7 +735,7 @@ def scrape_players_page(league_id, year):
 
 
 # Change dictionary if you want specific week
-for div in friday.keys():
+for div in divisions.keys():
     league_id = f"D00{divisions[div]}"
 
     # Scrape Team Summary page
