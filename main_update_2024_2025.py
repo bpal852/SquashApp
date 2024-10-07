@@ -133,6 +133,10 @@ base_directories = {
 # Ensure the logs directory exists
 os.makedirs(f"{year}/logs", exist_ok=True)
 
+# Clear any existing handlers
+for handler in logging.root.handlers[:]:
+    logging.root.removeHandler(handler)
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -442,9 +446,8 @@ def scrape_team_summary_page(league_id, year):
     logging.info(f"Scraping team summary page for league id: {league_id}, year: {year}...")
     logging.debug(f"Constructed summary URL: {summary_url}")
 
-
     try:
-        # SEnd the HTTP request
+        # Send the HTTP request
         response = requests.get(summary_url)
         logging.debug(f"Received response with status code: {response.status_code}")
 
@@ -480,14 +483,8 @@ def scrape_team_summary_page(league_id, year):
         # Create DataFrame from list of lists
         # Skip the first row as it's the header
         headers = ["Team", "Played", "Won", "Lost", "Points"]
-        if summary_data_rows[0] == headers:
-            data_rows = summary_data_rows[1:]
-            logging.debug("First row detected as header and skipped")
-        else:
-            data_rows = summary_data_rows
-
-        summary_df = pd.DataFrame(data_rows, columns=headers)
-        logging.info("Successfully created summary DataFrame with {len(summary_df)} rows")
+        summary_df = pd.DataFrame(summary_data_rows[1:], columns=headers)
+        logging.info(f"Successfully created summary DataFrame with {len(summary_df)} rows")
 
         # Convert numeric columns to appropriate data types
         summary_df[['Played', 'Won', 'Lost', 'Points']] = summary_df[['Played', 'Won', 'Lost', 'Points']].apply(pd.to_numeric, errors='coerce')
@@ -787,7 +784,7 @@ def find_max_win_percentage(df, team):
 
 def scrape_ranking_page(league_id, year):
     """
-    Function to scrape the Ranking page and process into a dataframe
+    Function to scrape the Ranking page and process it into a DataFrame.
     """
     ranking_url = (
         f"https://www.hksquash.org.hk/public/index.php/leagues/ranking/id/{league_id}/"
@@ -797,107 +794,111 @@ def scrape_ranking_page(league_id, year):
     logging.info(f"Scraping ranking page for league id: {league_id}, year: {year}...")
     logging.debug(f"Constructed ranking URL: {ranking_url}")
 
+    # Send the HTTP request
+    response = requests.get(ranking_url)
+    logging.debug(f"Received response with status code: {response.status_code}")
+
+    # Check if the response is successful
+    if response.status_code != 200:
+        logging.error(f"Failed to retrieve ranking page. Status code: {response.status_code}")
+        raise Exception(f"Failed to retrieve ranking page. Status code: {response.status_code}")
+
+    # Parse the HTML content
+    soup = BeautifulSoup(response.content, 'html.parser')
+    logging.debug("Parsed HTML content with BeautifulSoup")
+
+    # Find the ranking data
+    ranking_rows = soup.find_all("div", class_="clearfix ranking-content-list")
+    logging.debug(f"Found {len(ranking_rows)} ranking rows")
+
+    # Initialize a list to hold all the data rows
+    ranking_data_rows = []
+
+    # Extract the ranking data from the soup
+    for idx, row in enumerate(ranking_rows):
+        columns = row.find_all("div", recursive=False)
+        row_data = [col.text.strip() for col in columns]
+        # Exclude rows that contain "NO DATA" or are empty
+        if "NO DATA" in row_data or not row_data or len(row_data) < 8:
+            logging.debug(f"Skipping row {idx} due to 'NO DATA' or insufficient data: {row_data}")
+            continue
+        ranking_data_rows.append(row_data)
+        logging.debug(f"Extracted data from row {idx}: {row_data}")
+
+    # Check if any data was extracted
+    if not ranking_data_rows:
+        logging.warning("No data rows were extracted from the ranking page.")
+        raise Exception("No data rows were extracted from the ranking page.")
+
+    # Create DataFrame
+    df = pd.DataFrame(ranking_data_rows, columns=['Position', 'Name of Player', 'Team', 'Average Points',
+                                                  'Total Game Points', 'Games Played', 'Won', 'Lost'])
+    logging.info(f"Successfully created ranking DataFrame with {len(df)} rows")
+
+    # Get Division Name and add as a column
     try:
-        # Send the HTTP request
-        response = requests.get(ranking_url)
-        logging.debug(f"Received response with status code: {response.status_code}")
-
-        # Check if the response is successful
-        if response.status_code != 200:
-            logging.error(f"Failed to retrieve ranking page. Status code: {response.status_code}")
-            return pd.DataFrame(), pd.DataFrame(), [], pd.DataFrame()
-        
-        # Parse the HTML content
-        soup = BeautifulSoup(response.content, 'html.parser')
-        logging.debug("Parsed HTML content with BeautifulSoup")
-
-        # Find the ranking data
-        ranking_rows = soup.find_all("div", class_="clearfix ranking-content-list")
-        logging.debug(f"Found {len(ranking_rows)} ranking rows")
-
-        # Initialize a list to hold all the data rows
-        ranking_data_rows = []
-
-        # Extract the ranking data from the soup
-        for idx, row in enumerate(ranking_rows):
-            columns = row.find_all("div", recursive=False)
-            row_data = [col.text.strip() for col in columns]
-            ranking_data_rows.append(row_data)
-            logging.debug(f"Extracted data from row {idx}: {row_data}")
-
-        # Check if any data was extracted
-        if not ranking_data_rows:
-            logging.warning("No data rows were extracted from the ranking page.")
-            return pd.DataFrame(), pd.DataFrame(), [], pd.DataFrame()
-
-        # Create DataFrame
-        df = pd.DataFrame(ranking_data_rows, columns=['Position', 'Name of Player', 'Team', 'Average Points',
-                                                    'Total Game Points', 'Games Played', 'Won', 'Lost'])
-        logging.info(f"Successfully created ranking DataFrame with {len(df)} rows")
-
-        # Get Division Name and add as a column
-        try:
-            full_division_name = soup.find('a', href=lambda href: href and "leagues/detail/id" in href).text.strip()
-            division_number = full_division_name.split("Division ")[-1]
-            df['Division'] = division_number
-            logging.debug(f"Extracted division number: {division_number}")
-        except Exception as e:
-            logging.warning(f"Error extracting division number: {e}")
-            df['Division'] = ''
-
-        # Replace empty values with zero
-        df["Average Points"] = df["Average Points"].replace('', 0)
-        df["Total Game Points"] = df["Total Game Points"].replace('', 0)
-
-        # Convert columns to floats and integers
-
-        # Convert 'Total Game Points' to float first, then to int
-        df['Total Game Points'] = df['Total Game Points'].astype(float).astype(int)
-
-        # Convert the other columns to integer except Position
-        df['Games Played'] = df['Games Played'].astype(int)
-        df['Won'] = df['Won'].astype(int)
-        df['Lost'] = df['Lost'].astype(int)
-
-        # Convert 'Average Points' to float
-        df['Average Points'] = df['Average Points'].astype(float)
-        logging.debug("Converted columns to appropriate data types")
-
-        # Create Win Percentage column
-        df["Win Percentage"] = df["Won"] / df["Games Played"]
-
-        # Create filtered dataframe
-        ranking_df_filtered = df[df["Games Played"] >= 5]
-        logging.info(f"Filtered ranking DataFrame to {len(ranking_df_filtered)} rows with 5 or more games played")
-
-        # Creating the summarized DataFrame
-        teams = df['Team'].unique()
-        summary_data = {
-            'Team': [],
-            'Most Games': [],
-            'Most Wins': [],
-            'Highest Win Percentage': []
-        }
-
-        for team in teams:
-            summary_data['Team'].append(team)
-            summary_data['Most Games'].append(find_max_players(ranking_df_filtered, team, 'Games Played'))
-            summary_data['Most Wins'].append(find_max_players(ranking_df_filtered, team, 'Won'))
-            summary_data['Highest Win Percentage'].append(find_max_win_percentage(ranking_df_filtered, team))
-
-        summarized_df = pd.DataFrame(summary_data).sort_values("Team")
-        logging.info(f"Created summarized DataFrame with {len(summarized_df)} teams")
-
-        # Get list of unbeaten players
-        unbeaten_list = ranking_df_filtered[
-            ranking_df_filtered["Lost"] == 0].apply(lambda row: f"{row['Name of Player']} ({row['Team']})", axis=1).tolist()
-        logging.info(f"Found {len(unbeaten_list)} unbeaten players")
-
-        return df, summarized_df, unbeaten_list, ranking_df_filtered
-    
+        full_division_name = soup.find('a', href=lambda href: href and "leagues/detail/id" in href).text.strip()
+        division_number = full_division_name.split("Division ")[-1]
+        df['Division'] = division_number
+        logging.debug(f"Extracted division number: {division_number}")
     except Exception as e:
-        logging.exception(f"An error occured in scrape_ranking_page: {e}")
-        return pd.DataFrame(), pd.DataFrame(), [], pd.DataFrame()
+        logging.warning(f"Error extracting division number: {e}")
+        df['Division'] = ''
+
+    # Convert columns to numeric types, handling errors
+    numeric_columns = ['Average Points', 'Total Game Points', 'Games Played', 'Won', 'Lost']
+    for col in numeric_columns:
+        df[col] = pd.to_numeric(df[col], errors='coerce')
+
+    # Handle NaN values
+    df['Average Points'] = df['Average Points'].fillna(0.0)
+    df['Total Game Points'] = df['Total Game Points'].fillna(0)
+    df['Games Played'] = df['Games Played'].fillna(0)
+    df['Won'] = df['Won'].fillna(0)
+    df['Lost'] = df['Lost'].fillna(0)
+
+    # Convert to appropriate types
+    df['Total Game Points'] = df['Total Game Points'].astype(int)
+    df['Games Played'] = df['Games Played'].astype(int)
+    df['Won'] = df['Won'].astype(int)
+    df['Lost'] = df['Lost'].astype(int)
+    df['Average Points'] = df['Average Points'].astype(float)
+
+    logging.debug("Converted numeric columns to appropriate data types")
+
+    # Create Win Percentage column, handling division by zero
+    df["Win Percentage"] = df.apply(
+        lambda row: row["Won"] / row["Games Played"] if row["Games Played"] > 0 else 0, axis=1
+    )
+
+    # Create filtered DataFrame
+    ranking_df_filtered = df[df["Games Played"] >= 5]
+    logging.info(f"Filtered ranking DataFrame to {len(ranking_df_filtered)} rows with 5 or more games played")
+
+    # Creating the summarized DataFrame
+    teams = df['Team'].unique()
+    summary_data = {
+        'Team': [],
+        'Most Games': [],
+        'Most Wins': [],
+        'Highest Win Percentage': []
+    }
+
+    for team in teams:
+        summary_data['Team'].append(team)
+        summary_data['Most Games'].append(find_max_players(ranking_df_filtered, team, 'Games Played'))
+        summary_data['Most Wins'].append(find_max_players(ranking_df_filtered, team, 'Won'))
+        summary_data['Highest Win Percentage'].append(find_max_win_percentage(ranking_df_filtered, team))
+
+    summarized_df = pd.DataFrame(summary_data).sort_values("Team")
+    logging.info(f"Created summarized DataFrame with {len(summarized_df)} teams")
+
+    # Get list of unbeaten players
+    unbeaten_list = ranking_df_filtered[
+        ranking_df_filtered["Lost"] == 0].apply(lambda row: f"{row['Name of Player']} ({row['Team']})", axis=1).tolist()
+    logging.info(f"Found {len(unbeaten_list)} unbeaten players")
+
+    return df, summarized_df, unbeaten_list, ranking_df_filtered
 
 
 def scrape_players_page(league_id, year):
@@ -995,7 +996,7 @@ def scrape_players_page(league_id, year):
 logging.info("Starting the scraping process...")
 
 # Change dictionary if you want specific week
-for div in wednesday.keys():
+for div in thursday.keys():
     logging.info(f"Processing Division {div}")
     league_id = f"D00{all_divisions[div]}"
 
@@ -1008,12 +1009,25 @@ for div in wednesday.keys():
         logging.error(f"Error scraping Schedules and Results page for Division {div}: {e}")
         continue
 
-    # Get the latest match week number for which data is available and ensure it is an integer
-    match_week = schedules_df['Match Week'].max()
-    match_week = int(match_week)
+    # Check if the schedules_df is empty
+    if schedules_df.empty:
+        logging.warning(f"No data found in schedules_df for Division {div}. Skipping further processing.")
+        continue
+
+    # Filter schedules_df to only include matches where 'Result' is not empty
+    played_matches_df = schedules_df[schedules_df['Result'].notna() & (schedules_df['Result'] != '')]
+
+    # Check if played_matches_df is empty
+    if played_matches_df.empty:
+        logging.warning(f"No played matches found in schedules_df for Division {div}. Skipping further processing.")
+        match_week = 0
+    else:
+        # Get the latest match week number for which data is available and ensure it is an integer
+        match_week = played_matches_df['Match Week'].max()
+        match_week = int(match_week)
 
     # Create week specific directories
-    week_dir = f"week_{match_week}"
+    week_dir = f"week_{match_week}" if match_week > 0 else "week_0"
 
     # Create directories for each base directory
     for base_dir in base_directories.values():
@@ -1030,7 +1044,6 @@ for div in wednesday.keys():
         logging.info(f"Successfully saved schedules_df to {schedules_df_path}")
     except Exception as e:
         logging.error(f"Error saving schedules_df to {schedules_df_path}: {e}")
-        # no continue, why?
 
     time.sleep(10)
 
@@ -1041,6 +1054,11 @@ for div in wednesday.keys():
         logging.info(f"Successfully scraped Team Summary page for Division {div}")
     except Exception as e:
         logging.error(f"Error scraping Team Summary page for Division {div}: {e}")
+        continue
+
+    # Check if the summary_df is empty
+    if summary_df.empty:
+        logging.warning(f"No data found in summary_df for Division {div}. Skipping further processing.")
         continue
 
     # Save the summary_df to CSV
@@ -1074,14 +1092,15 @@ for div in wednesday.keys():
 
     time.sleep(10)
 
-    # Scrape Ranking page and create summarized_df
+    # Scrape Ranking page
     try:
         logging.info(f"Scraping Ranking page for Division {div}")
         ranking_df, summarized_df, unbeaten_list, ranking_df_filtered = scrape_ranking_page(league_id, year)
         logging.info(f"Successfully scraped Ranking page for Division {div}")
     except Exception as e:
         logging.error(f"Error scraping Ranking page for Division {div}: {e}")
-        continue
+        # Stop execution if an error occurs
+        raise
 
     # Save the ranking_df to CSV
     ranking_df_path = os.path.join(base_directories['ranking_df'], week_dir, f"{div}_ranking_df.csv")
@@ -1115,16 +1134,24 @@ for div in wednesday.keys():
     time.sleep(10)
 
     # Get list of players who have played every possible game
-    merged_ranking_df = ranking_df_filtered.merge(summary_df[["Team", "Played"]], on="Team", how="inner")
-    merged_ranking_df = merged_ranking_df.rename(columns={"Played": "Team Games Played"})
-    merged_ranking_df["Team Games Played"] = merged_ranking_df["Team Games Played"].astype(int)
-    played_every_game_list = merged_ranking_df[
-        (merged_ranking_df["Games Played"] == merged_ranking_df["Team Games Played"])].apply(
-        lambda row: f"{row['Name of Player']} ({row['Team']})", axis=1
-    ).tolist()
+    if not ranking_df_filtered.empty and not summary_df.empty:
+        merged_ranking_df = ranking_df_filtered.merge(summary_df[["Team", "Played"]], on="Team", how="inner")
+        merged_ranking_df = merged_ranking_df.rename(columns={"Played": "Team Games Played"})
+        merged_ranking_df["Team Games Played"] = merged_ranking_df["Team Games Played"].astype(int)
+        played_every_game_list = merged_ranking_df[
+            (merged_ranking_df["Games Played"] == merged_ranking_df["Team Games Played"])].apply(
+            lambda row: f"{row['Name of Player']} ({row['Team']})", axis=1
+        ).tolist()
+    else:
+        logging.warning(f"No ranking data available for Division {div}. Unable to determine players who have played every game.")
+        played_every_game_list = []
+        unbeaten_list = []
 
     # Save summarized player tables to CSV
-    summarized_df.to_csv(os.path.join(base_directories['summarized_player_tables'], week_dir, f"{div}_summarized_players.csv"), index=False)
+    if not summarized_df.empty:
+        summarized_df.to_csv(os.path.join(base_directories['summarized_player_tables'], week_dir, f"{div}_summarized_players.csv"), index=False)
+    else:
+        logging.warning(f"No summarized player data available for Division {div}")
 
     # Save list of unbeaten players
     with open(os.path.join(base_directories['unbeaten_players'], week_dir, f"{div}.txt"), "w") as file:
@@ -1149,6 +1176,11 @@ for div in wednesday.keys():
 
     # Keep rows where 'Result' contains brackets (indicative of a played match)
     results_df = results_df[results_df['Result'].str.contains(r'\(')]
+
+    # Check if the results_df is empty
+    if results_df.empty:
+        logging.warning(f"No data found in results_df for Division {div}. Skipping further processing.")
+        continue
 
     # Apply the function to the 'Result' column
     results_df[['Overall Score', 'Rubbers']] = results_df['Result'].apply(lambda x: pd.Series(parse_result(x)))
@@ -1248,18 +1280,23 @@ for div in wednesday.keys():
         df_remaining_fixtures.apply(lambda row: team_home_venues.get(row["Away Team"]) == row["Venue"], axis=1)].copy()
 
     # Calculate Home vs Away
+    if not results_df.empty:
+        # Apply the function to 'Overall Score' column
+        results_df[['Home Overall Score', 'Away Overall Score']] = results_df['Overall Score'].apply(
+            lambda x: pd.Series(split_overall_score(x)))
 
-    # Apply the function to 'Overall Score' column
-    results_df[['Home Overall Score', 'Away Overall Score']] = results_df['Overall Score'].apply(
-        lambda x: pd.Series(split_overall_score(x)))
+        # Calculate the average score for home and away teams
+        average_home_overall_score = results_df['Home Overall Score'].mean()
+        average_away_overall_score = results_df['Away Overall Score'].mean()
 
-    # Calculate the average score for home and away teams
-    average_home_overall_score = results_df['Home Overall Score'].mean()
-    average_away_overall_score = results_df['Away Overall Score'].mean()
-
-    # Calculate home win percentage
-    home_win_perc = len(
-        results_df[results_df["Home Overall Score"] > results_df["Away Overall Score"]]) / len(results_df)
+        # Calculate home win percentage
+        home_win_perc = len(
+            results_df[results_df["Home Overall Score"] > results_df["Away Overall Score"]]) / len(results_df)
+    else:
+        logging.warning("No results data to calculate home vs away statistics for Division {div}.")
+        average_home_overall_score = 0
+        average_away_overall_score = 0
+        home_win_perc = 0
 
     # Path to the overall scores CSV file (excluding week_dir)
     overall_scores_file = os.path.join(base_directories['home_away_data'], f"{div}_overall_scores.csv")
@@ -1268,7 +1305,8 @@ for div in wednesday.keys():
     if os.path.exists(overall_scores_file):
         overall_scores_df = pd.read_csv(overall_scores_file, header=None)
     else:
-        overall_scores_df = pd.DataFrame()
+        # Create an empty DataFrame with the expected columns
+        overall_scores_df = pd.DataFrame(columns=[0, 1, 2, 3, 4])
 
     # Calculate average home score for each home team
     average_home_scores = results_df.groupby('Home Team')['Home Overall Score'].mean().rename('Average Home Score')
@@ -1279,6 +1317,13 @@ for div in wednesday.keys():
     # Combine the two Series into one DataFrame
     team_average_scores = pd.concat([average_home_scores, average_away_scores], axis=1)
 
+    # Check the index name
+    print("Index name of team_average_scores:", team_average_scores.index.name)
+
+    # Handle missing values by filling NaN with 0 or using appropriate methods
+    team_average_scores['Average Home Score'] = team_average_scores['Average Home Score'].fillna(0)
+    team_average_scores['Average Away Score'] = team_average_scores['Average Away Score'].fillna(0)
+
     # Calculate the difference in home and away scores for each team
     team_average_scores["home_away_diff"] = team_average_scores["Average Home Score"] - team_average_scores[
         "Average Away Score"]
@@ -1287,15 +1332,21 @@ for div in wednesday.keys():
     team_average_scores = team_average_scores.merge(teams_df[["Team Name", "Home"]],
                                                     left_on=team_average_scores.index, right_on="Team Name",
                                                     how="inner")
-
+    
     # Reorganise columns and show teams in order of home/away split
     team_average_scores = team_average_scores[
         ["Team Name", "Home", "Average Home Score", "Average Away Score", "home_away_diff"]
-    ].sort_values("home_away_diff", ascending=False)
+    ]
+
+    # Since 'home_away_diff' may not be meaningful at this point, you can add a check
+    if team_average_scores['home_away_diff'].isnull().all():
+        logging.warning("All 'home_away_diff' values are NaN or zero. Teams may not have played both home and away games yet.")
+    else:
+        # Sort the DataFrame based on 'home_away_diff'
+        team_average_scores.sort_values("home_away_diff", ascending=False, inplace=True)
 
     # Save team_average_scores to csv
     team_average_scores.to_csv(os.path.join(base_directories['home_away_data'], week_dir, f"{div}_team_average_scores.csv"), index=False)
-
 
     # Show home/away split by venue
     venue_split = pd.pivot_table(data=team_average_scores,
@@ -1332,58 +1383,76 @@ for div in wednesday.keys():
     # Initialize an empty list to store the results for each team
     home_results_list = []
 
-    # Iterate through each team in the "Home Team" column
-    for team in valid_matches_df['Home Team'].unique():
-        # Filter for matches where the current team is playing at home
-        team_home_fixtures = valid_matches_df[valid_matches_df['Home Team'] == team]
-
-        # Get counts per team
-        total_home_matches_per_rubber_counts = {f'Rubber {i}': count_valid_matches(team_home_fixtures, i - 1)
-                                                for i in range(1, max_rubbers + 1)}
+    # Check if valid_matches_df is empty
+    if valid_matches_df.empty:
+        logging.warning("No valid matches to process for home win percentages.")
+        # Create an empty DataFrame with the required columns
+        home_results = pd.DataFrame(columns=['Team'] +
+                                [f'Wins in Rubber {i}' for i in range(1, max_rubbers + 1)] +
+                                [f'Rubber {i}' for i in range(1, max_rubbers + 1)] +
+                                [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] +
+                                ['avg_win_perc', 'Total Rubbers'])
         
-        # Extract counts for the specific team
-        total_home_matches_per_rubber = {rubber: counts.get(team, 0) for rubber, counts in total_home_matches_per_rubber_counts.items()}
+    else:
+        # Iterate through each team in the "Home Team" column
+        for team in valid_matches_df['Home Team'].unique():
+            # Filter for matches where the current team is playing at home
+            team_home_fixtures = valid_matches_df[valid_matches_df['Home Team'] == team]
 
-        # Convert the dictionary to a DataFrame
-        total_home_matches_df = pd.DataFrame([total_home_matches_per_rubber], index=[team])
+            # Get counts per team
+            total_home_matches_per_rubber_counts = {f'Rubber {i}': count_valid_matches(team_home_fixtures, i - 1)
+                                                    for i in range(1, max_rubbers + 1)}
+            
+            # Extract counts for the specific team
+            total_home_matches_per_rubber = {rubber: counts.get(team, 0) for rubber, counts in total_home_matches_per_rubber_counts.items()}
 
-        # Calculate total games played by summing all the rubber matches for each team
-        total_rubbers_played = total_home_matches_df.sum(axis=1)
+            # Convert the dictionary to a DataFrame
+            total_home_matches_df = pd.DataFrame([total_home_matches_per_rubber], index=[team])
 
-        # Merge with aggregate wins for the team's home fixtures and calculate win percentages
-        team_combined_home = aggregate_wins_home(
-            team, valid_matches_df
-        ).merge(total_home_matches_df, left_index=True, right_index=True, how='outer')
+            # Calculate total games played by summing all the rubber matches for each team
+            total_rubbers_played = total_home_matches_df.sum(axis=1)
 
-        team_combined_home.fillna(0, inplace=True)
+            # Merge with aggregate wins for the team's home fixtures and calculate win percentages
+            team_combined_home = aggregate_wins_home(
+                team, valid_matches_df
+            ).merge(total_home_matches_df, left_index=True, right_index=True, how='outer')
 
-        for i in range(1, max_rubbers + 1):
-            rubber_column = f'Rubber {i}'
-            team_combined_home[f'{rubber_column} Win %'] = (team_combined_home[f'Wins in {rubber_column}'] /
-                                                            team_combined_home[rubber_column]) * 100
+            team_combined_home.fillna(0, inplace=True)
 
-        team_combined_home.fillna(0, inplace=True)
-        team_combined_home["avg_win_perc"] = team_combined_home[
-            [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)]].mean(axis=1)
+            for i in range(1, max_rubbers + 1):
+                rubber_column = f'Rubber {i}'
+                team_combined_home[f'{rubber_column} Win %'] = (team_combined_home[f'Wins in {rubber_column}'] /
+                                                                team_combined_home[rubber_column]) * 100
 
-        # Add the total rubbers played to the DataFrame
-        team_combined_home["Total Rubbers"] = total_rubbers_played
+            team_combined_home.fillna(0, inplace=True)
+            team_combined_home["avg_win_perc"] = team_combined_home[
+                [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)]].mean(axis=1)
 
-        # Append the team's results to the list
-        home_results_list.append(team_combined_home)
+            # Add the total rubbers played to the DataFrame
+            team_combined_home["Total Rubbers"] = total_rubbers_played
 
-    # Concatenate all team results into a single DataFrame
-    home_results = pd.concat(home_results_list)
+            # Append the team's results to the list
+            home_results_list.append(team_combined_home)
 
-    # Sort and format the DataFrame
-    home_results_sorted = home_results.sort_values("avg_win_perc", ascending=False)
-    home_results_sorted = home_results_sorted.reset_index().rename(columns={'index': 'Team'})
+        # Concatenate all team results into a single DataFrame
+        home_results = pd.concat(home_results_list)
 
-    # Selecting and displaying the required columns
-    keep_columns_home = (
-            ["Team"] + [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] + ['avg_win_perc', "Total Rubbers"]
-    )
-    win_percentage_home_df = home_results_sorted[keep_columns_home]
+    # Check if home_results is empty
+    if home_results.empty:
+        logging.warning("No home results to process.")
+        win_percentage_home_df = pd.DataFrame(columns=['Team'] +
+                                          [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] +
+                                          ['avg_win_perc', 'Total Rubbers'])
+    else:
+        # Sort and format the DataFrame
+        home_results_sorted = home_results.sort_values("avg_win_perc", ascending=False)
+        home_results_sorted = home_results_sorted.reset_index().rename(columns={'index': 'Team'})
+
+        # Selecting and displaying the required columns
+        keep_columns_home = (
+                ["Team"] + [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] + ['avg_win_perc', "Total Rubbers"]
+        )
+        win_percentage_home_df = home_results_sorted[keep_columns_home]
 
     # Save win_percentage_home_df to csv
     win_percentage_home_df.to_csv(os.path.join(base_directories['team_win_percentage_breakdown_home'], week_dir, \
@@ -1393,61 +1462,78 @@ for div in wednesday.keys():
     # Initialize an empty list to store the results for each team
     away_results_list = []
 
-    # Iterate through each team in the "Away Team" column
-    for team in valid_matches_df['Away Team'].unique():
-        # Filter for matches where the current team is playing away
-        team_away_fixtures = valid_matches_df[valid_matches_df['Away Team'] == team]
+    # Check if valid_matches_df is empty
+    if valid_matches_df.empty:
+        logging.warning("No valid matches to process for away win percentages.")
+        # Create an empty DataFrame with the required columns
+        away_results = pd.DataFrame(columns=['Team'] +
+                                [f'Wins in Rubber {i}' for i in range(1, max_rubbers + 1)] +
+                                [f'Rubber {i}' for i in range(1, max_rubbers + 1)] +
+                                [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] +
+                                ['avg_win_perc', 'Total Rubbers'])
+    else:
+        # Iterate through each team in the "Away Team" column
+        for team in valid_matches_df['Away Team'].unique():
+            # Filter for matches where the current team is playing away
+            team_away_fixtures = valid_matches_df[valid_matches_df['Away Team'] == team]
 
-        # Get counts per team
-        total_away_matches_per_rubber_counts = {f'Rubber {i}': count_valid_matches(team_away_fixtures, i - 1)
-                                                for i in range(1, max_rubbers + 1)}
-        
-        # Extract counts for the specific team
-        total_away_matches_per_rubber = {rubber: counts.get(team, 0) for rubber, counts in total_away_matches_per_rubber_counts.items()}
+            # Get counts per team
+            total_away_matches_per_rubber_counts = {f'Rubber {i}': count_valid_matches(team_away_fixtures, i - 1)
+                                                    for i in range(1, max_rubbers + 1)}
+            
+            # Extract counts for the specific team
+            total_away_matches_per_rubber = {rubber: counts.get(team, 0) for rubber, counts in total_away_matches_per_rubber_counts.items()}
 
-        # Convert the dictionary to a DataFrame
-        total_away_matches_df = pd.DataFrame([total_away_matches_per_rubber], index=[team])
+            # Convert the dictionary to a DataFrame
+            total_away_matches_df = pd.DataFrame([total_away_matches_per_rubber], index=[team])
 
-        # Calculate total games played by summing all the rubber matches for each team
-        total_rubbers_played = total_away_matches_df.sum(axis=1)
+            # Calculate total games played by summing all the rubber matches for each team
+            total_rubbers_played = total_away_matches_df.sum(axis=1)
 
-        # Merge with aggregate wins for the team's away fixtures and calculate win percentages
-        team_combined_away = aggregate_wins_away(
-            team, valid_matches_df
-        ).merge(total_away_matches_df, left_index=True, right_index=True, how='outer')
+            # Merge with aggregate wins for the team's away fixtures and calculate win percentages
+            team_combined_away = aggregate_wins_away(
+                team, valid_matches_df
+            ).merge(total_away_matches_df, left_index=True, right_index=True, how='outer')
 
-        team_combined_away.fillna(0, inplace=True)
+            team_combined_away.fillna(0, inplace=True)
 
-        for i in range(1, max_rubbers + 1):
-            rubber_column = f'Rubber {i}'
-            team_combined_away[f'{rubber_column} Win %'] = (team_combined_away[f'Wins in {rubber_column}'] /
-                                                            team_combined_away[rubber_column]) * 100
+            for i in range(1, max_rubbers + 1):
+                rubber_column = f'Rubber {i}'
+                team_combined_away[f'{rubber_column} Win %'] = (team_combined_away[f'Wins in {rubber_column}'] /
+                                                                team_combined_away[rubber_column]) * 100
 
-        team_combined_away.fillna(0, inplace=True)
-        team_combined_away["avg_win_perc"] = team_combined_away[
-            [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)]].mean(axis=1)
+            team_combined_away.fillna(0, inplace=True)
+            team_combined_away["avg_win_perc"] = team_combined_away[
+                [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)]].mean(axis=1)
 
-        # Add the total rubbers played to the DataFrame
-        team_combined_away["Total Rubbers"] = total_rubbers_played
+            # Add the total rubbers played to the DataFrame
+            team_combined_away["Total Rubbers"] = total_rubbers_played
 
-        # Append the team's results to the list
-        away_results_list.append(team_combined_away)
+            # Append the team's results to the list
+            away_results_list.append(team_combined_away)
 
-    # Concatenate all team results into a single DataFrame
-    away_results = pd.concat(away_results_list)
+        # Concatenate all team results into a single DataFrame
+        away_results = pd.concat(away_results_list)
 
-    # Sort and format the DataFrame
-    away_results_sorted = away_results.sort_values("avg_win_perc", ascending=False)
-    away_results_sorted = away_results_sorted.reset_index().rename(columns={'index': 'Team'})
+    # Check if away_results is empty
+    if away_results.empty:
+        logging.warning("No away results to process.")
+        win_percentage_away_df = pd.DataFrame(columns=['Team'] +
+                                          [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] +
+                                          ['avg_win_perc', 'Total Rubbers'])
+    else:
+        # Sort and format the DataFrame
+        away_results_sorted = away_results.sort_values("avg_win_perc", ascending=False)
+        away_results_sorted = away_results_sorted.reset_index().rename(columns={'index': 'Team'})
 
-    # Selecting and displaying the required columns
-    keep_columns_away = (
-            ["Team"] +
-            [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] +
-            ['avg_win_perc', "Total Rubbers"]
-    )
+        # Selecting and displaying the required columns
+        keep_columns_away = (
+                ["Team"] +
+                [f'Rubber {i} Win %' for i in range(1, max_rubbers + 1)] +
+                ['avg_win_perc', "Total Rubbers"]
+        )
 
-    win_percentage_away_df = away_results_sorted[keep_columns_away]
+        win_percentage_away_df = away_results_sorted[keep_columns_away]
 
     # Save win_percentage_away_df to csv
     win_percentage_away_df.to_csv(os.path.join(base_directories['team_win_percentage_breakdown_away'],
@@ -1527,21 +1613,22 @@ for div in wednesday.keys():
     win_percentage_df.to_csv(os.path.join(base_directories['team_win_percentage_breakdown_overall'], 
                                           week_dir, f"{div}_team_win_percentage_breakdown.csv"), index=False)
 
-    # Check if run_projections is set to 1
-    if run_projections == 1:
-        # If it's set to 1, update or add the simulation date
-        if overall_scores_df.shape[1] == 5:
-            # Update the existing simulation date
-            overall_scores_df.iloc[0, 4] = today
-        else:
-            # Append the simulation date if it's not already there
-            overall_scores_df[4] = today
+    # Ensure the DataFrame has the necessary columns
+    for col in [0, 1, 2, 3, 4]:
+        if col not in overall_scores_df.columns:
+            overall_scores_df[col] = None
 
-    # Update the first four columns with the latest values
-    overall_scores_df.iloc[0, 0] = average_home_overall_score
-    overall_scores_df.iloc[0, 1] = average_away_overall_score
-    overall_scores_df.iloc[0, 2] = home_win_perc
-    overall_scores_df.iloc[0, 3] = today
+    # Prepare the data to update or insert
+    new_data = [
+        average_home_overall_score,
+        average_away_overall_score,
+        home_win_perc,
+        today,
+        today if run_projections == 1 else None
+    ]
+
+    # Assign the data to the first row
+    overall_scores_df.loc[0] = new_data
 
     # Write the updated DataFrame back to the CSV file
     overall_scores_df.to_csv(overall_scores_file, index=False, header=None)
