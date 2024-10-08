@@ -828,7 +828,7 @@ def scrape_ranking_page(league_id, year):
     # Check if any data was extracted
     if not ranking_data_rows:
         logging.warning("No data rows were extracted from the ranking page.")
-        raise Exception("No data rows were extracted from the ranking page.")
+        return None, None, None, None
 
     # Create DataFrame
     df = pd.DataFrame(ranking_data_rows, columns=['Position', 'Name of Player', 'Team', 'Average Points',
@@ -875,28 +875,35 @@ def scrape_ranking_page(league_id, year):
     ranking_df_filtered = df[df["Games Played"] >= 5]
     logging.info(f"Filtered ranking DataFrame to {len(ranking_df_filtered)} rows with 5 or more games played")
 
-    # Creating the summarized DataFrame
-    teams = df['Team'].unique()
-    summary_data = {
-        'Team': [],
-        'Most Games': [],
-        'Most Wins': [],
-        'Highest Win Percentage': []
-    }
 
-    for team in teams:
-        summary_data['Team'].append(team)
-        summary_data['Most Games'].append(find_max_players(ranking_df_filtered, team, 'Games Played'))
-        summary_data['Most Wins'].append(find_max_players(ranking_df_filtered, team, 'Won'))
-        summary_data['Highest Win Percentage'].append(find_max_win_percentage(ranking_df_filtered, team))
+    # Check if ranking_df_filtered is empty
+    if ranking_df_filtered.empty:
+        logging.warning("No players have played enough games to qualify for the table.")
+        summarized_df = None
+        unbeaten_list = []
+    else:
+        # Create the summarized DataFrame
+        teams = df['Team'].unique()
+        summary_data = {
+            'Team': [],
+            'Most Games': [],
+            'Most Wins': [],
+            'Highest Win Percentage': []
+        }
+        for team in teams:
+            summary_data['Team'].append(team)
+            summary_data['Most Games'].append(find_max_players(ranking_df_filtered, team, 'Games Played'))
+            summary_data['Most Wins'].append(find_max_players(ranking_df_filtered, team, 'Won'))
+            summary_data['Highest Win Percentage'].append(find_max_win_percentage(ranking_df_filtered, team))
 
-    summarized_df = pd.DataFrame(summary_data).sort_values("Team")
-    logging.info(f"Created summarized DataFrame with {len(summarized_df)} teams")
+        summarized_df = pd.DataFrame(summary_data).sort_values("Team")
+        logging.info(f"Created summarized DataFrame with {len(summarized_df)} teams")
 
-    # Get list of unbeaten players
-    unbeaten_list = ranking_df_filtered[
-        ranking_df_filtered["Lost"] == 0].apply(lambda row: f"{row['Name of Player']} ({row['Team']})", axis=1).tolist()
-    logging.info(f"Found {len(unbeaten_list)} unbeaten players")
+        # Get list of unbeaten players
+        unbeaten_list = ranking_df_filtered[
+            ranking_df_filtered["Lost"] == 0
+            ].apply(lambda row: f"{row['Name of Player']} ({row['Team']})", axis=1).tolist()
+        logging.info(f"Found {len(unbeaten_list)} unbeaten players")
 
     return df, summarized_df, unbeaten_list, ranking_df_filtered
 
@@ -996,7 +1003,7 @@ def scrape_players_page(league_id, year):
 logging.info("Starting the scraping process...")
 
 # Change dictionary if you want specific week
-for div in all_divisions.keys():
+for div in saturday.keys():
     logging.info(f"Processing Division {div}")
     league_id = f"D00{all_divisions[div]}"
 
@@ -1102,14 +1109,18 @@ for div in all_divisions.keys():
         # Stop execution if an error occurs
         raise
 
-    # Save the ranking_df to CSV
-    ranking_df_path = os.path.join(base_directories['ranking_df'], week_dir, f"{div}_ranking_df.csv")
-    try:
-        logging.info(f"Saving ranking_df to {ranking_df_path}")
-        ranking_df.to_csv(ranking_df_path, index=False)
-        logging.info(f"Successfully saved ranking_df to {ranking_df_path}")
-    except Exception as e:
-        logging.error(f"Error saving ranking_df to {ranking_df_path}: {e}")
+    # Save the ranking_df to CSV if it is not None and not empty
+    if ranking_df is not None and not ranking_df.empty:
+        ranking_df_path = os.path.join(base_directories['ranking_df'], week_dir, f"{div}_ranking_df.csv")
+        try:
+            logging.info(f"Saving ranking_df to {ranking_df_path}")
+            ranking_df.to_csv(ranking_df_path, index=False)
+            logging.info(f"Successfully saved ranking_df to {ranking_df_path}")
+        except Exception as e:
+            logging.error(f"Error saving ranking_df to {ranking_df_path}: {e}")
+    else:
+        logging.info(f"No ranking data to save for Division {div}; skipping ranking_df CSV creation.")
+
 
     time.sleep(10)
 
@@ -1147,21 +1158,45 @@ for div in all_divisions.keys():
         played_every_game_list = []
         unbeaten_list = []
 
-    # Save summarized player tables to CSV
-    if not summarized_df.empty:
-        summarized_df.to_csv(os.path.join(base_directories['summarized_player_tables'], week_dir, f"{div}_summarized_players.csv"), index=False)
+    # Save the summarized_df to CSV if it is not None and not empty
+    if summarized_df is not None and not summarized_df.empty:
+        summarized_df_path = os.path.join(base_directories['summarized_player_tables'], week_dir, f"{div}_summarized_players.csv")
+        try:
+            logging.info(f"Saving summarized_df to {summarized_df_path}")
+            summarized_df.to_csv(summarized_df_path, index=False)
+            logging.info(f"Successfully saved summarized_df to {summarized_df_path}")
+        except Exception as e:
+            logging.error(f"Error saving summarized_df to {summarized_df_path}: {e}")
     else:
-        logging.warning(f"No summarized player data available for Division {div}")
+        logging.info(f"No summarized data to save for Division {div}; skipping summarized_df CSV creation.")
 
-    # Save list of unbeaten players
-    with open(os.path.join(base_directories['unbeaten_players'], week_dir, f"{div}.txt"), "w") as file:
-        for item in unbeaten_list:
-            file.write(f"{item}\n")
+    # Save the unbeaten_list to a text file if it is not empty
+    if unbeaten_list:
+        unbeaten_players_path = os.path.join(base_directories['unbeaten_players'], week_dir, f"{div}.txt")
+        try:
+            logging.info(f"Saving unbeaten_list to {unbeaten_players_path}")
+            with open(unbeaten_players_path, 'w') as f:
+                for player in unbeaten_list:
+                    f.write(f"{player}\n")
+            logging.info(f"Successfully saved unbeaten_list to {unbeaten_players_path}")
+        except Exception as e:
+            logging.error(f"Error saving unbeaten_list to {unbeaten_players_path}: {e}")
+    else:
+        logging.info(f"No unbeaten players to save for Division {div}; skipping unbeaten_list file creation.")
 
     # Save list of players who have played every game
-    with open(os.path.join(base_directories['played_every_game'], week_dir, f"{div}.txt"), "w") as file:
-        for item in played_every_game_list:
-            file.write(f"{item}\n")
+    if played_every_game_list:
+        played_every_game_path = os.path.join(base_directories['played_every_game'], week_dir, f"{div}.txt")
+        try:
+            logging.info(f"Saving played_every_game_list to {played_every_game_path}")
+            with open(played_every_game_path, 'w') as f:
+                for player in played_every_game_list:
+                    f.write(f"{player}\n")
+            logging.info(f"Successfully saved played_every_game_list to {played_every_game_path}")
+        except Exception as e:
+            logging.error(f"Error saving played_every_game_list to {played_every_game_path}: {e}")
+    else:
+        logging.info(f"No players who have played every game to save for Division {div}; skipping played_every_game_list file creation.")
 
     # Create Results Dataframe
 
@@ -1298,8 +1333,8 @@ for div in all_divisions.keys():
         average_away_overall_score = 0
         home_win_perc = 0
 
-    # Path to the overall scores CSV file (excluding week_dir)
-    overall_scores_file = os.path.join(base_directories['home_away_data'], f"{div}_overall_scores.csv")
+    # Path to the overall scores CSV file
+    overall_scores_file = os.path.join(base_directories['home_away_data'], week_dir, f"{div}_overall_scores.csv")
 
     # Read the existing data from the CSV file into a DataFrame
     if os.path.exists(overall_scores_file):
@@ -1651,4 +1686,23 @@ for div in all_divisions.keys():
         projected_final_table.to_csv(os.path.join(base_directories['simulated_tables'], week_dir, f"{div}_proj_final_table.csv"), index=False)
         projected_fixtures.to_csv(os.path.join(base_directories['simulated_fixtures'], week_dir, f"{div}_proj_fixtures.csv"), index=False)
 
-    print(div)
+
+# After loop ends, print out all awaiting results
+for div in all_divisions.keys():
+    week_dir = f"week_{match_week}"
+    csv_file_path = os.path.join(
+        base_directories['awaiting_results'],
+        week_dir,
+        f"{div}_awaiting_results.csv"
+    )
+    
+    if os.path.exists(csv_file_path):
+        try:
+            awaiting_results_df = pd.read_csv(csv_file_path)
+            print(f"Division {div} Awaiting Results:")
+            print(awaiting_results_df)
+        except Exception as e:
+            logging.error(f"An error occurred while reading awaiting results for Division {div}: {e}")
+    else:
+        print(f"No awaiting results for Division {div}.")
+        logging.info(f"No awaiting results CSV file found for Division {div}.")
