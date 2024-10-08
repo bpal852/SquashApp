@@ -996,7 +996,7 @@ def scrape_players_page(league_id, year):
 logging.info("Starting the scraping process...")
 
 # Change dictionary if you want specific week
-for div in thursday.keys():
+for div in all_divisions.keys():
     logging.info(f"Processing Division {div}")
     league_id = f"D00{all_divisions[div]}"
 
