@@ -983,7 +983,7 @@ def scrape_players_page(league_id, year):
             team_dataframes.append(df)
             logging.info(f"Team {idx}: Created DataFrame with {len(df)} rows for team: {team_name}")
 
-            time.sleep(5)
+            time.sleep(2)
 
         if team_dataframes:
             # Concatenate all team dataframes
@@ -1003,7 +1003,7 @@ def scrape_players_page(league_id, year):
 logging.info("Starting the scraping process...")
 
 # Change dictionary if you want specific week
-for div in saturday.keys():
+for div in friday.keys():
     logging.info(f"Processing Division {div}")
     league_id = f"D00{all_divisions[div]}"
 
@@ -1351,9 +1351,6 @@ for div in saturday.keys():
 
     # Combine the two Series into one DataFrame
     team_average_scores = pd.concat([average_home_scores, average_away_scores], axis=1)
-
-    # Check the index name
-    print("Index name of team_average_scores:", team_average_scores.index.name)
 
     # Handle missing values by filling NaN with 0 or using appropriate methods
     team_average_scores['Average Home Score'] = team_average_scores['Average Home Score'].fillna(0)

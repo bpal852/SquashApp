@@ -4795,3 +4795,271 @@
 2024-10-08 17:00:43,741 - root - INFO - User selected section: Division Player Stats
 2024-10-08 17:00:43,742 - root - DEBUG - Processing division-specific data for 7B
 2024-10-08 17:00:43,743 - root - WARNING - Simulation date is not available.
+2024-10-08 17:00:44,987 - root - INFO - Application started
+2024-10-08 17:00:44,989 - root - INFO - User selected division: 7B
+2024-10-08 17:00:44,989 - root - INFO - User selected section: Home/Away Splits
+2024-10-08 17:00:44,990 - root - DEBUG - Processing division-specific data for 7B
+2024-10-08 17:00:44,992 - root - WARNING - Simulation date is not available.
+2024-10-08 17:00:44,993 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data
+2024-10-08 17:00:44,994 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\home_away_data\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\home_away_data\\week_1']
+2024-10-08 17:00:44,994 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_0
+2024-10-08 17:00:44,995 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1
+2024-10-08 17:00:44,995 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1
+2024-10-08 17:00:44,997 - root - DEBUG - Loaded overall_home_away data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1\7B_overall_scores.csv
+2024-10-08 17:00:45,225 - PIL.PngImagePlugin - DEBUG - STREAM b'IHDR' 16 13
+2024-10-08 17:00:45,226 - PIL.PngImagePlugin - DEBUG - STREAM b'tEXt' 41 57
+2024-10-08 17:00:45,226 - PIL.PngImagePlugin - DEBUG - STREAM b'pHYs' 110 9
+2024-10-08 17:00:45,226 - PIL.PngImagePlugin - DEBUG - STREAM b'IDAT' 131 65536
+2024-10-08 22:05:12,069 - root - INFO - Application started
+2024-10-08 22:05:12,091 - root - DEBUG - Initialized session state data
+2024-10-08 22:05:12,100 - root - INFO - User selected division: Premier Main
+2024-10-08 22:05:12,101 - root - INFO - User selected section: Detailed Division Table
+2024-10-08 22:05:12,105 - root - DEBUG - Processing division-specific data for Premier Main
+2024-10-08 22:05:12,105 - root - INFO - Loading CSVs for division Premier Main
+2024-10-08 22:05:12,105 - root - DEBUG - Getting latest week paths for data folders
+2024-10-08 22:05:12,106 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\detailed_league_tables
+2024-10-08 22:05:12,107 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\detailed_league_tables\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\detailed_league_tables\\week_1']
+2024-10-08 22:05:12,107 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\detailed_league_tables\week_0
+2024-10-08 22:05:12,107 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\detailed_league_tables\week_1
+2024-10-08 22:05:12,108 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\detailed_league_tables is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\detailed_league_tables\week_1
+2024-10-08 22:05:12,108 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data
+2024-10-08 22:05:12,108 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\home_away_data\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\home_away_data\\week_1']
+2024-10-08 22:05:12,108 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_0
+2024-10-08 22:05:12,109 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1
+2024-10-08 22:05:12,109 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1
+2024-10-08 22:05:12,109 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_tables
+2024-10-08 22:05:12,111 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\simulated_tables\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\simulated_tables\\week_1']
+2024-10-08 22:05:12,111 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_tables\week_0
+2024-10-08 22:05:12,112 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_tables\week_1
+2024-10-08 22:05:12,112 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_tables is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_tables\week_1
+2024-10-08 22:05:12,113 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_fixtures
+2024-10-08 22:05:12,113 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\simulated_fixtures\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\simulated_fixtures\\week_1']
+2024-10-08 22:05:12,114 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_fixtures\week_0
+2024-10-08 22:05:12,114 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_fixtures\week_1
+2024-10-08 22:05:12,114 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_fixtures is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_fixtures\week_1
+2024-10-08 22:05:12,114 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\awaiting_results
+2024-10-08 22:05:12,116 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\awaiting_results\\week_1']
+2024-10-08 22:05:12,116 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\awaiting_results\week_1
+2024-10-08 22:05:12,117 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\awaiting_results is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\awaiting_results\week_1
+2024-10-08 22:05:12,117 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\summarized_player_tables
+2024-10-08 22:05:12,117 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\summarized_player_tables\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\summarized_player_tables\\week_1']
+2024-10-08 22:05:12,118 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\summarized_player_tables\week_0
+2024-10-08 22:05:12,118 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\summarized_player_tables\week_1
+2024-10-08 22:05:12,118 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\summarized_player_tables is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\summarized_player_tables\week_1
+2024-10-08 22:05:12,120 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Overall
+2024-10-08 22:05:12,121 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\team_win_percentage_breakdown\\Overall\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\team_win_percentage_breakdown\\Overall\\week_1']
+2024-10-08 22:05:12,121 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Overall\week_0
+2024-10-08 22:05:12,121 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Overall\week_1
+2024-10-08 22:05:12,122 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Overall is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Overall\week_1
+2024-10-08 22:05:12,122 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Home
+2024-10-08 22:05:12,123 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\team_win_percentage_breakdown\\Home\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\team_win_percentage_breakdown\\Home\\week_1']
+2024-10-08 22:05:12,124 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Home\week_0
+2024-10-08 22:05:12,124 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Home\week_1
+2024-10-08 22:05:12,124 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Home is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Home\week_1
+2024-10-08 22:05:12,124 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Away
+2024-10-08 22:05:12,125 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\team_win_percentage_breakdown\\Away\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\team_win_percentage_breakdown\\Away\\week_1']
+2024-10-08 22:05:12,126 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Away\week_0
+2024-10-08 22:05:12,126 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Away\week_1
+2024-10-08 22:05:12,126 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Away is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Away\week_1
+2024-10-08 22:05:12,126 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Delta
+2024-10-08 22:05:12,127 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\team_win_percentage_breakdown\\Delta\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\team_win_percentage_breakdown\\Delta\\week_1']
+2024-10-08 22:05:12,128 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Delta\week_0
+2024-10-08 22:05:12,128 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Delta\week_1
+2024-10-08 22:05:12,128 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Delta is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Delta\week_1
+2024-10-08 22:05:12,129 - root - DEBUG - Constructing file paths
+2024-10-08 22:05:12,137 - root - WARNING - Could not load overall_home_away data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1\Premier Main_overall_scores.csv: [Errno 2] No such file or directory: 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\home_away_data\\week_1\\Premier Main_overall_scores.csv'
+2024-10-08 22:05:12,139 - root - WARNING - Could not load final_table data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_tables\week_1\Premier Main_proj_final_table.csv: [Errno 2] No such file or directory: 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\simulated_tables\\week_1\\Premier Main_proj_final_table.csv'
+2024-10-08 22:05:12,140 - root - WARNING - Could not load fixtures data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_fixtures\week_1\Premier Main_proj_fixtures.csv: [Errno 2] No such file or directory: 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\simulated_fixtures\\week_1\\Premier Main_proj_fixtures.csv'
+2024-10-08 22:05:12,140 - root - WARNING - Could not load home_away_df data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1\Premier Main_team_average_scores.csv: [Errno 2] No such file or directory: 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\home_away_data\\week_1\\Premier Main_team_average_scores.csv'
+2024-10-08 22:05:12,141 - root - WARNING - Could not load team_win_breakdown_overall data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Overall\week_1\Premier Main_team_win_percentage_breakdown.csv: [Errno 2] No such file or directory: 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\team_win_percentage_breakdown\\Overall\\week_1\\Premier Main_team_win_percentage_breakdown.csv'
+2024-10-08 22:05:12,142 - root - WARNING - Could not load team_win_breakdown_home data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Home\week_1\Premier Main_team_win_percentage_breakdown_home.csv: [Errno 2] No such file or directory: 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\team_win_percentage_breakdown\\Home\\week_1\\Premier Main_team_win_percentage_breakdown_home.csv'
+2024-10-08 22:05:12,143 - root - WARNING - Could not load team_win_breakdown_away data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Away\week_1\Premier Main_team_win_percentage_breakdown_away.csv: [Errno 2] No such file or directory: 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\team_win_percentage_breakdown\\Away\\week_1\\Premier Main_team_win_percentage_breakdown_away.csv'
+2024-10-08 22:05:12,145 - root - WARNING - Could not load team_win_breakdown_delta data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Delta\week_1\Premier Main_team_win_percentage_breakdown_delta.csv: [Errno 2] No such file or directory: 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\team_win_percentage_breakdown\\Delta\\week_1\\Premier Main_team_win_percentage_breakdown_delta.csv'
+2024-10-08 22:05:12,146 - root - WARNING - Could not load awaiting_results data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\awaiting_results\week_1\Premier Main_awaiting_results.csv: [Errno 2] No such file or directory: 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\awaiting_results\\week_1\\Premier Main_awaiting_results.csv'
+2024-10-08 22:05:12,147 - root - WARNING - Could not load detailed_league_table data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\detailed_league_tables\week_1\Premier Main_detailed_league_table.csv: [Errno 2] No such file or directory: 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\detailed_league_tables\\week_1\\Premier Main_detailed_league_table.csv'
+2024-10-08 22:05:12,149 - root - WARNING - Could not load summarized_players data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\summarized_player_tables\week_1\Premier Main_summarized_players.csv: [Errno 2] No such file or directory: 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\summarized_player_tables\\week_1\\Premier Main_summarized_players.csv'
+2024-10-08 22:05:12,153 - root - INFO - Loading TXTs for division Premier Main
+2024-10-08 22:05:12,153 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\unbeaten_players
+2024-10-08 22:05:12,154 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\unbeaten_players\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\unbeaten_players\\week_1']
+2024-10-08 22:05:12,154 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\unbeaten_players\week_0
+2024-10-08 22:05:12,155 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\unbeaten_players\week_1
+2024-10-08 22:05:12,155 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\unbeaten_players is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\unbeaten_players\week_1
+2024-10-08 22:05:12,156 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\played_every_game
+2024-10-08 22:05:12,156 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\played_every_game\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\played_every_game\\week_1']
+2024-10-08 22:05:12,157 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\played_every_game\week_0
+2024-10-08 22:05:12,157 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\played_every_game\week_1
+2024-10-08 22:05:12,157 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\played_every_game is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\played_every_game\week_1
+2024-10-08 22:05:12,158 - root - WARNING - No unbeaten players found for division Premier Main at C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\unbeaten_players\week_1\Premier Main.txt
+2024-10-08 22:05:12,158 - root - WARNING - No players who have played every game found for division Premier Main at C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\played_every_game\week_1\Premier Main.txt
+2024-10-08 22:05:12,158 - root - WARNING - overall_home_away DataFrame is empty or does not have enough columns; dates are not available.
+2024-10-08 22:05:20,578 - root - INFO - Application started
+2024-10-08 22:05:20,582 - root - INFO - User selected division: 15A
+2024-10-08 22:05:20,583 - root - INFO - User selected section: Detailed Division Table
+2024-10-08 22:05:20,585 - root - DEBUG - Processing division-specific data for 15A
+2024-10-08 22:05:20,586 - root - INFO - Loading CSVs for division 15A
+2024-10-08 22:05:20,586 - root - DEBUG - Getting latest week paths for data folders
+2024-10-08 22:05:20,587 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\detailed_league_tables
+2024-10-08 22:05:20,588 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\detailed_league_tables\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\detailed_league_tables\\week_1']
+2024-10-08 22:05:20,589 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\detailed_league_tables\week_0
+2024-10-08 22:05:20,589 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\detailed_league_tables\week_1
+2024-10-08 22:05:20,589 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\detailed_league_tables is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\detailed_league_tables\week_1
+2024-10-08 22:05:20,590 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data
+2024-10-08 22:05:20,590 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\home_away_data\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\home_away_data\\week_1']
+2024-10-08 22:05:20,591 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_0
+2024-10-08 22:05:20,591 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1
+2024-10-08 22:05:20,592 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1
+2024-10-08 22:05:20,592 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_tables
+2024-10-08 22:05:20,592 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\simulated_tables\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\simulated_tables\\week_1']
+2024-10-08 22:05:20,593 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_tables\week_0
+2024-10-08 22:05:20,593 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_tables\week_1
+2024-10-08 22:05:20,594 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_tables is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_tables\week_1
+2024-10-08 22:05:20,594 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_fixtures
+2024-10-08 22:05:20,595 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\simulated_fixtures\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\simulated_fixtures\\week_1']
+2024-10-08 22:05:20,595 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_fixtures\week_0
+2024-10-08 22:05:20,596 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_fixtures\week_1
+2024-10-08 22:05:20,596 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_fixtures is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_fixtures\week_1
+2024-10-08 22:05:20,596 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\awaiting_results
+2024-10-08 22:05:20,597 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\awaiting_results\\week_1']
+2024-10-08 22:05:20,598 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\awaiting_results\week_1
+2024-10-08 22:05:20,598 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\awaiting_results is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\awaiting_results\week_1
+2024-10-08 22:05:20,598 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\summarized_player_tables
+2024-10-08 22:05:20,599 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\summarized_player_tables\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\summarized_player_tables\\week_1']
+2024-10-08 22:05:20,600 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\summarized_player_tables\week_0
+2024-10-08 22:05:20,600 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\summarized_player_tables\week_1
+2024-10-08 22:05:20,600 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\summarized_player_tables is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\summarized_player_tables\week_1
+2024-10-08 22:05:20,601 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Overall
+2024-10-08 22:05:20,602 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\team_win_percentage_breakdown\\Overall\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\team_win_percentage_breakdown\\Overall\\week_1']
+2024-10-08 22:05:20,602 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Overall\week_0
+2024-10-08 22:05:20,602 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Overall\week_1
+2024-10-08 22:05:20,603 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Overall is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Overall\week_1
+2024-10-08 22:05:20,605 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Home
+2024-10-08 22:05:20,606 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\team_win_percentage_breakdown\\Home\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\team_win_percentage_breakdown\\Home\\week_1']
+2024-10-08 22:05:20,606 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Home\week_0
+2024-10-08 22:05:20,607 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Home\week_1
+2024-10-08 22:05:20,607 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Home is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Home\week_1
+2024-10-08 22:05:20,608 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Away
+2024-10-08 22:05:20,609 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\team_win_percentage_breakdown\\Away\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\team_win_percentage_breakdown\\Away\\week_1']
+2024-10-08 22:05:20,609 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Away\week_0
+2024-10-08 22:05:20,610 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Away\week_1
+2024-10-08 22:05:20,610 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Away is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Away\week_1
+2024-10-08 22:05:20,611 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Delta
+2024-10-08 22:05:20,611 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\team_win_percentage_breakdown\\Delta\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\team_win_percentage_breakdown\\Delta\\week_1']
+2024-10-08 22:05:20,612 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Delta\week_0
+2024-10-08 22:05:20,612 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Delta\week_1
+2024-10-08 22:05:20,613 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Delta is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Delta\week_1
+2024-10-08 22:05:20,613 - root - DEBUG - Constructing file paths
+2024-10-08 22:05:20,622 - root - DEBUG - Loaded overall_home_away data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1\15A_overall_scores.csv
+2024-10-08 22:05:20,623 - root - WARNING - Could not load final_table data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_tables\week_1\15A_proj_final_table.csv: [Errno 2] No such file or directory: 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\simulated_tables\\week_1\\15A_proj_final_table.csv'
+2024-10-08 22:05:20,624 - root - WARNING - Could not load fixtures data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\simulated_fixtures\week_1\15A_proj_fixtures.csv: [Errno 2] No such file or directory: 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\simulated_fixtures\\week_1\\15A_proj_fixtures.csv'
+2024-10-08 22:05:20,628 - root - DEBUG - Loaded home_away_df data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1\15A_team_average_scores.csv
+2024-10-08 22:05:20,631 - root - DEBUG - Loaded team_win_breakdown_overall data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Overall\week_1\15A_team_win_percentage_breakdown.csv
+2024-10-08 22:05:20,634 - root - DEBUG - Loaded team_win_breakdown_home data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Home\week_1\15A_team_win_percentage_breakdown_home.csv
+2024-10-08 22:05:20,637 - root - DEBUG - Loaded team_win_breakdown_away data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Away\week_1\15A_team_win_percentage_breakdown_away.csv
+2024-10-08 22:05:20,642 - root - DEBUG - Loaded team_win_breakdown_delta data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\team_win_percentage_breakdown\Delta\week_1\15A_team_win_percentage_breakdown_delta.csv
+2024-10-08 22:05:20,646 - root - DEBUG - Loaded awaiting_results data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\awaiting_results\week_1\15A_awaiting_results.csv
+2024-10-08 22:05:20,649 - root - DEBUG - Loaded detailed_league_table data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\detailed_league_tables\week_1\15A_detailed_league_table.csv
+2024-10-08 22:05:20,651 - root - DEBUG - Loaded summarized_players data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\summarized_player_tables\week_1\15A_summarized_players.csv
+2024-10-08 22:05:20,655 - root - INFO - Loading TXTs for division 15A
+2024-10-08 22:05:20,655 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\unbeaten_players
+2024-10-08 22:05:20,657 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\unbeaten_players\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\unbeaten_players\\week_1']
+2024-10-08 22:05:20,658 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\unbeaten_players\week_0
+2024-10-08 22:05:20,658 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\unbeaten_players\week_1
+2024-10-08 22:05:20,659 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\unbeaten_players is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\unbeaten_players\week_1
+2024-10-08 22:05:20,659 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\played_every_game
+2024-10-08 22:05:20,660 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\played_every_game\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\played_every_game\\week_1']
+2024-10-08 22:05:20,660 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\played_every_game\week_0
+2024-10-08 22:05:20,660 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\played_every_game\week_1
+2024-10-08 22:05:20,661 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\played_every_game is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\played_every_game\week_1
+2024-10-08 22:05:20,662 - root - DEBUG - Loaded unbeaten players: []
+2024-10-08 22:05:20,662 - root - DEBUG - Loaded players who have played every game: []
+2024-10-08 22:05:20,664 - root - WARNING - Simulation date is not available.
+2024-10-08 22:05:28,019 - root - INFO - Application started
+2024-10-08 22:05:28,022 - root - INFO - User selected division: 15A
+2024-10-08 22:05:28,023 - root - INFO - User selected section: Home/Away Splits
+2024-10-08 22:05:28,026 - root - DEBUG - Processing division-specific data for 15A
+2024-10-08 22:05:28,028 - root - WARNING - Simulation date is not available.
+2024-10-08 22:05:28,031 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data
+2024-10-08 22:05:28,033 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\home_away_data\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\home_away_data\\week_1']
+2024-10-08 22:05:28,034 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_0
+2024-10-08 22:05:28,034 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1
+2024-10-08 22:05:28,034 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1
+2024-10-08 22:05:28,037 - root - DEBUG - Loaded overall_home_away data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1\15A_overall_scores.csv
+2024-10-08 22:05:28,366 - PIL.PngImagePlugin - DEBUG - STREAM b'IHDR' 16 13
+2024-10-08 22:05:28,366 - PIL.PngImagePlugin - DEBUG - STREAM b'tEXt' 41 57
+2024-10-08 22:05:28,366 - PIL.PngImagePlugin - DEBUG - STREAM b'pHYs' 110 9
+2024-10-08 22:05:28,367 - PIL.PngImagePlugin - DEBUG - STREAM b'IDAT' 131 65536
+2024-10-08 22:05:40,011 - root - INFO - Application started
+2024-10-08 22:05:40,013 - root - INFO - User selected division: 15A
+2024-10-08 22:05:40,014 - root - INFO - User selected section: Home/Away Splits
+2024-10-08 22:05:40,015 - root - DEBUG - Processing division-specific data for 15A
+2024-10-08 22:05:40,016 - root - WARNING - Simulation date is not available.
+2024-10-08 22:05:40,018 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data
+2024-10-08 22:05:40,018 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\home_away_data\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\home_away_data\\week_1']
+2024-10-08 22:05:40,018 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_0
+2024-10-08 22:05:40,019 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1
+2024-10-08 22:05:40,019 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1
+2024-10-08 22:05:40,021 - root - DEBUG - Loaded overall_home_away data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1\15A_overall_scores.csv
+2024-10-08 22:05:40,250 - PIL.PngImagePlugin - DEBUG - STREAM b'IHDR' 16 13
+2024-10-08 22:05:40,250 - PIL.PngImagePlugin - DEBUG - STREAM b'tEXt' 41 57
+2024-10-08 22:05:40,251 - PIL.PngImagePlugin - DEBUG - STREAM b'pHYs' 110 9
+2024-10-08 22:05:40,251 - PIL.PngImagePlugin - DEBUG - STREAM b'IDAT' 131 65536
+2024-10-08 22:05:43,086 - root - INFO - Application started
+2024-10-08 22:05:43,087 - root - INFO - User selected division: 15A
+2024-10-08 22:05:43,088 - root - INFO - User selected section: Projections
+2024-10-08 22:05:43,088 - root - DEBUG - Processing division-specific data for 15A
+2024-10-08 22:05:43,089 - root - WARNING - Simulation date is not available.
+2024-10-08 22:05:47,192 - root - INFO - Application started
+2024-10-08 22:05:47,194 - root - INFO - User selected division: 15A
+2024-10-08 22:05:47,194 - root - INFO - User selected section: Rubber Win Percentage
+2024-10-08 22:05:47,196 - root - DEBUG - Processing division-specific data for 15A
+2024-10-08 22:05:47,200 - root - WARNING - Simulation date is not available.
+2024-10-08 22:06:19,610 - root - INFO - Application started
+2024-10-08 22:06:19,614 - root - INFO - User selected division: 15A
+2024-10-08 22:06:19,615 - root - INFO - User selected section: Projections
+2024-10-08 22:06:19,616 - root - DEBUG - Processing division-specific data for 15A
+2024-10-08 22:06:19,616 - root - WARNING - Simulation date is not available.
+2024-10-08 22:06:21,492 - root - INFO - Application started
+2024-10-08 22:06:21,495 - root - INFO - User selected division: 15A
+2024-10-08 22:06:21,496 - root - INFO - User selected section: Division Player Stats
+2024-10-08 22:06:21,497 - root - DEBUG - Processing division-specific data for 15A
+2024-10-08 22:06:21,500 - root - WARNING - Simulation date is not available.
+2024-10-08 22:06:23,448 - root - INFO - Application started
+2024-10-08 22:06:23,451 - root - INFO - User selected division: 15A
+2024-10-08 22:06:23,451 - root - INFO - User selected section: Home/Away Splits
+2024-10-08 22:06:23,452 - root - DEBUG - Processing division-specific data for 15A
+2024-10-08 22:06:23,453 - root - WARNING - Simulation date is not available.
+2024-10-08 22:06:23,454 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data
+2024-10-08 22:06:23,455 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\home_away_data\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\home_away_data\\week_1']
+2024-10-08 22:06:23,456 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_0
+2024-10-08 22:06:23,456 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1
+2024-10-08 22:06:23,457 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1
+2024-10-08 22:06:23,458 - root - DEBUG - Loaded overall_home_away data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1\15A_overall_scores.csv
+2024-10-08 22:06:23,713 - PIL.PngImagePlugin - DEBUG - STREAM b'IHDR' 16 13
+2024-10-08 22:06:23,714 - PIL.PngImagePlugin - DEBUG - STREAM b'tEXt' 41 57
+2024-10-08 22:06:23,714 - PIL.PngImagePlugin - DEBUG - STREAM b'pHYs' 110 9
+2024-10-08 22:06:23,715 - PIL.PngImagePlugin - DEBUG - STREAM b'IDAT' 131 65536
+2024-10-08 22:06:25,266 - root - INFO - Application started
+2024-10-08 22:06:25,268 - root - INFO - User selected division: 15A
+2024-10-08 22:06:25,268 - root - INFO - User selected section: Detailed Division Table
+2024-10-08 22:06:25,270 - root - DEBUG - Processing division-specific data for 15A
+2024-10-08 22:06:25,272 - root - WARNING - Simulation date is not available.
+2024-10-08 22:06:48,933 - root - INFO - Application started
+2024-10-08 22:06:48,935 - root - INFO - User selected division: 15A
+2024-10-08 22:06:48,936 - root - INFO - User selected section: Home/Away Splits
+2024-10-08 22:06:48,937 - root - DEBUG - Processing division-specific data for 15A
+2024-10-08 22:06:48,938 - root - WARNING - Simulation date is not available.
+2024-10-08 22:06:48,938 - root - DEBUG - Looking for week folders in C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data
+2024-10-08 22:06:48,939 - root - DEBUG - Found week folders: ['C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\home_away_data\\week_0', 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\home_away_data\\week_1']
+2024-10-08 22:06:48,939 - root - DEBUG - Found week folder: week_0 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_0
+2024-10-08 22:06:48,939 - root - DEBUG - Found week folder: week_1 in folder C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1
+2024-10-08 22:06:48,940 - root - INFO - Latest week folder for C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data is C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1
+2024-10-08 22:06:48,941 - root - DEBUG - Loaded overall_home_away data from C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\home_away_data\week_1\15A_overall_scores.csv
+2024-10-08 22:06:49,139 - PIL.PngImagePlugin - DEBUG - STREAM b'IHDR' 16 13
+2024-10-08 22:06:49,139 - PIL.PngImagePlugin - DEBUG - STREAM b'tEXt' 41 57
+2024-10-08 22:06:49,139 - PIL.PngImagePlugin - DEBUG - STREAM b'pHYs' 110 9
+2024-10-08 22:06:49,140 - PIL.PngImagePlugin - DEBUG - STREAM b'IDAT' 131 65536
+2024-10-08 22:06:50,937 - root - INFO - Application started
+2024-10-08 22:06:50,940 - root - INFO - User selected division: 15A
+2024-10-08 22:06:50,940 - root - INFO - User selected section: Division Player Stats
+2024-10-08 22:06:50,942 - root - DEBUG - Processing division-specific data for 15A
+2024-10-08 22:06:50,943 - root - WARNING - Simulation date is not available.

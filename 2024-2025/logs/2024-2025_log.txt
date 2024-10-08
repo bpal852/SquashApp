@@ -3011,3 +3011,439 @@ TypeError: int() argument must be a string, a bytes-like object or a real number
 2024-10-08 21:32:37,514 - INFO - No summarized data to save for Division 15B; skipping summarized_df CSV creation.
 2024-10-08 21:32:37,515 - INFO - No unbeaten players to save for Division 15B; skipping unbeaten_list file creation.
 2024-10-08 21:32:37,515 - INFO - No players who have played every game to save for Division 15B; skipping played_every_game_list file creation.
+2024-10-08 21:49:29,522 - INFO - Starting the scraping process...
+2024-10-08 21:49:29,523 - INFO - Processing Division 5
+2024-10-08 21:49:29,524 - INFO - Scraping Schedules and Results page for Division 5
+2024-10-08 21:49:29,525 - INFO - Scraping schedules and results page for league id: D00428, year: 2024-2025...
+2024-10-08 21:49:31,988 - INFO - Successfully created schedules and results DataFrame with 0 rows
+2024-10-08 21:49:31,994 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2024-10-08 21:49:31,996 - INFO - Successfully scraped Schedules and Results page for Division 5
+2024-10-08 21:49:31,997 - WARNING - No data found in schedules_df for Division 5. Skipping further processing.
+2024-10-08 21:49:31,997 - INFO - Processing Division 8A
+2024-10-08 21:49:31,998 - INFO - Scraping Schedules and Results page for Division 8A
+2024-10-08 21:49:31,999 - INFO - Scraping schedules and results page for league id: D00432, year: 2024-2025...
+2024-10-08 21:51:41,872 - ERROR - An error occured in scrape_schedules_and_results_page: HTTPSConnectionPool(host='www.hksquash.org.hk', port=443): Max retries exceeded with url: /public/index.php/leagues/results_schedules/id/D00432/league/Squash/year/2024-2025/pages_id/25.html (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1002)')))
+Traceback (most recent call last):
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\urllib3\connectionpool.py", line 467, in _make_request
+    self._validate_conn(conn)
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\urllib3\connectionpool.py", line 1096, in _validate_conn
+    conn.connect()
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\urllib3\connection.py", line 642, in connect
+    sock_and_verified = _ssl_wrap_socket_and_match_hostname(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\urllib3\connection.py", line 782, in _ssl_wrap_socket_and_match_hostname
+    ssl_sock = ssl_wrap_socket(
+               ^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\urllib3\util\ssl_.py", line 470, in ssl_wrap_socket
+    ssl_sock = _ssl_wrap_socket_impl(sock, context, tls_in_tls, server_hostname)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\urllib3\util\ssl_.py", line 514, in _ssl_wrap_socket_impl
+    return ssl_context.wrap_socket(sock, server_hostname=server_hostname)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\bpali\AppData\Local\Programs\Python\Python311\Lib\ssl.py", line 517, in wrap_socket
+    return self.sslsocket_class._create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\bpali\AppData\Local\Programs\Python\Python311\Lib\ssl.py", line 1075, in _create
+    self.do_handshake()
+  File "C:\Users\bpali\AppData\Local\Programs\Python\Python311\Lib\ssl.py", line 1346, in do_handshake
+    self._sslobj.do_handshake()
+ssl.SSLEOFError: EOF occurred in violation of protocol (_ssl.c:1002)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\urllib3\connectionpool.py", line 790, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\urllib3\connectionpool.py", line 491, in _make_request
+    raise new_e
+urllib3.exceptions.SSLError: EOF occurred in violation of protocol (_ssl.c:1002)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\requests\adapters.py", line 486, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\urllib3\connectionpool.py", line 844, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\urllib3\util\retry.py", line 515, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='www.hksquash.org.hk', port=443): Max retries exceeded with url: /public/index.php/leagues/results_schedules/id/D00432/league/Squash/year/2024-2025/pages_id/25.html (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1002)')))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\bpali\PycharmProjects\SquashApp\main_update_2024_2025.py", line 582, in scrape_schedules_and_results_page
+    response = requests.get(schedule_url)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\requests\api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\requests\adapters.py", line 517, in send
+    raise SSLError(e, request=request)
+requests.exceptions.SSLError: HTTPSConnectionPool(host='www.hksquash.org.hk', port=443): Max retries exceeded with url: /public/index.php/leagues/results_schedules/id/D00432/league/Squash/year/2024-2025/pages_id/25.html (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1002)')))
+2024-10-08 21:51:41,913 - INFO - Successfully scraped Schedules and Results page for Division 8A
+2024-10-08 21:51:41,914 - WARNING - No data found in schedules_df for Division 8A. Skipping further processing.
+2024-10-08 21:51:41,915 - INFO - Processing Division 8B
+2024-10-08 21:51:41,916 - INFO - Scraping Schedules and Results page for Division 8B
+2024-10-08 21:51:41,917 - INFO - Scraping schedules and results page for league id: D00433, year: 2024-2025...
+2024-10-08 21:51:43,371 - INFO - Successfully created schedules and results DataFrame with 0 rows
+2024-10-08 21:51:43,377 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2024-10-08 21:51:43,380 - INFO - Successfully scraped Schedules and Results page for Division 8B
+2024-10-08 21:51:43,382 - WARNING - No data found in schedules_df for Division 8B. Skipping further processing.
+2024-10-08 21:51:43,383 - INFO - Processing Division 13A
+2024-10-08 21:51:43,383 - INFO - Scraping Schedules and Results page for Division 13A
+2024-10-08 21:51:43,384 - INFO - Scraping schedules and results page for league id: D00438, year: 2024-2025...
+2024-10-08 21:53:51,743 - INFO - Starting the scraping process...
+2024-10-08 21:53:51,745 - INFO - Processing Division 5
+2024-10-08 21:53:51,746 - INFO - Scraping Schedules and Results page for Division 5
+2024-10-08 21:53:51,747 - INFO - Scraping schedules and results page for league id: D00428, year: 2024-2025...
+2024-10-08 21:53:52,977 - INFO - Successfully created schedules and results DataFrame with 90 rows
+2024-10-08 21:53:52,994 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2024-10-08 21:53:52,999 - INFO - Successfully scraped Schedules and Results page for Division 5
+2024-10-08 21:53:53,012 - INFO - Saving schedules_df to 2024-2025/schedules_df\week_1\5_schedules_df.csv
+2024-10-08 21:53:53,133 - INFO - Successfully saved schedules_df to 2024-2025/schedules_df\week_1\5_schedules_df.csv
+2024-10-08 21:54:03,134 - INFO - Scraping Team Summary page for Division 5
+2024-10-08 21:54:03,134 - INFO - Scraping team summary page for league id: D00428, year: 2024-2025...
+2024-10-08 21:54:03,907 - INFO - Successfully created summary DataFrame with 10 rows
+2024-10-08 21:54:03,918 - INFO - Successfully scraped Team Summary page for Division 5
+2024-10-08 21:54:03,919 - INFO - Saving summary_df to 2024-2025/summary_df\week_1\5_summary_df.csv
+2024-10-08 21:54:03,922 - INFO - Successfully saved summary_df to 2024-2025/summary_df\week_1\5_summary_df.csv
+2024-10-08 21:54:13,924 - INFO - Scraping Teams page for Division 5
+2024-10-08 21:54:13,924 - INFO - Starting scrape_teams_page for league id: D00428, year: 2024-2025
+2024-10-08 21:54:14,221 - INFO - Successfully created teams DataFrame with 10 rows
+2024-10-08 21:54:14,222 - INFO - Successfully scraped Teams page for Division 5
+2024-10-08 21:54:14,222 - INFO - Saving teams_df to 2024-2025/teams_df\week_1\5_teams_df.csv
+2024-10-08 21:54:14,225 - INFO - Successfully saved teams_df to 2024-2025/teams_df\week_1\5_teams_df.csv
+2024-10-08 21:54:24,226 - INFO - Scraping Ranking page for Division 5
+2024-10-08 21:54:24,226 - INFO - Scraping ranking page for league id: D00428, year: 2024-2025...
+2024-10-08 21:54:25,995 - INFO - Successfully created ranking DataFrame with 86 rows
+2024-10-08 21:54:26,015 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2024-10-08 21:54:26,016 - WARNING - No players have played enough games to qualify for the table.
+2024-10-08 21:54:26,019 - INFO - Successfully scraped Ranking page for Division 5
+2024-10-08 21:54:26,020 - INFO - Saving ranking_df to 2024-2025/ranking_df\week_1\5_ranking_df.csv
+2024-10-08 21:54:26,025 - INFO - Successfully saved ranking_df to 2024-2025/ranking_df\week_1\5_ranking_df.csv
+2024-10-08 21:54:36,027 - INFO - Scraping Players page for Division 5
+2024-10-08 21:54:36,028 - INFO - Starting scrape_players_page for league_id: D00428, year: 2024-2025
+2024-10-08 21:54:38,141 - INFO - Team 0: Created DataFrame with 7 rows for team: Happy Squash 2
+2024-10-08 21:54:43,153 - INFO - Team 1: Created DataFrame with 7 rows for team: Hong Kong Football Club 5A
+2024-10-08 21:54:48,165 - INFO - Team 2: Created DataFrame with 7 rows for team: Hong Kong Football Club 5B
+2024-10-08 21:54:53,179 - INFO - Team 3: Created DataFrame with 9 rows for team: Hong Kong Racketlon Association 1
+2024-10-08 21:54:58,193 - INFO - Team 4: Created DataFrame with 9 rows for team: i-Mask Advance Squash Club 1
+2024-10-08 21:55:03,206 - INFO - Team 5: Created DataFrame with 12 rows for team: Physical Chess 1
+2024-10-08 21:55:08,225 - INFO - Team 6: Created DataFrame with 10 rows for team: Squashathon
+2024-10-08 21:55:13,239 - INFO - Team 7: Created DataFrame with 11 rows for team: The Squash Club 1
+2024-10-08 21:55:18,250 - INFO - Team 8: Created DataFrame with 6 rows for team: Uncle
+2024-10-08 21:55:23,261 - INFO - Team 9: Created DataFrame with 8 rows for team: X-Alpha 2
+2024-10-08 21:55:28,265 - INFO - Concatenated all team dataframes into a single DataFrame with 86 rows
+2024-10-08 21:55:28,267 - INFO - Successfully scraped Players page for Division 5
+2024-10-08 21:55:28,267 - INFO - Saving players_df to 2024-2025/players_df\week_1\5_players_df.csv
+2024-10-08 21:55:28,270 - INFO - Successfully saved players_df to 2024-2025/players_df\week_1\5_players_df.csv
+2024-10-08 21:55:38,271 - WARNING - No ranking data available for Division 5. Unable to determine players who have played every game.
+2024-10-08 21:55:38,271 - INFO - No summarized data to save for Division 5; skipping summarized_df CSV creation.
+2024-10-08 21:55:38,272 - INFO - No unbeaten players to save for Division 5; skipping unbeaten_list file creation.
+2024-10-08 21:55:38,273 - INFO - No players who have played every game to save for Division 5; skipping played_every_game_list file creation.
+2024-10-08 21:55:53,514 - INFO - Processing Division 8A
+2024-10-08 21:55:53,514 - INFO - Scraping Schedules and Results page for Division 8A
+2024-10-08 21:55:53,515 - INFO - Scraping schedules and results page for league id: D00432, year: 2024-2025...
+2024-10-08 21:55:54,020 - INFO - Successfully created schedules and results DataFrame with 90 rows
+2024-10-08 21:55:54,023 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2024-10-08 21:55:54,026 - INFO - Successfully scraped Schedules and Results page for Division 8A
+2024-10-08 21:55:54,030 - INFO - Saving schedules_df to 2024-2025/schedules_df\week_1\8A_schedules_df.csv
+2024-10-08 21:55:54,034 - INFO - Successfully saved schedules_df to 2024-2025/schedules_df\week_1\8A_schedules_df.csv
+2024-10-08 21:56:04,035 - INFO - Scraping Team Summary page for Division 8A
+2024-10-08 21:56:04,035 - INFO - Scraping team summary page for league id: D00432, year: 2024-2025...
+2024-10-08 21:56:04,620 - INFO - Successfully created summary DataFrame with 9 rows
+2024-10-08 21:56:04,625 - INFO - Successfully scraped Team Summary page for Division 8A
+2024-10-08 21:56:04,626 - INFO - Saving summary_df to 2024-2025/summary_df\week_1\8A_summary_df.csv
+2024-10-08 21:56:04,629 - INFO - Successfully saved summary_df to 2024-2025/summary_df\week_1\8A_summary_df.csv
+2024-10-08 21:56:14,630 - INFO - Scraping Teams page for Division 8A
+2024-10-08 21:56:14,630 - INFO - Starting scrape_teams_page for league id: D00432, year: 2024-2025
+2024-10-08 21:56:14,921 - INFO - Successfully created teams DataFrame with 9 rows
+2024-10-08 21:56:14,923 - INFO - Successfully scraped Teams page for Division 8A
+2024-10-08 21:56:14,924 - INFO - Saving teams_df to 2024-2025/teams_df\week_1\8A_teams_df.csv
+2024-10-08 21:56:14,927 - INFO - Successfully saved teams_df to 2024-2025/teams_df\week_1\8A_teams_df.csv
+2024-10-08 21:56:24,929 - INFO - Scraping Ranking page for Division 8A
+2024-10-08 21:56:24,929 - INFO - Scraping ranking page for league id: D00432, year: 2024-2025...
+2024-10-08 21:56:26,546 - INFO - Successfully created ranking DataFrame with 84 rows
+2024-10-08 21:56:26,564 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2024-10-08 21:56:26,566 - WARNING - No players have played enough games to qualify for the table.
+2024-10-08 21:56:26,570 - INFO - Successfully scraped Ranking page for Division 8A
+2024-10-08 21:56:26,571 - INFO - Saving ranking_df to 2024-2025/ranking_df\week_1\8A_ranking_df.csv
+2024-10-08 21:56:26,576 - INFO - Successfully saved ranking_df to 2024-2025/ranking_df\week_1\8A_ranking_df.csv
+2024-10-08 21:56:36,577 - INFO - Scraping Players page for Division 8A
+2024-10-08 21:56:36,577 - INFO - Starting scrape_players_page for league_id: D00432, year: 2024-2025
+2024-10-08 21:56:38,209 - INFO - Team 0: Created DataFrame with 9 rows for team: Hong Kong Football Club 8
+2024-10-08 21:56:43,222 - INFO - Team 1: Created DataFrame with 6 rows for team: i-Mask Advance Squash Club 2
+2024-10-08 21:56:48,237 - INFO - Team 2: Created DataFrame with 9 rows for team: Kinetic 2
+2024-10-08 21:56:53,257 - INFO - Team 3: Created DataFrame with 8 rows for team: Ladies Recreation Club Div 8
+2024-10-08 21:56:58,273 - INFO - Team 4: Created DataFrame with 12 rows for team: Physical Chess 3
+2024-10-08 21:57:03,285 - INFO - Team 5: Created DataFrame with 11 rows for team: Sha Tin 3
+2024-10-08 21:57:08,301 - INFO - Team 6: Created DataFrame with 9 rows for team: Striving Squash
+2024-10-08 21:57:13,314 - INFO - Team 7: Created DataFrame with 11 rows for team: Squashathon Zero
+2024-10-08 21:57:18,326 - INFO - Team 8: Created DataFrame with 8 rows for team: TOMCAT
+2024-10-08 21:57:23,329 - INFO - Concatenated all team dataframes into a single DataFrame with 83 rows
+2024-10-08 21:57:23,333 - INFO - Successfully scraped Players page for Division 8A
+2024-10-08 21:57:23,334 - INFO - Saving players_df to 2024-2025/players_df\week_1\8A_players_df.csv
+2024-10-08 21:57:23,337 - INFO - Successfully saved players_df to 2024-2025/players_df\week_1\8A_players_df.csv
+2024-10-08 21:57:33,339 - WARNING - No ranking data available for Division 8A. Unable to determine players who have played every game.
+2024-10-08 21:57:33,339 - INFO - No summarized data to save for Division 8A; skipping summarized_df CSV creation.
+2024-10-08 21:57:33,340 - INFO - No unbeaten players to save for Division 8A; skipping unbeaten_list file creation.
+2024-10-08 21:57:33,341 - INFO - No players who have played every game to save for Division 8A; skipping played_every_game_list file creation.
+2024-10-08 21:57:48,556 - INFO - Processing Division 8B
+2024-10-08 21:57:48,556 - INFO - Scraping Schedules and Results page for Division 8B
+2024-10-08 21:57:48,557 - INFO - Scraping schedules and results page for league id: D00433, year: 2024-2025...
+2024-10-08 21:57:49,349 - INFO - Successfully created schedules and results DataFrame with 84 rows
+2024-10-08 21:57:49,352 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2024-10-08 21:57:49,354 - INFO - Successfully scraped Schedules and Results page for Division 8B
+2024-10-08 21:57:49,358 - INFO - Saving schedules_df to 2024-2025/schedules_df\week_1\8B_schedules_df.csv
+2024-10-08 21:57:49,361 - INFO - Successfully saved schedules_df to 2024-2025/schedules_df\week_1\8B_schedules_df.csv
+2024-10-08 21:57:59,362 - INFO - Scraping Team Summary page for Division 8B
+2024-10-08 21:57:59,363 - INFO - Scraping team summary page for league id: D00433, year: 2024-2025...
+2024-10-08 21:57:59,850 - INFO - Successfully created summary DataFrame with 8 rows
+2024-10-08 21:57:59,857 - INFO - Successfully scraped Team Summary page for Division 8B
+2024-10-08 21:57:59,858 - INFO - Saving summary_df to 2024-2025/summary_df\week_1\8B_summary_df.csv
+2024-10-08 21:57:59,860 - INFO - Successfully saved summary_df to 2024-2025/summary_df\week_1\8B_summary_df.csv
+2024-10-08 21:58:09,862 - INFO - Scraping Teams page for Division 8B
+2024-10-08 21:58:09,863 - INFO - Starting scrape_teams_page for league id: D00433, year: 2024-2025
+2024-10-08 21:58:10,703 - INFO - Successfully created teams DataFrame with 8 rows
+2024-10-08 21:58:10,705 - INFO - Successfully scraped Teams page for Division 8B
+2024-10-08 21:58:10,706 - INFO - Saving teams_df to 2024-2025/teams_df\week_1\8B_teams_df.csv
+2024-10-08 21:58:10,709 - INFO - Successfully saved teams_df to 2024-2025/teams_df\week_1\8B_teams_df.csv
+2024-10-08 21:58:20,711 - INFO - Scraping Ranking page for Division 8B
+2024-10-08 21:58:20,711 - INFO - Scraping ranking page for league id: D00433, year: 2024-2025...
+2024-10-08 21:58:22,688 - INFO - Successfully created ranking DataFrame with 69 rows
+2024-10-08 21:58:22,700 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2024-10-08 21:58:22,701 - WARNING - No players have played enough games to qualify for the table.
+2024-10-08 21:58:22,704 - INFO - Successfully scraped Ranking page for Division 8B
+2024-10-08 21:58:22,705 - INFO - Saving ranking_df to 2024-2025/ranking_df\week_1\8B_ranking_df.csv
+2024-10-08 21:58:22,709 - INFO - Successfully saved ranking_df to 2024-2025/ranking_df\week_1\8B_ranking_df.csv
+2024-10-08 21:58:32,711 - INFO - Scraping Players page for Division 8B
+2024-10-08 21:58:32,712 - INFO - Starting scrape_players_page for league_id: D00433, year: 2024-2025
+2024-10-08 21:58:34,574 - INFO - Team 0: Created DataFrame with 10 rows for team: Dynamos Squash
+2024-10-08 21:58:39,583 - INFO - Team 1: Created DataFrame with 10 rows for team: Fusion Squash Club 1
+2024-10-08 21:58:44,593 - INFO - Team 2: Created DataFrame with 7 rows for team: Happy Squash 3
+2024-10-08 21:58:49,600 - INFO - Team 3: Created DataFrame with 7 rows for team: LONGVIEW
+2024-10-08 21:58:54,610 - INFO - Team 4: Created DataFrame with 8 rows for team: MERCURY
+2024-10-08 21:58:59,618 - INFO - Team 5: Created DataFrame with 8 rows for team: NEXUS 3
+2024-10-08 21:59:04,627 - INFO - Team 6: Created DataFrame with 7 rows for team: Vitality Squash 2
+2024-10-08 21:59:09,638 - INFO - Team 7: Created DataFrame with 12 rows for team: X-Alpha 4
+2024-10-08 21:59:14,640 - INFO - Concatenated all team dataframes into a single DataFrame with 69 rows
+2024-10-08 21:59:14,642 - INFO - Successfully scraped Players page for Division 8B
+2024-10-08 21:59:14,644 - INFO - Saving players_df to 2024-2025/players_df\week_1\8B_players_df.csv
+2024-10-08 21:59:14,646 - INFO - Successfully saved players_df to 2024-2025/players_df\week_1\8B_players_df.csv
+2024-10-08 21:59:24,647 - WARNING - No ranking data available for Division 8B. Unable to determine players who have played every game.
+2024-10-08 21:59:24,647 - INFO - No summarized data to save for Division 8B; skipping summarized_df CSV creation.
+2024-10-08 21:59:24,649 - INFO - No unbeaten players to save for Division 8B; skipping unbeaten_list file creation.
+2024-10-08 21:59:24,650 - INFO - No players who have played every game to save for Division 8B; skipping played_every_game_list file creation.
+2024-10-08 21:59:39,802 - INFO - Processing Division 13A
+2024-10-08 21:59:39,802 - INFO - Scraping Schedules and Results page for Division 13A
+2024-10-08 21:59:39,803 - INFO - Scraping schedules and results page for league id: D00438, year: 2024-2025...
+2024-10-08 21:59:41,462 - INFO - Successfully created schedules and results DataFrame with 132 rows
+2024-10-08 21:59:41,466 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2024-10-08 21:59:41,469 - INFO - Successfully scraped Schedules and Results page for Division 13A
+2024-10-08 21:59:41,473 - INFO - Saving schedules_df to 2024-2025/schedules_df\week_1\13A_schedules_df.csv
+2024-10-08 21:59:41,477 - INFO - Successfully saved schedules_df to 2024-2025/schedules_df\week_1\13A_schedules_df.csv
+2024-10-08 21:59:51,479 - INFO - Scraping Team Summary page for Division 13A
+2024-10-08 21:59:51,479 - INFO - Scraping team summary page for league id: D00438, year: 2024-2025...
+2024-10-08 22:00:09,031 - INFO - Successfully created summary DataFrame with 12 rows
+2024-10-08 22:00:09,037 - INFO - Successfully scraped Team Summary page for Division 13A
+2024-10-08 22:00:09,039 - INFO - Saving summary_df to 2024-2025/summary_df\week_1\13A_summary_df.csv
+2024-10-08 22:00:09,041 - INFO - Successfully saved summary_df to 2024-2025/summary_df\week_1\13A_summary_df.csv
+2024-10-08 22:00:19,043 - INFO - Scraping Teams page for Division 13A
+2024-10-08 22:00:19,043 - INFO - Starting scrape_teams_page for league id: D00438, year: 2024-2025
+2024-10-08 22:00:19,825 - INFO - Successfully created teams DataFrame with 12 rows
+2024-10-08 22:00:19,828 - INFO - Successfully scraped Teams page for Division 13A
+2024-10-08 22:00:19,828 - INFO - Saving teams_df to 2024-2025/teams_df\week_1\13A_teams_df.csv
+2024-10-08 22:00:19,830 - INFO - Successfully saved teams_df to 2024-2025/teams_df\week_1\13A_teams_df.csv
+2024-10-08 22:00:29,831 - INFO - Scraping Ranking page for Division 13A
+2024-10-08 22:00:29,832 - INFO - Scraping ranking page for league id: D00438, year: 2024-2025...
+2024-10-08 22:00:33,224 - INFO - Successfully created ranking DataFrame with 112 rows
+2024-10-08 22:00:33,242 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2024-10-08 22:00:33,243 - WARNING - No players have played enough games to qualify for the table.
+2024-10-08 22:00:33,246 - INFO - Successfully scraped Ranking page for Division 13A
+2024-10-08 22:00:33,247 - INFO - Saving ranking_df to 2024-2025/ranking_df\week_1\13A_ranking_df.csv
+2024-10-08 22:00:33,250 - INFO - Successfully saved ranking_df to 2024-2025/ranking_df\week_1\13A_ranking_df.csv
+2024-10-08 22:00:43,252 - INFO - Scraping Players page for Division 13A
+2024-10-08 22:00:43,253 - INFO - Starting scrape_players_page for league_id: D00438, year: 2024-2025
+2024-10-08 22:00:47,530 - INFO - Team 0: Created DataFrame with 8 rows for team: Arctic Circle
+2024-10-08 22:00:52,538 - INFO - Team 1: Created DataFrame with 9 rows for team: Bravo D13
+2024-10-08 22:00:57,549 - INFO - Team 2: Created DataFrame with 11 rows for team: Greenfield
+2024-10-08 22:01:02,557 - INFO - Team 3: Created DataFrame with 7 rows for team: M&M Squash
+2024-10-08 22:01:07,565 - INFO - Team 4: Created DataFrame with 7 rows for team: North District Sports Association 2
+2024-10-08 22:01:12,576 - INFO - Team 5: Created DataFrame with 12 rows for team: Physical Chess 4
+2024-10-08 22:01:17,586 - INFO - Team 6: Created DataFrame with 11 rows for team: Royal Hong Kong Yacht Club Div 13
+2024-10-08 22:01:22,595 - INFO - Team 7: Created DataFrame with 7 rows for team: Star River 3
+2024-10-08 22:01:27,607 - INFO - Team 8: Created DataFrame with 12 rows for team: Squashathon PLZ
+2024-10-08 22:01:32,633 - INFO - Team 9: Created DataFrame with 10 rows for team: TNG 1
+2024-10-08 22:01:37,644 - INFO - Team 10: Created DataFrame with 9 rows for team: TNG 2
+2024-10-08 22:01:42,655 - INFO - Team 11: Created DataFrame with 8 rows for team: Vitality Squash 3
+2024-10-08 22:01:47,658 - INFO - Concatenated all team dataframes into a single DataFrame with 111 rows
+2024-10-08 22:01:47,660 - INFO - Successfully scraped Players page for Division 13A
+2024-10-08 22:01:47,661 - INFO - Saving players_df to 2024-2025/players_df\week_1\13A_players_df.csv
+2024-10-08 22:01:47,664 - INFO - Successfully saved players_df to 2024-2025/players_df\week_1\13A_players_df.csv
+2024-10-08 22:01:57,665 - WARNING - No ranking data available for Division 13A. Unable to determine players who have played every game.
+2024-10-08 22:01:57,665 - INFO - No summarized data to save for Division 13A; skipping summarized_df CSV creation.
+2024-10-08 22:01:57,666 - INFO - No unbeaten players to save for Division 13A; skipping unbeaten_list file creation.
+2024-10-08 22:01:57,666 - INFO - No players who have played every game to save for Division 13A; skipping played_every_game_list file creation.
+2024-10-08 22:02:12,894 - INFO - Processing Division 13B
+2024-10-08 22:02:12,894 - INFO - Scraping Schedules and Results page for Division 13B
+2024-10-08 22:02:12,897 - INFO - Scraping schedules and results page for league id: D00439, year: 2024-2025...
+2024-10-08 22:02:13,780 - INFO - Successfully created schedules and results DataFrame with 132 rows
+2024-10-08 22:02:13,784 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2024-10-08 22:02:13,791 - INFO - Successfully scraped Schedules and Results page for Division 13B
+2024-10-08 22:02:13,798 - INFO - Saving schedules_df to 2024-2025/schedules_df\week_1\13B_schedules_df.csv
+2024-10-08 22:02:13,804 - INFO - Successfully saved schedules_df to 2024-2025/schedules_df\week_1\13B_schedules_df.csv
+2024-10-08 22:02:23,806 - INFO - Scraping Team Summary page for Division 13B
+2024-10-08 22:02:23,807 - INFO - Scraping team summary page for league id: D00439, year: 2024-2025...
+2024-10-08 22:02:24,638 - INFO - Successfully created summary DataFrame with 12 rows
+2024-10-08 22:02:24,642 - INFO - Successfully scraped Team Summary page for Division 13B
+2024-10-08 22:02:24,643 - INFO - Saving summary_df to 2024-2025/summary_df\week_1\13B_summary_df.csv
+2024-10-08 22:02:24,646 - INFO - Successfully saved summary_df to 2024-2025/summary_df\week_1\13B_summary_df.csv
+2024-10-08 22:02:34,647 - INFO - Scraping Teams page for Division 13B
+2024-10-08 22:02:34,647 - INFO - Starting scrape_teams_page for league id: D00439, year: 2024-2025
+2024-10-08 22:02:34,931 - INFO - Successfully created teams DataFrame with 12 rows
+2024-10-08 22:02:34,933 - INFO - Successfully scraped Teams page for Division 13B
+2024-10-08 22:02:34,934 - INFO - Saving teams_df to 2024-2025/teams_df\week_1\13B_teams_df.csv
+2024-10-08 22:02:34,936 - INFO - Successfully saved teams_df to 2024-2025/teams_df\week_1\13B_teams_df.csv
+2024-10-08 22:02:44,937 - INFO - Scraping Ranking page for Division 13B
+2024-10-08 22:02:44,937 - INFO - Scraping ranking page for league id: D00439, year: 2024-2025...
+2024-10-08 22:02:47,865 - INFO - Successfully created ranking DataFrame with 112 rows
+2024-10-08 22:02:47,877 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2024-10-08 22:02:47,877 - WARNING - No players have played enough games to qualify for the table.
+2024-10-08 22:02:47,879 - INFO - Successfully scraped Ranking page for Division 13B
+2024-10-08 22:02:47,880 - INFO - Saving ranking_df to 2024-2025/ranking_df\week_1\13B_ranking_df.csv
+2024-10-08 22:02:47,883 - INFO - Successfully saved ranking_df to 2024-2025/ranking_df\week_1\13B_ranking_df.csv
+2024-10-08 22:02:57,884 - INFO - Scraping Players page for Division 13B
+2024-10-08 22:02:57,885 - INFO - Starting scrape_players_page for league_id: D00439, year: 2024-2025
+2024-10-08 22:03:01,251 - INFO - Team 0: Created DataFrame with 11 rows for team: Electrify Squash Div 13
+2024-10-08 22:03:06,263 - INFO - Team 1: Created DataFrame with 12 rows for team: Energy Squash Club 1
+2024-10-08 22:03:11,272 - INFO - Team 2: Created DataFrame with 8 rows for team: Energy Squash Club 2
+2024-10-08 22:03:16,282 - INFO - Team 3: Created DataFrame with 7 rows for team: Fusion Squash Club 2
+2024-10-08 22:03:21,292 - INFO - Team 4: Created DataFrame with 7 rows for team: Happy Squash 4
+2024-10-08 22:03:26,303 - INFO - Team 5: Created DataFrame with 8 rows for team: HKIS Div 13
+2024-10-08 22:03:31,311 - INFO - Team 6: Created DataFrame with 9 rows for team: i-Mask Advance Squash Club 5
+2024-10-08 22:03:36,324 - INFO - Team 7: Created DataFrame with 12 rows for team: Kinetic 4
+2024-10-08 22:03:41,335 - INFO - Team 8: Created DataFrame with 7 rows for team: Sha Tin 6
+2024-10-08 22:03:46,344 - INFO - Team 9: Created DataFrame with 8 rows for team: SocGen Squash
+2024-10-08 22:03:51,354 - INFO - Team 10: Created DataFrame with 10 rows for team: X-Alpha 5
+2024-10-08 22:03:56,381 - INFO - Team 11: Created DataFrame with 11 rows for team: Yuen Long District Sports Association Limited
+2024-10-08 22:04:01,385 - INFO - Concatenated all team dataframes into a single DataFrame with 110 rows
+2024-10-08 22:04:01,386 - INFO - Successfully scraped Players page for Division 13B
+2024-10-08 22:04:01,387 - INFO - Saving players_df to 2024-2025/players_df\week_1\13B_players_df.csv
+2024-10-08 22:04:01,391 - INFO - Successfully saved players_df to 2024-2025/players_df\week_1\13B_players_df.csv
+2024-10-08 22:04:11,392 - WARNING - No ranking data available for Division 13B. Unable to determine players who have played every game.
+2024-10-08 22:04:11,392 - INFO - No summarized data to save for Division 13B; skipping summarized_df CSV creation.
+2024-10-08 22:04:11,393 - INFO - No unbeaten players to save for Division 13B; skipping unbeaten_list file creation.
+2024-10-08 22:04:11,393 - INFO - No players who have played every game to save for Division 13B; skipping played_every_game_list file creation.
+2024-10-08 22:04:26,667 - INFO - Processing Division L3
+2024-10-08 22:04:26,667 - INFO - Scraping Schedules and Results page for Division L3
+2024-10-08 22:04:26,668 - INFO - Scraping schedules and results page for league id: D00449, year: 2024-2025...
+2024-10-08 22:04:27,460 - INFO - Successfully created schedules and results DataFrame with 60 rows
+2024-10-08 22:04:27,463 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2024-10-08 22:04:27,466 - INFO - Successfully scraped Schedules and Results page for Division L3
+2024-10-08 22:04:27,472 - INFO - Saving schedules_df to 2024-2025/schedules_df\week_1\L3_schedules_df.csv
+2024-10-08 22:04:27,477 - INFO - Successfully saved schedules_df to 2024-2025/schedules_df\week_1\L3_schedules_df.csv
+2024-10-08 22:04:37,478 - INFO - Scraping Team Summary page for Division L3
+2024-10-08 22:04:37,479 - INFO - Scraping team summary page for league id: D00449, year: 2024-2025...
+2024-10-08 22:04:38,110 - INFO - Successfully created summary DataFrame with 6 rows
+2024-10-08 22:04:38,116 - INFO - Successfully scraped Team Summary page for Division L3
+2024-10-08 22:04:38,117 - INFO - Saving summary_df to 2024-2025/summary_df\week_1\L3_summary_df.csv
+2024-10-08 22:04:38,120 - INFO - Successfully saved summary_df to 2024-2025/summary_df\week_1\L3_summary_df.csv
+2024-10-08 22:04:48,121 - INFO - Scraping Teams page for Division L3
+2024-10-08 22:04:48,121 - INFO - Starting scrape_teams_page for league id: D00449, year: 2024-2025
+2024-10-08 22:04:48,391 - INFO - Successfully created teams DataFrame with 6 rows
+2024-10-08 22:04:48,393 - INFO - Successfully scraped Teams page for Division L3
+2024-10-08 22:04:48,394 - INFO - Saving teams_df to 2024-2025/teams_df\week_1\L3_teams_df.csv
+2024-10-08 22:04:48,397 - INFO - Successfully saved teams_df to 2024-2025/teams_df\week_1\L3_teams_df.csv
+2024-10-08 22:04:58,398 - INFO - Scraping Ranking page for Division L3
+2024-10-08 22:04:58,399 - INFO - Scraping ranking page for league id: D00449, year: 2024-2025...
+2024-10-08 22:04:59,256 - INFO - Successfully created ranking DataFrame with 39 rows
+2024-10-08 22:04:59,273 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2024-10-08 22:04:59,274 - WARNING - No players have played enough games to qualify for the table.
+2024-10-08 22:04:59,276 - INFO - Successfully scraped Ranking page for Division L3
+2024-10-08 22:04:59,277 - INFO - Saving ranking_df to 2024-2025/ranking_df\week_1\L3_ranking_df.csv
+2024-10-08 22:04:59,280 - INFO - Successfully saved ranking_df to 2024-2025/ranking_df\week_1\L3_ranking_df.csv
+2024-10-08 22:05:09,281 - INFO - Scraping Players page for Division L3
+2024-10-08 22:05:09,282 - INFO - Starting scrape_players_page for league_id: D00449, year: 2024-2025
+2024-10-08 22:05:10,246 - INFO - Team 0: Created DataFrame with 7 rows for team: Hong Kong Cricket Club Rockettes
+2024-10-08 22:05:15,257 - INFO - Team 1: Created DataFrame with 6 rows for team: Hong Kong Football Club L3A
+2024-10-08 22:05:20,267 - INFO - Team 2: Created DataFrame with 5 rows for team: Hong Kong Football Club L3B
+2024-10-08 22:05:25,278 - INFO - Team 3: Created DataFrame with 6 rows for team: Hong Kong Football Club L3C
+2024-10-08 22:05:30,289 - INFO - Team 4: Created DataFrame with 6 rows for team: i-Mask Advance Squash Club L3
+2024-10-08 22:05:35,302 - INFO - Team 5: Created DataFrame with 7 rows for team: JESSICA L3
+2024-10-08 22:05:40,305 - INFO - Concatenated all team dataframes into a single DataFrame with 37 rows
+2024-10-08 22:05:40,310 - INFO - Successfully scraped Players page for Division L3
+2024-10-08 22:05:40,311 - INFO - Saving players_df to 2024-2025/players_df\week_1\L3_players_df.csv
+2024-10-08 22:05:40,315 - INFO - Successfully saved players_df to 2024-2025/players_df\week_1\L3_players_df.csv
+2024-10-08 22:05:50,317 - WARNING - No ranking data available for Division L3. Unable to determine players who have played every game.
+2024-10-08 22:05:50,317 - INFO - No summarized data to save for Division L3; skipping summarized_df CSV creation.
+2024-10-08 22:05:50,318 - INFO - No unbeaten players to save for Division L3; skipping unbeaten_list file creation.
+2024-10-08 22:05:50,319 - INFO - No players who have played every game to save for Division L3; skipping played_every_game_list file creation.
+2024-10-08 22:06:05,501 - INFO - Processing Division L4
+2024-10-08 22:06:05,501 - INFO - Scraping Schedules and Results page for Division L4
+2024-10-08 22:06:05,502 - INFO - Scraping schedules and results page for league id: D00450, year: 2024-2025...
+2024-10-08 22:06:06,097 - INFO - Successfully created schedules and results DataFrame with 84 rows
+2024-10-08 22:06:06,100 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2024-10-08 22:06:06,103 - INFO - Successfully scraped Schedules and Results page for Division L4
+2024-10-08 22:06:06,106 - INFO - Saving schedules_df to 2024-2025/schedules_df\week_1\L4_schedules_df.csv
+2024-10-08 22:06:06,108 - INFO - Successfully saved schedules_df to 2024-2025/schedules_df\week_1\L4_schedules_df.csv
+2024-10-08 22:06:16,110 - INFO - Scraping Team Summary page for Division L4
+2024-10-08 22:06:16,112 - INFO - Scraping team summary page for league id: D00450, year: 2024-2025...
+2024-10-08 22:06:16,714 - INFO - Successfully created summary DataFrame with 7 rows
+2024-10-08 22:06:16,721 - INFO - Successfully scraped Team Summary page for Division L4
+2024-10-08 22:06:16,722 - INFO - Saving summary_df to 2024-2025/summary_df\week_1\L4_summary_df.csv
+2024-10-08 22:06:16,725 - INFO - Successfully saved summary_df to 2024-2025/summary_df\week_1\L4_summary_df.csv
+2024-10-08 22:06:26,727 - INFO - Scraping Teams page for Division L4
+2024-10-08 22:06:26,728 - INFO - Starting scrape_teams_page for league id: D00450, year: 2024-2025
+2024-10-08 22:06:27,316 - INFO - Successfully created teams DataFrame with 7 rows
+2024-10-08 22:06:27,319 - INFO - Successfully scraped Teams page for Division L4
+2024-10-08 22:06:27,319 - INFO - Saving teams_df to 2024-2025/teams_df\week_1\L4_teams_df.csv
+2024-10-08 22:06:27,322 - INFO - Successfully saved teams_df to 2024-2025/teams_df\week_1\L4_teams_df.csv
+2024-10-08 22:06:37,324 - INFO - Scraping Ranking page for Division L4
+2024-10-08 22:06:37,325 - INFO - Scraping ranking page for league id: D00450, year: 2024-2025...
+2024-10-08 22:06:38,439 - INFO - Successfully created ranking DataFrame with 56 rows
+2024-10-08 22:06:38,450 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2024-10-08 22:06:38,451 - WARNING - No players have played enough games to qualify for the table.
+2024-10-08 22:06:38,453 - INFO - Successfully scraped Ranking page for Division L4
+2024-10-08 22:06:38,454 - INFO - Saving ranking_df to 2024-2025/ranking_df\week_1\L4_ranking_df.csv
+2024-10-08 22:06:38,456 - INFO - Successfully saved ranking_df to 2024-2025/ranking_df\week_1\L4_ranking_df.csv
+2024-10-08 22:06:48,458 - INFO - Scraping Players page for Division L4
+2024-10-08 22:06:48,458 - INFO - Starting scrape_players_page for league_id: D00450, year: 2024-2025
+2024-10-08 22:06:49,646 - INFO - Team 0: Created DataFrame with 10 rows for team: Electrify Squash Ladies
+2024-10-08 22:06:54,656 - INFO - Team 1: Created DataFrame with 9 rows for team: Hong Kong Cricket Club L4
+2024-10-08 22:06:59,667 - INFO - Team 2: Created DataFrame with 12 rows for team: Hong Kong Football Club L4
+2024-10-08 22:07:04,676 - INFO - Team 3: Created DataFrame with 7 rows for team: Hong Kong Football Club JSA
+2024-10-08 22:07:09,684 - INFO - Team 4: Created DataFrame with 6 rows for team: i-Mask Advance Squash Club L4
+2024-10-08 22:07:14,693 - INFO - Team 5: Created DataFrame with 6 rows for team: JESSICA L4
+2024-10-08 22:07:19,702 - INFO - Team 6: Created DataFrame with 6 rows for team: JESSICA Smashin' Mochi
+2024-10-08 22:07:24,704 - INFO - Concatenated all team dataframes into a single DataFrame with 56 rows
+2024-10-08 22:07:24,706 - INFO - Successfully scraped Players page for Division L4
+2024-10-08 22:07:24,706 - INFO - Saving players_df to 2024-2025/players_df\week_1\L4_players_df.csv
+2024-10-08 22:07:24,708 - INFO - Successfully saved players_df to 2024-2025/players_df\week_1\L4_players_df.csv
+2024-10-08 22:07:34,710 - WARNING - No ranking data available for Division L4. Unable to determine players who have played every game.
+2024-10-08 22:07:34,710 - INFO - No summarized data to save for Division L4; skipping summarized_df CSV creation.
+2024-10-08 22:07:34,710 - INFO - No unbeaten players to save for Division L4; skipping unbeaten_list file creation.
+2024-10-08 22:07:34,711 - INFO - No players who have played every game to save for Division L4; skipping played_every_game_list file creation.
+2024-10-08 22:07:49,853 - INFO - No awaiting results CSV file found for Division Premier Main.
+2024-10-08 22:07:49,855 - INFO - No awaiting results CSV file found for Division 2.
+2024-10-08 22:07:49,856 - INFO - No awaiting results CSV file found for Division 3.
+2024-10-08 22:07:49,857 - INFO - No awaiting results CSV file found for Division 4.
+2024-10-08 22:07:49,874 - INFO - No awaiting results CSV file found for Division 6.
+2024-10-08 22:07:49,917 - INFO - No awaiting results CSV file found for Division 10.
+2024-10-08 22:07:49,919 - INFO - No awaiting results CSV file found for Division 11.
+2024-10-08 22:07:49,979 - INFO - No awaiting results CSV file found for Division Premier Masters.
+2024-10-08 22:07:49,997 - INFO - No awaiting results CSV file found for Division Premier Ladies.
+2024-10-08 22:07:49,998 - INFO - No awaiting results CSV file found for Division L2.

@@ -692,7 +692,7 @@ def main():
 
         elif sections_box == "Rubber Win Percentage":
             # Header
-            st.header("Rubber Win Percentage - Division {division}")
+            st.header(f"Rubber Win Percentage - Division {division}")
 
             # Function to apply common formatting
             def format_dataframe(df):
