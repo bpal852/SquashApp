@@ -19,6 +19,9 @@ logging.basicConfig(
     ]
 )
 
+# Suppress Matplotlib's DEBUG logs
+logging.getLogger('matplotlib').setLevel(logging.WARNING)
+
 # Set page configurations
 st.set_page_config(
     page_title="HK Squash App",
@@ -75,6 +78,18 @@ all_divisions = {
     "L3": 449,
     "L4": 450,
     }
+
+# List of clubs
+clubs = [
+    "Hong Kong Cricket Club", "Hong Kong Football Club", "Kowloon Cricket Club",
+    "Ladies Recreation Club", "Royal Hong Kong Yacht Club", "United Services Recreation Club",
+    "Fusion Squash Club", "Sha Tin", "X-Alpha", "TNG", "RELAY", "JESSICA",
+    "i-Mask Advance Squash Club", "Vitality Squash", "Friend Club",
+    "North District Sports Association", "Physical Chess", "Electrify Squash", "Global Squash",
+    "Squashathon", "Hong Kong Racketlon Association", "The Squash Club", "Happy Squash",
+    "Star River", "Kinetic", "The Hong Kong Jockey Club", "Young Player",
+    "Hong Kong Club", "The Best Group", "Bravo", "Energy Squash Club", "HKIS", "NEXUS"
+    ]
 
 def get_latest_week_path(data_folder):
     """
@@ -333,69 +348,156 @@ def load_txts(division):
 
 def load_player_rankings():
     """
-    Function to load player rankings CSVs and add club information
+    Function to load player rankings CSVs from the most recent weeks for each division,
+    ensuring data is loaded for all divisions even if they didn't play in the latest week.
     """
     logging.info("Loading player rankings")
 
     # Define the path to the ranking data for the season
     ranking_df_path = os.path.join(season_base_path, "ranking_df")
-    latest_ranking_week = get_latest_week_path(ranking_df_path)
-
-    if latest_ranking_week is None:
-        logging.error("No ranking data found.")
-        st.error("No ranking data found.")
-        return pd.DataFrame()
     
-    logging.debug(f"Latest ranking week folder: {latest_ranking_week}")
+    # Get all week folders sorted by week number descending
+    week_folders = glob.glob(os.path.join(ranking_df_path, "week_*"))
+    week_numbers = []
+    for folder in week_folders:
+        week_name = os.path.basename(folder)
+        match = re.match(r"week_(\d+)", week_name)
+        if match:
+            week_number = int(match.group(1))
+            week_numbers.append((week_number, folder))
+    # Sort week folders by week number in descending order
+    week_numbers.sort(reverse=True)
+    sorted_week_folders = [folder for _, folder in week_numbers]
 
-    # Get all CSV files in the latest ranking week directory
-    files = glob.glob(os.path.join(latest_ranking_week, "*.csv"))
-    logging.debug(f"Ranking data files found: {files}")
+    # Initialize variables
+    ranking_dataframes = []
+    divisions_loaded = set()
+    divisions_to_load = set(all_divisions.keys())
 
-    if not files:
-        logging.error("No ranking data files found in the latest week.")
-        st.error("No ranking data files found in the latest week.")
-        return pd.DataFrame()
+    # Iterate over week folders
+    for week_folder in sorted_week_folders:
+        if not divisions_to_load:
+            break # All divisions have been loaded
+            
+        # Get all CSV files in the week folder
+        ranking_files = glob.glob(os.path.join(week_folder, "*.csv"))
+        for file in ranking_files:
+            # Extract division from filename
+            filename = os.path.basename(file)
+            logging.debug(f"Processing file: {filename}")
+            division_match = re.match(r"(.*)_ranking_df\.csv", filename)
+            if division_match:
+                division = division_match.group(1)
+                logging.debug(f"Matched division: {division}")
+                if division in divisions_to_load:
+                    try:
+                        df = pd.read_csv(file)
+                        ranking_dataframes.append(df)
+                        divisions_loaded.add(division)
+                        divisions_to_load.remove(division)
+                        logging.debug(f"Loaded ranking data for division {division} from {file}")
+                    except Exception as e:
+                        logging.warning(f"Error reading file {file}: {e}")
+                        continue
+            else:
+                logging.warning(f"Filename {filename} does not match expected pattern.")
+        if not divisions_to_load:
+            break  # All divisions loaded
 
-    dataframes = []
-    for file in files:
-        try:
-            df = pd.read_csv(file)
-            dataframes.append(df)
-            logging.debug(f"Loaded ranking data from {file}")
-        except Exception as e:
-            logging.warning(f"Error reading file {file}: {e}")
-            continue
-    
-    if not dataframes:
+    if not ranking_dataframes:
         logging.error("No valid ranking data files loaded.")
         st.error("No valid ranking data files loaded.")
         return pd.DataFrame()
 
-    all_rankings_df = pd.concat(dataframes, ignore_index=True)
-    logging.info(f"Combined all rankings data into a single DataFrame with shape {all_rankings_df.shape}")
+    # Concatenate all ranking DataFrames
+    ranking_df_all = pd.concat(ranking_dataframes, ignore_index=True)
+    logging.info(f"Combined all rankings data into a single DataFrame with shape {ranking_df_all.shape}")
 
-    # List of clubs
-    clubs = [
-        "Hong Kong Cricket Club", "Hong Kong Football Club", "Kowloon Cricket Club",
-        "Ladies Recreation Club", "Royal Hong Kong Yacht Club", "United Services Recreation Club",
-        "Fusion Squash Club", "Sha Tin Squash Rackets Club", "X-Alpha", "TNG", "RELAY", "YLJR",
-        "i-Mask Advance Squash Club", "Vitality Squash", "Twister", "Friend Club",
-        "North District Sports Association", "Physical Chess", "Electrify Squash", "Global Squash",
-        "Squashathon", "Hong Kong Racketlon Association", "The Squash Club", "Happy Squash",
-        "Star River", "Kinetic", "Smart Squash", "The Hong Kong Jockey Club", "Young Player",
-        "Hong Kong Club", "8 Virtues"
-    ]
+    # Repeat similar steps for players_df
+    # Define the path to the players data for the season
+    players_df_path = os.path.join(season_base_path, "players_df")
+
+    # Get all week folders sorted by week number descending
+    week_folders = glob.glob(os.path.join(players_df_path, "week_*"))
+    week_numbers = []
+    for folder in week_folders:
+        week_name = os.path.basename(folder)
+        match = re.match(r"week_(\d+)", week_name)
+        if match:
+            week_number = int(match.group(1))
+            week_numbers.append((week_number, folder))
+    # Sort week folders by week number descending
+    week_numbers.sort(reverse=True)
+    sorted_week_folders = [folder for _, folder in week_numbers]
+
+    players_dataframes = []
+    divisions_loaded = set()
+    divisions_to_load = set(all_divisions.keys())
+
+    for week_folder in sorted_week_folders:
+        if not divisions_to_load:
+            break  # All divisions loaded  
+
+        # Get all CSV files in the week folder
+        players_files = glob.glob(os.path.join(week_folder, "*.csv"))
+        for file in players_files:
+            # Extract division from filename
+            filename = os.path.basename(file)
+            logging.debug(f"Processing file: {filename}")
+            division_match = re.match(r"(.*)_players_df\.csv", filename)
+            if division_match:
+                division = division_match.group(1)
+                logging.debug(f"Matched division: {division}")
+                if division in divisions_to_load:
+                    try:
+                        df = pd.read_csv(file)
+                        players_dataframes.append(df)
+                        divisions_loaded.add(division)
+                        divisions_to_load.remove(division)
+                        logging.debug(f"Loaded players data for division {division} from {file}")
+                    except Exception as e:
+                        logging.warning(f"Error reading file {file}: {e}")
+                        continue
+            else:
+                logging.warning(f"Filename {filename} does not match expected pattern.")
+        if not divisions_to_load:
+            break  # All divisions loaded
+
+    if not players_dataframes:
+        logging.error("No valid players data files loaded.")
+        st.error("No valid players data files loaded.")
+        return pd.DataFrame()
+
+    # Concatenate all players DataFrames
+    players_df_all = pd.concat(players_dataframes, ignore_index=True)
+    logging.info(f"Combined all players data into a single DataFrame with shape {players_df_all.shape}")
+
+    # Now merge ranking_df_all and players_df_all on 'Name of Player'/'Player' and 'Team'
+    # We'll rename 'Player' in players_df_all to 'Name of Player' to facilitate the merge
+    players_df_all = players_df_all.rename(columns={'Player': 'Name of Player'})
+
+    # Merge on 'Name of Player' and 'Team'
+    merged_df = pd.merge(
+        ranking_df_all,
+        players_df_all[['Name of Player', 'Team', 'HKS No.']],
+        on=['Name of Player', 'Team'],
+        how='left'
+    )
+
+    # Check columns after merging
+    logging.debug(f"Columns in merged DataFrame: {merged_df.columns.tolist()}")
+    if 'HKS No.' not in merged_df.columns:
+        logging.error("'HKS No.' column is missing after merging.")
+
+    # Handle missing HKS No.
+    missing_hksno = merged_df['HKS No.'].isnull().sum()
+    if missing_hksno > 0:
+        logging.warning(f"{missing_hksno} entries have missing HKS No. after merge.")
 
     def determine_club(team_name):
         """
         Function to create club column from team name
         """
-        # Check for the specific case
-        if team_name == "FC 3":
-            return "Friend Club"
-
-        # Existing logic for other cases
         for club in clubs:
             if club.lower() in team_name.lower():
                 return club
@@ -403,17 +505,16 @@ def load_player_rankings():
 
 
     # Apply the function to the 'Team' column
-    if "Team" in all_rankings_df.columns:
-        all_rankings_df['Club'] = all_rankings_df['Team'].apply(determine_club)
+    if "Team" in merged_df.columns:
+        merged_df['Club'] = merged_df['Team'].apply(determine_club)
     else:
         st.error("Column 'Team' not found in ranking data.")
-        all_rankings_df["Club"] = "Unknown"
+        merged_df["Club"] = "Unknown"
 
-    return all_rankings_df
-
-# testing
+    return merged_df
 
 
+# Start the main application
 def main():
     logging.info("Application started")
     # Initialize 'data' in session_state with default empty DataFrames if it doesn't exist
@@ -520,7 +621,10 @@ def main():
         # Handle the "All Divisions" case separately
         if not st.session_state["data"].get("all_rankings_loaded", False):
             # Load all_rankings_df
-            all_rankings_df = load_player_rankings()
+            all_rankings_df = load_player_rankings()            
+            if all_rankings_df.empty:
+                st.error("No player ranking data is available.")
+                return  # Exit the function to prevent further errors
             st.session_state["data"]["all_rankings_df"] = all_rankings_df
             st.session_state["data"]["all_rankings_loaded"] = True
         else:
@@ -1078,16 +1182,7 @@ def main():
 
 
         # List of clubs
-        clubs = ["Overall"] + sorted([
-            "Hong Kong Cricket Club", "Hong Kong Football Club", "Kowloon Cricket Club",
-            "Ladies Recreation Club", "Royal Hong Kong Yacht Club", "United Services Recreation Club",
-            "Fusion Squash Club", "Sha Tin Squash Rackets Club", "X-Alpha", "TNG", "RELAY", "YLJR",
-            "i-Mask Advance Squash Club", "Vitality Squash", "Twister", "Friend Club",
-            "North District Sports Association", "Physical Chess", "Electrify Squash", "Global Squash",
-            "Squashathon", "Hong Kong Racketlon Association", "The Squash Club", "Happy Squash",
-            "Star River", "Kinetic", "Smart Squash", "The Hong Kong Jockey Club", "Young Player",
-            "Hong Kong Club", "8 Virtues"
-        ])
+        list_of_clubs = ["Overall"] + sorted(clubs)
 
         # Title
         st.title("**Player Rankings**")
@@ -1099,14 +1194,14 @@ def main():
         col1, col2 = st.columns([1, 3])
 
         # Find the index for "Hong Kong Cricket Club"
-        default_club_index = clubs.index("Hong Kong Cricket Club")
+        default_club_index = list_of_clubs.index("Hong Kong Cricket Club")
 
         # Plotting the chart in the first column
         with col1:
-            club = st.selectbox("**Select club:**", clubs, index=default_club_index)
+            club = st.selectbox("**Select club:**", list_of_clubs, index=default_club_index)
 
         if club != "Overall":
-            aggregated_df = all_rankings_df.groupby(['Name of Player', 'Club']).agg({
+            aggregated_df = all_rankings_df.groupby(['HKS No.', 'Name of Player', 'Club']).agg({
                 'Division': lambda x: ', '.join(sorted(set(str(d) for d in x))),  # Aggregate divisions
                 'Average Points': 'mean',  # Calculate the mean of average points
                 'Total Game Points': 'sum',  # Sum of total game points
@@ -1115,7 +1210,7 @@ def main():
                 'Lost': 'sum',  # Sum of games lost
             }).reset_index()
         else:
-            aggregated_df = all_rankings_df.groupby('Name of Player').agg({
+            aggregated_df = all_rankings_df.groupby(['HKS No.', 'Name of Player']).agg({
                 'Club': aggregate_club_overall,  # Use the custom aggregation for clubs
                 'Division': lambda x: ', '.join(sorted(set(x.astype(str)))),  # Aggregate divisions
                 'Average Points': 'mean',  # Calculate the mean of average points
@@ -1131,10 +1226,14 @@ def main():
         # Create Avg Pts column
         aggregated_df['Avg Pts'] = (aggregated_df['Total Game Points'] / aggregated_df['Games Played']).fillna(0)
 
-        # Continue with your reduced dataframe and further logic
+        # Continue with reduced dataframe
         aggregated_df_reduced = aggregated_df[[
-            "Name of Player", "Club", "Division", "Games Played", "Won", "Lost", "Win Percentage", "Avg Pts"
-        ]].rename(columns={"Name of Player": "Player", "Games Played": "Games", "Win Percentage": "Win %"})
+            "HKS No.", "Name of Player", "Club", "Division", "Games Played", "Won", "Lost", "Win Percentage", "Avg Pts"
+        ]].rename(columns={
+            "Name of Player": "Player",
+            "Games Played": "Games",
+            "Win Percentage": "Win %"
+        })
 
         # Sort functionality
         with col1:
@@ -1142,22 +1241,17 @@ def main():
                                        index=aggregated_df_reduced.columns.get_loc("Games"))
         sort_order = st.radio("**Sort order**", ["Ascending", "Descending"], index=1)
 
-        # If a specific club is selected (not "Overall"), filter the DataFrame by that club
+        # Filter DataFrame based on selected club
         if club != "Overall":
-            # Ensures sorted_df is only defined within this block
             filtered_df = aggregated_df_reduced[aggregated_df_reduced["Club"] == club]
             # Drop Club column if needed
-            filtered_df = filtered_df.drop(columns='Club',
-                                           errors='ignore')  # Use errors='ignore' to avoid error if 'Club' column does not exist
+            filtered_df = filtered_df.drop(columns='Club', errors='ignore')
         else:
-            # Ensure that filtered_df is defined even when "Overall" is selected
             filtered_df = aggregated_df_reduced
 
         # Sort the DataFrame based on user selection
-        if sort_order == "Ascending":
-            sorted_df = filtered_df.sort_values(by=sort_column, ascending=True)
-        else:
-            sorted_df = filtered_df.sort_values(by=sort_column, ascending=False)
+        ascending = True if sort_order == "Ascending" else False
+        sorted_df = filtered_df.sort_values(by=sort_column, ascending=ascending)
 
         # Apply styles and formatting to sorted_df
         sorted_df = sorted_df.style.set_properties(
@@ -1165,7 +1259,13 @@ def main():
         sorted_df = sorted_df.set_properties(
             subset=['Games', "Won", "Lost", "Win %", "Avg Pts"], **{'text-align': 'right'}
         )
-        sorted_df = sorted_df.format("{:.1f}", subset=["Win %", "Avg Pts"])
+
+        # Format the columns to display as desired
+        sorted_df = sorted_df.format({
+            "HKS No.": "{:.0f}",
+            "Win %": "{:.1f}",
+            "Avg Pts": "{:.1f}"
+        })
 
         # Convert DataFrame to HTML, hide the index, and apply minimal styling for spacing
         html = sorted_df.to_html()
