@@ -91,39 +91,41 @@ clubs = [
     "Hong Kong Club", "The Best Group", "Bravo", "Energy Squash Club", "HKIS", "NEXUS"
     ]
 
-def get_latest_week_path(data_folder):
+def find_latest_file_for_division(data_folder, division, filename_pattern):
     """
-    Function to get the path of the latest week folder in a given data folder.
-    """
-    logging.debug(f"Looking for week folders in {data_folder}")
-    week_folder_pattern = os.path.join(data_folder, "week_*")
-    week_folders = glob.glob(week_folder_pattern)
-    logging.debug(f"Found week folders: {week_folders}")
+    Search for the latest file for a given division in the week folders under data_folder.
 
-    if not week_folders:
-        logging.warning(f"No week folders found in {data_folder}")
-        return None
-    
-    # Extract week numbers and their corresponding folders
+    Args:
+        data_folder (str): The base path to the data folder (e.g., season_base_path + "/detailed_league_tables")
+        division (str): The division name.
+        filename_pattern (str): The filename pattern, e.g., "{}_detailed_league_table.csv"
+
+    Returns:
+        str or None: The full path to the latest file found for the division, or None if not found.
+    """
+    # Get all week folders sorted by week number descending
+    week_folders = glob.glob(os.path.join(data_folder, "week_*"))
     week_numbers = []
     for folder in week_folders:
         week_name = os.path.basename(folder)
         match = re.match(r"week_(\d+)", week_name)
         if match:
             week_number = int(match.group(1))
-            week_numbers.append((week_number, folder))  # Collect as tuple (week_number, folder)
-            logging.debug(f"Found week folder: {week_name} in folder {folder}")
-        else:
-            logging.warning(f"Folder name {week_name} does not match expected pattern.")
-    
-    if not week_numbers:
-        logging.warning("No valid week folders found after processing.")
-        return None # No valid week folders found
-    
-    # Get the folder with the highest week number
-    latest_week_folder = max(week_numbers, key=lambda x: x[0])[1]
-    logging.info(f"Latest week folder for {data_folder} is {latest_week_folder}")
-    return latest_week_folder
+            week_numbers.append((week_number, folder))
+    # Sort week folders by week number in descending order
+    week_numbers.sort(reverse=True)
+    sorted_week_folders = [folder for _, folder in week_numbers]
+
+    # Loop over week folders
+    for week_folder in sorted_week_folders:
+        # Construct the file path
+        filename = filename_pattern.format(division)
+        file_path = os.path.join(week_folder, filename)
+        if os.path.exists(file_path):
+            logging.debug(f"Found file for division {division} at {file_path}")
+            return file_path
+    logging.warning(f"No file found for division {division} in {data_folder}")
+    return None
     
 
 def load_overall_home_away_data(division):
@@ -133,15 +135,12 @@ def load_overall_home_away_data(division):
     # Define the base path for home_away_data
     home_away_data_base_path = os.path.join(season_base_path, "home_away_data")
 
-    # Get the latest week folder
-    latest_home_away_data_week = get_latest_week_path(home_away_data_base_path)
+    # Use find_latest_file_for_division to get the file path
+    overall_home_away_path = find_latest_file_for_division(home_away_data_base_path, division, "{}_overall_scores.csv")
 
-    if latest_home_away_data_week is None:
+    if overall_home_away_path is None:
         logging.warning(f"No home/away data available for division {division}.")
         return None  # Or return an empty DataFrame/list as appropriate
-
-    # Construct the file path
-    overall_home_away_path = os.path.join(latest_home_away_data_week, f"{division}_overall_scores.csv")
 
     try:
         # Read the CSV file using Pandas
@@ -175,97 +174,43 @@ def load_csvs(division):
         awaiting_results_path = os.path.join(season_base_path, "awaiting_results")
         summarized_player_tables_path = os.path.join(season_base_path, "summarized_player_tables")
 
-        # Get the latest week paths
-        logging.debug("Getting latest week paths for data folders")
-        latest_detailed_league_tables_week = get_latest_week_path(detailed_league_tables_path)
-        latest_home_away_data_week = get_latest_week_path(home_away_data_path)
-        latest_simulated_tables_week = get_latest_week_path(simulated_tables_path)
-        latest_simulated_fixtures_week = get_latest_week_path(simulated_fixtures_path)
-        latest_awaiting_results_week = get_latest_week_path(awaiting_results_path)
-        latest_summarized_player_tables_week = get_latest_week_path(summarized_player_tables_path)
+        # Paths to subdirectories
+        team_win_percentage_breakdown_overall_path = os.path.join(team_win_percentage_breakdown_path, "Overall")
+        team_win_percentage_breakdown_home_path = os.path.join(team_win_percentage_breakdown_path, "Home")
+        team_win_percentage_breakdown_away_path = os.path.join(team_win_percentage_breakdown_path, "Away")
+        team_win_percentage_breakdown_delta_path = os.path.join(team_win_percentage_breakdown_path, "Delta")
 
-        # Get latest week paths under each subdirectory for team win percentage breakdown
-        latest_team_win_percentage_breakdown_overall_week = get_latest_week_path(team_win_percentage_breakdown_overall_path)
-        latest_team_win_percentage_breakdown_home_week = get_latest_week_path(team_win_percentage_breakdown_home_path)
-        latest_team_win_percentage_breakdown_away_week = get_latest_week_path(team_win_percentage_breakdown_away_path)
-        latest_team_win_percentage_breakdown_delta_week = get_latest_week_path(team_win_percentage_breakdown_delta_path)
-
-        # Construct file paths, handling None values for week paths
-        logging.debug("Constructing file paths")
-        overall_home_away_path = os.path.join(latest_home_away_data_week, f"{division}_overall_scores.csv") \
-            if latest_home_away_data_week else None
-        final_table_path = os.path.join(latest_simulated_tables_week, f"{division}_proj_final_table.csv") \
-            if latest_simulated_tables_week else None
-        fixtures_path = os.path.join(latest_simulated_fixtures_week, f"{division}_proj_fixtures.csv") \
-            if latest_simulated_fixtures_week else None
-        home_away_df_path = os.path.join(latest_home_away_data_week, f"{division}_team_average_scores.csv") \
-            if latest_home_away_data_week else None
-        team_win_breakdown_overall_path = os.path.join(
-            latest_team_win_percentage_breakdown_overall_week,
-            f"{division}_team_win_percentage_breakdown.csv"
-        ) if latest_team_win_percentage_breakdown_overall_week else None
-        team_win_breakdown_home_path = os.path.join(
-            latest_team_win_percentage_breakdown_home_week,
-            f"{division}_team_win_percentage_breakdown_home.csv"
-        ) if latest_team_win_percentage_breakdown_home_week else None
-        team_win_breakdown_away_path = os.path.join(
-            latest_team_win_percentage_breakdown_away_week,
-            f"{division}_team_win_percentage_breakdown_away.csv"
-        ) if latest_team_win_percentage_breakdown_away_week else None
-        team_win_breakdown_delta_path = os.path.join(
-            latest_team_win_percentage_breakdown_delta_week,
-            f"{division}_team_win_percentage_breakdown_delta.csv"
-        ) if latest_team_win_percentage_breakdown_delta_week else None
-        awaiting_results_path = os.path.join(latest_awaiting_results_week, f"{division}_awaiting_results.csv") \
-            if latest_awaiting_results_week else None
-        detailed_league_table_path = os.path.join(latest_detailed_league_tables_week,
-                                                  f"{division}_detailed_league_table.csv") \
-            if latest_detailed_league_tables_week else None
-        summarized_players_path = os.path.join(latest_summarized_player_tables_week,
-                                               f"{division}_summarized_players.csv") \
-            if latest_summarized_player_tables_week else None
-
-        # Initialize variables with empty DataFrames
-        overall_home_away = pd.DataFrame()
-        final_table = pd.DataFrame()
-        fixtures = pd.DataFrame()
-        home_away_df = pd.DataFrame()
-        team_win_breakdown_overall = pd.DataFrame()
-        team_win_breakdown_home = pd.DataFrame()
-        team_win_breakdown_away = pd.DataFrame()
-        team_win_breakdown_delta = pd.DataFrame()
-        awaiting_results = pd.DataFrame()
-        detailed_league_table = pd.DataFrame()
-        summarized_players = pd.DataFrame()
-
-        # Load data files individually
-        data_files = {
-            'overall_home_away': (overall_home_away_path, 'csv', {'header': None}),
-            'final_table': (final_table_path, 'csv', {}),
-            'fixtures': (fixtures_path, 'csv', {}),
-            'home_away_df': (home_away_df_path, 'csv', {}),
-            'team_win_breakdown_overall': (team_win_breakdown_overall_path, 'csv', {}),
-            'team_win_breakdown_home': (team_win_breakdown_home_path, 'csv', {}),
-            'team_win_breakdown_away': (team_win_breakdown_away_path, 'csv', {}),
-            'team_win_breakdown_delta': (team_win_breakdown_delta_path, 'csv', {}),
-            'awaiting_results': (awaiting_results_path, 'csv', {}),
-            'detailed_league_table': (detailed_league_table_path, 'csv', {}),
-            'summarized_players': (summarized_players_path, 'csv', {}),
-        }
+        # Define the data files to load
+        data_files = [
+            {'key': 'overall_home_away', 'data_folder': home_away_data_path, 'filename_pattern': "{}_overall_scores.csv", 'read_params': {'header': None}},
+            {'key': 'final_table', 'data_folder': simulated_tables_path, 'filename_pattern': "{}_proj_final_table.csv", 'read_params': {}},
+            {'key': 'fixtures', 'data_folder': simulated_fixtures_path, 'filename_pattern': "{}_proj_fixtures.csv", 'read_params': {}},
+            {'key': 'home_away_df', 'data_folder': home_away_data_path, 'filename_pattern': "{}_team_average_scores.csv", 'read_params': {}},
+            {'key': 'team_win_breakdown_overall', 'data_folder': team_win_percentage_breakdown_overall_path, 'filename_pattern': "{}_team_win_percentage_breakdown.csv", 'read_params': {}},
+            {'key': 'team_win_breakdown_home', 'data_folder': team_win_percentage_breakdown_home_path, 'filename_pattern': "{}_team_win_percentage_breakdown_home.csv", 'read_params': {}},
+            {'key': 'team_win_breakdown_away', 'data_folder': team_win_percentage_breakdown_away_path, 'filename_pattern': "{}_team_win_percentage_breakdown_away.csv", 'read_params': {}},
+            {'key': 'team_win_breakdown_delta', 'data_folder': team_win_percentage_breakdown_delta_path, 'filename_pattern': "{}_team_win_percentage_breakdown_delta.csv", 'read_params': {}},
+            {'key': 'awaiting_results', 'data_folder': awaiting_results_path, 'filename_pattern': "{}_awaiting_results.csv", 'read_params': {}},
+            {'key': 'detailed_league_table', 'data_folder': detailed_league_tables_path, 'filename_pattern': "{}_detailed_league_table.csv", 'read_params': {}},
+            {'key': 'summarized_players', 'data_folder': summarized_player_tables_path, 'filename_pattern': "{}_summarized_players.csv", 'read_params': {}},
+        ]
 
         data = {}
-        for key, (path, file_type, params) in data_files.items():
-            if path:
+        for file_info in data_files:
+            key = file_info['key']
+            data_folder = file_info['data_folder']
+            filename_pattern = file_info['filename_pattern']
+            read_params = file_info.get('read_params', {})
+            file_path = find_latest_file_for_division(data_folder, division, filename_pattern)
+            if file_path:
                 try:
-                    if file_type == 'csv':
-                        data[key] = pd.read_csv(path, **params)
-                    # Add other file types if needed
-                    logging.debug(f"Loaded {key} data from {path}")
+                    data[key] = pd.read_csv(file_path, **read_params)
+                    logging.debug(f"Loaded {key} data from {file_path}")
                 except Exception as e:
-                    logging.warning(f"Could not load {key} data from {path}: {e}")
+                    logging.warning(f"Could not load {key} data from {file_path}: {e}")
                     data[key] = pd.DataFrame()  # Assign empty DataFrame
             else:
-                logging.warning(f"No path available for {key}; setting as empty DataFrame.")
+                logging.warning(f"No file found for {key} for division {division}; setting as empty DataFrame.")
                 data[key] = pd.DataFrame()
 
         # Return the data in the expected order
@@ -310,38 +255,34 @@ def load_txts(division):
     unbeaten_players_base_path = os.path.join(season_base_path, "unbeaten_players")
     played_every_game_base_path = os.path.join(season_base_path, "played_every_game")
 
-    # Get the latest week paths
-    latest_unbeaten_players_week = get_latest_week_path(unbeaten_players_base_path)
-    latest_played_every_game_week = get_latest_week_path(played_every_game_base_path)
-
-    # Check if the latest week paths are found
-    if latest_unbeaten_players_week is None or latest_played_every_game_week is None:
-        logging.warning(f"No data available for unbeaten players or played every game for division {division}.")
-        st.error(f"Data not available for division {division}.")
-        return [], []
-    
-    # Construct file paths
-    unbeaten_file_path = os.path.join(latest_unbeaten_players_week, f"{division}.txt")
-    played_every_game_file_path = os.path.join(latest_played_every_game_week, f"{division}.txt")
+    # Use find_latest_file_for_division to get the file paths
+    unbeaten_file_path = find_latest_file_for_division(unbeaten_players_base_path, division, "{}.txt")
+    played_every_game_file_path = find_latest_file_for_division(played_every_game_base_path, division, "{}.txt")
 
     unbeaten_players = []
     played_every_game = []
 
     # Load unbeaten players
-    try:
-        with open(unbeaten_file_path, "r") as file:
-            unbeaten_players = [line.strip() for line in file]
-            logging.debug(f"Loaded unbeaten players: {unbeaten_players}")
-    except FileNotFoundError:
-        logging.warning(f"No unbeaten players found for division {division} at {unbeaten_file_path}")
+    if unbeaten_file_path:
+        try:
+            with open(unbeaten_file_path, "r") as file:
+                unbeaten_players = [line.strip() for line in file]
+                logging.debug(f"Loaded unbeaten players: {unbeaten_players}")
+        except Exception as e:
+            logging.warning(f"Error reading file {unbeaten_file_path}: {e}")
+    else:
+        logging.warning(f"No unbeaten players found for division {division}")
 
     # Load players who have played every game
-    try:
-        with open(played_every_game_file_path, "r") as file:
-            played_every_game = [line.strip() for line in file]
-            logging.debug(f"Loaded players who have played every game: {played_every_game}")
-    except FileNotFoundError:
-        logging.warning(f"No players who have played every game found for division {division} at {played_every_game_file_path}")
+    if played_every_game_file_path:
+        try:
+            with open(played_every_game_file_path, "r") as file:
+                played_every_game = [line.strip() for line in file]
+                logging.debug(f"Loaded players who have played every game: {played_every_game}")
+        except Exception as e:
+            logging.warning(f"Error reading file {played_every_game_file_path}: {e}")
+    else:
+        logging.warning(f"No players who have played every game found for division {division}")
 
     return unbeaten_players, played_every_game
 

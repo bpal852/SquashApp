@@ -791,7 +791,7 @@ def scrape_ranking_page(league_id, year):
         f"league/Squash/year/{year}/pages_id/25.html"
     )
 
-    logging.info(f"Scraping ranking page for league id: {league_id}, year: {year}...")
+    logging.info(f"Scraping ranking page for league id: {league_id}, year: {year}")
     logging.debug(f"Constructed ranking URL: {ranking_url}")
 
     # Send the HTTP request
@@ -1003,7 +1003,7 @@ def scrape_players_page(league_id, year):
 logging.info("Starting the scraping process...")
 
 # Change dictionary if you want specific week
-for div in wednesday.keys():
+for div in tuesday.keys():
     logging.info(f"Processing Division {div}")
     league_id = f"D00{all_divisions[div]}"
 
@@ -1052,7 +1052,7 @@ for div in wednesday.keys():
     except Exception as e:
         logging.error(f"Error saving schedules_df to {schedules_df_path}: {e}")
 
-    time.sleep(10)
+    time.sleep(20)
 
     # Scrape Team Summary page
     try:
@@ -1077,7 +1077,7 @@ for div in wednesday.keys():
     except Exception as e:
         logging.error(f"Error saving summary_df to {summary_df_path}: {e}")
     
-    time.sleep(10)
+    time.sleep(20)
 
     # Scrape Teams page
     try:
@@ -1097,7 +1097,7 @@ for div in wednesday.keys():
     except Exception as e:
         logging.error(f"Error saving teams_df to {teams_df_path}: {e}")
 
-    time.sleep(10)
+    time.sleep(20)
 
     # Scrape Ranking page
     try:
@@ -1122,7 +1122,7 @@ for div in wednesday.keys():
         logging.info(f"No ranking data to save for Division {div}; skipping ranking_df CSV creation.")
 
 
-    time.sleep(10)
+    time.sleep(20)
 
     # Scrape Players page
     try:
@@ -1142,7 +1142,7 @@ for div in wednesday.keys():
     except Exception as e:
         logging.error(f"Error saving players_df to {players_df_path}: {e}")
 
-    time.sleep(10)
+    time.sleep(20)
 
     # Get list of players who have played every possible game
     if not ranking_df_filtered.empty and not summary_df.empty:
@@ -1315,18 +1315,18 @@ for div in wednesday.keys():
         df_remaining_fixtures.apply(lambda row: team_home_venues.get(row["Away Team"]) == row["Venue"], axis=1)].copy()
 
     # Calculate Home vs Away
-    if not results_df.empty:
+    if not valid_matches_df.empty:
         # Apply the function to 'Overall Score' column
-        results_df[['Home Overall Score', 'Away Overall Score']] = results_df['Overall Score'].apply(
+        valid_matches_df[['Home Overall Score', 'Away Overall Score']] = valid_matches_df['Overall Score'].apply(
             lambda x: pd.Series(split_overall_score(x)))
 
         # Calculate the average score for home and away teams
-        average_home_overall_score = results_df['Home Overall Score'].mean()
-        average_away_overall_score = results_df['Away Overall Score'].mean()
+        average_home_overall_score = valid_matches_df['Home Overall Score'].mean()
+        average_away_overall_score = valid_matches_df['Away Overall Score'].mean()
 
         # Calculate home win percentage
         home_win_perc = len(
-            results_df[results_df["Home Overall Score"] > results_df["Away Overall Score"]]) / len(results_df)
+            valid_matches_df[valid_matches_df["Home Overall Score"] > valid_matches_df["Away Overall Score"]]) / len(results_df)
     else:
         logging.warning("No results data to calculate home vs away statistics for Division {div}.")
         average_home_overall_score = 0
@@ -1344,10 +1344,10 @@ for div in wednesday.keys():
         overall_scores_df = pd.DataFrame(columns=[0, 1, 2, 3, 4])
 
     # Calculate average home score for each home team
-    average_home_scores = results_df.groupby('Home Team')['Home Overall Score'].mean().rename('Average Home Score')
+    average_home_scores = valid_matches_df.groupby('Home Team')['Home Overall Score'].mean().rename('Average Home Score')
 
     # Calculate average away score for each away team
-    average_away_scores = results_df.groupby('Away Team')['Away Overall Score'].mean().rename('Average Away Score')
+    average_away_scores = valid_matches_df.groupby('Away Team')['Away Overall Score'].mean().rename('Average Away Score')
 
     # Combine the two Series into one DataFrame
     team_average_scores = pd.concat([average_home_scores, average_away_scores], axis=1)
@@ -1666,7 +1666,7 @@ for div in wednesday.keys():
     overall_scores_df.to_csv(overall_scores_file, index=False, header=None)
 
     # Wait so as not to get a connection error
-    time.sleep(15)
+    time.sleep(20)
 
     # Use run_projections to determine whether to run projections or not
     if run_projections == 1:
@@ -1682,24 +1682,3 @@ for div in wednesday.keys():
         # Save the results
         projected_final_table.to_csv(os.path.join(base_directories['simulated_tables'], week_dir, f"{div}_proj_final_table.csv"), index=False)
         projected_fixtures.to_csv(os.path.join(base_directories['simulated_fixtures'], week_dir, f"{div}_proj_fixtures.csv"), index=False)
-
-
-# After loop ends, print out all awaiting results
-for div in all_divisions.keys():
-    week_dir = f"week_{match_week}"
-    csv_file_path = os.path.join(
-        base_directories['awaiting_results'],
-        week_dir,
-        f"{div}_awaiting_results.csv"
-    )
-    
-    if os.path.exists(csv_file_path):
-        try:
-            awaiting_results_df = pd.read_csv(csv_file_path)
-            print(f"Division {div} Awaiting Results:")
-            print(awaiting_results_df)
-        except Exception as e:
-            logging.error(f"An error occurred while reading awaiting results for Division {div}: {e}")
-    else:
-        print(f"No awaiting results for Division {div}.")
-        logging.info(f"No awaiting results CSV file found for Division {div}.")
