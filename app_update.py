@@ -35,7 +35,7 @@ today = pd.Timestamp(datetime.now().date())
 season = "2024-2025"
 
 # Define the base directory
-base_directory = "C:/Users/bpali/PycharmProjects/SquashApp/"
+base_directory = os.path.dirname(os.path.abspath(__file__))
 
 # Define the season base path 
 season_base_path = os.path.join(base_directory, season)
