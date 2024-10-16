@@ -21,6 +21,9 @@ logging.basicConfig(
 # Suppress Matplotlib's DEBUG logs
 logging.getLogger('matplotlib').setLevel(logging.WARNING)
 
+# Suppress DEBUG messages from the 'watchdog' logger
+logging.getLogger('watchdog').setLevel(logging.WARNING)
+
 # Set page configurations
 st.set_page_config(
     page_title="HK Squash App",
@@ -31,13 +34,30 @@ st.set_page_config(
 today = pd.Timestamp(datetime.now().date())
 
 # Define the season
-season = "2024-2025"
+current_season = "2024-2025"
 
 # Define the base directory
 base_directory = os.path.dirname(os.path.abspath(__file__))
 
+def get_available_seasons(base_directory, current_season):
+    """
+    Function to get list of available seasons
+    """
+    previous_seasons_dir = os.path.join(base_directory, "previous_seasons")
+    if os.path.exists(previous_seasons_dir):
+        previous_seasons = [d for d in os.listdir(previous_seasons_dir) if os.path.isdir(os.path.join(previous_seasons_dir, d))]
+    else:
+        previous_seasons = []
+    seasons = previous_seasons + [current_season]
+    seasons.sort(reverse=True)  # Sort seasons in descending order
+    return seasons
+
+
+# List of available seasons
+available_seasons = get_available_seasons(base_directory, current_season)
+
 # Define the season base path 
-season_base_path = os.path.join(base_directory, season)
+season_base_path = os.path.join(base_directory, current_season)
 
 # Define the team win percentage base path
 team_win_percentage_breakdown_path = os.path.join(season_base_path, "team_win_percentage_breakdown")
@@ -90,44 +110,64 @@ clubs = [
     "Hong Kong Club", "The Best Group", "Bravo", "Energy Squash Club", "HKIS", "NEXUS"
     ]
 
+
+
 def find_latest_file_for_division(data_folder, division, filename_pattern):
     """
     Search for the latest file for a given division in the week folders under data_folder.
-
+    If week_* folders do not exist, search directly in the data_folder.
+    
     Args:
-        data_folder (str): The base path to the data folder (e.g., season_base_path + "/detailed_league_tables")
+        data_folder (str): The base path to the data folder.
         division (str): The division name.
         filename_pattern (str): The filename pattern, e.g., "{}_detailed_league_table.csv"
-
+    
     Returns:
         str or None: The full path to the latest file found for the division, or None if not found.
     """
-    # Get all week folders sorted by week number descending
-    week_folders = glob.glob(os.path.join(data_folder, "week_*"))
-    week_numbers = []
-    for folder in week_folders:
-        week_name = os.path.basename(folder)
-        match = re.match(r"week_(\d+)", week_name)
-        if match:
-            week_number = int(match.group(1))
-            week_numbers.append((week_number, folder))
-    # Sort week folders by week number in descending order
-    week_numbers.sort(reverse=True)
-    sorted_week_folders = [folder for _, folder in week_numbers]
+    # Ensure data_folder exists
+    if not os.path.exists(data_folder):
+        logging.warning(f"Data folder does not exist: {data_folder}")
+        return None
 
-    # Loop over week folders
-    for week_folder in sorted_week_folders:
-        # Construct the file path
+    # Check if week_* folders exist
+    week_folders = glob.glob(os.path.join(data_folder, "week_*"))
+    if week_folders:
+        # Proceed as before, searching within week_* folders
+        week_numbers = []
+        for folder in week_folders:
+            week_name = os.path.basename(folder)
+            match = re.match(r"week_(\d+)", week_name)
+            if match:
+                week_number = int(match.group(1))
+                week_numbers.append((week_number, folder))
+        # Sort week folders by week number in descending order
+        week_numbers.sort(reverse=True)
+        sorted_week_folders = [folder for _, folder in week_numbers]
+        # Loop over week folders
+        for week_folder in sorted_week_folders:
+            # Construct the file path
+            filename = filename_pattern.format(division)
+            file_path = os.path.join(week_folder, filename)
+            if os.path.exists(file_path):
+                logging.debug(f"Found file for division {division} at {file_path}")
+                return file_path
+        logging.warning(f"No file found for division {division} in week folders of {data_folder}")
+    else:
+        # No week_* folders; search directly in data_folder
         filename = filename_pattern.format(division)
-        file_path = os.path.join(week_folder, filename)
+        file_path = os.path.join(data_folder, filename)
         if os.path.exists(file_path):
             logging.debug(f"Found file for division {division} at {file_path}")
             return file_path
-    logging.warning(f"No file found for division {division} in {data_folder}")
+        else:
+            logging.warning(f"No file found for division {division} directly in {data_folder}")
+
     return None
+
     
 
-def load_overall_home_away_data(division):
+def load_overall_home_away_data(division, season_base_path):
     """
     Load the overall home/away data for a given division.
     """
@@ -161,38 +201,85 @@ def load_overall_home_away_data(division):
 
 
 
-def load_csvs(division):
+def load_csvs(division, season_base_path, is_current_season=True):
     try:
-        logging.info(f"Loading CSVs for division {division}")
+        logging.info(f"Loading CSVs for division {division} for season {season_base_path}")
         # Define the paths to the data folders
         detailed_league_tables_path = os.path.join(season_base_path, "detailed_league_tables")
         home_away_data_path = os.path.join(season_base_path, "home_away_data")
-        simulated_tables_path = os.path.join(season_base_path, "simulated_tables")
-        simulated_fixtures_path = os.path.join(season_base_path, "simulated_fixtures")
         team_win_percentage_breakdown_path = os.path.join(season_base_path, "team_win_percentage_breakdown")
-        awaiting_results_path = os.path.join(season_base_path, "awaiting_results")
         summarized_player_tables_path = os.path.join(season_base_path, "summarized_player_tables")
+        ranking_df_path = os.path.join(season_base_path, "ranking_df")
+        # For current season only
+        simulated_tables_path = os.path.join(season_base_path, "simulated_tables") if is_current_season else None
+        simulated_fixtures_path = os.path.join(season_base_path, "simulated_fixtures") if is_current_season else None
+        awaiting_results_path = os.path.join(season_base_path, "awaiting_results") if is_current_season else None
 
-        # Paths to subdirectories
-        team_win_percentage_breakdown_overall_path = os.path.join(team_win_percentage_breakdown_path, "Overall")
-        team_win_percentage_breakdown_home_path = os.path.join(team_win_percentage_breakdown_path, "Home")
-        team_win_percentage_breakdown_away_path = os.path.join(team_win_percentage_breakdown_path, "Away")
-        team_win_percentage_breakdown_delta_path = os.path.join(team_win_percentage_breakdown_path, "Delta")
+        # Check if subfolders exist under team_win_percentage_breakdown_path
+        overall_subfolder = os.path.join(team_win_percentage_breakdown_path, "Overall")
+        if os.path.exists(overall_subfolder):
+            # Subfolders exist
+            team_win_percentage_breakdown_overall_path = overall_subfolder
+            team_win_percentage_breakdown_home_path = os.path.join(team_win_percentage_breakdown_path, "Home")
+            team_win_percentage_breakdown_away_path = os.path.join(team_win_percentage_breakdown_path, "Away")
+            team_win_percentage_breakdown_delta_path = os.path.join(team_win_percentage_breakdown_path, "Delta")
+            # Indicate that multiple breakdowns are available
+            multiple_breakdowns_available = True
+        else:
+            # Subfolders do not exist; use the main folder and set others to None
+            team_win_percentage_breakdown_overall_path = team_win_percentage_breakdown_path
+            team_win_percentage_breakdown_home_path = None
+            team_win_percentage_breakdown_away_path = None
+            team_win_percentage_breakdown_delta_path = None
+            multiple_breakdowns_available = False
 
         # Define the data files to load
         data_files = [
             {'key': 'overall_home_away', 'data_folder': home_away_data_path, 'filename_pattern': "{}_overall_scores.csv", 'read_params': {'header': None}},
-            {'key': 'final_table', 'data_folder': simulated_tables_path, 'filename_pattern': "{}_proj_final_table.csv", 'read_params': {}},
-            {'key': 'fixtures', 'data_folder': simulated_fixtures_path, 'filename_pattern': "{}_proj_fixtures.csv", 'read_params': {}},
             {'key': 'home_away_df', 'data_folder': home_away_data_path, 'filename_pattern': "{}_team_average_scores.csv", 'read_params': {}},
             {'key': 'team_win_breakdown_overall', 'data_folder': team_win_percentage_breakdown_overall_path, 'filename_pattern': "{}_team_win_percentage_breakdown.csv", 'read_params': {}},
-            {'key': 'team_win_breakdown_home', 'data_folder': team_win_percentage_breakdown_home_path, 'filename_pattern': "{}_team_win_percentage_breakdown_home.csv", 'read_params': {}},
-            {'key': 'team_win_breakdown_away', 'data_folder': team_win_percentage_breakdown_away_path, 'filename_pattern': "{}_team_win_percentage_breakdown_away.csv", 'read_params': {}},
-            {'key': 'team_win_breakdown_delta', 'data_folder': team_win_percentage_breakdown_delta_path, 'filename_pattern': "{}_team_win_percentage_breakdown_delta.csv", 'read_params': {}},
-            {'key': 'awaiting_results', 'data_folder': awaiting_results_path, 'filename_pattern': "{}_awaiting_results.csv", 'read_params': {}},
-            {'key': 'detailed_league_table', 'data_folder': detailed_league_tables_path, 'filename_pattern': "{}_detailed_league_table.csv", 'read_params': {}},
-            {'key': 'summarized_players', 'data_folder': summarized_player_tables_path, 'filename_pattern': "{}_summarized_players.csv", 'read_params': {}},
         ]
+
+        # Only add Home, Away, and Delta if they are available
+        if multiple_breakdowns_available:
+            data_files.extend([
+                {'key': 'team_win_breakdown_home', 'data_folder': team_win_percentage_breakdown_home_path, 'filename_pattern': "{}_team_win_percentage_breakdown_home.csv", 'read_params': {}},
+                {'key': 'team_win_breakdown_away', 'data_folder': team_win_percentage_breakdown_away_path, 'filename_pattern': "{}_team_win_percentage_breakdown_away.csv", 'read_params': {}},
+                {'key': 'team_win_breakdown_delta', 'data_folder': team_win_percentage_breakdown_delta_path, 'filename_pattern': "{}_team_win_percentage_breakdown_delta.csv", 'read_params': {}},
+            ])
+        else:
+            # Assign None or empty DataFrames to these keys
+            data_files.extend([
+                {'key': 'team_win_breakdown_home', 'data_folder': None, 'filename_pattern': None, 'read_params': {}},
+                {'key': 'team_win_breakdown_away', 'data_folder': None, 'filename_pattern': None, 'read_params': {}},
+                {'key': 'team_win_breakdown_delta', 'data_folder': None, 'filename_pattern': None, 'read_params': {}},
+            ])
+
+        # Add detailed league table
+        data_files.append({'key': 'detailed_league_table', 'data_folder': detailed_league_tables_path, 'filename_pattern': "{}_detailed_league_table.csv", 'read_params': {}})
+
+        # Handle summarized players differently based on the existence of summarized_player_tables_path
+        if os.path.exists(summarized_player_tables_path):
+            # Use summarized_player_tables_path with the format "{}_summarized_players.csv"
+            data_files.append({'key': 'summarized_players', 'data_folder': summarized_player_tables_path, 'filename_pattern': "{}_summarized_players.csv", 'read_params': {}})
+        else:
+            # Use ranking_df_path with the format "{}_summarized_df.csv"
+            data_files.append({'key': 'summarized_players', 'data_folder': ranking_df_path, 'filename_pattern': "{}_summarized_df.csv", 'read_params': {}})
+
+        # Only load projections and awaiting results for current season
+        if is_current_season:
+            data_files.extend([
+                {'key': 'final_table', 'data_folder': simulated_tables_path, 'filename_pattern': "{}_proj_final_table.csv", 'read_params': {}},
+                {'key': 'fixtures', 'data_folder': simulated_fixtures_path, 'filename_pattern': "{}_proj_fixtures.csv", 'read_params': {}},
+                {'key': 'awaiting_results', 'data_folder': awaiting_results_path, 'filename_pattern': "{}_awaiting_results.csv", 'read_params': {}},
+            ])
+        else:
+            # For previous seasons, assign empty DataFrames
+            data_files.extend([
+                {'key': 'final_table', 'data_folder': None, 'filename_pattern': None, 'read_params': {}},
+                {'key': 'fixtures', 'data_folder': None, 'filename_pattern': None, 'read_params': {}},
+                {'key': 'awaiting_results', 'data_folder': None, 'filename_pattern': None, 'read_params': {}},
+            ])
 
         data = {}
         for file_info in data_files:
@@ -200,16 +287,20 @@ def load_csvs(division):
             data_folder = file_info['data_folder']
             filename_pattern = file_info['filename_pattern']
             read_params = file_info.get('read_params', {})
-            file_path = find_latest_file_for_division(data_folder, division, filename_pattern)
-            if file_path:
-                try:
-                    data[key] = pd.read_csv(file_path, **read_params)
-                    logging.debug(f"Loaded {key} data from {file_path}")
-                except Exception as e:
-                    logging.warning(f"Could not load {key} data from {file_path}: {e}")
-                    data[key] = pd.DataFrame()  # Assign empty DataFrame
+            if data_folder and filename_pattern:
+                file_path = find_latest_file_for_division(data_folder, division, filename_pattern)
+                if file_path:
+                    try:
+                        data[key] = pd.read_csv(file_path, **read_params)
+                        logging.debug(f"Loaded {key} data from {file_path}")
+                    except Exception as e:
+                        logging.warning(f"Could not load {key} data from {file_path}: {e}")
+                        data[key] = pd.DataFrame()  # Assign empty DataFrame
+                else:
+                    logging.warning(f"No file found for {key} for division {division}; setting as empty DataFrame.")
+                    data[key] = pd.DataFrame()
             else:
-                logging.warning(f"No file found for {key} for division {division}; setting as empty DataFrame.")
+                logging.debug(f"Data folder or filename pattern is None for {key}; assigning empty DataFrame.")
                 data[key] = pd.DataFrame()
 
         # Return the data in the expected order
@@ -224,7 +315,8 @@ def load_csvs(division):
             data.get('awaiting_results', pd.DataFrame()),
             data.get('detailed_league_table', pd.DataFrame()),
             data.get('overall_home_away', pd.DataFrame()),
-            data.get('summarized_players', pd.DataFrame())
+            data.get('summarized_players', pd.DataFrame()),
+            multiple_breakdowns_available  # Return this flag
         )
 
     except Exception as e:
@@ -232,21 +324,12 @@ def load_csvs(division):
         st.error(f"Data not found for division {division}. Error: {e}")
         # Return a tuple of empty DataFrames
         empty_df = pd.DataFrame()
-        return (empty_df,) * 11
+        return (empty_df,) * 11 + (False,)  # Return False for multiple_breakdowns_available
 
 
-
-def load_txts(division):
+def load_txts(division, season_base_path):
     """
     Load the lists of unbeaten players and players who have played every game for a given division.
-
-    Args:
-        division (str): The division name.
-
-    Returns:
-        tuple: A tuple containing two lists:
-            - unbeaten_players (list): List of unbeaten players.
-            - played_every_game (list): List of players who have played every game.
     """
     logging.info(f"Loading TXTs for division {division}")
 
@@ -254,73 +337,118 @@ def load_txts(division):
     unbeaten_players_base_path = os.path.join(season_base_path, "unbeaten_players")
     played_every_game_base_path = os.path.join(season_base_path, "played_every_game")
 
+    # Initialize the lists
+    unbeaten_players = []
+    played_every_game = []
+
     # Use find_latest_file_for_division to get the file paths
     unbeaten_file_path = find_latest_file_for_division(unbeaten_players_base_path, division, "{}.txt")
     played_every_game_file_path = find_latest_file_for_division(played_every_game_base_path, division, "{}.txt")
 
-    unbeaten_players = []
-    played_every_game = []
-
     # Load unbeaten players
-    if unbeaten_file_path:
+    if unbeaten_file_path and os.path.exists(unbeaten_file_path):
         try:
-            with open(unbeaten_file_path, "r") as file:
-                unbeaten_players = [line.strip() for line in file]
-                logging.debug(f"Loaded unbeaten players: {unbeaten_players}")
+            with open(unbeaten_file_path, 'r') as file:
+                unbeaten_players = [line.strip() for line in file if line.strip()]
+            logging.debug(f"Loaded unbeaten players from {unbeaten_file_path}")
         except Exception as e:
-            logging.warning(f"Error reading file {unbeaten_file_path}: {e}")
+            logging.exception(f"Error reading unbeaten players file: {unbeaten_file_path}")
     else:
-        logging.warning(f"No unbeaten players found for division {division}")
+        logging.warning(f"No unbeaten players file found for division {division}")
+        unbeaten_players = []  # Ensure it's an empty list
 
     # Load players who have played every game
-    if played_every_game_file_path:
+    if played_every_game_file_path and os.path.exists(played_every_game_file_path):
         try:
-            with open(played_every_game_file_path, "r") as file:
-                played_every_game = [line.strip() for line in file]
-                logging.debug(f"Loaded players who have played every game: {played_every_game}")
+            with open(played_every_game_file_path, 'r') as file:
+                played_every_game = [line.strip() for line in file if line.strip()]
+            logging.debug(f"Loaded players who have played every game from {played_every_game_file_path}")
         except Exception as e:
-            logging.warning(f"Error reading file {played_every_game_file_path}: {e}")
+            logging.exception(f"Error reading played every game file: {played_every_game_file_path}")
     else:
-        logging.warning(f"No players who have played every game found for division {division}")
+        logging.warning(f"No played every game file found for division {division}")
+        played_every_game = []  # Ensure it's an empty list
 
     return unbeaten_players, played_every_game
 
 
-def load_player_rankings():
+
+def load_player_rankings(season_base_path, divisions_for_season):
     """
     Function to load player rankings CSVs from the most recent weeks for each division,
     ensuring data is loaded for all divisions even if they didn't play in the latest week.
+    Handles both cases where data is stored under week_* folders (current season)
+    and where data files are stored directly under the data directories (previous seasons).
     """
-    logging.info("Loading player rankings")
+    logging.info(f"Loading player rankings for season {season_base_path}")
 
     # Define the path to the ranking data for the season
     ranking_df_path = os.path.join(season_base_path, "ranking_df")
-    
-    # Get all week folders sorted by week number descending
-    week_folders = glob.glob(os.path.join(ranking_df_path, "week_*"))
-    week_numbers = []
-    for folder in week_folders:
-        week_name = os.path.basename(folder)
-        match = re.match(r"week_(\d+)", week_name)
-        if match:
-            week_number = int(match.group(1))
-            week_numbers.append((week_number, folder))
-    # Sort week folders by week number in descending order
-    week_numbers.sort(reverse=True)
-    sorted_week_folders = [folder for _, folder in week_numbers]
+
+    # Ensure the path exists
+    if not os.path.exists(ranking_df_path):
+        logging.warning(f"Ranking data path does not exist: {ranking_df_path}")
+        st.error("Ranking data not available.")
+        return pd.DataFrame()
 
     # Initialize variables
     ranking_dataframes = []
-    divisions_loaded = set()
-    divisions_to_load = set(all_divisions.keys())
 
-    # Iterate over week folders
-    for week_folder in sorted_week_folders:
-        if not divisions_to_load:
-            break # All divisions have been loaded
-            
-        # Get all CSV files in the week folder
-        ranking_files = glob.glob(os.path.join(week_folder, "*.csv"))
+    # Check if week_* folders exist
+    week_folders = glob.glob(os.path.join(ranking_df_path, "week_*"))
+    if week_folders:
+        # Week folders exist; proceed to load data from them
+        week_numbers = []
+        for folder in week_folders:
+            week_name = os.path.basename(folder)
+            match = re.match(r"week_(\d+)", week_name)
+            if match:
+                week_number = int(match.group(1))
+                week_numbers.append((week_number, folder))
+        # Sort week folders by week number in descending order
+        week_numbers.sort(reverse=True)
+        sorted_week_folders = [folder for _, folder in week_numbers]
+
+        divisions_loaded = set()
+        divisions_to_load = set(divisions_for_season)
+
+        # Iterate over week folders
+        for week_folder in sorted_week_folders:
+            if not divisions_to_load:
+                break  # All divisions have been loaded
+
+            # Get all CSV files in the week folder
+            ranking_files = glob.glob(os.path.join(week_folder, "*.csv"))
+            for file in ranking_files:
+                # Extract division from filename
+                filename = os.path.basename(file)
+                logging.debug(f"Processing file: {filename}")
+                division_match = re.match(r"(.*)_ranking_df\.csv", filename)
+                if division_match:
+                    division = division_match.group(1)
+                    logging.debug(f"Matched division: {division}")
+                    if division in divisions_to_load:
+                        try:
+                            df = pd.read_csv(file)
+                            ranking_dataframes.append(df)
+                            divisions_loaded.add(division)
+                            divisions_to_load.remove(division)
+                            logging.debug(f"Loaded ranking data for division {division} from {file}")
+                        except Exception as e:
+                            logging.warning(f"Error reading file {file}: {e}")
+                            continue
+                else:
+                    logging.warning(f"Filename {filename} does not match expected pattern.")
+            if not divisions_to_load:
+                break  # All divisions loaded
+    else:
+        # No week_* folders; load CSV files directly from ranking_df_path
+        ranking_files = glob.glob(os.path.join(ranking_df_path, "*.csv"))
+        if not ranking_files:
+            logging.warning(f"No ranking files found in {ranking_df_path}")
+            st.error("No ranking data available.")
+            return pd.DataFrame()
+
         for file in ranking_files:
             # Extract division from filename
             filename = os.path.basename(file)
@@ -328,21 +456,15 @@ def load_player_rankings():
             division_match = re.match(r"(.*)_ranking_df\.csv", filename)
             if division_match:
                 division = division_match.group(1)
-                logging.debug(f"Matched division: {division}")
-                if division in divisions_to_load:
-                    try:
-                        df = pd.read_csv(file)
-                        ranking_dataframes.append(df)
-                        divisions_loaded.add(division)
-                        divisions_to_load.remove(division)
-                        logging.debug(f"Loaded ranking data for division {division} from {file}")
-                    except Exception as e:
-                        logging.warning(f"Error reading file {file}: {e}")
-                        continue
+                try:
+                    df = pd.read_csv(file)
+                    ranking_dataframes.append(df)
+                    logging.debug(f"Loaded ranking data for division {division} from {file}")
+                except Exception as e:
+                    logging.warning(f"Error reading file {file}: {e}")
+                    continue
             else:
                 logging.warning(f"Filename {filename} does not match expected pattern.")
-        if not divisions_to_load:
-            break  # All divisions loaded
 
     if not ranking_dataframes:
         logging.error("No valid ranking data files loaded.")
@@ -353,33 +475,73 @@ def load_player_rankings():
     ranking_df_all = pd.concat(ranking_dataframes, ignore_index=True)
     logging.info(f"Combined all rankings data into a single DataFrame with shape {ranking_df_all.shape}")
 
-    # Repeat similar steps for players_df
+    # Now repeat similar steps for players_df
     # Define the path to the players data for the season
     players_df_path = os.path.join(season_base_path, "players_df")
 
-    # Get all week folders sorted by week number descending
-    week_folders = glob.glob(os.path.join(players_df_path, "week_*"))
-    week_numbers = []
-    for folder in week_folders:
-        week_name = os.path.basename(folder)
-        match = re.match(r"week_(\d+)", week_name)
-        if match:
-            week_number = int(match.group(1))
-            week_numbers.append((week_number, folder))
-    # Sort week folders by week number descending
-    week_numbers.sort(reverse=True)
-    sorted_week_folders = [folder for _, folder in week_numbers]
+    # Ensure the path exists
+    if not os.path.exists(players_df_path):
+        logging.warning(f"Players data path does not exist: {players_df_path}")
+        st.error("Players data not available.")
+        return pd.DataFrame()
 
     players_dataframes = []
-    divisions_loaded = set()
-    divisions_to_load = set(all_divisions.keys())
 
-    for week_folder in sorted_week_folders:
-        if not divisions_to_load:
-            break  # All divisions loaded  
+    # Check if week_* folders exist
+    week_folders = glob.glob(os.path.join(players_df_path, "week_*"))
+    if week_folders:
+        # Week folders exist; proceed to load data from them
+        week_numbers = []
+        for folder in week_folders:
+            week_name = os.path.basename(folder)
+            match = re.match(r"week_(\d+)", week_name)
+            if match:
+                week_number = int(match.group(1))
+                week_numbers.append((week_number, folder))
+        # Sort week folders by week number descending
+        week_numbers.sort(reverse=True)
+        sorted_week_folders = [folder for _, folder in week_numbers]
 
-        # Get all CSV files in the week folder
-        players_files = glob.glob(os.path.join(week_folder, "*.csv"))
+        divisions_loaded = set()
+        divisions_to_load = set(divisions_for_season)
+
+        # Iterate over week folders
+        for week_folder in sorted_week_folders:
+            if not divisions_to_load:
+                break  # All divisions loaded
+
+            # Get all CSV files in the week folder
+            players_files = glob.glob(os.path.join(week_folder, "*.csv"))
+            for file in players_files:
+                # Extract division from filename
+                filename = os.path.basename(file)
+                logging.debug(f"Processing file: {filename}")
+                division_match = re.match(r"(.*)_players_df\.csv", filename)
+                if division_match:
+                    division = division_match.group(1)
+                    logging.debug(f"Matched division: {division}")
+                    if division in divisions_to_load:
+                        try:
+                            df = pd.read_csv(file)
+                            players_dataframes.append(df)
+                            divisions_loaded.add(division)
+                            divisions_to_load.remove(division)
+                            logging.debug(f"Loaded players data for division {division} from {file}")
+                        except Exception as e:
+                            logging.warning(f"Error reading file {file}: {e}")
+                            continue
+                else:
+                    logging.warning(f"Filename {filename} does not match expected pattern.")
+            if not divisions_to_load:
+                break  # All divisions loaded
+    else:
+        # No week_* folders; load CSV files directly from players_df_path
+        players_files = glob.glob(os.path.join(players_df_path, "*.csv"))
+        if not players_files:
+            logging.warning(f"No players files found in {players_df_path}")
+            st.error("No players data available.")
+            return pd.DataFrame()
+
         for file in players_files:
             # Extract division from filename
             filename = os.path.basename(file)
@@ -387,21 +549,15 @@ def load_player_rankings():
             division_match = re.match(r"(.*)_players_df\.csv", filename)
             if division_match:
                 division = division_match.group(1)
-                logging.debug(f"Matched division: {division}")
-                if division in divisions_to_load:
-                    try:
-                        df = pd.read_csv(file)
-                        players_dataframes.append(df)
-                        divisions_loaded.add(division)
-                        divisions_to_load.remove(division)
-                        logging.debug(f"Loaded players data for division {division} from {file}")
-                    except Exception as e:
-                        logging.warning(f"Error reading file {file}: {e}")
-                        continue
+                try:
+                    df = pd.read_csv(file)
+                    players_dataframes.append(df)
+                    logging.debug(f"Loaded players data for division {division} from {file}")
+                except Exception as e:
+                    logging.warning(f"Error reading file {file}: {e}")
+                    continue
             else:
                 logging.warning(f"Filename {filename} does not match expected pattern.")
-        if not divisions_to_load:
-            break  # All divisions loaded
 
     if not players_dataframes:
         logging.error("No valid players data files loaded.")
@@ -412,7 +568,7 @@ def load_player_rankings():
     players_df_all = pd.concat(players_dataframes, ignore_index=True)
     logging.info(f"Combined all players data into a single DataFrame with shape {players_df_all.shape}")
 
-    # Now merge ranking_df_all and players_df_all on 'Name of Player'/'Player' and 'Team'
+    # Merge ranking_df_all and players_df_all on 'Name of Player'/'Player' and 'Team'
     # We'll rename 'Player' in players_df_all to 'Name of Player' to facilitate the merge
     players_df_all = players_df_all.rename(columns={'Player': 'Name of Player'})
 
@@ -436,13 +592,12 @@ def load_player_rankings():
 
     def determine_club(team_name):
         """
-        Function to create club column from team name
+        Function to determine the club based on the team name.
         """
         for club in clubs:
             if club.lower() in team_name.lower():
                 return club
-        return team_name # Return the team name if no club is matched
-
+        return team_name  # Return the team name if no club is matched
 
     # Apply the function to the 'Team' column
     if "Team" in merged_df.columns:
@@ -452,6 +607,49 @@ def load_player_rankings():
         merged_df["Club"] = "Unknown"
 
     return merged_df
+
+
+def get_divisions_for_season(season_base_path):
+    """
+    Function to get a list of divisions available for a given season.
+    """
+    detailed_league_tables_path = os.path.join(season_base_path, "detailed_league_tables")
+    
+    # Check if week_* folders exist
+    week_folders = glob.glob(os.path.join(detailed_league_tables_path, "week_*"))
+    divisions = set()
+    
+    if week_folders:
+        # Week folders exist; collect divisions from the most recent week
+        week_numbers = []
+        for folder in week_folders:
+            week_name = os.path.basename(folder)
+            match = re.match(r"week_(\d+)", week_name)
+            if match:
+                week_number = int(match.group(1))
+                week_numbers.append((week_number, folder))
+        # Sort week folders by week number in descending order
+        week_numbers.sort(reverse=True)
+        latest_week_folder = week_numbers[0][1]  # Get the folder for the latest week
+        
+        # Get all CSV files in the latest week folder
+        csv_files = glob.glob(os.path.join(latest_week_folder, "*.csv"))
+    else:
+        # No week_* folders; collect divisions from files directly under detailed_league_tables_path
+        csv_files = glob.glob(os.path.join(detailed_league_tables_path, "*.csv"))
+    
+    # Extract division names from filenames
+    for file in csv_files:
+        filename = os.path.basename(file)
+        match = re.match(r"(.*)_detailed_league_table\.csv", filename)
+        if match:
+            division_name = match.group(1)
+            divisions.add(division_name)
+    
+    # Convert the set to a sorted list
+    divisions_list = sorted(divisions)
+    return divisions_list
+
 
 
 # Start the main application
@@ -464,7 +662,8 @@ def main():
             'division_data': {},
             'all_rankings_df': pd.DataFrame(),
             'data_loaded': False,
-            'current_division': None
+            'current_division': None,
+            'current_season': None
         }
         logging.debug("Initialized session state data")
 
@@ -472,18 +671,41 @@ def main():
     st.title("HK Squash League App")
 
     with st.sidebar:
+        # Season selection
+        selected_season = st.selectbox("**Select Season:**", available_seasons)
+        is_current_season = selected_season == current_season
+
+        # Set the season_base_path based on the selected season
+        if selected_season == current_season:
+            season_base_path = os.path.join(base_directory, selected_season)
+        else:
+            season_base_path = os.path.join(base_directory, "previous_seasons", selected_season)
+
+        # Get divisions for the selected season
+        divisions_for_season = get_divisions_for_season(season_base_path)
+
+        # Division selection
         division_selection = st.radio("**Select View**:", ["Select a Division", "All Divisions"])
         division = None  # Initialize division
 
         if division_selection == "Select a Division":
-            division = st.selectbox("**Select a Division:**", list(all_divisions.keys()))
-            sections = [
-                "Detailed Division Table",
-                "Home/Away Splits",
-                "Division Player Stats",
-                "Projections",
-                "Rubber Win Percentage"
-            ]
+            division = st.selectbox("**Select a Division:**", divisions_for_season)
+            if is_current_season:
+                sections = [
+                    "Detailed Division Table",
+                    "Home/Away Splits",
+                    "Division Player Stats",
+                    "Projections",
+                    "Rubber Win Percentage"
+                ]
+            else:
+                # Exclude 'Projections' for previous seasons
+                sections = [
+                    "Detailed Division Table",
+                    "Home/Away Splits",
+                    "Division Player Stats",
+                    "Rubber Win Percentage"
+                ]
         else:
             division = "All"  # Handle the "All Divisions" case
             sections = [
@@ -491,6 +713,7 @@ def main():
             ]
 
         sections_box = st.selectbox("**Select a section:**", sections)
+        logging.info(f"User selected season: {selected_season}")
         logging.info(f"User selected division: {division}")
         logging.info(f"User selected section: {sections_box}")
 
@@ -506,28 +729,45 @@ def main():
     # Only attempt to load division-specific data if a specific division is selected
     if division != "All":
         logging.debug(f"Processing division-specific data for {division}")
-        if (st.session_state['data'].get('current_division') != division or
+        # Check if data has already been loaded for the selected division
+        division_key = f"{selected_season}_{division}"
+        if (st.session_state['data'].get('current_season') != division_key or
             not st.session_state['data'].get('data_loaded')):
-            # Load data for the selected division
-            division_data = load_csvs(division)
-            st.session_state['data']['division_data'][division] = division_data
-            st.session_state['data']['current_division'] = division
+            # Load data for the selected division and season
+            division_data = load_csvs(division, season_base_path, is_current_season)
+            st.session_state['data']['division_data'][division_key] = division_data
+            st.session_state['data']['current_division'] = division_key
             st.session_state['data']['data_loaded'] = True
 
             # Load TXTs only for a specific division
-            unbeaten_players, played_every_game = load_txts(division)
+            try:
+                # Load TXT files
+                unbeaten_players, played_every_game = load_txts(division, season_base_path)
+            except Exception as e:
+                logging.exception(f"Error loading TXT files for division {division}")
+                unbeaten_players, played_every_game = [], []
             st.session_state['data']['unbeaten_players'] = unbeaten_players
             st.session_state['data']['played_every_game'] = played_every_game
         else:
             # Retrieve data from session state
-            division_data = st.session_state['data']['division_data'].get(division)
+            division_data = st.session_state['data']['division_data'].get(division_key)
             unbeaten_players = st.session_state['data'].get('unbeaten_players', [])
             played_every_game = st.session_state['data'].get('played_every_game', [])
 
         # Unpack the division data
         (simulated_table, simulated_fixtures, home_away_df, team_win_breakdown_overall,
-         team_win_breakdown_home, team_win_breakdown_away, team_win_breakdown_delta,
-         awaiting_results, detailed_league_table, overall_home_away, summarized_players) = division_data
+        team_win_breakdown_home, team_win_breakdown_away, team_win_breakdown_delta,
+        awaiting_results, detailed_league_table, overall_home_away, summarized_players,
+        multiple_breakdowns_available) = division_data
+
+        # Debugging statements
+        logging.debug(f"summarized_players DataFrame shape: {summarized_players.shape}")
+        logging.debug(f"summarized_players DataFrame columns: {summarized_players.columns.tolist()}")
+        logging.debug(f"summarized_players DataFrame head:\n{summarized_players.head()}")
+
+        # Initialize date variables
+        date = None
+        simulation_date = None
         
         # Handle cases where data might be empty
         if overall_home_away is not None and not overall_home_away.empty and overall_home_away.shape[1] > 4:
@@ -559,16 +799,18 @@ def main():
     else:
         logging.debug("Processing data for all divisions")
         # Handle the "All Divisions" case separately
-        if not st.session_state["data"].get("all_rankings_loaded", False):
+        # Check if data for the selected season is already loaded
+        season_key = f"{selected_season}_all"
+        if not st.session_state["data"].get(f"all_rankings_loaded_{season_key}", False):
             # Load all_rankings_df
-            all_rankings_df = load_player_rankings()            
+            all_rankings_df = load_player_rankings(season_base_path, divisions_for_season)
             if all_rankings_df.empty:
                 st.error("No player ranking data is available.")
                 return  # Exit the function to prevent further errors
-            st.session_state["data"]["all_rankings_df"] = all_rankings_df
-            st.session_state["data"]["all_rankings_loaded"] = True
+            st.session_state["data"][f"all_rankings_df_{season_key}"] = all_rankings_df
+            st.session_state["data"][f"all_rankings_loaded_{season_key}"] = True
         else:
-            all_rankings_df = st.session_state["data"]["all_rankings_df"]
+            all_rankings_df = st.session_state["data"][f"all_rankings_df_{season_key}"]
 
     # Now proceed based on the selected section
     if division != "All":
@@ -612,7 +854,7 @@ def main():
             st.header(f"Home/Away Splits - Division {division}")
 
             # Load and display overall scores
-            overall_scores = load_overall_home_away_data(division)
+            overall_scores = load_overall_home_away_data(division, season_base_path)
             if overall_scores:
                 # Line break
                 st.write('<br>', unsafe_allow_html=True)
@@ -848,9 +1090,12 @@ def main():
                 else:
                     return "DataFrame is empty or not loaded."
 
-            # Radio button for user to choose the DataFrame
-            option = st.radio("Select Team Win Breakdown View:", 
-                            ['Overall', 'Home', 'Away', 'H/A Delta'], horizontal=True)
+            if multiple_breakdowns_available:
+                # Radio button for user to choose the DataFrame
+                option = st.radio("Select Team Win Breakdown View:", 
+                                ['Overall', 'Home', 'Away', 'H/A Delta'], horizontal=True)
+            else:
+                option = "Overall"
 
             st.write('<br>', unsafe_allow_html=True)
             st.subheader("Team win percentage by rubber:")
@@ -870,20 +1115,28 @@ def main():
                 else:
                     st.write(format_dataframe(selected_df).to_html(escape=False), unsafe_allow_html=True)
             else:
-                st.error("Selected data is not available.")
+                st.info(f"No data available for {option} breakdown in Division {division}.")
 
             # Note
             st.write('<br>', unsafe_allow_html=True)
-            st.write(
-                "**Note:**  \nOnly rubbers that were played are included. Conceded Rubbers \
-                and Walkovers are ignored.  \nMatches where the home team and away team share \
-                a home venue are ignored in the Home and Away tables.")
+            if multiple_breakdowns_available:
+                st.write(
+                    "**Note:**  \nOnly rubbers that were played are included. Conceded Rubbers \
+                    and Walkovers are ignored.  \nMatches where the home team and away team share \
+                    a home venue are ignored in the Home and Away tables.")
+            else:
+                st.write(
+                    "**Note:**  \nOnly rubbers that were played are included. Conceded Rubbers \
+                    and Walkovers are ignored.")
 
     elif sections_box == "Projections":
 
         # Load and display overall scores
         st.header("Projections")
-        st.write(f"**Date of last simulation:** {simulation_date}")
+        if simulation_date:
+            st.write(f"**Date of last simulation:** {simulation_date}")
+        else:
+            st.write("**Date of last simulation:** Date not available")
 
         if not awaiting_results.empty:
             # Line break
@@ -1019,80 +1272,119 @@ def main():
 
     elif sections_box == "Division Player Stats":
 
-        def extract_names(cell_value):
+        # Header
+        st.header("Division Player Stats")
 
+        def extract_names(cell_value):
             """
             Function to extract names from the cell
             """
-            # Using regex to extract names before parentheses or commas
-            names = re.findall(r"([\w\s]+)(?=\s\(|,|$)", cell_value)
-            return set(names)
+            try:
+                # Convert cell_value to string and handle possible NaN values
+                cell_str = str(cell_value) if pd.notnull(cell_value) else ''
+                # Split the cell value by commas
+                parts = [part.strip() for part in cell_str.split(',')]
+                names = []
+                for part in parts:
+                    # Extract the name before the parenthesis
+                    match = re.match(r"([^\(]+)", part)
+                    if match:
+                        name = match.group(1).strip()
+                        names.append(name)
+                return set(names)
+            except Exception as e:
+                logging.exception(f"Error in extract_names for cell_value: {cell_value}")
+                return set()
 
 
         # Custom styling function
         def highlight_row_if_same_player(row):
-            # Extract player names from each column
-            games_names = extract_names(row["Most Games"])
-            wins_names = extract_names(row["Most Wins"])
-            win_percentage_names = extract_names(row["Highest Win Percentage"])
+            try:
+                # Extract player names from each column
+                games_names = extract_names(row["Most Games"])
+                wins_names = extract_names(row["Most Wins"])
+                win_percentage_names = extract_names(row["Highest Win Percentage"])
 
-            # Highlight color
-            highlight_color = 'background-color: #FFF2CC'
-            # Default color
-            default_color = ''  # or 'background-color: none'
+                # Highlight color
+                highlight_color = 'background-color: #FFF2CC'
+                # Default color
+                default_color = ''
 
-            # Check if each column has exactly one name and it's the same across all three columns
-            unique_names = games_names.union(wins_names).union(win_percentage_names)
-            if len(unique_names) == 1 and len(games_names) == len(wins_names) == len(win_percentage_names) == 1:
-                # The set union of all names will have exactly one element if all columns have the same single name
-                return [
-                    highlight_color if col in ["Most Games", "Most Wins", "Highest Win Percentage"] else default_color
-                    for col in row.index]
-            else:
-                # Return default color for all columns if the condition is not met
-                return [default_color for _ in row.index]
+                # Find the intersection of names across all columns
+                common_names = games_names & wins_names & win_percentage_names
+
+                if common_names:
+                    # Highlight the cells if there is at least one common name
+                    return [
+                        highlight_color if col in ["Most Games", "Most Wins", "Highest Win Percentage"] else default_color
+                        for col in row.index
+                    ]
+                else:
+                    # Return default color for all columns if no common names
+                    return [default_color for _ in row.index]
+            except Exception as e:
+                logging.exception(f"Error in highlight_row_if_same_player for row: {row}")
+                return ['' for _ in row.index]
+
 
         # Load and display overall scores
-        st.header("Player Stats")
-        st.write(f"**Last Updated:** {date}")
-
-        if not summarized_players.empty:
-            # Apply styles to the DataFrame
-            styled_df = summarized_players.style.set_properties(**{'text-align': 'left'}).hide(axis='index')
-
-            # Apply the styling function to the DataFrame
-            styled_df = styled_df.apply(highlight_row_if_same_player, axis=1)
-
-            # Convert styled DataFrame to HTML
-            html = styled_df.to_html(escape=False)
-
-            st.write(html, unsafe_allow_html=True)
+        if date:
+            st.write(f"**Last Updated:** {date}")
         else:
+            st.write("**Last Updated:** Date not available")
+
+        if summarized_players.empty:
             st.info(f"No player stats available for Division {division}.")
+        else:
+            # Ensure required columns are present
+            required_columns = ["Team", "Most Games", "Most Win", "Highest Win Percentage"]
+            missing_columns = [col for col in required_columns if col not in summarized_players.columns]
+
+            if missing_columns:
+                st.error(f"Missing columns in player stats: {', '.join(missing_columns)}")
+            else:
+                try:
+                    # Apply styles to the DataFrame
+                    styled_df = summarized_players.style.set_properties(**{'text-align': 'left'}).hide(axis='index')
+
+                    # Apply the styling function to the DataFrame
+                    styled_df = styled_df.apply(highlight_row_if_same_player, axis=1)
+
+                    # Convert styled DataFrame to HTML
+                    html = styled_df.to_html(escape=False)
+
+                    st.write(html, unsafe_allow_html=True)
+                except Exception as e:
+                    logging.exception("Error while processing and displaying summarized player stats")
+                    st.error("An error occurred while displaying player stats.")                   
 
         # Line break
         st.write('<br>', unsafe_allow_html=True)
 
         # Show list of unbeaten players
-        if len(unbeaten_players) == 0:
-            st.write("**There are no unbeaten players.**")
-        elif len(unbeaten_players) == 1:
-            st.write(f"**The following player is unbeaten:**  \n{', '.join(unbeaten_players)}")
-        else:
-            unbeaten_players_list = '<br>'.join(unbeaten_players)
-            st.markdown(f"**The following players "
-                        f"are unbeaten:**<br>{unbeaten_players_list}", unsafe_allow_html=True)
+        if unbeaten_players:
+            st.subheader("Unbeaten Players")
+            if len(unbeaten_players) == 0:
+                st.write("**There are no unbeaten players.**")
+            elif len(unbeaten_players) == 1:
+                st.write(f"**The following player is unbeaten:**  \n{', '.join(unbeaten_players)}")
+            else:
+                unbeaten_players_list = '<br>'.join(unbeaten_players)
+                st.markdown(f"**The following players "
+                            f"are unbeaten:**<br>{unbeaten_players_list}", unsafe_allow_html=True)
 
         # Show list of players who have played in every game for their team
-        if len(played_every_game) == 0:
-            st.write("No player has played in all of their team's games")
-        elif len(played_every_game) == 1:
-            st.write(f"**The following player has played in all of their "
-                     f"team's games:**  \n{', '.join(played_every_game)}")
-        else:
-            every_game_list = '<br>'.join(played_every_game)
-            st.markdown(f"**The following players "
-                        f"have played every game:**<br>{every_game_list}", unsafe_allow_html=True)
+        if played_every_game:
+            st.subheader("Players Who Have Played Every Game")
+            if len(played_every_game) == 0:
+                st.write("No player has played in all of their team's games")
+            elif len(played_every_game) == 1:
+                st.write(f"**The following player has played in all of their "
+                        f"team's games:**  \n{', '.join(played_every_game)}")
+            else:
+                every_game_list = '<br>'.join(played_every_game)
+                st.markdown(f"**The following players "
+                            f"have played every game:**<br>{every_game_list}", unsafe_allow_html=True)
 
         # Line break
         st.write("**Note:** Players must have played 5+ games to qualify.")

@@ -108,12 +108,3 @@ for div in all_divisions.keys():
 # Show the home team, away team, division, and date in awaiting results
 print("Awaiting Results:")
 print(awaiting_results_df[['Home Team', 'Away Team', 'Division', 'Date']])
-
-
-
-
-
-        
-
-
-

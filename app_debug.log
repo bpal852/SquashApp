@@ -11698,3 +11698,155 @@
 2024-10-15 17:19:44,560 - root - DEBUG - Loaded unbeaten players: []
 2024-10-15 17:19:44,560 - root - DEBUG - Loaded players who have played every game: []
 2024-10-15 17:19:44,561 - root - WARNING - Simulation date is not available.
+2024-10-16 10:29:41,907 - root - INFO - Application started
+2024-10-16 10:29:41,924 - root - INFO - User selected division: Premier Main
+2024-10-16 10:29:41,924 - root - INFO - User selected section: Detailed Division Table
+2024-10-16 10:29:41,927 - root - DEBUG - Processing division-specific data for Premier Main
+2024-10-16 10:29:41,953 - root - WARNING - Simulation date is not available.
+2024-10-16 10:42:09,833 - root - INFO - Application started
+2024-10-16 10:42:09,836 - root - INFO - User selected division: Premier Main
+2024-10-16 10:42:09,836 - root - INFO - User selected section: Home/Away Splits
+2024-10-16 10:42:09,838 - root - DEBUG - Processing division-specific data for Premier Main
+2024-10-16 10:42:09,840 - root - WARNING - Simulation date is not available.
+2024-10-16 10:42:09,842 - root - DEBUG - Found file for division Premier Main at C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\home_away_data\week_1\Premier Main_overall_scores.csv
+2024-10-16 10:42:09,845 - root - DEBUG - Loaded overall_home_away data from C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\home_away_data\week_1\Premier Main_overall_scores.csv
+2024-10-16 10:42:10,038 - PIL.PngImagePlugin - DEBUG - STREAM b'IHDR' 16 13
+2024-10-16 10:42:10,038 - PIL.PngImagePlugin - DEBUG - STREAM b'tEXt' 41 57
+2024-10-16 10:42:10,039 - PIL.PngImagePlugin - DEBUG - STREAM b'pHYs' 110 9
+2024-10-16 10:42:10,039 - PIL.PngImagePlugin - DEBUG - STREAM b'IDAT' 131 65536
+2024-10-16 10:42:13,826 - root - INFO - Application started
+2024-10-16 10:42:13,828 - root - INFO - User selected division: Premier Main
+2024-10-16 10:42:13,829 - root - INFO - User selected section: Division Player Stats
+2024-10-16 10:42:13,831 - root - DEBUG - Processing division-specific data for Premier Main
+2024-10-16 10:42:13,832 - root - WARNING - Simulation date is not available.
+2024-10-16 10:42:15,942 - root - INFO - Application started
+2024-10-16 10:42:15,944 - root - INFO - User selected division: Premier Main
+2024-10-16 10:42:15,944 - root - INFO - User selected section: Projections
+2024-10-16 10:42:15,946 - root - DEBUG - Processing division-specific data for Premier Main
+2024-10-16 10:42:15,947 - root - WARNING - Simulation date is not available.
+2024-10-16 11:22:57,639 - root - INFO - Application started
+2024-10-16 11:22:57,642 - root - INFO - User selected season: 2024-2025
+2024-10-16 11:22:57,642 - root - INFO - User selected division: 6
+2024-10-16 11:22:57,642 - root - INFO - User selected section: Projections
+2024-10-16 11:22:57,647 - root - DEBUG - Processing division-specific data for 6
+2024-10-16 11:22:57,647 - root - INFO - Loading CSVs for division 6 for season C:\Users\bpali\PycharmProjects\SquashApp\2024-2025
+2024-10-16 11:22:57,648 - root - DEBUG - Found file for division 6 at C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\home_away_data\week_2\6_overall_scores.csv
+2024-10-16 11:22:57,652 - root - DEBUG - Loaded overall_home_away data from C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\home_away_data\week_2\6_overall_scores.csv
+2024-10-16 11:22:57,653 - root - DEBUG - Found file for division 6 at C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\home_away_data\week_2\6_team_average_scores.csv
+2024-10-16 11:22:57,656 - root - DEBUG - Loaded home_away_df data from C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\home_away_data\week_2\6_team_average_scores.csv
+2024-10-16 11:22:57,658 - root - DEBUG - Found file for division 6 at C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\team_win_percentage_breakdown\Overall\week_2\6_team_win_percentage_breakdown.csv
+2024-10-16 11:22:57,660 - root - DEBUG - Loaded team_win_breakdown_overall data from C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\team_win_percentage_breakdown\Overall\week_2\6_team_win_percentage_breakdown.csv
+2024-10-16 11:22:57,661 - root - DEBUG - Found file for division 6 at C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\team_win_percentage_breakdown\Home\week_2\6_team_win_percentage_breakdown_home.csv
+2024-10-16 11:22:57,664 - root - DEBUG - Loaded team_win_breakdown_home data from C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\team_win_percentage_breakdown\Home\week_2\6_team_win_percentage_breakdown_home.csv
+2024-10-16 11:22:57,664 - root - DEBUG - Found file for division 6 at C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\team_win_percentage_breakdown\Away\week_2\6_team_win_percentage_breakdown_away.csv
+2024-10-16 11:22:57,667 - root - DEBUG - Loaded team_win_breakdown_away data from C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\team_win_percentage_breakdown\Away\week_2\6_team_win_percentage_breakdown_away.csv
+2024-10-16 11:22:57,667 - root - DEBUG - Found file for division 6 at C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\team_win_percentage_breakdown\Delta\week_2\6_team_win_percentage_breakdown_delta.csv
+2024-10-16 11:22:57,668 - root - DEBUG - Loaded team_win_breakdown_delta data from C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\team_win_percentage_breakdown\Delta\week_2\6_team_win_percentage_breakdown_delta.csv
+2024-10-16 11:22:57,669 - root - DEBUG - Found file for division 6 at C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\detailed_league_tables\week_2\6_detailed_league_table.csv
+2024-10-16 11:22:57,671 - root - DEBUG - Loaded detailed_league_table data from C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\detailed_league_tables\week_2\6_detailed_league_table.csv
+2024-10-16 11:22:57,672 - root - DEBUG - Found file for division 6 at C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\summarized_player_tables\week_0\6_summarized_players.csv
+2024-10-16 11:22:57,674 - root - DEBUG - Loaded summarized_players data from C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\summarized_player_tables\week_0\6_summarized_players.csv
+2024-10-16 11:22:57,675 - root - WARNING - No file found for division 6 in week folders of C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\simulated_tables
+2024-10-16 11:22:57,675 - root - WARNING - No file found for final_table for division 6; setting as empty DataFrame.
+2024-10-16 11:22:57,675 - root - WARNING - No file found for division 6 in week folders of C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\simulated_fixtures
+2024-10-16 11:22:57,676 - root - WARNING - No file found for fixtures for division 6; setting as empty DataFrame.
+2024-10-16 11:22:57,677 - root - DEBUG - Found file for division 6 at C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\awaiting_results\week_2\6_awaiting_results.csv
+2024-10-16 11:22:57,687 - root - DEBUG - Loaded awaiting_results data from C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\awaiting_results\week_2\6_awaiting_results.csv
+2024-10-16 11:22:57,691 - root - INFO - Loading TXTs for division 6
+2024-10-16 11:22:57,693 - root - DEBUG - Found file for division 6 at C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\unbeaten_players\week_0\6.txt
+2024-10-16 11:22:57,694 - root - DEBUG - Found file for division 6 at C:\Users\bpali\PycharmProjects\SquashApp\2024-2025\played_every_game\week_0\6.txt
+2024-10-16 11:22:57,695 - root - DEBUG - Loaded unbeaten players: []
+2024-10-16 11:22:57,695 - root - DEBUG - Loaded players who have played every game: []
+2024-10-16 11:22:57,696 - root - WARNING - Simulation date is not available.
+2024-10-16 11:23:03,047 - root - INFO - Application started
+2024-10-16 11:23:03,047 - root - INFO - User selected season: 2022-2023
+2024-10-16 11:23:03,047 - root - INFO - User selected division: 6
+2024-10-16 11:23:03,047 - root - INFO - User selected section: Detailed Division Table
+2024-10-16 11:23:03,047 - root - DEBUG - Processing division-specific data for 6
+2024-10-16 11:23:03,047 - root - INFO - Loading CSVs for division 6 for season C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2022-2023
+2024-10-16 11:23:03,047 - root - WARNING - No file found for division 6 directly in C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2022-2023\home_away_data
+2024-10-16 11:23:03,051 - root - WARNING - No file found for overall_home_away for division 6; setting as empty DataFrame.
+2024-10-16 11:23:03,052 - root - WARNING - No file found for division 6 directly in C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2022-2023\home_away_data
+2024-10-16 11:23:03,053 - root - WARNING - No file found for home_away_df for division 6; setting as empty DataFrame.
+2024-10-16 11:23:03,053 - root - WARNING - Data folder does not exist: C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2022-2023\team_win_percentage_breakdown\Overall
+2024-10-16 11:23:03,054 - root - WARNING - No file found for team_win_breakdown_overall for division 6; setting as empty DataFrame.
+2024-10-16 11:23:03,054 - root - WARNING - Data folder does not exist: C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2022-2023\team_win_percentage_breakdown\Home
+2024-10-16 11:23:03,055 - root - WARNING - No file found for team_win_breakdown_home for division 6; setting as empty DataFrame.
+2024-10-16 11:23:03,055 - root - WARNING - Data folder does not exist: C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2022-2023\team_win_percentage_breakdown\Away
+2024-10-16 11:23:03,055 - root - WARNING - No file found for team_win_breakdown_away for division 6; setting as empty DataFrame.
+2024-10-16 11:23:03,056 - root - WARNING - Data folder does not exist: C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2022-2023\team_win_percentage_breakdown\Delta
+2024-10-16 11:23:03,057 - root - WARNING - No file found for team_win_breakdown_delta for division 6; setting as empty DataFrame.
+2024-10-16 11:23:03,057 - root - WARNING - No file found for division 6 directly in C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2022-2023\detailed_league_tables
+2024-10-16 11:23:03,057 - root - WARNING - No file found for detailed_league_table for division 6; setting as empty DataFrame.
+2024-10-16 11:23:03,058 - root - WARNING - Data folder does not exist: C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2022-2023\summarized_player_tables
+2024-10-16 11:23:03,059 - root - WARNING - No file found for summarized_players for division 6; setting as empty DataFrame.
+2024-10-16 11:23:03,059 - root - DEBUG - Data folder or filename pattern is None for final_table; assigning empty DataFrame.
+2024-10-16 11:23:03,060 - root - DEBUG - Data folder or filename pattern is None for fixtures; assigning empty DataFrame.
+2024-10-16 11:23:03,061 - root - DEBUG - Data folder or filename pattern is None for awaiting_results; assigning empty DataFrame.
+2024-10-16 11:23:03,063 - root - INFO - Loading TXTs for division 6
+2024-10-16 11:23:03,063 - root - WARNING - Data folder does not exist: C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2022-2023\unbeaten_players
+2024-10-16 11:23:03,064 - root - WARNING - No file found for division 6 directly in C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2022-2023\played_every_game
+2024-10-16 11:23:03,064 - root - WARNING - No unbeaten players found for division 6
+2024-10-16 11:23:03,064 - root - WARNING - No players who have played every game found for division 6
+2024-10-16 11:23:03,065 - root - WARNING - overall_home_away DataFrame is empty or does not have enough columns; dates are not available.
+2024-10-16 11:23:05,926 - root - INFO - Application started
+2024-10-16 11:23:05,927 - root - INFO - User selected season: 2023-2024
+2024-10-16 11:23:05,927 - root - INFO - User selected division: 6
+2024-10-16 11:23:05,927 - root - INFO - User selected section: Detailed Division Table
+2024-10-16 11:23:05,931 - root - DEBUG - Processing division-specific data for 6
+2024-10-16 11:23:05,932 - root - INFO - Loading CSVs for division 6 for season C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024
+2024-10-16 11:23:05,934 - root - WARNING - No file found for division 6 directly in C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\home_away_data
+2024-10-16 11:23:05,934 - root - WARNING - No file found for overall_home_away for division 6; setting as empty DataFrame.
+2024-10-16 11:23:05,935 - root - WARNING - No file found for division 6 directly in C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\home_away_data
+2024-10-16 11:23:05,935 - root - WARNING - No file found for home_away_df for division 6; setting as empty DataFrame.
+2024-10-16 11:23:05,936 - root - WARNING - No file found for division 6 directly in C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\team_win_percentage_breakdown\Overall
+2024-10-16 11:23:05,937 - root - WARNING - No file found for team_win_breakdown_overall for division 6; setting as empty DataFrame.
+2024-10-16 11:23:05,937 - root - WARNING - No file found for division 6 directly in C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\team_win_percentage_breakdown\Home
+2024-10-16 11:23:05,939 - root - WARNING - No file found for team_win_breakdown_home for division 6; setting as empty DataFrame.
+2024-10-16 11:23:05,941 - root - WARNING - No file found for division 6 directly in C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\team_win_percentage_breakdown\Away
+2024-10-16 11:23:05,941 - root - WARNING - No file found for team_win_breakdown_away for division 6; setting as empty DataFrame.
+2024-10-16 11:23:05,943 - root - WARNING - No file found for division 6 directly in C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\team_win_percentage_breakdown\Delta
+2024-10-16 11:23:05,944 - root - WARNING - No file found for team_win_breakdown_delta for division 6; setting as empty DataFrame.
+2024-10-16 11:23:05,945 - root - WARNING - No file found for division 6 directly in C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\detailed_league_tables
+2024-10-16 11:23:05,946 - root - WARNING - No file found for detailed_league_table for division 6; setting as empty DataFrame.
+2024-10-16 11:23:05,947 - root - WARNING - No file found for division 6 directly in C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\summarized_player_tables
+2024-10-16 11:23:05,947 - root - WARNING - No file found for summarized_players for division 6; setting as empty DataFrame.
+2024-10-16 11:23:05,948 - root - DEBUG - Data folder or filename pattern is None for final_table; assigning empty DataFrame.
+2024-10-16 11:23:05,949 - root - DEBUG - Data folder or filename pattern is None for fixtures; assigning empty DataFrame.
+2024-10-16 11:23:05,949 - root - DEBUG - Data folder or filename pattern is None for awaiting_results; assigning empty DataFrame.
+2024-10-16 11:23:05,951 - root - INFO - Loading TXTs for division 6
+2024-10-16 11:23:05,952 - root - WARNING - No file found for division 6 directly in C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\unbeaten_players
+2024-10-16 11:23:05,953 - root - WARNING - No file found for division 6 directly in C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\played_every_game
+2024-10-16 11:23:05,953 - root - WARNING - No unbeaten players found for division 6
+2024-10-16 11:23:05,953 - root - WARNING - No players who have played every game found for division 6
+2024-10-16 11:23:05,954 - root - WARNING - overall_home_away DataFrame is empty or does not have enough columns; dates are not available.
+2024-10-16 11:23:10,242 - root - INFO - Application started
+2024-10-16 11:23:10,251 - root - INFO - User selected season: 2023-2024
+2024-10-16 11:23:10,251 - root - INFO - User selected division: M2
+2024-10-16 11:23:10,252 - root - INFO - User selected section: Detailed Division Table
+2024-10-16 11:23:10,253 - root - DEBUG - Processing division-specific data for M2
+2024-10-16 11:23:10,254 - root - INFO - Loading CSVs for division M2 for season C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024
+2024-10-16 11:23:10,255 - root - DEBUG - Found file for division M2 at C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\home_away_data\M2_overall_scores.csv
+2024-10-16 11:23:10,257 - root - DEBUG - Loaded overall_home_away data from C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\home_away_data\M2_overall_scores.csv
+2024-10-16 11:23:10,258 - root - DEBUG - Found file for division M2 at C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\home_away_data\M2_team_average_scores.csv
+2024-10-16 11:23:10,261 - root - DEBUG - Loaded home_away_df data from C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\home_away_data\M2_team_average_scores.csv
+2024-10-16 11:23:10,262 - root - DEBUG - Found file for division M2 at C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\team_win_percentage_breakdown\Overall\M2_team_win_percentage_breakdown.csv
+2024-10-16 11:23:10,264 - root - DEBUG - Loaded team_win_breakdown_overall data from C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\team_win_percentage_breakdown\Overall\M2_team_win_percentage_breakdown.csv
+2024-10-16 11:23:10,266 - root - DEBUG - Found file for division M2 at C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\team_win_percentage_breakdown\Home\M2_team_win_percentage_breakdown_home.csv
+2024-10-16 11:23:10,270 - root - DEBUG - Loaded team_win_breakdown_home data from C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\team_win_percentage_breakdown\Home\M2_team_win_percentage_breakdown_home.csv
+2024-10-16 11:23:10,271 - root - DEBUG - Found file for division M2 at C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\team_win_percentage_breakdown\Away\M2_team_win_percentage_breakdown_away.csv
+2024-10-16 11:23:10,273 - root - DEBUG - Loaded team_win_breakdown_away data from C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\team_win_percentage_breakdown\Away\M2_team_win_percentage_breakdown_away.csv
+2024-10-16 11:23:10,274 - root - DEBUG - Found file for division M2 at C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\team_win_percentage_breakdown\Delta\M2_team_win_percentage_breakdown_delta.csv
+2024-10-16 11:23:10,276 - root - DEBUG - Loaded team_win_breakdown_delta data from C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\team_win_percentage_breakdown\Delta\M2_team_win_percentage_breakdown_delta.csv
+2024-10-16 11:23:10,277 - root - DEBUG - Found file for division M2 at C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\detailed_league_tables\M2_detailed_league_table.csv
+2024-10-16 11:23:10,279 - root - DEBUG - Loaded detailed_league_table data from C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\detailed_league_tables\M2_detailed_league_table.csv
+2024-10-16 11:23:10,280 - root - DEBUG - Found file for division M2 at C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\summarized_player_tables\M2_summarized_players.csv
+2024-10-16 11:23:10,282 - root - DEBUG - Loaded summarized_players data from C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\summarized_player_tables\M2_summarized_players.csv
+2024-10-16 11:23:10,283 - root - DEBUG - Data folder or filename pattern is None for final_table; assigning empty DataFrame.
+2024-10-16 11:23:10,283 - root - DEBUG - Data folder or filename pattern is None for fixtures; assigning empty DataFrame.
+2024-10-16 11:23:10,284 - root - DEBUG - Data folder or filename pattern is None for awaiting_results; assigning empty DataFrame.
+2024-10-16 11:23:10,287 - root - INFO - Loading TXTs for division M2
+2024-10-16 11:23:10,287 - root - DEBUG - Found file for division M2 at C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\unbeaten_players\M2.txt
+2024-10-16 11:23:10,288 - root - DEBUG - Found file for division M2 at C:\Users\bpali\PycharmProjects\SquashApp\previous_seasons\2023-2024\played_every_game\M2.txt
+2024-10-16 11:23:10,289 - root - DEBUG - Loaded unbeaten players: ['Yeung Tak Keung (Hong Kong Football Club M2A)']
+2024-10-16 11:23:10,290 - root - DEBUG - Loaded players who have played every game: ['Wei Stephen J. (Hong Kong Football Club M2A)', 'Au Ming Chung Sampson (Titlows Squash Team)', 'Lo Wai Kiu Bobby (Titlows Squash Team)', 'Yung Kai Sing (Titlows Squash Team)']
