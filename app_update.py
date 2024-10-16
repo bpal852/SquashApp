@@ -14,7 +14,6 @@ logging.basicConfig(
     level=logging.DEBUG,  # Set to DEBUG to capture all levels of logs
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',  # Define the log format
     handlers=[
-        logging.FileHandler("app_debug.log"),  # Log to a file named 'app_debug.log'
         logging.StreamHandler()  # Also output logs to the console (optional)
     ]
 )
