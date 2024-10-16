@@ -8,6 +8,7 @@ import re
 import glob
 import os
 import logging
+import traceback
 
 # Configure logging
 logging.basicConfig(
@@ -568,17 +569,51 @@ def load_player_rankings(season_base_path, divisions_for_season):
     players_df_all = pd.concat(players_dataframes, ignore_index=True)
     logging.info(f"Combined all players data into a single DataFrame with shape {players_df_all.shape}")
 
-    # Merge ranking_df_all and players_df_all on 'Name of Player'/'Player' and 'Team'
-    # We'll rename 'Player' in players_df_all to 'Name of Player' to facilitate the merge
-    players_df_all = players_df_all.rename(columns={'Player': 'Name of Player'})
+    # Standardize player name column in players_df_all
+    if 'Player' in players_df_all.columns:
+        players_df_all = players_df_all.rename(columns={'Player': 'Name of Player'})
+    elif 'Name of Players' in players_df_all.columns:
+        players_df_all = players_df_all.rename(columns={'Name of Players': 'Name of Player'})
+    elif 'Name of Player' in players_df_all.columns:
+        pass  # Column is already named 'Name of Player'
+    else:
+        logging.error("No player name column found in players_df_all.")
+        st.error("Player name column not found in players data.")
+        return pd.DataFrame()
 
-    # Merge on 'Name of Player' and 'Team'
-    merged_df = pd.merge(
-        ranking_df_all,
-        players_df_all[['Name of Player', 'Team', 'HKS No.']],
-        on=['Name of Player', 'Team'],
-        how='left'
-    )
+    # Standardize player name column in ranking_df_all
+    if 'Player' in ranking_df_all.columns:
+        ranking_df_all = ranking_df_all.rename(columns={'Player': 'Name of Player'})
+    elif 'Name of Players' in ranking_df_all.columns:
+        ranking_df_all = ranking_df_all.rename(columns={'Name of Players': 'Name of Player'})
+    elif 'Name of Player' in ranking_df_all.columns:
+        pass  # Column is already named 'Name of Player'
+    else:
+        logging.error("No player name column found in ranking_df_all.")
+        st.error("Player name column not found in ranking data.")
+        return pd.DataFrame()
+
+    # Now proceed to merge
+    try:
+        # Ensure required columns are present
+        required_columns = ['Name of Player', 'Team', 'HKS No.']
+        missing_columns = [col for col in required_columns if col not in players_df_all.columns]
+        if missing_columns:
+            logging.error(f"Missing columns in players_df_all: {', '.join(missing_columns)}")
+            st.error(f"Missing columns in players data: {', '.join(missing_columns)}")
+            return pd.DataFrame()
+
+        merged_df = pd.merge(
+            ranking_df_all,
+            players_df_all[['Name of Player', 'Team', 'HKS No.']],
+            on=['Name of Player', 'Team'],
+            how='left'
+        )
+    except Exception as e:
+        logging.exception("Error merging ranking_df_all and players_df_all")
+        st.error("An error occurred while merging player data.")
+        return pd.DataFrame()
+
 
     # Check columns after merging
     logging.debug(f"Columns in merged DataFrame: {merged_df.columns.tolist()}")
@@ -607,6 +642,41 @@ def load_player_rankings(season_base_path, divisions_for_season):
         merged_df["Club"] = "Unknown"
 
     return merged_df
+
+
+def get_division_sort_key(division_name):
+    """
+    Returns a sort key for a division name to sort divisions in the desired order.
+    """
+    # Define the category based on the prefix
+    if division_name.startswith('M'):
+        category = 2  # Masters Divisions
+        rest = division_name[1:]
+    elif division_name.startswith('L'):
+        category = 3  # Ladies Divisions
+        rest = division_name[1:]
+    else:
+        category = 1  # Main Divisions
+        rest = division_name
+
+    # Extract the main number and any letter suffix
+    match = re.match(r'(\d+)([A-Z]*)', rest, re.I)
+    if match:
+        main_number = int(match.group(1))
+        letter_suffix = match.group(2).upper()
+    else:
+        # In case of unexpected format, place it at the end
+        main_number = float('inf')
+        letter_suffix = ''
+    
+    # Map letter suffix to a number for sorting ('A' -> 0, 'B' -> 1, etc.)
+    if letter_suffix:
+        letter_value = ord(letter_suffix) - ord('A')
+    else:
+        letter_value = -1  # No letter comes before letters
+
+    # Return the sort key as a tuple
+    return (category, main_number, letter_value)
 
 
 def get_divisions_for_season(season_base_path):
@@ -647,7 +717,8 @@ def get_divisions_for_season(season_base_path):
             divisions.add(division_name)
     
     # Convert the set to a sorted list
-    divisions_list = sorted(divisions)
+    divisions_list = sorted(divisions, key=get_division_sort_key)
+    
     return divisions_list
 
 
@@ -1337,7 +1408,7 @@ def main():
             st.info(f"No player stats available for Division {division}.")
         else:
             # Ensure required columns are present
-            required_columns = ["Team", "Most Games", "Most Win", "Highest Win Percentage"]
+            required_columns = ["Team", "Most Games", "Most Wins", "Highest Win Percentage"]
             missing_columns = [col for col in required_columns if col not in summarized_players.columns]
 
             if missing_columns:
@@ -1356,7 +1427,9 @@ def main():
                     st.write(html, unsafe_allow_html=True)
                 except Exception as e:
                     logging.exception("Error while processing and displaying summarized player stats")
-                    st.error("An error occurred while displaying player stats.")                   
+                    st.error("An error occurred while displaying player stats.")
+                    st.text(f"Exception: {str(e)}")
+                    st.text(traceback.format_exc())               
 
         # Line break
         st.write('<br>', unsafe_allow_html=True)
