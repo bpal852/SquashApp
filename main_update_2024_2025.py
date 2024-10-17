@@ -127,8 +127,12 @@ base_directories = {
     'team_win_percentage_breakdown_delta': f'{year}/team_win_percentage_breakdown/Delta',
     'team_win_percentage_breakdown_overall': f'{year}/team_win_percentage_breakdown/Overall',
     'simulated_tables': f'{year}/simulated_tables',
-    'simulated_fixtures': f'{year}/simulated_fixtures'
+    'simulated_fixtures': f'{year}/simulated_fixtures',
+    'remaining_fixtures': f'{year}/remaining_fixtures',
+    'neutral_fixtures': f'{year}/neutral_fixtures',
+    'results_df': f'{year}/results_df',
 }
+
 
 # Ensure the logs directory exists
 os.makedirs(f"{year}/logs", exist_ok=True)
@@ -981,7 +985,7 @@ def scrape_players_page(league_id, year):
 
             # Add dataframe to list
             team_dataframes.append(df)
-            logging.info(f"Team {idx}: Created DataFrame with {len(df)} rows for team: {team_name}")
+            logging.info(f"Team {idx + 1}: Created DataFrame with {len(df)} rows for team: {team_name}")
 
             time.sleep(2)
 
@@ -997,6 +1001,57 @@ def scrape_players_page(league_id, year):
     except Exception as e:
         logging.exception(f"An error occured in scrape_players_page: {e}")
         return pd.DataFrame()
+    
+
+def count_games_won(row):
+    """
+    Function to count the number of games won by each team in a match,
+    handling walkovers (WO) and conceded rubbers (CR) by referring to the 'Overall Score'.
+    """
+    home_games_won = 0
+    away_games_won = 0
+
+    # Calculate the games won from the rubbers, excluding 'CR' and 'WO'
+    for rubber in row['Rubbers']:
+        if rubber == 'CR' or rubber == 'WO':
+            continue
+        home, away = map(int, rubber.split('-'))
+        home_games_won += home
+        away_games_won += away
+
+    # Now handle the 'WO' and 'CR' rubbers by referring to the 'Overall Score'
+    if 'WO' in row['Rubbers'] or 'CR' in row['Rubbers']:
+        home_overall_score, away_overall_score = map(int, row['Overall Score'].split('-'))
+        
+        # If the home team has a higher overall score, award the missing games to them
+        # Otherwise, award the missing games to the away team
+        for rubber in row['Rubbers']:
+            if rubber == 'WO' or rubber == 'CR':
+                if home_overall_score > away_overall_score:
+                    home_games_won += 3
+                else:
+                    away_games_won += 3
+
+    return home_games_won, away_games_won
+    
+
+def home_team_won(row):
+    """Function to determine whether the home team or away team
+    won the match, using games won as a tiebreaker. If overall score
+    and games won are equal, the match is ignored.
+    """
+    if row['Home Score'] > row['Away Score']:
+        return 'Home'
+    elif row['Home Score'] < row['Away Score']:
+        return 'Away'
+    else:
+        # If overall scores are equal, use games won as tiebreaker
+        if row['Home Games Won'] > row['Away Games Won']:
+            return 'Home'
+        elif row['Home Games Won'] < row['Away Games Won']:
+            return 'Away'
+        else:
+            return 'Ignore'
     
 
 # Use logging to track progress
@@ -1067,15 +1122,7 @@ for div in all_divisions.keys():
     if summary_df.empty:
         logging.warning(f"No data found in summary_df for Division {div}. Skipping further processing.")
         continue
-
-    # Save the summary_df to CSV
-    summary_df_path = os.path.join(base_directories['summary_df'], week_dir, f"{div}_summary_df.csv")
-    try:
-        logging.info(f"Saving summary_df to {summary_df_path}")
-        summary_df.to_csv(summary_df_path, index=False)
-        logging.info(f"Successfully saved summary_df to {summary_df_path}")
-    except Exception as e:
-        logging.error(f"Error saving summary_df to {summary_df_path}: {e}")
+    # We save the summnary_df at a later stage
     
     time.sleep(20)
 
@@ -1236,6 +1283,9 @@ for div in all_divisions.keys():
     rubbers_won = {}
     rubbers_conceded = {}
 
+    # Create Games Won columns
+    results_df[['Home Games Won', 'Away Games Won']] = results_df.apply(count_games_won, axis=1, result_type='expand')
+
     # Apply the function to each row
     results_df.apply(update_rubbers, axis=1)
 
@@ -1278,6 +1328,15 @@ for div in all_divisions.keys():
     summary_df = pd.merge(summary_df, rubbers_df, on="Team")
     detailed_table_df = pd.merge(summary_df, detailed_table_df, on="Team")
 
+    # Now save the updated 'summary_df' to CSV
+    summary_df_path = os.path.join(base_directories['summary_df'], week_dir, f"{div}_summary_df.csv")
+    try:
+        logging.info(f"Saving summary_df to {summary_df_path}")
+        summary_df.to_csv(summary_df_path, index=False)
+        logging.info(f"Successfully saved summary_df to {summary_df_path}")
+    except Exception as e:
+        logging.error(f"Error saving summary_df to {summary_df_path}: {e}")
+
     # Save detailed league table
     detailed_table_df.to_csv(os.path.join(base_directories['detailed_league_tables'], week_dir, f"{div}_detailed_league_table.csv"), index=False)
 
@@ -1298,11 +1357,19 @@ for div in all_divisions.keys():
     # Convert the 'Date' column to datetime if it's not already
     df_remaining_fixtures['Date'] = pd.to_datetime(df_remaining_fixtures['Date'], dayfirst=True)
 
+    # Create remaining fixtures folder if it doesn't exist
+    os.makedirs(os.path.join(base_directories['remaining_fixtures'], week_dir), exist_ok=True)
+
+    # Save remaining fixtures
+    df_remaining_fixtures.to_csv(
+        os.path.join(base_directories['remaining_fixtures'], week_dir, f"{div}_remaining_fixtures.csv"), index=False)
+
     # Filter rows where the 'Date' is earlier than today to create awaiting_results dataframe
     today = pd.Timestamp(datetime.now().date())
     awaiting_results_df = df_remaining_fixtures[df_remaining_fixtures['Date'] < today]
     # Save awaiting results
-    awaiting_results_df.to_csv(os.path.join(base_directories['awaiting_results'], week_dir, f"{div}_awaiting_results.csv"), index=False)
+    awaiting_results_df.to_csv(
+        os.path.join(base_directories['awaiting_results'], week_dir, f"{div}_awaiting_results.csv"), index=False)
 
     # Create results dataframe that ignores games where away team plays at home venue
     # Create dictionary of team home venues
@@ -1313,6 +1380,13 @@ for div in all_divisions.keys():
     # Create dataframe of neutral fixtures
     neutral_fixtures_df = df_remaining_fixtures[
         df_remaining_fixtures.apply(lambda row: team_home_venues.get(row["Away Team"]) == row["Venue"], axis=1)].copy()
+    
+    # Create folder for neutral fixtures if it doesn't exist
+    os.makedirs(os.path.join(base_directories['neutral_fixtures'], week_dir), exist_ok=True)
+
+    # Save neutral fixtures
+    neutral_fixtures_df.to_csv(
+        os.path.join(base_directories['neutral_fixtures'], week_dir, f"{div}_neutral_fixtures.csv"), index=False)
 
     # Calculate Home vs Away
     if not valid_matches_df.empty:
@@ -1324,9 +1398,14 @@ for div in all_divisions.keys():
         average_home_overall_score = valid_matches_df['Home Overall Score'].mean()
         average_away_overall_score = valid_matches_df['Away Overall Score'].mean()
 
-        # Calculate home win percentage
-        home_win_perc = len(
-            valid_matches_df[valid_matches_df["Home Overall Score"] > valid_matches_df["Away Overall Score"]]) / len(results_df)
+        # Apply home_team_won function to each row
+        valid_matches_df['Winner'] = valid_matches_df.apply(home_team_won, axis=1)
+
+        # Calculate home team win percentage, filtering out matches where the winner is 'Ignore'
+        home_win_perc = valid_matches_df[
+            valid_matches_df["Winner"] != "Ignore"]["Winner"].value_counts(normalize=True).get("Home", 0)
+
+
     else:
         logging.warning("No results data to calculate home vs away statistics for Division {div}.")
         average_home_overall_score = 0
@@ -1665,8 +1744,11 @@ for div in all_divisions.keys():
     # Write the updated DataFrame back to the CSV file
     overall_scores_df.to_csv(overall_scores_file, index=False, header=None)
 
+    # Save the results_df to CSV
+    results_df.to_csv(os.path.join(base_directories['results_df'], week_dir, f"{div}_results_df.csv"), index=False)
+
     # Wait so as not to get a connection error
-    time.sleep(20)
+    time.sleep(10)
 
     # Use run_projections to determine whether to run projections or not
     if run_projections == 1:
