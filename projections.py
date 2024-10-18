@@ -10,7 +10,7 @@ from collections import Counter, defaultdict
 year = "2024-2025"
 num_simulations = 999
 home_advantage_factor = 0.05
-unpredictability_factor = 0.6
+unpredictability_factor = 0.9
 
 # Define functions
 
@@ -286,7 +286,7 @@ os.makedirs(base_directories['simulated_tables'], exist_ok=True)
 os.makedirs(base_directories['simulated_fixtures'], exist_ok=True)
 
 # Process each division
-for div in wednesday:
+for div in divisions:
     logging.info(f"Processing projections for Division {div}")
 
     # Find the latest week directory for the division
@@ -350,6 +350,20 @@ for div in wednesday:
     # Determine max_rubbers
     max_rubbers = len([col for col in combined.columns if 'Rubber' in col and 'Win %' in col])
 
+    # Get the list of teams from the fixtures
+    teams_in_fixtures = set(df_remaining_fixtures['Home Team']).union(set(df_remaining_fixtures['Away Team']))
+
+    # Get the list of teams in the combined data
+    teams_in_combined = set(combined.index)
+
+    # Find missing teams
+    missing_teams = teams_in_fixtures - teams_in_combined
+
+    if missing_teams:
+        logging.warning(f"The following teams are missing in the combined data for Division {div}: {', '.join(missing_teams)}")
+        logging.warning(f"Skipping Division {div} due to missing team data.")
+        continue  # Skip to the next division
+
     # Run simulations
     try:
         projected_final_table, projected_fixtures = simulate_league(
@@ -372,9 +386,19 @@ for div in wednesday:
     os.makedirs(simulated_tables_dir, exist_ok=True)
     os.makedirs(simulated_fixtures_dir, exist_ok=True)
 
+    # Define the path for the simulation date file
+    simulation_date_file = os.path.join(simulated_tables_dir, f"{div}_simulation_date.txt")
+
     # Save the results
     projected_final_table_path = os.path.join(simulated_tables_dir, f"{div}_proj_final_table.csv")
     projected_fixtures_path = os.path.join(simulated_fixtures_dir, f"{div}_proj_fixtures.csv")
+    logging.info(f"Saving projections for Division {div} to {projected_final_table_path} and {projected_fixtures_path}")
+
+    # Save the simulation date to the file
+    simulation_date = datetime.now().strftime('%Y-%m-%d')
+    with open(simulation_date_file, 'w') as f:
+        f.write(simulation_date)
+    logging.info(f"Saved simulation date to {simulation_date_file}")
 
     projected_final_table.to_csv(projected_final_table_path, index=False)
     projected_fixtures.to_csv(projected_fixtures_path, index=False)
