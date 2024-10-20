@@ -762,6 +762,82 @@ def get_divisions_for_season(season_base_path, is_current_season):
         divisions_list = sorted(divisions, key=lambda x: get_division_sort_key(x, is_current_season))
         
         return divisions_list
+    
+@st.cache_data
+def load_all_results_and_player_results(season_base_path):
+    """
+    Load all results_df and player_results CSVs from all week_* folders and combine them, removing duplicates.
+    """
+    all_results = []
+    all_player_results = []
+
+    # Paths to the results_df and player_results directories
+    results_df_dir = os.path.join(season_base_path, "results_df")
+    player_results_dir = os.path.join(season_base_path, "player_results")
+
+    # Find all week_* folders
+    results_week_folders = glob.glob(os.path.join(results_df_dir, "week_*"))
+    player_results_week_folders = glob.glob(os.path.join(player_results_dir, "week_*"))
+
+    # Load all results_df files
+    for week_folder in results_week_folders:
+        csv_files = glob.glob(os.path.join(week_folder, "*.csv"))
+        for file in csv_files:
+            try:
+                df = pd.read_csv(file)
+                # Extract division from filename
+                filename = os.path.basename(file)
+                match = re.match(r"(.*)_results_df\.csv", filename)
+                if match:
+                    division = match.group(1)
+                else:
+                    division = "Unknown"
+                df['Division'] = division
+                # Optionally, add week information if needed
+                all_results.append(df)
+            except Exception as e:
+                logging.warning(f"Error reading file {file}: {e}")
+
+    # Load all player_results files
+    for week_folder in player_results_week_folders:
+        csv_files = glob.glob(os.path.join(week_folder, "*.csv"))
+        for file in csv_files:
+            try:
+                df = pd.read_csv(file)
+                # Extract division from filename
+                filename = os.path.basename(file)
+                match = re.match(r"(.*)_player_results\.csv", filename)
+                if match:
+                    division = match.group(1)
+                else:
+                    division = "Unknown"
+                df['Division'] = division
+                # Optionally, add week information if needed
+                all_player_results.append(df)
+            except Exception as e:
+                logging.warning(f"Error reading file {file}: {e}")
+
+    # Combine all results into a single DataFrame, remove duplicates
+    if all_results:
+        combined_results_df = pd.concat(all_results, ignore_index=True).drop_duplicates()
+    else:
+        combined_results_df = pd.DataFrame()
+
+    if all_player_results:
+        combined_player_results_df = pd.concat(all_player_results, ignore_index=True).drop_duplicates()
+    else:
+        combined_player_results_df = pd.DataFrame()
+
+    # Convert Division to string and strip spaces
+    combined_results_df['Division'] = combined_results_df['Division'].astype(str).str.strip()
+    combined_player_results_df['Division'] = combined_player_results_df['Division'].astype(str).str.strip()
+
+    # Save to CSV
+    combined_player_results_df.to_csv(r"2024-2025/combined_player_results_df.csv")
+    combined_results_df.to_csv(r"2024-2025/combined_results_df.csv")
+
+    return combined_results_df, combined_player_results_df
+
 
 
 # Start the main application
@@ -804,7 +880,7 @@ def main():
             sections = ["Player Info", "Division Player Stats"]
         else:
             if is_current_season:
-                sections = ["Detailed Division Table", "Rubber Win Percentage", "Home/Away Splits", "Projections"]
+                sections = ["Detailed Division Table", "Rubber Win Percentage", "Home/Away Splits", "Projections", "Match Results by Club"]
             else:
                 sections = ["Detailed Division Table", "Rubber Win Percentage", "Home/Away Splits"]
 
@@ -812,7 +888,7 @@ def main():
         selected_section = st.selectbox("**Select a Section:**", sections)
 
         # If selected_section is 'Player Info', we don't need to select a division
-        if selected_section == "Player Info":
+        if selected_section in ["Player Info", "Match Results by Club"]:
             division = None
         else:
             division = st.selectbox("**Select a Division:**", divisions_for_season)
@@ -847,6 +923,114 @@ def main():
             st.session_state["data"][f"all_rankings_loaded_{season_key}"] = True
         else:
             all_rankings_df = st.session_state["data"][f"all_rankings_df_{season_key}"]
+       
+    elif selected_section == "Match Results by Club":
+        # Load data
+        season_base_path = os.path.join(base_directory, selected_season)
+        combined_results_df, combined_player_results_df = load_all_results_and_player_results(season_base_path)
+
+        print(combined_results_df['Date'].dtype)
+        print(combined_player_results_df['Match Date'].dtype)
+
+        # Convert 'Date' and 'Match Date' to datetime objects without converting to string
+        combined_results_df['Date'] = pd.to_datetime(combined_results_df['Date'], dayfirst=True, errors='coerce')
+        combined_player_results_df['Match Date'] = pd.to_datetime(combined_player_results_df['Match Date'], dayfirst=False, errors='coerce')
+
+        # Log unique parsed dates for verification
+        parsed_results_dates = combined_results_df['Date'].dropna().unique()
+        parsed_player_dates = combined_player_results_df['Match Date'].dropna().unique()
+        logging.debug(f"Unique parsed Dates in combined_results_df: {parsed_results_dates}")
+        logging.debug(f"Unique parsed Match Dates in combined_player_results_df: {parsed_player_dates}")
+
+        # Make sure Division columns are consistent
+        combined_results_df['Division'] = combined_results_df['Division'].astype(str).str.strip()
+        combined_player_results_df['Division'] = combined_player_results_df['Division'].astype(str).str.strip()
+
+        if combined_results_df.empty:
+            st.error("No match results data available.")
+            return
+
+        if combined_player_results_df.empty:
+            st.warning("Player results data is not available.")
+            # You can proceed without player results, but you won't be able to display them
+
+        # Define the determine_club function
+        def determine_club(team_name):
+            """
+            Function to determine the club based on the team name.
+            """
+            for club in clubs:
+                if club.lower() in team_name.lower():
+                    return club
+            return 'Other'  # Assign 'Other' if no club is matched
+        
+        # Apply the function to determine the club for each team
+        combined_results_df['Home Club'] = combined_results_df['Home Team'].apply(determine_club)
+        combined_results_df['Away Club'] = combined_results_df['Away Team'].apply(determine_club)
+
+        # Include 'Other' in the list of clubs if necessary
+        all_clubs_in_data = set(combined_results_df['Home Club']).union(set(combined_results_df['Away Club']))
+        clubs_in_data = [club for club in clubs if club in all_clubs_in_data]
+        if 'Other' in all_clubs_in_data:
+            clubs_in_data.append('Other')
+
+        # Add 'Overall' option to the list of clubs
+        list_of_clubs = ["Overall"] + sorted(clubs_in_data)
+
+        # Sidebar for club selection
+        selected_club = st.sidebar.selectbox("Select a Club:", list_of_clubs)
+
+        # Filter matches involving the selected club
+        if selected_club == "Overall":
+            filtered_results = combined_results_df
+        else:
+            filtered_results = combined_results_df[
+                (combined_results_df['Home Club'] == selected_club) |
+                (combined_results_df['Away Club'] == selected_club)
+            ]
+
+        # Sort by Date
+        filtered_results = filtered_results.sort_values(by=['Date', 'Division', 'Home Team'], ascending=[False, True, True])
+
+        if filtered_results.empty:
+            st.info(f"No matches found for club {selected_club}.")
+            return
+
+        # Display filtered results
+        st.header(f"Matches Involving {selected_club}")
+
+        for idx, row in filtered_results.iterrows():
+            # Match summary
+            match_summary = f'### **Division {row["Division"]}:** {row["Home Team"]} **{row["Home Score"]}** - **{row["Away Score"]}** {row["Away Team"]}  ({row["Date"].date()})'
+
+            with st.expander(match_summary):
+                # Filter player_results where Division and Match Date match, and Team is either Home or Away Team
+                player_results = combined_player_results_df[
+                    (combined_player_results_df['Division'] == row['Division']) &
+                    (combined_player_results_df['Match Date'] == row['Date']) &
+                    (combined_player_results_df['Team'].isin([row['Home Team'], row['Away Team']]))
+                ].drop_duplicates()
+                logging.debug(f"Found {len(player_results)} player results for this match.")
+
+                if not player_results.empty:
+                    # Filter for wins only
+                    winning_results = player_results[player_results['Result'] == 'Win']
+
+                    if not winning_results.empty:
+                        st.subheader("Player Results")
+                        for _, win_row in winning_results.iterrows():
+                            rubber_number = win_row['Rubber Number']
+                            player_name = win_row['Player Name']
+                            opponent_name = win_row['Opponent Name']
+                            score = win_row['Score']
+                            line = f"<p><strong>{rubber_number}</strong>: {player_name} beat {opponent_name} {score}.</p>"
+                            st.markdown(line, unsafe_allow_html=True)
+                    logging.debug(f"Displaying player results for match: {row['Home Team']} vs {row['Away Team']} on {row['Date']}")
+
+                else:
+                    logging.debug(f"No player results found for match: {row['Home Team']} vs {row['Away Team']} on {row['Date']}")
+                    st.write("Player results not available for this match.")
+
     else:
         # Process division-specific data
         if division is not None:
@@ -1620,7 +1804,7 @@ def main():
                 st.write("**Note:**  \nThe projected final table is the average result of simulating the remaining "
                             "fixtures 10,000 times.  \nFixtures are simulated using teams' average rubber win percentage, "
                             "factoring in home advantage.")
-
+                
     else:
         st.error("Invalid section selected.")
 

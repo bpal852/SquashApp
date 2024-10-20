@@ -368,7 +368,7 @@ def process_division(division, current_week, previous_week):
         return
 
 # Run the script
-week_numbers = [1]  # Adjust as needed
+week_numbers = [1, 2, 3]  # Adjust as needed
 
 for current_week in week_numbers:
     previous_week = current_week - 1
