@@ -626,14 +626,18 @@ def load_player_rankings(season_base_path, divisions_for_season):
 
 
     # Check columns after merging
-    logging.debug(f"Columns in merged DataFrame: {merged_df.columns.tolist()}")
     if 'HKS No.' not in merged_df.columns:
         logging.error("'HKS No.' column is missing after merging.")
 
-    # Handle missing HKS No.
+    # Handle missing HKS No. (these should be players who 'played up')
     missing_hksno = merged_df['HKS No.'].isnull().sum()
     if missing_hksno > 0:
         logging.warning(f"{missing_hksno} entries have missing HKS No. after merge.")
+
+    # Identify rows with missing 'HKS No.'
+    missing_hksno_df = merged_df[merged_df['HKS No.'].isnull()]
+    missing_hksno_df.to_csv("2024-2025/missing_hksno.csv", index=False)
+    
 
     def determine_club(team_name):
         """
