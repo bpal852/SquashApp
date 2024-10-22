@@ -39838,3 +39838,200 @@ Traceback (most recent call last):
     if '(' in result and ')' in result:
        ^^^^^^^^^^^^^
 TypeError: argument of type 'float' is not iterable
+2024-10-22 13:40:25,804 - INFO - Total players mapped across all divisions: 1679
+2024-10-22 13:43:10,452 - INFO - Processing Division 7A for Week 1
+2024-10-22 13:43:10,470 - INFO - Number of players who played in Division '7A' during week 1: 28
+2024-10-22 13:43:10,502 - INFO - Number of 'Playing Up' players in Division '7A' during week 1: 2
+2024-10-22 13:43:10,530 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\7A_player_results.csv
+2024-10-22 14:14:35,500 - INFO - Total players mapped across all divisions: 1679
+2024-10-22 14:14:35,601 - INFO - Processing Division 7A for Week 1
+2024-10-22 14:14:35,610 - INFO - Number of players who played in Division '7A' during week 1: 28
+2024-10-22 14:14:35,624 - INFO - Number of 'Playing Up' players in Division '7A' during week 1: 2
+2024-10-22 14:14:35,646 - ERROR - Error saving player results for Division '7A', Week 1: [Errno 13] Permission denied: 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\player_results\\week_1\\7A_player_results.csv'
+Traceback (most recent call last):
+  File "C:\Users\bpali\AppData\Local\Temp\ipykernel_26200\2566957624.py", line 363, in process_division
+    player_results_df.to_csv(output_path, index=False)
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\core\generic.py", line 3902, in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\io\formats\format.py", line 1152, in to_csv
+    csv_formatter.save()
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\io\formats\csvs.py", line 247, in save
+    with get_handle(
+         ^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\io\common.py", line 863, in get_handle
+    handle = open(
+             ^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\player_results\\week_1\\7A_player_results.csv'
+2024-10-22 14:14:50,601 - INFO - Total players mapped across all divisions: 1679
+2024-10-22 14:14:50,701 - INFO - Processing Division 7A for Week 1
+2024-10-22 14:14:50,714 - INFO - Number of players who played in Division '7A' during week 1: 28
+2024-10-22 14:14:50,722 - INFO - Number of 'Playing Up' players in Division '7A' during week 1: 2
+2024-10-22 14:14:50,792 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\7A_player_results.csv
+2024-10-22 14:24:15,914 - INFO - Total players mapped across all divisions: 1679
+2024-10-22 14:24:16,228 - INFO - Processing Division 7A for Week 1
+2024-10-22 14:24:16,240 - INFO - Number of players who played in Division '7A' during week 1: 28
+2024-10-22 14:24:16,259 - INFO - Number of 'Playing Up' players in Division '7A' during week 1: 2
+2024-10-22 14:24:16,271 - WARNING - No available players to assign for Team 'Vitality Squash 1', Rubber 4. Assigning 'Unknown'.
+2024-10-22 14:24:16,273 - WARNING - No available players to assign for Team 'Kinetic 1', Rubber 5. Assigning 'Unknown'.
+2024-10-22 14:24:16,275 - WARNING - No available players to assign for Team 'X-Alpha 3', Rubber 5. Assigning 'Unknown'.
+2024-10-22 14:24:16,279 - WARNING - No available players to assign for Team 'Vitality Squash 1', Rubber 5. Assigning 'Unknown'.
+2024-10-22 14:24:16,291 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\7A_player_results.csv
+2024-10-22 14:45:29,571 - INFO - Total players mapped across all divisions: 1679
+2024-10-22 14:45:29,685 - INFO - Processing Division 7A for Week 1
+2024-10-22 14:45:29,699 - INFO - Number of players who played in Division '7A' during week 1: 28
+2024-10-22 14:45:29,711 - INFO - Number of 'Playing Up' players in Division '7A' during week 1: 2
+2024-10-22 14:45:29,711 - INFO - Added 'Playing Up' player 'Lo Ching Yin' to Team 'Sha Tin 7'.
+2024-10-22 14:45:29,711 - INFO - Added 'Playing Up' player 'Dong Bo Ang' to Team 'NEXUS 3'.
+2024-10-22 14:45:29,722 - WARNING - No available players to assign for Team 'Vitality Squash 1', Rubber 4. Assigning 'Unknown'.
+2024-10-22 14:45:29,722 - WARNING - No available players to assign for Team 'Kinetic 1', Rubber 5. Assigning 'Unknown'.
+2024-10-22 14:45:29,728 - WARNING - No available players to assign for Team 'X-Alpha 3', Rubber 5. Assigning 'Unknown'.
+2024-10-22 14:45:29,730 - WARNING - No available players to assign for Team 'Vitality Squash 1', Rubber 5. Assigning 'Unknown'.
+2024-10-22 14:45:29,742 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\7A_player_results.csv
+2024-10-22 14:46:58,440 - INFO - Total players mapped across all divisions: 1679
+2024-10-22 14:46:58,564 - INFO - Processing Division 7A for Week 1
+2024-10-22 14:46:58,579 - INFO - Number of players who played in Division '7A' during week 1: 28
+2024-10-22 14:46:58,594 - INFO - Number of 'Playing Up' players in Division '7A' during week 1: 2
+2024-10-22 14:46:58,595 - INFO - Added 'Playing Up' player 'Lo Ching Yin' to Team 'Sha Tin 7'.
+2024-10-22 14:46:58,596 - INFO - Added 'Playing Up' player 'Dong Bo Ang' to Team 'NEXUS 3'.
+2024-10-22 14:46:58,609 - WARNING - No available players to assign for Team 'Vitality Squash 1', Rubber 4. Assigning 'Unknown'.
+2024-10-22 14:46:58,612 - WARNING - No available players to assign for Team 'Kinetic 1', Rubber 5. Assigning 'Unknown'.
+2024-10-22 14:46:58,614 - WARNING - No available players to assign for Team 'X-Alpha 3', Rubber 5. Assigning 'Unknown'.
+2024-10-22 14:46:58,616 - WARNING - No available players to assign for Team 'Vitality Squash 1', Rubber 5. Assigning 'Unknown'.
+2024-10-22 14:46:58,630 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\7A_player_results.csv
+2024-10-22 15:09:15,706 - INFO - Total players mapped across all divisions: 1679
+2024-10-22 15:09:15,808 - INFO - Processing Division 7A for Week 1
+2024-10-22 15:09:15,815 - INFO - Number of players who played in Division '7A' during week 1: 28
+2024-10-22 15:09:15,826 - INFO - Number of 'Playing Up' players in Division '7A' during week 1: 2
+2024-10-22 15:09:15,827 - INFO - Assigned 'Playing Up' player 'Lo Ching Yin' to Team 'Sha Tin 7'.
+2024-10-22 15:09:15,828 - INFO - Assigned 'Playing Up' player 'Dong Bo Ang' to Team 'NEXUS 3'.
+2024-10-22 15:09:15,840 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\7A_player_results.csv
+2024-10-22 15:10:30,648 - INFO - Total players mapped across all divisions: 1679
+2024-10-22 15:10:30,724 - INFO - Processing Division 7A for Week 1
+2024-10-22 15:10:30,735 - INFO - Number of players who played in Division '7A' during week 1: 28
+2024-10-22 15:10:30,751 - INFO - Number of 'Playing Up' players in Division '7A' during week 1: 2
+2024-10-22 15:10:30,753 - INFO - Assigned 'Playing Up' player 'Lo Ching Yin' to Team 'Sha Tin 7'.
+2024-10-22 15:10:30,754 - INFO - Assigned 'Playing Up' player 'Dong Bo Ang' to Team 'NEXUS 3'.
+2024-10-22 15:10:30,770 - ERROR - Error saving player results for Division '7A', Week 1: [Errno 13] Permission denied: 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\player_results\\week_1\\7A_player_results.csv'
+Traceback (most recent call last):
+  File "C:\Users\bpali\AppData\Local\Temp\ipykernel_26200\4144410305.py", line 404, in process_division
+    player_results_df.to_csv(output_path, index=False)
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\core\generic.py", line 3902, in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\io\formats\format.py", line 1152, in to_csv
+    csv_formatter.save()
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\io\formats\csvs.py", line 247, in save
+    with get_handle(
+         ^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\io\common.py", line 863, in get_handle
+    handle = open(
+             ^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\\player_results\\week_1\\7A_player_results.csv'
+2024-10-22 15:10:41,794 - INFO - Total players mapped across all divisions: 1679
+2024-10-22 15:10:41,910 - INFO - Processing Division 7A for Week 1
+2024-10-22 15:10:41,910 - INFO - Number of players who played in Division '7A' during week 1: 28
+2024-10-22 15:10:41,933 - INFO - Number of 'Playing Up' players in Division '7A' during week 1: 2
+2024-10-22 15:10:41,934 - INFO - Assigned 'Playing Up' player 'Lo Ching Yin' to Team 'Sha Tin 7'.
+2024-10-22 15:10:41,934 - INFO - Assigned 'Playing Up' player 'Dong Bo Ang' to Team 'NEXUS 3'.
+2024-10-22 15:10:41,948 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\7A_player_results.csv
+2024-10-22 15:51:09,989 - INFO - Total players mapped across all divisions: 1679
+2024-10-22 15:51:10,065 - INFO - Processing Division 7A for Week 1
+2024-10-22 15:51:10,073 - INFO - Number of players who played in Division '7A' during week 1: 28
+2024-10-22 15:51:10,088 - INFO - Number of 'Playing Up' players in Division '7A' during week 1: 2
+2024-10-22 15:51:10,088 - ERROR - Error processing match at index 0 in Division '7A', Week 1: 'Rubber 1 Score'
+Traceback (most recent call last):
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\core\indexes\base.py", line 3790, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "index.pyx", line 152, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 181, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Rubber 1 Score'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\bpali\AppData\Local\Temp\ipykernel_26200\920610472.py", line 218, in process_division
+    rubber_score = row[f'Rubber {rubber_num} Score']
+                   ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\core\series.py", line 1040, in __getitem__
+    return self._get_value(key)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\core\series.py", line 1156, in _get_value
+    loc = self.index.get_loc(label)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\core\indexes\base.py", line 3797, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Rubber 1 Score'
+2024-10-22 15:51:10,103 - ERROR - Error processing match at index 1 in Division '7A', Week 1: 'Rubber 1 Score'
+Traceback (most recent call last):
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\core\indexes\base.py", line 3790, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "index.pyx", line 152, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 181, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Rubber 1 Score'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\bpali\AppData\Local\Temp\ipykernel_26200\920610472.py", line 218, in process_division
+    rubber_score = row[f'Rubber {rubber_num} Score']
+                   ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\core\series.py", line 1040, in __getitem__
+    return self._get_value(key)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\core\series.py", line 1156, in _get_value
+    loc = self.index.get_loc(label)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\core\indexes\base.py", line 3797, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Rubber 1 Score'
+2024-10-22 15:51:10,104 - ERROR - Error processing match at index 2 in Division '7A', Week 1: 'Rubber 1 Score'
+Traceback (most recent call last):
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\core\indexes\base.py", line 3790, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "index.pyx", line 152, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 181, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Rubber 1 Score'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\bpali\AppData\Local\Temp\ipykernel_26200\920610472.py", line 218, in process_division
+    rubber_score = row[f'Rubber {rubber_num} Score']
+                   ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\core\series.py", line 1040, in __getitem__
+    return self._get_value(key)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\core\series.py", line 1156, in _get_value
+    loc = self.index.get_loc(label)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\core\indexes\base.py", line 3797, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Rubber 1 Score'
+2024-10-22 15:51:10,104 - ERROR - Error converting 'Match Date' to datetime in Division '7A', Week 1: 'Match Date'
+Traceback (most recent call last):
+  File "C:\Users\bpali\AppData\Local\Temp\ipykernel_26200\920610472.py", line 354, in process_division
+    player_results_df['Match Date'] = pd.to_datetime(player_results_df['Match Date'],
+                                                    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\core\frame.py", line 3893, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\bpali\PycharmProjects\SquashApp\venv\Lib\site-packages\pandas\core\indexes\range.py", line 418, in get_loc
+    raise KeyError(key)
+KeyError: 'Match Date'
+2024-10-22 16:16:28,266 - INFO - Total players mapped across all divisions: 1679
+2024-10-22 16:16:28,338 - INFO - Processing Division 7A for Week 1
+2024-10-22 16:16:28,340 - ERROR - Unexpected error processing Division 7A, Week 1: process_division() got an unexpected keyword argument 'previous_week'
+Traceback (most recent call last):
+  File "C:\Users\bpali\AppData\Local\Temp\ipykernel_26200\4182627535.py", line 8, in <module>
+    process_division(
+TypeError: process_division() got an unexpected keyword argument 'previous_week'
