@@ -933,12 +933,9 @@ def main():
         season_base_path = os.path.join(base_directory, selected_season)
         combined_results_df, combined_player_results_df = load_all_results_and_player_results(season_base_path)
 
-        print(combined_results_df['Date'].dtype)
-        print(combined_player_results_df['Match Date'].dtype)
-
         # Convert 'Date' and 'Match Date' to datetime objects without converting to string
         combined_results_df['Date'] = pd.to_datetime(combined_results_df['Date'], dayfirst=True, errors='coerce')
-        combined_player_results_df['Match Date'] = pd.to_datetime(combined_player_results_df['Match Date'], dayfirst=False, errors='coerce')
+        combined_player_results_df['Match Date'] = pd.to_datetime(combined_player_results_df['Match Date'], dayfirst=True, errors='coerce')
 
         # Log unique parsed dates for verification
         parsed_results_dates = combined_results_df['Date'].dropna().unique()
@@ -949,6 +946,9 @@ def main():
         # Make sure Division columns are consistent
         combined_results_df['Division'] = combined_results_df['Division'].astype(str).str.strip()
         combined_player_results_df['Division'] = combined_player_results_df['Division'].astype(str).str.strip()
+
+        print(combined_results_df.head())
+        print(combined_player_results_df.head())
 
         if combined_results_df.empty:
             st.error("No match results data available.")
