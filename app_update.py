@@ -947,9 +947,6 @@ def main():
         combined_results_df['Division'] = combined_results_df['Division'].astype(str).str.strip()
         combined_player_results_df['Division'] = combined_player_results_df['Division'].astype(str).str.strip()
 
-        print(combined_results_df.head())
-        print(combined_player_results_df.head())
-
         if combined_results_df.empty:
             st.error("No match results data available.")
             return
