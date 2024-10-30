@@ -547,22 +547,23 @@ def process_division(division, current_week, previous_week, player_mapping, all_
 player_mapping = build_player_mapping(all_divisions, base_directory)
 logging.info(f"Total players mapped across all divisions: {len(player_mapping)}")
 
-# Run the script
-week_numbers = [1, 2, 3, 4]  # Adjust as needed
+# Get current week
+current_week = 4
 
-for current_week in week_numbers:
+# Run the script for each division and week
+for week in range(1, current_week + 1):
     previous_week = current_week - 1
     for division in all_divisions.keys():
-        logging.info(f"Processing Division '{division}' for Week {current_week}")
+        logging.info(f"Processing Division '{division}' for Week {week}")
         try:
             process_division(
                 division=division,
-                current_week=current_week,
+                current_week=week,
                 previous_week=previous_week,
                 player_mapping=player_mapping,
                 all_divisions=all_divisions,
                 base_directory=base_directory
             )
         except Exception as e:
-            logging.exception(f"Unexpected error processing Division '{division}', Week {current_week}: {e}")
+            logging.exception(f"Unexpected error processing Division '{division}', Week {week}: {e}")
             continue  # Proceed to the next division
