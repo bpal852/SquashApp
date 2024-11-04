@@ -643,6 +643,9 @@ def load_player_rankings(season_base_path, divisions_for_season):
         """
         Function to determine the club based on the team name.
         """
+        # Allow for special case
+        if team_name == "HKCC Tuesday Night Rockers":
+            return "Hong Kong Cricket Club"
         for club in clubs:
             if club.lower() in team_name.lower():
                 return club

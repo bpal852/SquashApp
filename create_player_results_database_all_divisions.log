@@ -43191,3 +43191,419 @@ AttributeError: 'DataFrame' object has no attribute 'append'
 2024-11-02 20:03:28,931 - WARNING - Data files for Division 'L3' not found for week 5. Skipping.
 2024-11-02 20:03:28,931 - INFO - Processing Division 'L4' for Week 5
 2024-11-02 20:03:28,932 - WARNING - Data files for Division 'L4' not found for week 5. Skipping.
+2024-11-04 22:18:15,374 - INFO - Total players mapped across all divisions: 1679
+2024-11-04 22:18:15,375 - INFO - Processing Division 'Premier Main' for Week 1
+2024-11-04 22:18:15,389 - INFO - Number of players who played in Division 'Premier Main' during week 1: 15
+2024-11-04 22:18:15,407 - INFO - Number of 'Playing Up' players in Division 'Premier Main' during week 1: 1
+2024-11-04 22:18:15,440 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\Premier Main_player_results.csv
+2024-11-04 22:18:15,441 - INFO - Processing Division '2' for Week 1
+2024-11-04 22:18:15,451 - INFO - Number of players who played in Division '2' during week 1: 16
+2024-11-04 22:18:15,462 - INFO - Number of 'Playing Up' players in Division '2' during week 1: 0
+2024-11-04 22:18:15,478 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\2_player_results.csv
+2024-11-04 22:18:15,479 - INFO - Processing Division '3' for Week 1
+2024-11-04 22:18:15,490 - INFO - Number of players who played in Division '3' during week 1: 40
+2024-11-04 22:18:15,507 - INFO - Number of 'Playing Up' players in Division '3' during week 1: 0
+2024-11-04 22:18:15,533 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\3_player_results.csv
+2024-11-04 22:18:15,534 - INFO - Processing Division '4' for Week 1
+2024-11-04 22:18:15,543 - INFO - Number of players who played in Division '4' during week 1: 38
+2024-11-04 22:18:15,560 - INFO - Number of 'Playing Up' players in Division '4' during week 1: 0
+2024-11-04 22:18:15,588 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\4_player_results.csv
+2024-11-04 22:18:15,588 - INFO - Processing Division '5' for Week 1
+2024-11-04 22:18:15,598 - INFO - Number of players who played in Division '5' during week 1: 50
+2024-11-04 22:18:15,618 - INFO - Number of 'Playing Up' players in Division '5' during week 1: 0
+2024-11-04 22:18:15,646 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\5_player_results.csv
+2024-11-04 22:18:15,646 - INFO - Processing Division '6' for Week 1
+2024-11-04 22:18:15,658 - INFO - Number of players who played in Division '6' during week 1: 50
+2024-11-04 22:18:15,676 - INFO - Number of 'Playing Up' players in Division '6' during week 1: 0
+2024-11-04 22:18:15,705 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\6_player_results.csv
+2024-11-04 22:18:15,705 - INFO - Processing Division '7A' for Week 1
+2024-11-04 22:18:15,715 - INFO - Number of players who played in Division '7A' during week 1: 28
+2024-11-04 22:18:15,730 - INFO - Number of 'Playing Up' players in Division '7A' during week 1: 2
+2024-11-04 22:18:15,758 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\7A_player_results.csv
+2024-11-04 22:18:15,759 - INFO - Processing Division '7B' for Week 1
+2024-11-04 22:18:15,770 - INFO - Number of players who played in Division '7B' during week 1: 30
+2024-11-04 22:18:15,783 - INFO - Number of 'Playing Up' players in Division '7B' during week 1: 0
+2024-11-04 22:18:15,802 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\7B_player_results.csv
+2024-11-04 22:18:15,803 - INFO - Processing Division '8A' for Week 1
+2024-11-04 22:18:15,813 - INFO - Number of players who played in Division '8A' during week 1: 40
+2024-11-04 22:18:15,831 - INFO - Number of 'Playing Up' players in Division '8A' during week 1: 1
+2024-11-04 22:18:15,870 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\8A_player_results.csv
+2024-11-04 22:18:15,871 - INFO - Processing Division '8B' for Week 1
+2024-11-04 22:18:15,882 - INFO - Number of players who played in Division '8B' during week 1: 39
+2024-11-04 22:18:15,898 - INFO - Number of 'Playing Up' players in Division '8B' during week 1: 1
+2024-11-04 22:18:15,929 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\8B_player_results.csv
+2024-11-04 22:18:15,930 - INFO - Processing Division '9' for Week 1
+2024-11-04 22:18:15,943 - INFO - Number of players who played in Division '9' during week 1: 40
+2024-11-04 22:18:15,966 - INFO - Number of 'Playing Up' players in Division '9' during week 1: 0
+2024-11-04 22:18:16,008 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\9_player_results.csv
+2024-11-04 22:18:16,009 - INFO - Processing Division '10' for Week 1
+2024-11-04 22:18:16,023 - INFO - Number of players who played in Division '10' during week 1: 30
+2024-11-04 22:18:16,040 - INFO - Number of 'Playing Up' players in Division '10' during week 1: 1
+2024-11-04 22:18:16,073 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\10_player_results.csv
+2024-11-04 22:18:16,074 - INFO - Processing Division '11' for Week 1
+2024-11-04 22:18:16,087 - INFO - Number of players who played in Division '11' during week 1: 50
+2024-11-04 22:18:16,112 - INFO - Number of 'Playing Up' players in Division '11' during week 1: 1
+2024-11-04 22:18:16,159 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\11_player_results.csv
+2024-11-04 22:18:16,160 - INFO - Processing Division '12' for Week 1
+2024-11-04 22:18:16,172 - INFO - Number of players who played in Division '12' during week 1: 55
+2024-11-04 22:18:16,198 - INFO - Number of 'Playing Up' players in Division '12' during week 1: 0
+2024-11-04 22:18:16,244 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\12_player_results.csv
+2024-11-04 22:18:16,245 - INFO - Processing Division '13A' for Week 1
+2024-11-04 22:18:16,255 - INFO - Number of players who played in Division '13A' during week 1: 60
+2024-11-04 22:18:16,279 - INFO - Number of 'Playing Up' players in Division '13A' during week 1: 1
+2024-11-04 22:18:16,384 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\13A_player_results.csv
+2024-11-04 22:18:16,385 - INFO - Processing Division '13B' for Week 1
+2024-11-04 22:18:16,400 - INFO - Number of players who played in Division '13B' during week 1: 56
+2024-11-04 22:18:16,442 - INFO - Number of 'Playing Up' players in Division '13B' during week 1: 2
+2024-11-04 22:18:16,511 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\13B_player_results.csv
+2024-11-04 22:18:16,512 - INFO - Processing Division '14' for Week 1
+2024-11-04 22:18:16,523 - INFO - Number of players who played in Division '14' during week 1: 31
+2024-11-04 22:18:16,541 - INFO - Number of 'Playing Up' players in Division '14' during week 1: 0
+2024-11-04 22:18:16,569 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\14_player_results.csv
+2024-11-04 22:18:16,570 - INFO - Processing Division '15A' for Week 1
+2024-11-04 22:18:16,585 - INFO - Number of players who played in Division '15A' during week 1: 28
+2024-11-04 22:18:16,605 - INFO - Number of 'Playing Up' players in Division '15A' during week 1: 0
+2024-11-04 22:18:16,630 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\15A_player_results.csv
+2024-11-04 22:18:16,630 - INFO - Processing Division '15B' for Week 1
+2024-11-04 22:18:16,643 - INFO - Number of players who played in Division '15B' during week 1: 39
+2024-11-04 22:18:16,659 - INFO - Number of 'Playing Up' players in Division '15B' during week 1: 0
+2024-11-04 22:18:16,684 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\15B_player_results.csv
+2024-11-04 22:18:16,685 - INFO - Processing Division 'Premier Masters' for Week 1
+2024-11-04 22:18:16,697 - INFO - Number of players who played in Division 'Premier Masters' during week 1: 6
+2024-11-04 22:18:16,710 - INFO - Number of 'Playing Up' players in Division 'Premier Masters' during week 1: 0
+2024-11-04 22:18:16,723 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\Premier Masters_player_results.csv
+2024-11-04 22:18:16,724 - INFO - Processing Division 'M2' for Week 1
+2024-11-04 22:18:16,734 - INFO - Number of players who played in Division 'M2' during week 1: 24
+2024-11-04 22:18:16,748 - INFO - Number of 'Playing Up' players in Division 'M2' during week 1: 0
+2024-11-04 22:18:16,773 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\M2_player_results.csv
+2024-11-04 22:18:16,773 - INFO - Processing Division 'M3' for Week 1
+2024-11-04 22:18:16,783 - INFO - Number of players who played in Division 'M3' during week 1: 39
+2024-11-04 22:18:16,799 - INFO - Number of 'Playing Up' players in Division 'M3' during week 1: 1
+2024-11-04 22:18:16,829 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\M3_player_results.csv
+2024-11-04 22:18:16,830 - INFO - Processing Division 'M4' for Week 1
+2024-11-04 22:18:16,842 - INFO - Number of players who played in Division 'M4' during week 1: 39
+2024-11-04 22:18:16,861 - INFO - Number of 'Playing Up' players in Division 'M4' during week 1: 0
+2024-11-04 22:18:16,891 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\M4_player_results.csv
+2024-11-04 22:18:16,891 - INFO - Processing Division 'Premier Ladies' for Week 1
+2024-11-04 22:18:16,903 - INFO - Number of players who played in Division 'Premier Ladies' during week 1: 12
+2024-11-04 22:18:16,919 - INFO - Number of 'Playing Up' players in Division 'Premier Ladies' during week 1: 0
+2024-11-04 22:18:16,937 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\Premier Ladies_player_results.csv
+2024-11-04 22:18:16,938 - INFO - Processing Division 'L2' for Week 1
+2024-11-04 22:18:16,948 - INFO - Number of players who played in Division 'L2' during week 1: 24
+2024-11-04 22:18:16,966 - INFO - Number of 'Playing Up' players in Division 'L2' during week 1: 0
+2024-11-04 22:18:16,988 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\L2_player_results.csv
+2024-11-04 22:18:16,989 - INFO - Processing Division 'L3' for Week 1
+2024-11-04 22:18:16,999 - INFO - Number of players who played in Division 'L3' during week 1: 18
+2024-11-04 22:18:17,015 - INFO - Number of 'Playing Up' players in Division 'L3' during week 1: 2
+2024-11-04 22:18:17,045 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\L3_player_results.csv
+2024-11-04 22:18:17,046 - INFO - Processing Division 'L4' for Week 1
+2024-11-04 22:18:17,058 - INFO - Number of players who played in Division 'L4' during week 1: 18
+2024-11-04 22:18:17,073 - INFO - Number of 'Playing Up' players in Division 'L4' during week 1: 0
+2024-11-04 22:18:17,096 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_1\L4_player_results.csv
+2024-11-04 22:18:17,096 - INFO - Processing Division 'Premier Main' for Week 2
+2024-11-04 22:18:17,107 - WARNING - Ranking data for Division 'Premier Main' not found for previous week 4. Skipping.
+2024-11-04 22:18:17,108 - INFO - Processing Division '2' for Week 2
+2024-11-04 22:18:17,130 - INFO - Number of players who played in Division '2' during week 2: 0
+2024-11-04 22:18:17,131 - WARNING - No players played in Division '2' during week 2. Skipping.
+2024-11-04 22:18:17,131 - INFO - Processing Division '3' for Week 2
+2024-11-04 22:18:17,149 - INFO - Number of players who played in Division '3' during week 2: 0
+2024-11-04 22:18:17,149 - WARNING - No players played in Division '3' during week 2. Skipping.
+2024-11-04 22:18:17,150 - INFO - Processing Division '4' for Week 2
+2024-11-04 22:18:17,170 - INFO - Number of players who played in Division '4' during week 2: 0
+2024-11-04 22:18:17,171 - WARNING - No players played in Division '4' during week 2. Skipping.
+2024-11-04 22:18:17,171 - INFO - Processing Division '5' for Week 2
+2024-11-04 22:18:17,191 - INFO - Number of players who played in Division '5' during week 2: 0
+2024-11-04 22:18:17,191 - WARNING - No players played in Division '5' during week 2. Skipping.
+2024-11-04 22:18:17,192 - INFO - Processing Division '6' for Week 2
+2024-11-04 22:18:17,211 - INFO - Number of players who played in Division '6' during week 2: 0
+2024-11-04 22:18:17,211 - WARNING - No players played in Division '6' during week 2. Skipping.
+2024-11-04 22:18:17,212 - INFO - Processing Division '7A' for Week 2
+2024-11-04 22:18:17,231 - INFO - Number of players who played in Division '7A' during week 2: 0
+2024-11-04 22:18:17,232 - WARNING - No players played in Division '7A' during week 2. Skipping.
+2024-11-04 22:18:17,232 - INFO - Processing Division '7B' for Week 2
+2024-11-04 22:18:17,254 - INFO - Number of players who played in Division '7B' during week 2: 0
+2024-11-04 22:18:17,255 - WARNING - No players played in Division '7B' during week 2. Skipping.
+2024-11-04 22:18:17,255 - INFO - Processing Division '8A' for Week 2
+2024-11-04 22:18:17,274 - INFO - Number of players who played in Division '8A' during week 2: 0
+2024-11-04 22:18:17,275 - WARNING - No players played in Division '8A' during week 2. Skipping.
+2024-11-04 22:18:17,275 - INFO - Processing Division '8B' for Week 2
+2024-11-04 22:18:17,293 - INFO - Number of players who played in Division '8B' during week 2: 0
+2024-11-04 22:18:17,294 - WARNING - No players played in Division '8B' during week 2. Skipping.
+2024-11-04 22:18:17,294 - INFO - Processing Division '9' for Week 2
+2024-11-04 22:18:17,314 - INFO - Number of players who played in Division '9' during week 2: 0
+2024-11-04 22:18:17,314 - WARNING - No players played in Division '9' during week 2. Skipping.
+2024-11-04 22:18:17,315 - INFO - Processing Division '10' for Week 2
+2024-11-04 22:18:17,334 - INFO - Number of players who played in Division '10' during week 2: 0
+2024-11-04 22:18:17,335 - WARNING - No players played in Division '10' during week 2. Skipping.
+2024-11-04 22:18:17,335 - INFO - Processing Division '11' for Week 2
+2024-11-04 22:18:17,353 - INFO - Number of players who played in Division '11' during week 2: 0
+2024-11-04 22:18:17,354 - WARNING - No players played in Division '11' during week 2. Skipping.
+2024-11-04 22:18:17,354 - INFO - Processing Division '12' for Week 2
+2024-11-04 22:18:17,376 - INFO - Number of players who played in Division '12' during week 2: 0
+2024-11-04 22:18:17,376 - WARNING - No players played in Division '12' during week 2. Skipping.
+2024-11-04 22:18:17,377 - INFO - Processing Division '13A' for Week 2
+2024-11-04 22:18:17,401 - INFO - Number of players who played in Division '13A' during week 2: 0
+2024-11-04 22:18:17,402 - WARNING - No players played in Division '13A' during week 2. Skipping.
+2024-11-04 22:18:17,403 - INFO - Processing Division '13B' for Week 2
+2024-11-04 22:18:17,427 - INFO - Number of players who played in Division '13B' during week 2: 1
+2024-11-04 22:18:17,452 - INFO - Number of 'Playing Up' players in Division '13B' during week 2: 0
+2024-11-04 22:18:17,483 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_2\13B_player_results.csv
+2024-11-04 22:18:17,483 - INFO - Processing Division '14' for Week 2
+2024-11-04 22:18:17,503 - INFO - Number of players who played in Division '14' during week 2: 0
+2024-11-04 22:18:17,504 - WARNING - No players played in Division '14' during week 2. Skipping.
+2024-11-04 22:18:17,504 - INFO - Processing Division '15A' for Week 2
+2024-11-04 22:18:17,523 - INFO - Number of players who played in Division '15A' during week 2: 0
+2024-11-04 22:18:17,524 - WARNING - No players played in Division '15A' during week 2. Skipping.
+2024-11-04 22:18:17,524 - INFO - Processing Division '15B' for Week 2
+2024-11-04 22:18:17,543 - INFO - Number of players who played in Division '15B' during week 2: 0
+2024-11-04 22:18:17,544 - WARNING - No players played in Division '15B' during week 2. Skipping.
+2024-11-04 22:18:17,544 - INFO - Processing Division 'Premier Masters' for Week 2
+2024-11-04 22:18:17,562 - INFO - Number of players who played in Division 'Premier Masters' during week 2: 0
+2024-11-04 22:18:17,563 - WARNING - No players played in Division 'Premier Masters' during week 2. Skipping.
+2024-11-04 22:18:17,563 - INFO - Processing Division 'M2' for Week 2
+2024-11-04 22:18:17,583 - INFO - Number of players who played in Division 'M2' during week 2: 0
+2024-11-04 22:18:17,584 - WARNING - No players played in Division 'M2' during week 2. Skipping.
+2024-11-04 22:18:17,584 - INFO - Processing Division 'M3' for Week 2
+2024-11-04 22:18:17,606 - INFO - Number of players who played in Division 'M3' during week 2: 0
+2024-11-04 22:18:17,606 - WARNING - No players played in Division 'M3' during week 2. Skipping.
+2024-11-04 22:18:17,607 - INFO - Processing Division 'M4' for Week 2
+2024-11-04 22:18:17,626 - INFO - Number of players who played in Division 'M4' during week 2: 0
+2024-11-04 22:18:17,627 - WARNING - No players played in Division 'M4' during week 2. Skipping.
+2024-11-04 22:18:17,628 - INFO - Processing Division 'Premier Ladies' for Week 2
+2024-11-04 22:18:17,639 - WARNING - Ranking data for Division 'Premier Ladies' not found for previous week 4. Skipping.
+2024-11-04 22:18:17,640 - INFO - Processing Division 'L2' for Week 2
+2024-11-04 22:18:17,658 - INFO - Number of players who played in Division 'L2' during week 2: 0
+2024-11-04 22:18:17,659 - WARNING - No players played in Division 'L2' during week 2. Skipping.
+2024-11-04 22:18:17,659 - INFO - Processing Division 'L3' for Week 2
+2024-11-04 22:18:17,678 - INFO - Number of players who played in Division 'L3' during week 2: 0
+2024-11-04 22:18:17,679 - WARNING - No players played in Division 'L3' during week 2. Skipping.
+2024-11-04 22:18:17,679 - INFO - Processing Division 'L4' for Week 2
+2024-11-04 22:18:17,698 - INFO - Number of players who played in Division 'L4' during week 2: 0
+2024-11-04 22:18:17,699 - WARNING - No players played in Division 'L4' during week 2. Skipping.
+2024-11-04 22:18:17,699 - INFO - Processing Division 'Premier Main' for Week 3
+2024-11-04 22:18:17,709 - WARNING - Ranking data for Division 'Premier Main' not found for previous week 4. Skipping.
+2024-11-04 22:18:17,710 - INFO - Processing Division '2' for Week 3
+2024-11-04 22:18:17,726 - INFO - Number of players who played in Division '2' during week 3: 0
+2024-11-04 22:18:17,727 - WARNING - No players played in Division '2' during week 3. Skipping.
+2024-11-04 22:18:17,727 - INFO - Processing Division '3' for Week 3
+2024-11-04 22:18:17,745 - INFO - Number of players who played in Division '3' during week 3: 0
+2024-11-04 22:18:17,746 - WARNING - No players played in Division '3' during week 3. Skipping.
+2024-11-04 22:18:17,746 - INFO - Processing Division '4' for Week 3
+2024-11-04 22:18:17,763 - INFO - Number of players who played in Division '4' during week 3: 0
+2024-11-04 22:18:17,764 - WARNING - No players played in Division '4' during week 3. Skipping.
+2024-11-04 22:18:17,764 - INFO - Processing Division '5' for Week 3
+2024-11-04 22:18:17,781 - INFO - Number of players who played in Division '5' during week 3: 0
+2024-11-04 22:18:17,782 - WARNING - No players played in Division '5' during week 3. Skipping.
+2024-11-04 22:18:17,782 - INFO - Processing Division '6' for Week 3
+2024-11-04 22:18:17,800 - INFO - Number of players who played in Division '6' during week 3: 0
+2024-11-04 22:18:17,800 - WARNING - No players played in Division '6' during week 3. Skipping.
+2024-11-04 22:18:17,801 - INFO - Processing Division '7A' for Week 3
+2024-11-04 22:18:17,819 - INFO - Number of players who played in Division '7A' during week 3: 0
+2024-11-04 22:18:17,819 - WARNING - No players played in Division '7A' during week 3. Skipping.
+2024-11-04 22:18:17,820 - INFO - Processing Division '7B' for Week 3
+2024-11-04 22:18:17,839 - INFO - Number of players who played in Division '7B' during week 3: 0
+2024-11-04 22:18:17,839 - WARNING - No players played in Division '7B' during week 3. Skipping.
+2024-11-04 22:18:17,840 - INFO - Processing Division '8A' for Week 3
+2024-11-04 22:18:17,856 - INFO - Number of players who played in Division '8A' during week 3: 0
+2024-11-04 22:18:17,857 - WARNING - No players played in Division '8A' during week 3. Skipping.
+2024-11-04 22:18:17,857 - INFO - Processing Division '8B' for Week 3
+2024-11-04 22:18:17,875 - INFO - Number of players who played in Division '8B' during week 3: 0
+2024-11-04 22:18:17,876 - WARNING - No players played in Division '8B' during week 3. Skipping.
+2024-11-04 22:18:17,876 - INFO - Processing Division '9' for Week 3
+2024-11-04 22:18:17,895 - INFO - Number of players who played in Division '9' during week 3: 0
+2024-11-04 22:18:17,896 - WARNING - No players played in Division '9' during week 3. Skipping.
+2024-11-04 22:18:17,896 - INFO - Processing Division '10' for Week 3
+2024-11-04 22:18:17,916 - INFO - Number of players who played in Division '10' during week 3: 0
+2024-11-04 22:18:17,917 - WARNING - No players played in Division '10' during week 3. Skipping.
+2024-11-04 22:18:17,917 - INFO - Processing Division '11' for Week 3
+2024-11-04 22:18:17,935 - INFO - Number of players who played in Division '11' during week 3: 0
+2024-11-04 22:18:17,935 - WARNING - No players played in Division '11' during week 3. Skipping.
+2024-11-04 22:18:17,936 - INFO - Processing Division '12' for Week 3
+2024-11-04 22:18:17,958 - INFO - Number of players who played in Division '12' during week 3: 0
+2024-11-04 22:18:17,959 - WARNING - No players played in Division '12' during week 3. Skipping.
+2024-11-04 22:18:17,960 - INFO - Processing Division '13A' for Week 3
+2024-11-04 22:18:17,981 - INFO - Number of players who played in Division '13A' during week 3: 0
+2024-11-04 22:18:17,982 - WARNING - No players played in Division '13A' during week 3. Skipping.
+2024-11-04 22:18:17,982 - INFO - Processing Division '13B' for Week 3
+2024-11-04 22:18:18,005 - INFO - Number of players who played in Division '13B' during week 3: 0
+2024-11-04 22:18:18,008 - WARNING - No players played in Division '13B' during week 3. Skipping.
+2024-11-04 22:18:18,010 - INFO - Processing Division '14' for Week 3
+2024-11-04 22:18:18,081 - INFO - Number of players who played in Division '14' during week 3: 0
+2024-11-04 22:18:18,081 - WARNING - No players played in Division '14' during week 3. Skipping.
+2024-11-04 22:18:18,082 - INFO - Processing Division '15A' for Week 3
+2024-11-04 22:18:18,100 - INFO - Number of players who played in Division '15A' during week 3: 1
+2024-11-04 22:18:18,114 - INFO - Number of 'Playing Up' players in Division '15A' during week 3: 0
+2024-11-04 22:18:18,133 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_3\15A_player_results.csv
+2024-11-04 22:18:18,135 - INFO - Processing Division '15B' for Week 3
+2024-11-04 22:18:18,152 - INFO - Number of players who played in Division '15B' during week 3: 0
+2024-11-04 22:18:18,153 - WARNING - No players played in Division '15B' during week 3. Skipping.
+2024-11-04 22:18:18,153 - INFO - Processing Division 'Premier Masters' for Week 3
+2024-11-04 22:18:18,169 - INFO - Number of players who played in Division 'Premier Masters' during week 3: 0
+2024-11-04 22:18:18,170 - WARNING - No players played in Division 'Premier Masters' during week 3. Skipping.
+2024-11-04 22:18:18,170 - INFO - Processing Division 'M2' for Week 3
+2024-11-04 22:18:18,188 - INFO - Number of players who played in Division 'M2' during week 3: 0
+2024-11-04 22:18:18,189 - WARNING - No players played in Division 'M2' during week 3. Skipping.
+2024-11-04 22:18:18,189 - INFO - Processing Division 'M3' for Week 3
+2024-11-04 22:18:18,208 - INFO - Number of players who played in Division 'M3' during week 3: 0
+2024-11-04 22:18:18,209 - WARNING - No players played in Division 'M3' during week 3. Skipping.
+2024-11-04 22:18:18,209 - INFO - Processing Division 'M4' for Week 3
+2024-11-04 22:18:18,228 - INFO - Number of players who played in Division 'M4' during week 3: 0
+2024-11-04 22:18:18,228 - WARNING - No players played in Division 'M4' during week 3. Skipping.
+2024-11-04 22:18:18,229 - INFO - Processing Division 'Premier Ladies' for Week 3
+2024-11-04 22:18:18,237 - WARNING - Ranking data for Division 'Premier Ladies' not found for previous week 4. Skipping.
+2024-11-04 22:18:18,237 - INFO - Processing Division 'L2' for Week 3
+2024-11-04 22:18:18,256 - INFO - Number of players who played in Division 'L2' during week 3: 0
+2024-11-04 22:18:18,257 - WARNING - No players played in Division 'L2' during week 3. Skipping.
+2024-11-04 22:18:18,257 - INFO - Processing Division 'L3' for Week 3
+2024-11-04 22:18:18,275 - INFO - Number of players who played in Division 'L3' during week 3: 0
+2024-11-04 22:18:18,275 - WARNING - No players played in Division 'L3' during week 3. Skipping.
+2024-11-04 22:18:18,275 - INFO - Processing Division 'L4' for Week 3
+2024-11-04 22:18:18,293 - INFO - Number of players who played in Division 'L4' during week 3: 0
+2024-11-04 22:18:18,294 - WARNING - No players played in Division 'L4' during week 3. Skipping.
+2024-11-04 22:18:18,294 - INFO - Processing Division 'Premier Main' for Week 4
+2024-11-04 22:18:18,294 - WARNING - Data files for Division 'Premier Main' not found for week 4. Skipping.
+2024-11-04 22:18:18,295 - INFO - Processing Division '2' for Week 4
+2024-11-04 22:18:18,311 - INFO - Number of players who played in Division '2' during week 4: 0
+2024-11-04 22:18:18,311 - WARNING - No players played in Division '2' during week 4. Skipping.
+2024-11-04 22:18:18,311 - INFO - Processing Division '3' for Week 4
+2024-11-04 22:18:18,328 - INFO - Number of players who played in Division '3' during week 4: 0
+2024-11-04 22:18:18,329 - WARNING - No players played in Division '3' during week 4. Skipping.
+2024-11-04 22:18:18,329 - INFO - Processing Division '4' for Week 4
+2024-11-04 22:18:18,347 - INFO - Number of players who played in Division '4' during week 4: 0
+2024-11-04 22:18:18,348 - WARNING - No players played in Division '4' during week 4. Skipping.
+2024-11-04 22:18:18,348 - INFO - Processing Division '5' for Week 4
+2024-11-04 22:18:18,365 - INFO - Number of players who played in Division '5' during week 4: 0
+2024-11-04 22:18:18,365 - WARNING - No players played in Division '5' during week 4. Skipping.
+2024-11-04 22:18:18,365 - INFO - Processing Division '6' for Week 4
+2024-11-04 22:18:18,383 - INFO - Number of players who played in Division '6' during week 4: 0
+2024-11-04 22:18:18,383 - WARNING - No players played in Division '6' during week 4. Skipping.
+2024-11-04 22:18:18,383 - INFO - Processing Division '7A' for Week 4
+2024-11-04 22:18:18,402 - INFO - Number of players who played in Division '7A' during week 4: 0
+2024-11-04 22:18:18,402 - WARNING - No players played in Division '7A' during week 4. Skipping.
+2024-11-04 22:18:18,402 - INFO - Processing Division '7B' for Week 4
+2024-11-04 22:18:18,421 - INFO - Number of players who played in Division '7B' during week 4: 0
+2024-11-04 22:18:18,421 - WARNING - No players played in Division '7B' during week 4. Skipping.
+2024-11-04 22:18:18,422 - INFO - Processing Division '8A' for Week 4
+2024-11-04 22:18:18,439 - INFO - Number of players who played in Division '8A' during week 4: 0
+2024-11-04 22:18:18,439 - WARNING - No players played in Division '8A' during week 4. Skipping.
+2024-11-04 22:18:18,439 - INFO - Processing Division '8B' for Week 4
+2024-11-04 22:18:18,457 - INFO - Number of players who played in Division '8B' during week 4: 0
+2024-11-04 22:18:18,458 - WARNING - No players played in Division '8B' during week 4. Skipping.
+2024-11-04 22:18:18,458 - INFO - Processing Division '9' for Week 4
+2024-11-04 22:18:18,476 - INFO - Number of players who played in Division '9' during week 4: 0
+2024-11-04 22:18:18,476 - WARNING - No players played in Division '9' during week 4. Skipping.
+2024-11-04 22:18:18,476 - INFO - Processing Division '10' for Week 4
+2024-11-04 22:18:18,494 - INFO - Number of players who played in Division '10' during week 4: 0
+2024-11-04 22:18:18,494 - WARNING - No players played in Division '10' during week 4. Skipping.
+2024-11-04 22:18:18,495 - INFO - Processing Division '11' for Week 4
+2024-11-04 22:18:18,511 - INFO - Number of players who played in Division '11' during week 4: 0
+2024-11-04 22:18:18,512 - WARNING - No players played in Division '11' during week 4. Skipping.
+2024-11-04 22:18:18,512 - INFO - Processing Division '12' for Week 4
+2024-11-04 22:18:18,531 - INFO - Number of players who played in Division '12' during week 4: 0
+2024-11-04 22:18:18,532 - WARNING - No players played in Division '12' during week 4. Skipping.
+2024-11-04 22:18:18,532 - INFO - Processing Division '13A' for Week 4
+2024-11-04 22:18:18,547 - INFO - Number of players who played in Division '13A' during week 4: 0
+2024-11-04 22:18:18,548 - WARNING - No players played in Division '13A' during week 4. Skipping.
+2024-11-04 22:18:18,548 - INFO - Processing Division '13B' for Week 4
+2024-11-04 22:18:18,564 - INFO - Number of players who played in Division '13B' during week 4: 0
+2024-11-04 22:18:18,564 - WARNING - No players played in Division '13B' during week 4. Skipping.
+2024-11-04 22:18:18,565 - INFO - Processing Division '14' for Week 4
+2024-11-04 22:18:18,580 - INFO - Number of players who played in Division '14' during week 4: 0
+2024-11-04 22:18:18,581 - WARNING - No players played in Division '14' during week 4. Skipping.
+2024-11-04 22:18:18,581 - INFO - Processing Division '15A' for Week 4
+2024-11-04 22:18:18,598 - INFO - Number of players who played in Division '15A' during week 4: 0
+2024-11-04 22:18:18,598 - WARNING - No players played in Division '15A' during week 4. Skipping.
+2024-11-04 22:18:18,599 - INFO - Processing Division '15B' for Week 4
+2024-11-04 22:18:18,615 - INFO - Number of players who played in Division '15B' during week 4: 0
+2024-11-04 22:18:18,615 - WARNING - No players played in Division '15B' during week 4. Skipping.
+2024-11-04 22:18:18,615 - INFO - Processing Division 'Premier Masters' for Week 4
+2024-11-04 22:18:18,632 - INFO - Number of players who played in Division 'Premier Masters' during week 4: 0
+2024-11-04 22:18:18,633 - WARNING - No players played in Division 'Premier Masters' during week 4. Skipping.
+2024-11-04 22:18:18,633 - INFO - Processing Division 'M2' for Week 4
+2024-11-04 22:18:18,649 - INFO - Number of players who played in Division 'M2' during week 4: 0
+2024-11-04 22:18:18,649 - WARNING - No players played in Division 'M2' during week 4. Skipping.
+2024-11-04 22:18:18,649 - INFO - Processing Division 'M3' for Week 4
+2024-11-04 22:18:18,666 - INFO - Number of players who played in Division 'M3' during week 4: 0
+2024-11-04 22:18:18,666 - WARNING - No players played in Division 'M3' during week 4. Skipping.
+2024-11-04 22:18:18,666 - INFO - Processing Division 'M4' for Week 4
+2024-11-04 22:18:18,684 - INFO - Number of players who played in Division 'M4' during week 4: 0
+2024-11-04 22:18:18,684 - WARNING - No players played in Division 'M4' during week 4. Skipping.
+2024-11-04 22:18:18,685 - INFO - Processing Division 'Premier Ladies' for Week 4
+2024-11-04 22:18:18,685 - WARNING - Data files for Division 'Premier Ladies' not found for week 4. Skipping.
+2024-11-04 22:18:18,686 - INFO - Processing Division 'L2' for Week 4
+2024-11-04 22:18:18,704 - INFO - Number of players who played in Division 'L2' during week 4: 0
+2024-11-04 22:18:18,705 - WARNING - No players played in Division 'L2' during week 4. Skipping.
+2024-11-04 22:18:18,705 - INFO - Processing Division 'L3' for Week 4
+2024-11-04 22:18:18,722 - INFO - Number of players who played in Division 'L3' during week 4: 0
+2024-11-04 22:18:18,722 - WARNING - No players played in Division 'L3' during week 4. Skipping.
+2024-11-04 22:18:18,723 - INFO - Processing Division 'L4' for Week 4
+2024-11-04 22:18:18,739 - INFO - Number of players who played in Division 'L4' during week 4: 0
+2024-11-04 22:18:18,739 - WARNING - No players played in Division 'L4' during week 4. Skipping.
+2024-11-04 22:18:18,740 - INFO - Processing Division 'Premier Main' for Week 5
+2024-11-04 22:18:18,740 - WARNING - Data files for Division 'Premier Main' not found for week 5. Skipping.
+2024-11-04 22:18:18,740 - INFO - Processing Division '2' for Week 5
+2024-11-04 22:18:18,741 - WARNING - Data files for Division '2' not found for week 5. Skipping.
+2024-11-04 22:18:18,741 - INFO - Processing Division '3' for Week 5
+2024-11-04 22:18:18,742 - WARNING - Data files for Division '3' not found for week 5. Skipping.
+2024-11-04 22:18:18,742 - INFO - Processing Division '4' for Week 5
+2024-11-04 22:18:18,742 - WARNING - Data files for Division '4' not found for week 5. Skipping.
+2024-11-04 22:18:18,743 - INFO - Processing Division '5' for Week 5
+2024-11-04 22:18:18,743 - WARNING - Data files for Division '5' not found for week 5. Skipping.
+2024-11-04 22:18:18,743 - INFO - Processing Division '6' for Week 5
+2024-11-04 22:18:18,744 - WARNING - Data files for Division '6' not found for week 5. Skipping.
+2024-11-04 22:18:18,744 - INFO - Processing Division '7A' for Week 5
+2024-11-04 22:18:18,762 - INFO - Number of players who played in Division '7A' during week 5: 28
+2024-11-04 22:18:18,777 - INFO - Number of 'Playing Up' players in Division '7A' during week 5: 3
+2024-11-04 22:18:18,807 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_5\7A_player_results.csv
+2024-11-04 22:18:18,808 - INFO - Processing Division '7B' for Week 5
+2024-11-04 22:18:18,822 - INFO - Number of players who played in Division '7B' during week 5: 30
+2024-11-04 22:18:18,836 - INFO - Number of 'Playing Up' players in Division '7B' during week 5: 0
+2024-11-04 22:18:18,856 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_5\7B_player_results.csv
+2024-11-04 22:18:18,857 - INFO - Processing Division '8A' for Week 5
+2024-11-04 22:18:18,858 - WARNING - Data files for Division '8A' not found for week 5. Skipping.
+2024-11-04 22:18:18,858 - INFO - Processing Division '8B' for Week 5
+2024-11-04 22:18:18,859 - WARNING - Data files for Division '8B' not found for week 5. Skipping.
+2024-11-04 22:18:18,859 - INFO - Processing Division '9' for Week 5
+2024-11-04 22:18:18,876 - INFO - Number of players who played in Division '9' during week 5: 39
+2024-11-04 22:18:18,895 - INFO - Number of 'Playing Up' players in Division '9' during week 5: 2
+2024-11-04 22:18:18,930 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_5\9_player_results.csv
+2024-11-04 22:18:18,930 - INFO - Processing Division '10' for Week 5
+2024-11-04 22:18:18,931 - WARNING - Data files for Division '10' not found for week 5. Skipping.
+2024-11-04 22:18:18,931 - INFO - Processing Division '11' for Week 5
+2024-11-04 22:18:18,932 - WARNING - Data files for Division '11' not found for week 5. Skipping.
+2024-11-04 22:18:18,932 - INFO - Processing Division '12' for Week 5
+2024-11-04 22:18:18,948 - INFO - Number of players who played in Division '12' during week 5: 50
+2024-11-04 22:18:18,973 - INFO - Number of 'Playing Up' players in Division '12' during week 5: 0
+2024-11-04 22:18:19,006 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_5\12_player_results.csv
+2024-11-04 22:18:19,007 - INFO - Processing Division '13A' for Week 5
+2024-11-04 22:18:19,008 - WARNING - Data files for Division '13A' not found for week 5. Skipping.
+2024-11-04 22:18:19,008 - INFO - Processing Division '13B' for Week 5
+2024-11-04 22:18:19,008 - WARNING - Data files for Division '13B' not found for week 5. Skipping.
+2024-11-04 22:18:19,009 - INFO - Processing Division '14' for Week 5
+2024-11-04 22:18:19,009 - WARNING - Data files for Division '14' not found for week 5. Skipping.
+2024-11-04 22:18:19,010 - INFO - Processing Division '15A' for Week 5
+2024-11-04 22:18:19,010 - WARNING - Data files for Division '15A' not found for week 5. Skipping.
+2024-11-04 22:18:19,010 - INFO - Processing Division '15B' for Week 5
+2024-11-04 22:18:19,011 - WARNING - Data files for Division '15B' not found for week 5. Skipping.
+2024-11-04 22:18:19,011 - INFO - Processing Division 'Premier Masters' for Week 5
+2024-11-04 22:18:19,012 - WARNING - Data files for Division 'Premier Masters' not found for week 5. Skipping.
+2024-11-04 22:18:19,012 - INFO - Processing Division 'M2' for Week 5
+2024-11-04 22:18:19,030 - INFO - Number of players who played in Division 'M2' during week 5: 23
+2024-11-04 22:18:19,045 - INFO - Number of 'Playing Up' players in Division 'M2' during week 5: 0
+2024-11-04 22:18:19,065 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_5\M2_player_results.csv
+2024-11-04 22:18:19,066 - INFO - Processing Division 'M3' for Week 5
+2024-11-04 22:18:19,084 - INFO - Number of players who played in Division 'M3' during week 5: 30
+2024-11-04 22:18:19,099 - INFO - Number of 'Playing Up' players in Division 'M3' during week 5: 0
+2024-11-04 22:18:19,123 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_5\M3_player_results.csv
+2024-11-04 22:18:19,123 - INFO - Processing Division 'M4' for Week 5
+2024-11-04 22:18:19,139 - INFO - Number of players who played in Division 'M4' during week 5: 40
+2024-11-04 22:18:19,156 - INFO - Number of 'Playing Up' players in Division 'M4' during week 5: 0
+2024-11-04 22:18:19,184 - INFO - Player match results saved to C:/Users/bpali/PycharmProjects/SquashApp/2024-2025\player_results\week_5\M4_player_results.csv
+2024-11-04 22:18:19,184 - INFO - Processing Division 'Premier Ladies' for Week 5
+2024-11-04 22:18:19,185 - WARNING - Data files for Division 'Premier Ladies' not found for week 5. Skipping.
+2024-11-04 22:18:19,185 - INFO - Processing Division 'L2' for Week 5
+2024-11-04 22:18:19,186 - WARNING - Data files for Division 'L2' not found for week 5. Skipping.
+2024-11-04 22:18:19,186 - INFO - Processing Division 'L3' for Week 5
+2024-11-04 22:18:19,187 - WARNING - Data files for Division 'L3' not found for week 5. Skipping.
+2024-11-04 22:18:19,187 - INFO - Processing Division 'L4' for Week 5
+2024-11-04 22:18:19,188 - WARNING - Data files for Division 'L4' not found for week 5. Skipping.
