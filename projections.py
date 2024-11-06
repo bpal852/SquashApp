@@ -10,7 +10,7 @@ from collections import Counter, defaultdict
 year = "2024-2025"
 num_simulations = 999
 home_advantage_factor = 0.05
-unpredictability_factor = 0.85
+unpredictability_factor = 0.7
 
 # Define functions
 
