@@ -963,6 +963,9 @@ def main():
             """
             Function to determine the club based on the team name.
             """
+            # Allow for special case
+            if team_name == "HKCC Tuesday Night Rockers":
+                return "Hong Kong Cricket Club"           
             for club in clubs:
                 if club.lower() in team_name.lower():
                     return club
@@ -1017,23 +1020,50 @@ def main():
                 logging.debug(f"Found {len(player_results)} player results for this match.")
 
                 if not player_results.empty:
-                    # Filter for wins only
-                    winning_results = player_results[player_results['Result'] == 'Win']
+                    st.subheader("Player Results")
+                    
+                    for rubber_number, rubber_results in player_results.groupby("Rubber Number"):
+                        result_row = rubber_results.iloc[0]
 
-                    if not winning_results.empty:
-                        st.subheader("Player Results")
-                        for _, win_row in winning_results.iterrows():
-                            rubber_number = win_row['Rubber Number']
-                            player_name = win_row['Player Name']
-                            opponent_name = win_row['Opponent Name']
-                            score = win_row['Score']
-                            line = f"<p><strong>{rubber_number}</strong>: {player_name} beat {opponent_name} {score}.</p>"
-                            st.markdown(line, unsafe_allow_html=True)
-                    logging.debug(f"Displaying player results for match: {row['Home Team']} vs {row['Away Team']} on {row['Date']}")
+                        # Determine the home and away players
+                        if result_row['Team'] == row['Home Team']:
+                            home_player = result_row['Player Name']
+                            away_player = result_row['Opponent Name']
+                            score = result_row['Score']
+                            home_won = (result_row['Result'] == "Win")
+                        else:
+                            home_player = result_row['Opponent Name']
+                            away_player = result_row['Player Name']
+                            score = result_row['Score']
+                            home_won = (result_row['Result'] == "Loss")
 
-                else:
-                    logging.debug(f"No player results found for match: {row['Home Team']} vs {row['Away Team']} on {row['Date']}")
-                    st.write("Player results not available for this match.")
+                        # Check if the score is a standard numeric score, CR, or WO
+                        if score in ['CR', 'WO']:
+                            # Format the line based on whether the home player won or lost due to CR or WO
+                            if home_won:
+                                line = f"<p><strong>{rubber_number}</strong>: {home_player} beat {away_player} ({score}).</p>"
+                            else:
+                                line = f"<p><strong>{rubber_number}</strong>: {home_player} lost to {away_player} ({score}).</p>"
+                        else:
+                            # Split score if it's a standard numeric format
+                            if '-' in score:
+                                home_score, away_score = score.split('-')
+                                # Format the line based on whether the home player won or lost
+                                if home_won:
+                                    line = f"<p><strong>{rubber_number}</strong>: {home_player} beat {away_player} {home_score}-{away_score}.</p>"
+                                else:
+                                    line = f"<p><strong>{rubber_number}</strong>: {home_player} lost to {away_player} {home_score}-{away_score}.</p>"
+                            else:
+                                line = f"<p><strong>{rubber_number}</strong>: Score format invalid or missing for this match.</p>"
+
+                        st.markdown(line, unsafe_allow_html=True)
+
+
+                logging.debug(f"Displaying player results for match: {row['Home Team']} vs {row['Away Team']} on {row['Date']}")
+
+        else:
+            logging.debug(f"No player results found for match: {row['Home Team']} vs {row['Away Team']} on {row['Date']}")
+            st.write("Player results not available for this match.")
 
     else:
         # Process division-specific data
