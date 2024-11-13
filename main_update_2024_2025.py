@@ -15,6 +15,18 @@ from logging.handlers import RotatingFileHandler
 # Inputs
 year = "2024-2025"
 
+current_divisions = {
+    "15B": 442,
+    "Premier Masters": 443,
+    "M2": 444,
+    "M3": 445,
+    "M4": 446,
+    "Premier Ladies": 447,
+    "L2": 448,
+    "L3": 449,
+    "L4": 450,
+    }
+
 all_divisions = {
     "Premier Main": 424,
     "2": 425,

@@ -535,7 +535,7 @@ def process_division(division, current_week, previous_week, player_mapping, all_
         f"{division}_player_results.csv"
     )
     try:
-        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        os.makedirs(os.path.dirname(output_path), exist_ok=True) 
         player_results_df.to_csv(output_path, index=False)
         logging.info(f"Player match results saved to {output_path}")
     except Exception as e:
@@ -548,7 +548,7 @@ player_mapping = build_player_mapping(all_divisions, base_directory)
 logging.info(f"Total players mapped across all divisions: {len(player_mapping)}")
 
 # Get current week
-current_week = 6
+current_week = 7
 
 # Run the script for each division and week
 for week in range(1, current_week + 1):
