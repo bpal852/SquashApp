@@ -769,8 +769,8 @@ def get_divisions_for_season(season_base_path, is_current_season):
         divisions_list = sorted(divisions, key=lambda x: get_division_sort_key(x, is_current_season))
         
         return divisions_list
-    
-@st.cache_data
+
+
 def load_all_results_and_player_results(season_base_path):
     """
     Load all results_df and player_results CSVs from all week_* folders and combine them, removing duplicates.
@@ -975,26 +975,47 @@ def main():
         combined_results_df['Home Club'] = combined_results_df['Home Team'].apply(determine_club)
         combined_results_df['Away Club'] = combined_results_df['Away Team'].apply(determine_club)
 
-        # Include 'Other' in the list of clubs if necessary
-        all_clubs_in_data = set(combined_results_df['Home Club']).union(set(combined_results_df['Away Club']))
-        clubs_in_data = [club for club in clubs if club in all_clubs_in_data]
-        if 'Other' in all_clubs_in_data:
-            clubs_in_data.append('Other')
+        # Sidebar for filter option
+        filter_option = st.sidebar.radio("Filter by:", ["Club", "Division"])
 
-        # Add 'Overall' option to the list of clubs
-        list_of_clubs = ["Overall"] + sorted(clubs_in_data)
+        if filter_option == "Club":
+            # Include 'Other' in the list of clubs if necessary
+            all_clubs_in_data = set(combined_results_df['Home Club']).union(set(combined_results_df['Away Club']))
+            clubs_in_data = [club for club in clubs if club in all_clubs_in_data]
+            if 'Other' in all_clubs_in_data:
+                clubs_in_data.append('Other')
 
-        # Sidebar for club selection
-        selected_club = st.sidebar.selectbox("Select a Club:", list_of_clubs)
+            # Add 'Overall' option to the list of clubs
+            list_of_clubs = ["Overall"] + sorted(clubs_in_data)
 
-        # Filter matches involving the selected club
-        if selected_club == "Overall":
-            filtered_results = combined_results_df
-        else:
-            filtered_results = combined_results_df[
-                (combined_results_df['Home Club'] == selected_club) |
-                (combined_results_df['Away Club'] == selected_club)
-            ]
+            # Sidebar for club selection
+            selected_club = st.sidebar.selectbox("Select a Club:", list_of_clubs)
+
+        elif filter_option == "Division":
+            # Get list of divisions from the combined_results_df
+            divisions_in_data = combined_results_df['Division'].unique()
+            # Convert to list and sort
+            divisions_list = ["Overall"] + sorted(divisions_in_data, key=lambda x: get_division_sort_key(x, is_current_season))
+            # Sidebar for division selection
+            selected_division = st.sidebar.selectbox("Select a Division:", divisions_list)
+
+        if filter_option == "Club":
+            # Filter matches involving the selected club
+            if selected_club == "Overall":
+                filtered_results = combined_results_df
+            else:
+                filtered_results = combined_results_df[
+                    (combined_results_df['Home Club'] == selected_club) |
+                    (combined_results_df['Away Club'] == selected_club)
+                ]
+        elif filter_option == "Division":
+            # Filter matches in the selected division
+            if selected_division == "Overall":
+                filtered_results = combined_results_df
+            else:
+                filtered_results = combined_results_df[
+                    combined_results_df['Division'] == selected_division
+                ]
 
         # Sort by Date
         filtered_results = filtered_results.sort_values(by=['Date', 'Division', 'Home Team'], ascending=[False, True, True])
@@ -1002,10 +1023,14 @@ def main():
         if filtered_results.empty:
             st.info(f"No matches found for club {selected_club}.")
             return
+        
+        # Adjust the header based on the selected filter option
+        if filter_option == "Club":
+            st.header(f"Matches Involving {selected_club}")
+        elif filter_option == "Division":
+            st.header(f"Matches in {selected_division}")
 
-        # Display filtered results
-        st.header(f"Matches Involving {selected_club}")
-
+        # Display the filtered results
         for idx, row in filtered_results.iterrows():
             # Match summary
             match_summary = f'### **Division {row["Division"]}:** {row["Home Team"]} **{row["Home Score"]}** - **{row["Away Score"]}** {row["Away Team"]}  ({row["Date"].date()})'
