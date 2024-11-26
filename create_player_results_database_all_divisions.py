@@ -548,7 +548,7 @@ player_mapping = build_player_mapping(all_divisions, base_directory)
 logging.info(f"Total players mapped across all divisions: {len(player_mapping)}")
 
 # Get current week
-current_week = 8
+current_week = 9
 
 # Run the script for each division and weekg
 for week in range(1, current_week + 1):
