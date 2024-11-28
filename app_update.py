@@ -887,7 +887,7 @@ def main():
             sections = ["Player Info", "Division Player Stats"]
         else:
             if is_current_season:
-                sections = ["Detailed Division Table", "Rubber Win Percentage", "Home/Away Splits", "Projections", "Match Results by Club"]
+                sections = ["Detailed Division Table", "Rubber Win Percentage", "Home/Away Splits", "Projections", "Match Results"]
             else:
                 sections = ["Detailed Division Table", "Rubber Win Percentage", "Home/Away Splits"]
 
@@ -895,7 +895,7 @@ def main():
         selected_section = st.selectbox("**Select a Section:**", sections)
 
         # If selected_section is 'Player Info', we don't need to select a division
-        if selected_section in ["Player Info", "Match Results by Club"]:
+        if selected_section in ["Player Info", "Match Results"]:
             division = None
         else:
             division = st.selectbox("**Select a Division:**", divisions_for_season)
@@ -931,7 +931,7 @@ def main():
         else:
             all_rankings_df = st.session_state["data"][f"all_rankings_df_{season_key}"]
        
-    elif selected_section == "Match Results by Club":
+    elif selected_section == "Match Results":
         # Load data
         season_base_path = os.path.join(base_directory, selected_season)
         combined_results_df, combined_player_results_df = load_all_results_and_player_results(season_base_path)
