@@ -1279,7 +1279,7 @@ def main():
         # Use division-specific data
 
         # Header
-        st.header("Division Player Stats")
+        st.header(f"Division Player Stats - {division}")
 
         def extract_names(cell_value):
             """
@@ -1726,7 +1726,7 @@ def main():
             # Use division-specific data
 
             # Load and display overall scores
-            st.header("Projections")
+            st.header(f"Projections - Division {division}")
             if simulation_date and simulation_date != "Date not available":
                 st.write(f"**Date of last simulation:** {simulation_date}")
             else:
