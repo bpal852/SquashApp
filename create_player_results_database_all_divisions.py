@@ -550,7 +550,7 @@ logging.info(f"Total players mapped across all divisions: {len(player_mapping)}"
 # Get current week
 current_week = 14
 
-# Run the script for each division and weekg
+# Run the script for each division and week
 for week in range(1, current_week + 1):
     previous_week = week - 1
     for division in all_divisions.keys():

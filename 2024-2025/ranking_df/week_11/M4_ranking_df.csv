@@ -1,9 +1,9 @@
 Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,Lost,Division,Win Percentage
 1,Rundle David Christopher,Hong Kong Football Club M4B,25.71,180,7,7,0,M4,1.0
-2,Au Siu Fai,Hong Kong Football Club M4A,23.62,189,8,7,1,M4,0.875
+2,Au Siu Fai,Hong Kong Football Club M4A,24.0,216,9,8,1,M4,0.8888888888888888
 3,Yam Ken Luen Kai,United Services Recreation Club M4,22.2,111,5,5,0,M4,1.0
-4,Ford Anthony,Hong Kong Football Club M4A,21.6,108,5,5,0,M4,1.0
-5,Yiu Sai Ngoi,WAKO,21.33,192,9,8,1,M4,0.8888888888888888
+4,Ford Anthony,Hong Kong Football Club M4A,21.0,126,6,6,0,M4,1.0
+5,Yiu Sai Ngoi,WAKO,20.7,207,10,8,2,M4,0.8
 6,Cox Simon,Hong Kong Club Blue,20.4,102,5,4,1,M4,0.8
 7,Dansanghani Rahul,Hong Kong Football Club M4B,20.4,102,5,3,2,M4,0.6
 8,Brien Peter Wilhelm Hubert,Hong Kong Club Blue,19.8,198,10,6,4,M4,0.6
@@ -13,20 +13,20 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 12,Wong Tony Wing Tung,SKCSC,17.67,159,9,8,1,M4,0.8888888888888888
 13,Gollop Stephen,Bolton,17.57,123,7,4,3,M4,0.5714285714285714
 14,Wright Martin,Bolton,17.25,138,8,3,5,M4,0.375
-15,Leung Chi Wang Christopher,United Services Recreation Club M4,16.88,135,8,7,1,M4,0.875
-16,Tse Ray,Royal Hong Kong Yacht Club M4,16.71,117,7,2,5,M4,0.2857142857142857
-17,Mrosek Martin,Hong Kong Football Club M4A,16.5,99,6,3,3,M4,0.5
-18,Murray David,Hong Kong Football Club M4A,16.29,114,7,4,3,M4,0.5714285714285714
+15,Mrosek Martin,Hong Kong Football Club M4A,17.14,120,7,4,3,M4,0.5714285714285714
+16,Leung Chi Wang Christopher,United Services Recreation Club M4,16.88,135,8,7,1,M4,0.875
+17,Tse Ray,Royal Hong Kong Yacht Club M4,16.71,117,7,2,5,M4,0.2857142857142857
+18,Murray David,Hong Kong Football Club M4A,16.5,132,8,5,3,M4,0.625
 19,Mirapuri Rajesh,United Services Recreation Club M4,16.2,81,5,4,1,M4,0.8
 20,Ho Kwan Lun,Hong Kong Football Club M4B,15.6,78,5,3,2,M4,0.6
 21,Chui Danny Kam Wah,WAKO,15.6,78,5,2,3,M4,0.4
 22,Oei Chuen Shek Joseph,Royal Hong Kong Yacht Club M4,15.33,138,9,5,4,M4,0.5555555555555556
 23,Chui King Yat,SKCSC,14.7,147,10,7,3,M4,0.7
 24,Daigneault Christian,United Services Recreation Club M4,14.5,87,6,6,0,M4,1.0
-25,Chan Chi Ming,WAKO,14.0,84,6,1,5,M4,0.16666666666666666
-26,Dong Ka Chung Jacky,Royal Hong Kong Yacht Club M4,13.8,69,5,4,1,M4,0.8
-27,Lam Francis Fu Yuen,WAKO,13.0,78,6,3,3,M4,0.5
-28,Lai Ming Wah,Royal Hong Kong Yacht Club M4,12.6,63,5,3,2,M4,0.6
+25,Dong Ka Chung Jacky,Royal Hong Kong Yacht Club M4,13.8,69,5,4,1,M4,0.8
+26,Chan Chi Ming,WAKO,13.71,96,7,1,6,M4,0.14285714285714285
+27,Lai Ming Wah,Royal Hong Kong Yacht Club M4,12.6,63,5,3,2,M4,0.6
+28,Lam Francis Fu Yuen,WAKO,12.0,84,7,3,4,M4,0.42857142857142855
 29,Yu Chi Keung,United Services Recreation Club M4,11.25,90,8,1,7,M4,0.125
 30,Somers Jonathan,Bolton,11.14,78,7,2,5,M4,0.2857142857142857
 31,McLennan Justin,Hong Kong Club Blue,11.0,66,6,2,4,M4,0.3333333333333333
@@ -35,10 +35,10 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 34,Siu Andrew Chung Fai,SKCSC,10.0,60,6,4,2,M4,0.6666666666666666
 35,Kendall Charles Richard,Hong Kong Club Blue,9.0,72,8,3,5,M4,0.375
 36,Baram Derek,Hong Kong Club Blue,9.0,54,6,0,6,M4,0.0
-37,Chiu Chi Shing,WAKO,7.0,42,6,3,3,M4,0.5
-38,Tsang Tzu Hao,Bolton,7.0,42,6,2,4,M4,0.3333333333333333
+37,Tsang Tzu Hao,Bolton,7.0,42,6,2,4,M4,0.3333333333333333
+38,Chiu Chi Shing,WAKO,6.0,42,7,3,4,M4,0.42857142857142855
 39,Cheng Chen Kaja,Hong Kong Football Club M4B,4.8,24,5,1,4,M4,0.2
-40,Ha Henry Kam Bo,WAKO,4.0,24,6,1,5,M4,0.16666666666666666
+40,Ha Henry Kam Bo,WAKO,3.86,27,7,1,6,M4,0.14285714285714285
 41,Sung Stephen,Hong Kong Football Club M4A,3.0,18,6,0,6,M4,0.0
 42,Farran Andrew,Bolton,2.5,15,6,0,6,M4,0.0
 ,Chow Kar Wah,Hong Kong Football Club M4A,27.0,27,1,1,0,M4,1.0
@@ -55,6 +55,7 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 ,Ku Wai Hang William,United Services Recreation Club M4,15.0,60,4,4,0,M4,1.0
 ,Luk Jackie Ching Chug,WAKO,15.0,45,3,2,1,M4,0.6666666666666666
 ,Wong Rames Wang Lung,United Services Recreation Club M4,15.0,30,2,2,0,M4,1.0
+,McAuslan Gary,Hong Kong Football Club M4A,15.0,15,1,1,0,M4,1.0
 ,Wong Javy Ki Ling,Hong Kong Football Club M4B,15.0,15,1,1,0,M4,1.0
 ,Leung Patrick Pak Chiu,SKCSC,15.0,15,1,1,0,M4,1.0
 ,Yuen Amos Wing Keung,United Services Recreation Club M4,15.0,15,1,1,0,M4,1.0
@@ -99,7 +100,6 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 ,Tilbrook Nicolas,United Services Recreation Club M4,0.0,0,2,0,2,M4,0.0
 ,Walsh Paul,Bolton,0.0,0,0,0,0,M4,0.0
 ,Mok Sui Kei,WAKO,0.0,0,0,0,0,M4,0.0
-,McAuslan Gary,Hong Kong Football Club M4A,0.0,0,0,0,0,M4,0.0
 ,Simons Paul,Bolton,0.0,0,0,0,0,M4,0.0
 ,Webb James,United Services Recreation Club M4,0.0,0,0,0,0,M4,0.0
 ,Tang Thomas Sek Khuen,Hong Kong Football Club M4A,0.0,0,0,0,0,M4,0.0
