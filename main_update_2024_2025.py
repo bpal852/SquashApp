@@ -121,6 +121,10 @@ weekend = {
     "15B": 442
 }
 
+specific_divisions = {
+    "7B": 431
+}
+
 # Define base directories
 base_directories = {
     'summary_df': f'{year}/summary_df',

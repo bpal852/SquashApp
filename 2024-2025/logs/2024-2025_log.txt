@@ -23124,3 +23124,52 @@ requests.exceptions.ConnectionError: HTTPSConnectionPool(host='www.hksquash.org.
 2025-01-16 12:07:26,908 - INFO - Successfully saved played_every_game_list to 2024-2025/played_every_game\week_10\L4.txt
 2025-01-16 12:07:26,942 - INFO - Saving summary_df to 2024-2025/summary_df\week_10\L4_summary_df.csv
 2025-01-16 12:07:26,944 - INFO - Successfully saved summary_df to 2024-2025/summary_df\week_10\L4_summary_df.csv
+2025-01-16 12:55:18,604 - INFO - Starting the scraping process...
+2025-01-16 12:55:18,606 - INFO - Processing Division 7B
+2025-01-16 12:55:18,607 - INFO - Scraping Schedules and Results page for Division 7B
+2025-01-16 12:55:18,609 - INFO - Scraping schedules and results page for league id: D00431, year: 2024-2025...
+2025-01-16 12:55:26,182 - INFO - Successfully created schedules and results DataFrame with 84 rows
+2025-01-16 12:55:26,188 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-01-16 12:55:26,191 - INFO - Successfully scraped Schedules and Results page for Division 7B
+2025-01-16 12:55:26,195 - INFO - Saving schedules_df to 2024-2025/schedules_df\week_12\7B_schedules_df.csv
+2025-01-16 12:55:26,201 - INFO - Successfully saved schedules_df to 2024-2025/schedules_df\week_12\7B_schedules_df.csv
+2025-01-16 12:55:46,201 - INFO - Scraping Team Summary page for Division 7B
+2025-01-16 12:55:46,202 - INFO - Scraping team summary page for league id: D00431, year: 2024-2025...
+2025-01-16 12:55:46,606 - INFO - Successfully created summary DataFrame with 7 rows
+2025-01-16 12:55:46,612 - INFO - Successfully scraped Team Summary page for Division 7B
+2025-01-16 12:56:06,613 - INFO - Scraping Teams page for Division 7B
+2025-01-16 12:56:06,614 - INFO - Starting scrape_teams_page for league id: D00431, year: 2024-2025
+2025-01-16 12:56:06,847 - INFO - Successfully created teams DataFrame with 7 rows
+2025-01-16 12:56:06,849 - INFO - Successfully scraped Teams page for Division 7B
+2025-01-16 12:56:06,849 - INFO - Saving teams_df to 2024-2025/teams_df\week_12\7B_teams_df.csv
+2025-01-16 12:56:06,851 - INFO - Successfully saved teams_df to 2024-2025/teams_df\week_12\7B_teams_df.csv
+2025-01-16 12:56:26,852 - INFO - Scraping Ranking page for Division 7B
+2025-01-16 12:56:26,853 - INFO - Scraping ranking page for league id: D00431, year: 2024-2025
+2025-01-16 12:56:28,156 - INFO - Successfully created ranking DataFrame with 73 rows
+2025-01-16 12:56:28,170 - INFO - Filtered ranking DataFrame to 40 rows with 5 or more games played
+2025-01-16 12:56:28,215 - INFO - Created summarized DataFrame with 7 teams
+2025-01-16 12:56:28,217 - INFO - Found 1 unbeaten players
+2025-01-16 12:56:28,218 - INFO - Successfully scraped Ranking page for Division 7B
+2025-01-16 12:56:28,219 - INFO - Saving ranking_df to 2024-2025/ranking_df\week_12\7B_ranking_df.csv
+2025-01-16 12:56:28,221 - INFO - Successfully saved ranking_df to 2024-2025/ranking_df\week_12\7B_ranking_df.csv
+2025-01-16 12:56:48,222 - INFO - Scraping Players page for Division 7B
+2025-01-16 12:56:48,222 - INFO - Starting scrape_players_page for league_id: D00431, year: 2024-2025
+2025-01-16 12:56:49,524 - INFO - Team 1: Created DataFrame with 12 rows for team: Hong Kong Cricket Club 6
+2025-01-16 12:56:51,538 - INFO - Team 2: Created DataFrame with 12 rows for team: Hong Kong Football Club 7B
+2025-01-16 12:56:53,547 - INFO - Team 3: Created DataFrame with 8 rows for team: Kowloon Cricket Club 7
+2025-01-16 12:56:55,557 - INFO - Team 4: Created DataFrame with 12 rows for team: Physical Chess 2
+2025-01-16 12:56:57,568 - INFO - Team 5: Created DataFrame with 9 rows for team: The Squash Club 2
+2025-01-16 12:56:59,578 - INFO - Team 6: Created DataFrame with 9 rows for team: Twister 2
+2025-01-16 12:57:01,586 - INFO - Team 7: Created DataFrame with 7 rows for team: Xavier
+2025-01-16 12:57:03,590 - INFO - Concatenated all team dataframes into a single DataFrame with 69 rows
+2025-01-16 12:57:03,592 - INFO - Successfully scraped Players page for Division 7B
+2025-01-16 12:57:03,593 - INFO - Saving players_df to 2024-2025/players_df\week_12\7B_players_df.csv
+2025-01-16 12:57:03,597 - INFO - Successfully saved players_df to 2024-2025/players_df\week_12\7B_players_df.csv
+2025-01-16 12:57:23,604 - INFO - Saving summarized_df to 2024-2025/summarized_player_tables\week_12\7B_summarized_players.csv
+2025-01-16 12:57:23,606 - INFO - Successfully saved summarized_df to 2024-2025/summarized_player_tables\week_12\7B_summarized_players.csv
+2025-01-16 12:57:23,607 - INFO - Saving unbeaten_list to 2024-2025/unbeaten_players\week_12\7B.txt
+2025-01-16 12:57:23,608 - INFO - Successfully saved unbeaten_list to 2024-2025/unbeaten_players\week_12\7B.txt
+2025-01-16 12:57:23,609 - INFO - Saving played_every_game_list to 2024-2025/played_every_game\week_12\7B.txt
+2025-01-16 12:57:23,610 - INFO - Successfully saved played_every_game_list to 2024-2025/played_every_game\week_12\7B.txt
+2025-01-16 12:57:23,653 - INFO - Saving summary_df to 2024-2025/summary_df\week_12\7B_summary_df.csv
+2025-01-16 12:57:23,655 - INFO - Successfully saved summary_df to 2024-2025/summary_df\week_12\7B_summary_df.csv
