@@ -1,7 +1,7 @@
 Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,Lost,Division,Win Percentage
 1,Lau Wai Tung,Kowloon Cricket Club 6B,26.5,159,6,6,0,6,1.0
 2,Li Ho Sum,Kowloon Cricket Club 6A,22.67,204,9,8,1,6,0.8888888888888888
-3,Chow Hester Yuk Ting,United Services Recreation Club 2,22.2,222,10,8,2,6,0.8
+3,Chow Hester Yuk Ting,United Services Recreation Club 2,22.64,249,11,9,2,6,0.8181818181818182
 4,Tjia Jonathan,Hong Kong Football Club 6B,21.5,129,6,5,1,6,0.8333333333333334
 5,Ho Yiu Wah Hendry,Kowloon Cricket Club 6B,21.0,210,10,9,1,6,0.9
 6,Achouch Frank,Hong Kong Cricket Club 4,20.5,123,6,4,2,6,0.6666666666666666
@@ -13,26 +13,26 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 12,Hau Venus,Kowloon Cricket Club 6B,18.38,147,8,5,3,6,0.625
 13,Bidal Jay,United Services Recreation Club 2,17.57,123,7,5,2,6,0.7142857142857143
 14,Li Pinky Wing Shan,Kowloon Cricket Club 6A,17.33,156,9,4,5,6,0.4444444444444444
-15,Mountford Graham,Hong Kong Football Club 6A,17.14,120,7,3,4,6,0.42857142857142855
-16,Catherine Loic,Social Squash Team,16.88,135,8,4,4,6,0.5
-17,Au Jovi Chun Tat,Kowloon Cricket Club 6A,16.71,117,7,5,2,6,0.7142857142857143
-18,Cheng Victor Kwok Wai,Kowloon Cricket Club 6B,16.67,150,9,8,1,6,0.8888888888888888
-19,Chan Ming Yan Calvin,Global Squash 1,16.64,183,11,6,5,6,0.5454545454545454
+15,Catherine Loic,Social Squash Team,16.88,135,8,4,4,6,0.5
+16,Au Jovi Chun Tat,Kowloon Cricket Club 6A,16.71,117,7,5,2,6,0.7142857142857143
+17,Cheng Victor Kwok Wai,Kowloon Cricket Club 6B,16.67,150,9,8,1,6,0.8888888888888888
+18,Chan Ming Yan Calvin,Global Squash 1,16.64,183,11,6,5,6,0.5454545454545454
+19,Mohammad Gull Ilyas,United Services Recreation Club 2,16.5,99,6,5,1,6,0.8333333333333334
 20,Chan Siu Kwan,Friend Club 3,16.36,180,11,3,8,6,0.2727272727272727
-21,Derouet Yann,Hong Kong Football Club 6A,16.33,147,9,2,7,6,0.2222222222222222
-22,Mohammad Gull Ilyas,United Services Recreation Club 2,16.2,81,5,4,1,6,0.8
-22,Ng Adrian,Hong Kong Football Club 6A,16.2,81,5,4,1,6,0.8
-24,Cheng August Huan-Chen,Hong Kong Football Club 6C,15.75,126,8,6,2,6,0.75
-25,Lau Yan Kiu,Global Squash 1,15.6,156,10,2,8,6,0.2
+21,Mountford Graham,Hong Kong Football Club 6A,16.12,129,8,3,5,6,0.375
+22,Cheng August Huan-Chen,Hong Kong Football Club 6C,15.75,126,8,6,2,6,0.75
+23,Derouet Yann,Hong Kong Football Club 6A,15.6,156,10,2,8,6,0.2
+23,Lau Yan Kiu,Global Squash 1,15.6,156,10,2,8,6,0.2
+25,Ng Adrian,Hong Kong Football Club 6A,15.5,93,6,5,1,6,0.8333333333333334
 26,Katsande Danai,Hong Kong Football Club 6C,15.0,90,6,5,1,6,0.8333333333333334
 27,Van Gregory,Hong Kong Football Club 6C,15.0,105,7,2,5,6,0.2857142857142857
 28,Chan Weldon,Hong Kong Cricket Club 4,15.0,90,6,1,5,6,0.16666666666666666
-29,Chow Ming Hei Quincy,United Services Recreation Club 2,14.67,132,9,6,3,6,0.6666666666666666
-30,Achouch Jules Simon,Hong Kong Cricket Club 4,14.4,72,5,5,0,6,1.0
-31,Ching Andus Kin Nok,Global Squash 1,14.14,99,7,7,0,6,1.0
-32,Ternes Daniel,Hong Kong Cricket Club 4,14.0,84,6,2,4,6,0.3333333333333333
-33,Cheng Tak Kwong,Kowloon Cricket Club 6A,13.91,153,11,8,3,6,0.7272727272727273
-34,Choi Kenny Wing Kin,Friend Club 3,13.71,96,7,5,2,6,0.7142857142857143
+29,Achouch Jules Simon,Hong Kong Cricket Club 4,14.4,72,5,5,0,6,1.0
+30,Ching Andus Kin Nok,Global Squash 1,14.14,99,7,7,0,6,1.0
+31,Ternes Daniel,Hong Kong Cricket Club 4,14.0,84,6,2,4,6,0.3333333333333333
+32,Cheng Tak Kwong,Kowloon Cricket Club 6A,13.91,153,11,8,3,6,0.7272727272727273
+33,Choi Kenny Wing Kin,Friend Club 3,13.71,96,7,5,2,6,0.7142857142857143
+34,Chow Ming Hei Quincy,United Services Recreation Club 2,13.5,135,10,6,4,6,0.6
 35,Sze James Wang Cho,Friend Club 3,13.36,147,11,5,6,6,0.45454545454545453
 36,Kan Ho Yin Alex,Global Squash 1,13.29,93,7,2,5,6,0.2857142857142857
 36,Lee Roger Chi Lam,Friend Club 3,13.29,93,7,2,5,6,0.2857142857142857
@@ -63,18 +63,18 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 ,Fung Gary Fuk Ming,Kowloon Cricket Club 6A,21.0,21,1,1,0,6,1.0
 ,Lo Ho Yin Terry,Hong Kong Football Club 6A,19.5,39,2,2,0,6,1.0
 ,Ng Elise Jia Yunn,Kowloon Cricket Club 6B,18.0,36,2,2,0,6,1.0
-,Leung Nok Yi,Hong Kong Football Club 6A,16.5,33,2,1,1,6,0.5
+,Leong Se Chun,United Services Recreation Club 2,17.0,51,3,2,1,6,0.6666666666666666
+,Leung Nok Yi,Hong Kong Football Club 6A,17.0,51,3,2,1,6,0.6666666666666666
 ,Sheethal Kumar Palash,Hong Kong Cricket Club 4,16.0,48,3,3,0,6,1.0
 ,Caveney Barry John,Hong Kong Cricket Club 4,16.0,48,3,1,2,6,0.3333333333333333
 ,Lo Kenneth Kin Cheung,Hong Kong Football Club 6B,15.0,30,2,2,0,6,1.0
 ,Cross David,Hong Kong Football Club 6B,15.0,15,1,1,0,6,1.0
 ,Denham Paul,Hong Kong Cricket Club 4,15.0,15,1,1,0,6,1.0
-,Leong Se Chun,United Services Recreation Club 2,13.5,27,2,1,1,6,0.5
 ,Pudwill Alexander Stephan,Hong Kong Football Club 6B,13.0,39,3,1,2,6,0.3333333333333333
 ,Lamb Russell,Hong Kong Cricket Club 4,13.0,39,3,0,3,6,0.0
 ,Kenny Gareth,United Services Recreation Club 2,12.0,48,4,2,2,6,0.5
 ,Ng Paul Lap Yan,Hong Kong Football Club 6C,12.0,48,4,2,2,6,0.5
-,Barr Shane,Hong Kong Football Club 6A,12.0,12,1,0,1,6,0.0
+,Barr Shane,Hong Kong Football Club 6A,12.0,24,2,0,2,6,0.0
 ,Law Hong Ting Kelvin,Global Squash 1,11.0,33,3,2,1,6,0.6666666666666666
 ,Buckland Paul Edwin Kim,Hong Kong Cricket Club 4,9.75,39,4,2,2,6,0.5
 ,Ladharam Sunesh,Hong Kong Football Club 6B,9.0,36,4,2,2,6,0.5
@@ -83,7 +83,7 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 ,Scheepers Bradley,Hong Kong Football Club 6B,8.0,24,3,1,2,6,0.3333333333333333
 ,Chan Kai Ki,Kowloon Cricket Club 6B,7.5,15,2,1,1,6,0.5
 ,Soo Gene,Hong Kong Football Club 6A,7.5,15,2,1,1,6,0.5
-,Yao Tang Fat Elbert,United Services Recreation Club 2,7.0,21,3,2,1,6,0.6666666666666666
+,Yao Tang Fat Elbert,United Services Recreation Club 2,6.0,24,4,2,2,6,0.5
 ,Thompson John,Hong Kong Football Club 6A,6.0,18,3,1,2,6,0.3333333333333333
 ,Yeung Tak Keung,Hong Kong Football Club 6A,6.0,18,3,1,2,6,0.3333333333333333
 ,Chan Chi Ming Mike,Social Squash Team,6.0,12,2,0,2,6,0.0
