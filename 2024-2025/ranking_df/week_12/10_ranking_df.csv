@@ -1,7 +1,7 @@
 Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,Lost,Division,Win Percentage
 1,* Wong Aaron Wan Chong,The Hong Kong Jockey Club Div 10,27.0,135,5,5,0,10,1.0
-2,Tam Wai Nam,RELAY 1,23.0,207,9,7,2,10,0.7777777777777778
-3,Cheung Danny Yui Nam,RELAY 1,22.71,159,7,6,1,10,0.8571428571428571
+2,Tam Wai Nam,RELAY 1,23.4,234,10,8,2,10,0.8
+3,Cheung Danny Yui Nam,RELAY 1,22.88,183,8,7,1,10,0.875
 4,Foo Chun Huey,Banbil,22.0,198,9,8,1,10,0.8888888888888888
 5,Smith Alexander,Bravo D10,21.86,153,7,5,2,10,0.7142857142857143
 6,* Lee Dennis Yuk Kai,The Hong Kong Jockey Club Div 10,21.5,129,6,4,2,10,0.6666666666666666
@@ -16,14 +16,14 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 15,Shum Hin Yeung Almond,The Hong Kong Jockey Club Div 10,15.6,78,5,4,1,10,0.8
 16,Leung Chi Wang Christopher,United Services Recreation Club 3,15.6,78,5,3,2,10,0.6
 17,Tong Franco Sui Lun,The Hong Kong Jockey Club Div 10,15.38,123,8,6,2,10,0.75
-18,Lo Tien Yue,Craigengower Cricket Club,15.0,105,7,1,6,10,0.14285714285714285
+18,Lo Tien Yue,Craigengower Cricket Club,14.62,117,8,1,7,10,0.125
 19,Wong Gary Ming Ho,Sha Tin 4,14.4,72,5,2,3,10,0.4
-20,Yuen Tsun Kit,RELAY 1,14.0,126,9,5,4,10,0.5555555555555556
+20,Yuen Tsun Kit,RELAY 1,14.1,141,10,6,4,10,0.6
 21,Ho Kwan Lun,The Hong Kong Jockey Club Div 10,13.8,69,5,3,2,10,0.6
 22,Leow Kin Leung,Banbil,13.8,69,5,2,3,10,0.4
 23,Mirapuri Rajesh,United Services Recreation Club 3,13.12,105,8,5,3,10,0.625
-24,Lam Wilson Koon Fung,Craigengower Cricket Club,13.12,105,8,3,5,10,0.375
-25,Cheng Wing Hei Timothy,Bravo D10,13.12,105,8,2,6,10,0.25
+24,Cheng Wing Hei Timothy,Bravo D10,13.12,105,8,2,6,10,0.25
+25,Lam Wilson Koon Fung,Craigengower Cricket Club,13.0,117,9,3,6,10,0.3333333333333333
 26,Hong Cheuk Yip Gary,Bravo D10,12.86,90,7,2,5,10,0.2857142857142857
 27,Leung Wai Kwan,Banbil,12.6,63,5,4,1,10,0.8
 28,Lau Ching Yin,Sha Tin 4,12.0,72,6,1,5,10,0.16666666666666666
@@ -45,6 +45,7 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 ,Tong Chi On,United Services Recreation Club 3,17.0,51,3,1,2,10,0.3333333333333333
 ,Ku Wai Hang William,United Services Recreation Club 3,15.0,30,2,2,0,10,1.0
 ,Chow Pui Sing,Bravo D10,15.0,15,1,1,0,10,1.0
+,Chan Long Ying,RELAY 1,15.0,15,1,1,0,10,1.0
 ,Lam King Tak Douglas,The Hong Kong Jockey Club Div 10,15.0,15,1,1,0,10,1.0
 ,Chan Wun Hei,Sha Tin 4,13.5,54,4,0,4,10,0.0
 ,Yu Chi Keung,United Services Recreation Club 3,13.0,39,3,1,2,10,0.3333333333333333
@@ -55,25 +56,24 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 ,Hui Prodipto,United Services Recreation Club 3,12.0,12,1,1,0,10,1.0
 ,Leung Siu Lun,Sha Tin 4,11.25,45,4,1,3,10,0.25
 ,Chau Ka Chung,Sha Tin 4,10.0,30,3,2,1,10,0.6666666666666666
-,Chui Horace,Craigengower Cricket Club,10.0,30,3,0,3,10,0.0
+,Chui Horace,Craigengower Cricket Club,9.75,39,4,0,4,10,0.0
 ,Yiu Cheuk Fung,Sha Tin 4,9.0,18,2,1,1,10,0.5
+,Mau Kam Tong,RELAY 1,9.0,9,1,0,1,10,0.0
 ,Lee Hsuen Pin,Bravo D10,7.5,30,4,1,3,10,0.25
+,Chan Kar Wai Cynthia,Craigengower Cricket Club,7.5,15,2,1,1,10,0.5
 ,Ip Kenny Lau Chuen,The Hong Kong Jockey Club Div 10,7.5,15,2,1,1,10,0.5
 ,Tang Jie,Banbil,7.5,15,2,1,1,10,0.5
 ,Wong Cho Kit,Craigengower Cricket Club,6.0,24,4,0,4,10,0.0
 ,Liang Shi Jing,United Services Recreation Club 3,5.25,21,4,1,3,10,0.25
 ,Law Yuen Fung,RELAY 1,4.5,18,4,1,3,10,0.25
-,Chan Kar Wai Cynthia,Craigengower Cricket Club,3.0,3,1,0,1,10,0.0
 ,Chan Simon,Craigengower Cricket Club,3.0,9,3,0,3,10,0.0
 ,Zhang Wei,Bravo D10,3.0,6,2,0,2,10,0.0
 ,Wang Ju Li,Bravo D10,3.0,6,2,0,2,10,0.0
 ,Yip Michael Chun Lai,Craigengower Cricket Club,0.0,0,2,0,2,10,0.0
 ,Man Kwan Wun,Craigengower Cricket Club,0.0,0,1,0,1,10,0.0
-,Tsang Patrick Kai Chi,Craigengower Cricket Club,0.0,0,2,0,2,10,0.0
+,Tsang Patrick Kai Chi,Craigengower Cricket Club,0.0,0,3,0,3,10,0.0
 ,Tse Edmund Chun Ming,Sha Tin 4,0.0,0,0,0,0,10,0.0
-,Mau Kam Tong,RELAY 1,0.0,0,0,0,0,10,0.0
 ,So Li Chuan John,Banbil,0.0,0,0,0,0,10,0.0
-,Chan Long Ying,RELAY 1,0.0,0,0,0,0,10,0.0
 ,Webb James,United Services Recreation Club 3,0.0,0,0,0,0,10,0.0
 ,Lau Hin Wang,Craigengower Cricket Club,0.0,0,0,0,0,10,0.0
 ,Tan Hui Ting,Bravo D10,0.0,0,0,0,0,10,0.0
