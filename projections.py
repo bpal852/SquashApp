@@ -8,9 +8,9 @@ from collections import Counter, defaultdict
 
 # Set parameters
 year = "2024-2025"
-num_simulations = 1999
+num_simulations = 4999
 home_advantage_factor = 0.05
-unpredictability_factor = 0.2
+unpredictability_factor = 0.1
 
 # Define functions
 
