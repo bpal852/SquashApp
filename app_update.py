@@ -979,6 +979,7 @@ def main():
         filter_option = st.sidebar.radio("Filter by:", ["Club", "Division"])
 
         if filter_option == "Club":
+
             # Include 'Other' in the list of clubs if necessary
             all_clubs_in_data = set(combined_results_df['Home Club']).union(set(combined_results_df['Away Club']))
             clubs_in_data = [club for club in clubs if club in all_clubs_in_data]
@@ -988,16 +989,25 @@ def main():
             # Add 'Overall' option to the list of clubs
             list_of_clubs = ["Overall"] + sorted(clubs_in_data)
 
+            # Set default club to 'Hong Kong Cricket Club'
+            default_club = 'Hong Kong Cricket Club'
+
             # Sidebar for club selection
-            selected_club = st.sidebar.selectbox("Select a Club:", list_of_clubs)
+            selected_club = st.sidebar.selectbox("Select a Club:", list_of_clubs, index=list_of_clubs.index(default_club))
 
         elif filter_option == "Division":
+
             # Get list of divisions from the combined_results_df
             divisions_in_data = combined_results_df['Division'].unique()
+
             # Convert to list and sort
             divisions_list = ["Overall"] + sorted(divisions_in_data, key=lambda x: get_division_sort_key(x, is_current_season))
+
+            # Set default division to '7B'
+            default_division = '7B'
+
             # Sidebar for division selection
-            selected_division = st.sidebar.selectbox("Select a Division:", divisions_list)
+            selected_division = st.sidebar.selectbox("Select a Division:", divisions_list, index=divisions_list.index(default_division))
 
         if filter_option == "Club":
             # Filter matches involving the selected club
@@ -1086,9 +1096,9 @@ def main():
 
                 logging.debug(f"Displaying player results for match: {row['Home Team']} vs {row['Away Team']} on {row['Date']}")
 
-        else:
-            logging.debug(f"No player results found for match: {row['Home Team']} vs {row['Away Team']} on {row['Date']}")
-            st.write("Player results not available for this match.")
+        #else:
+        #    logging.debug(f"No player results found for match: {row['Home Team']} vs {row['Away Team']} on {row['Date']}")
+        #    st.write("Player results not available for this match.")
 
     else:
         # Process division-specific data
@@ -1863,6 +1873,10 @@ def main():
                 st.write("**Note:**  \nThe projected final table is the average result of simulating the remaining "
                             "fixtures 10,000 times.  \nFixtures are simulated using teams' average rubber win percentage, "
                             "factoring in home advantage.")
+                
+    elif selected_section == "Match Results":
+        # We have already handled "Match Results" above, so do nothing here
+        pass
                 
     else:
         st.error("Invalid section selected.")
