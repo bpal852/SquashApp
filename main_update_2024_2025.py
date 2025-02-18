@@ -851,7 +851,7 @@ def home_team_won(row):
 logging.info("Starting the scraping process...")
 
 # Change dictionary if you want specific week
-for div in specific_divisions.keys():
+for div in all_divisions.keys():
     logging.info(f"Processing Division {div}")
     league_id = f"D00{all_divisions[div]}"
 
