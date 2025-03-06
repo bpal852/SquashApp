@@ -14,6 +14,7 @@ from logging.handlers import RotatingFileHandler
 
 # Inputs
 year = "2024-2025"
+wait_time = 30
 
 current_divisions = {
     "11": 436,
@@ -780,7 +781,7 @@ def scrape_players_page(league_id, year):
             team_dataframes.append(df)
             logging.info(f"Team {idx + 1}: Created DataFrame with {len(df)} rows for team: {team_name}")
 
-            time.sleep(2)
+            time.sleep(5)
 
         if team_dataframes:
             # Concatenate all team dataframes
@@ -900,7 +901,7 @@ for div in all_divisions.keys():
     except Exception as e:
         logging.error(f"Error saving schedules_df to {schedules_df_path}: {e}")
 
-    time.sleep(20)
+    time.sleep(wait_time)
 
     # Scrape Team Summary page
     try:
@@ -917,7 +918,7 @@ for div in all_divisions.keys():
         continue
     # We save the summnary_df at a later stage
     
-    time.sleep(20)
+    time.sleep(wait_time)
 
     # Scrape Teams page
     try:
@@ -937,7 +938,7 @@ for div in all_divisions.keys():
     except Exception as e:
         logging.error(f"Error saving teams_df to {teams_df_path}: {e}")
 
-    time.sleep(20)
+    time.sleep(wait_time)
 
     # Scrape Ranking page
     try:
@@ -961,8 +962,7 @@ for div in all_divisions.keys():
     else:
         logging.info(f"No ranking data to save for Division {div}; skipping ranking_df CSV creation.")
 
-
-    time.sleep(20)
+    time.sleep(wait_time)
 
     # Scrape Players page
     try:
@@ -982,7 +982,7 @@ for div in all_divisions.keys():
     except Exception as e:
         logging.error(f"Error saving players_df to {players_df_path}: {e}")
 
-    time.sleep(20)
+    time.sleep(wait_time)
 
     # Get list of players who have played every possible game
     if not ranking_df_filtered.empty and not summary_df.empty:
@@ -1541,4 +1541,4 @@ for div in all_divisions.keys():
     results_df.to_csv(os.path.join(base_directories['results_df'], week_dir, f"{div}_results_df.csv"), index=False)
 
     # Wait so as not to get a connection error
-    time.sleep(10)
+    time.sleep(wait_time)
