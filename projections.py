@@ -8,9 +8,9 @@ from collections import Counter, defaultdict
 
 # Set parameters
 year = "2024-2025"
-num_simulations = 4999
+num_simulations = 9999
 home_advantage_factor = 0.05
-unpredictability_factor = 0.01
+unpredictability_factor = 0
 
 # Define functions
 
@@ -268,7 +268,7 @@ divisions = [
     "Premier Ladies", "L2", "L3", "L4"
 ]
 
-wednesday = ["7A", "7B", "9", "12", "M2"]
+wednesday = ["7A", "7B"]
 
 # Base directories (ensure they match the ones used in the data gathering script)
 base_directories = {
@@ -286,7 +286,7 @@ os.makedirs(base_directories['simulated_tables'], exist_ok=True)
 os.makedirs(base_directories['simulated_fixtures'], exist_ok=True)
 
 # Process each division
-for div in divisions:
+for div in wednesday:
     logging.info(f"Processing projections for Division {div}")
 
     # Find the latest week directory for the division
