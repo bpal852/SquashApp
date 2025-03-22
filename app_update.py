@@ -918,6 +918,16 @@ def main():
     # Data loading logic based on selected section
     if selected_section == "Player Info":
         logging.debug("Processing data for 'Player Info'")
+        # ---------- NEW SAFEGUARD ---------------
+        if "data" not in st.session_state:
+            st.session_state["data"] = {
+                'division_data': {},
+                'all_rankings_df': pd.DataFrame(),
+                'data_loaded': False,
+                'current_division': None,
+                'current_season': None
+            }
+        # ----------------------------------------
         # Handle the "Player Info" case
         season_key = f"{selected_season}_all"
         if not st.session_state["data"].get(f"all_rankings_loaded_{season_key}", False):
