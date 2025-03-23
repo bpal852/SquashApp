@@ -51,7 +51,7 @@ divisions_to_process = list(all_divisions.keys())
 
 # Define functions
 
-def build_player_mapping(all_divisions, base_directory):
+def build_player_mapping(all_divisions, base_directory, week):
     """
     Build a mapping of player names to their divisions and teams across all divisions.
 
@@ -64,7 +64,7 @@ def build_player_mapping(all_divisions, base_directory):
     """
     player_mapping = {}
     for division in all_divisions.keys():
-        players_df_path = os.path.join(base_directory, "players_df", "week_1", f"{division}_players_df.csv")  # Assuming week 1 has all players
+        players_df_path = os.path.join(base_directory, "players_df", f"week_{week}", f"{division}_players_df.csv")
         if not os.path.exists(players_df_path):
             logging.warning(f"Players file for Division {division} not found at {players_df_path}. Skipping.")
             continue
@@ -273,30 +273,46 @@ def process_division(division, current_week, previous_week, player_mapping, all_
     playing_up_players = active_players - set(players_df['Player'])
     logging.info(f"Number of 'Playing Up' players in Division '{division}' during week {current_week}: {len(playing_up_players)}")
 
-    # Ensure 'playing up' players are included in players_df with an 'Order' higher than existing players
-    for player in playing_up_players:
-        # Get the team the 'playing up' player is playing for
-        team = ranking_df_current.loc[ranking_df_current['Name of Player'] == player, 'Team'].values
-        if len(team) > 0:
-            team = team[0]
-        else:
-            continue  # Skip if team is not found
+    # Process playing up players by team.
+    # We rely on the global player_mapping (built from all divisions' players_df CSVs for the week)
+    # to retrieve the playing up player's original (home) division, team, and order.
+    teams_in_current_division = players_df['Team'].unique()
+    for team in teams_in_current_division:
+        # Identify playing up players for this team.
+        # Here we use ranking_df_current (or player_mapping) to check a player's home team.
+        team_playing_up = [
+            p for p in playing_up_players 
+            if ranking_df_current.loc[ranking_df_current['Name of Player'] == p, 'Team'].iloc[0] == team
+        ]
+        if not team_playing_up:
+            continue
 
-        # Find the maximum 'Order' in the team
-        team_orders = players_df[players_df['Team'] == team]['Order']
-        if not team_orders.empty:
-            max_order = team_orders.max()
-        else:
-            max_order = 0  # If team has no players, start from 0
+        # Gather ordering info from the global player_mapping.
+        playing_up_info = []
+        for p in team_playing_up:
+            if p in player_mapping:
+                home_division = player_mapping[p]['Division']
+                home_order = player_mapping[p]['Order']
+                # Use the division ID from all_divisions for ordering 
+                # (assuming a lower division ID means a higher-ranked division)
+                division_id = all_divisions.get(home_division, float('inf'))
+                playing_up_info.append((p, division_id, home_order))
+            else:
+                # Fallback if the player is not found in the mapping
+                playing_up_info.append((p, float('inf'), float('inf')))
 
-        # Assign 'Order' as max_order + 1
-        order = max_order + 1
+        # Sort playing up players by their home division (using division ID) then by home order.
+        playing_up_info.sort(key=lambda x: (x[1], x[2]))
 
-        # Check if the player is already in players_df for this team
-        if not ((players_df['Player'] == player) & (players_df['Team'] == team)).any():
-            # Add the player to players_df
-            new_row = {'Player': player, 'Team': team, 'Order': order}
+        # Determine the starting order number for playing up players in the current team.
+        current_max_order = players_df[players_df['Team'] == team]['Order'].max() if not players_df[players_df['Team'] == team].empty else 0
+
+        # Append the sorted playing up players to the players_df with new order numbers.
+        for p, div_id, home_order in playing_up_info:
+            current_max_order += 1
+            new_row = {'Player': p, 'Team': team, 'Order': current_max_order}
             players_df = pd.concat([players_df, pd.DataFrame([new_row])], ignore_index=True)
+
 
     # Prepare active players list for each team, including 'playing up' players
     team_active_players = {}
@@ -307,14 +323,15 @@ def process_division(division, current_week, previous_week, player_mapping, all_
         active_team_players = [player for player in team_players if player in active_players]
         team_active_players[team] = active_team_players
 
-    # Process results_df to include rubber details
-    try:
+    # Process results_df to include rubber details - This is second time parse_result is called. Can remove?
+    """ try:
         results_df[['Overall Score', 'Rubbers']] = results_df['Result'].apply(
             lambda x: pd.Series(parse_result(x))
         )
     except Exception as e:
         logging.exception(f"Error parsing 'Result' column in Division '{division}', Week {current_week}: {e}")
         return
+        """
 
     # Ensure 'Rubbers' is a list
     results_df['Rubbers'] = results_df['Rubbers'].apply(lambda x: x if isinstance(x, list) else [x])
@@ -542,16 +559,15 @@ def process_division(division, current_week, previous_week, player_mapping, all_
         logging.exception(f"Error saving player results for Division '{division}', Week {current_week}: {e}")
         return
 
-    
-# Build the global player mapping
-player_mapping = build_player_mapping(all_divisions, base_directory)
-logging.info(f"Total players mapped across all divisions: {len(player_mapping)}")
 
 # Get current week
 current_week = 20
 
 # Run the script for each division and week
 for week in range(1, current_week + 1):
+    # Build the global player mapping
+    logging.info(f"Building player mapping for week {week}")
+    player_mapping = build_player_mapping(all_divisions, base_directory, week)
     previous_week = week - 1
     for division in all_divisions.keys():
         logging.info(f"Processing Division '{division}' for Week {week}")
