@@ -944,7 +944,9 @@ def main():
     elif selected_section == "Match Results":
         # Load data
         season_base_path = os.path.join(base_directory, selected_season)
-        combined_results_df, combined_player_results_df = load_all_results_and_player_results(season_base_path)
+        # We load the CSVs rather than generating them in the script
+        combined_results_df = pd.read_csv(os.path.join("2024-2025", "combined_results_df.csv"))
+        combined_player_results_df = pd.read_csv(os.path.join("2024-2025", "combined_player_results_df.csv"))
 
         # Convert 'Date' and 'Match Date' to datetime objects without converting to string
         combined_results_df['Date'] = pd.to_datetime(combined_results_df['Date'], dayfirst=True, errors='coerce')
