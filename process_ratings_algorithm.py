@@ -68,8 +68,8 @@ def main():
     )
     df = df[~skip_mask].copy()
 
-    # Convert date
-    df["Match Date"] = pd.to_datetime(df["Match Date"], dayfirst=True, errors="coerce")
+    # Avoid converting date or now to see if it's a problem
+    # df["Match Date"] = pd.to_datetime(df["Match Date"], dayfirst=True, errors="coerce")
     df.sort_values("Match Date", inplace=True)
 
     # We'll add new columns to track rating changes in the updated CSV

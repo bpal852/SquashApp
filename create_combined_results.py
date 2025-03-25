@@ -76,7 +76,7 @@ def load_all_results_and_player_results(season_base_path):
 
     # Make sure Match Date column is in datetime format (and day first)
     if 'Match Date' in combined_player_results_df.columns:
-        combined_player_results_df['Match Date'] = pd.to_datetime(combined_player_results_df['Match Date'], dayfirst=True)
+        # combined_player_results_df['Match Date'] = pd.to_datetime(combined_player_results_df['Match Date'], dayfirst=True)
 
         # Sort by Match Date, then Division, then Rubber Number
         combined_player_results_df = combined_player_results_df.sort_values(['Match Date', 'Division', 'Team', 'Rubber Number']).reset_index(drop=True)
