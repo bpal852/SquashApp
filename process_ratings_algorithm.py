@@ -36,8 +36,8 @@ def main():
     init_csv = os.path.join(folder, "all_initial_ratings.csv")
     df_init = pd.read_csv(init_csv)
 
-    # Rename column to match combined_player_results_df
-    df_init.rename(columns={"Player": "Player Name"}, inplace=True)
+    # Rename column name to avoid spaces
+    df_init.rename(columns={"Initial Rating": "Initial_Rating"}, inplace=True)
 
     # Example: columns = ["Player", "Team", "Initial Rating", ...]
     player_data = {}  
@@ -47,7 +47,7 @@ def main():
     # }
 
     for row in df_init.itertuples(index=False):
-        p = getattr(row, "Player_Name", "").strip().lower()
+        p = getattr(row, "Player", "").strip().lower()
         t = getattr(row, "Team", "").strip().lower()
         r = getattr(row, "Initial_Rating", 1000.0)
         if p and t:
@@ -58,6 +58,9 @@ def main():
     # ------------------------------------------------------------------
     results_csv = os.path.join(folder, "combined_player_results_df.csv")
     df = pd.read_csv(results_csv)
+
+    # Sort by Match Date, then Division, then Rubber Number
+    df = df.sort_values(['Match Date', 'Division', 'Team', 'Rubber Number']).reset_index(drop=True)
 
     # If Score is CR/WO => skip
     # If Player Name or Opponent Name = 'Unknown', skip
@@ -138,6 +141,9 @@ def main():
     # ------------------------------------------------------------------
     # 5) Output #1: Updated version of combined_player_results_df
     # ------------------------------------------------------------------
+    # Drop rows where Result != "Win"
+    df = df[df["Result"] == "Win"].copy()
+
     updated_csv = os.path.join(folder, "combined_player_results_df_updated.csv")
     df.to_csv(updated_csv, index=False)
 

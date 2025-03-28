@@ -73,10 +73,13 @@ def build_player_mapping(all_divisions, base_directory, week):
             for _, row in players_df.iterrows():
                 player_name = row['Player']
                 team = row['Team']
+                # Get HKS number
+                hks_no = row.get('HKS No.', None)
                 player_mapping[player_name] = {
                     'Division': division,
                     'Team': team,
-                    'Order': row['Order']
+                    'Order': row['Order'],
+                    'HKS_No': hks_no
                 }
         except Exception as e:
             logging.exception(f"Error loading players for Division {division}: {e}")
@@ -293,13 +296,14 @@ def process_division(division, current_week, previous_week, player_mapping, all_
             if p in player_mapping:
                 home_division = player_mapping[p]['Division']
                 home_order = player_mapping[p]['Order']
+                hks_no = player_mapping[p]['HKS_No']
                 # Use the division ID from all_divisions for ordering 
                 # (assuming a lower division ID means a higher-ranked division)
                 division_id = all_divisions.get(home_division, float('inf'))
-                playing_up_info.append((p, division_id, home_order))
+                playing_up_info.append((p, division_id, home_order, hks_no))
             else:
                 # Fallback if the player is not found in the mapping
-                playing_up_info.append((p, float('inf'), float('inf')))
+                playing_up_info.append((p, float('inf'), float('inf'), None))
 
         # Sort playing up players by their home division (using division ID) then by home order.
         playing_up_info.sort(key=lambda x: (x[1], x[2]))
@@ -308,9 +312,13 @@ def process_division(division, current_week, previous_week, player_mapping, all_
         current_max_order = players_df[players_df['Team'] == team]['Order'].max() if not players_df[players_df['Team'] == team].empty else 0
 
         # Append the sorted playing up players to the players_df with new order numbers.
-        for p, div_id, home_order in playing_up_info:
+        for (p, div_id, home_order, hks_no) in playing_up_info:
             current_max_order += 1
-            new_row = {'Player': p, 'Team': team, 'Order': current_max_order}
+            new_row = {'Player': p, 
+                       'Team': team, 
+                       'Order': current_max_order,
+                       'HKS No.': hks_no
+                       }
             players_df = pd.concat([players_df, pd.DataFrame([new_row])], ignore_index=True)
 
 
@@ -471,6 +479,10 @@ def process_division(division, current_week, previous_week, player_mapping, all_
                 home_player = home_players_assigned[idx_rubber]
                 away_player = away_players_assigned[idx_rubber]
 
+                # Look up each player's HKS_No from the player_mapping
+                home_hks_no = player_mapping.get(home_player, {}).get('HKS_No', None)
+                away_hks_no = player_mapping.get(away_player, {}).get('HKS_No', None)
+
                 if winner_team == 'Home':
                     result_home = 'Win'
                     result_away = 'Loss'
@@ -512,7 +524,9 @@ def process_division(division, current_week, previous_week, player_mapping, all_
                     'Rubber Number': i,
                     'Score': score_home,
                     'Result': result_home,
-                    'Home/Away': 'Home'
+                    'Home/Away': 'Home',
+                    'HKS No.': home_hks_no,
+                    'Opponent HKS No.': away_hks_no
                 })
 
                 # Append away player's result
@@ -526,7 +540,9 @@ def process_division(division, current_week, previous_week, player_mapping, all_
                     'Rubber Number': i,
                     'Score': score_away,
                     'Result': result_away,
-                    'Home/Away': 'Away'
+                    'Home/Away': 'Away',
+                    'HKS No.': away_hks_no,
+                    'Opponent HKS No.': home_hks_no
                 })
 
         except Exception as e:
@@ -539,7 +555,7 @@ def process_division(division, current_week, previous_week, player_mapping, all_
 
     # Reorder columns and handle missing dates
     player_results_df = player_results_df[[
-        'Player Name', 'Team', 'Opponent Name', 'Opponent Team', 'Match Date',
+        'Player Name', 'HKS No.', 'Team', 'Opponent Name', 'Opponent HKS No.', 'Opponent Team', 'Match Date',
         'Venue', 'Rubber Number', 'Score', 'Result', 'Home/Away'
     ]]
     player_results_df['Match Date'] = player_results_df['Match Date'].fillna(pd.NaT)
