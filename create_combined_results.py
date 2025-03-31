@@ -37,6 +37,9 @@ def load_all_results_and_player_results(season_base_path):
                 df['Division'] = division
                 # Optionally, add week information if needed
                 all_results.append(df)
+                # Check file to see if a row is empty except for Division column
+                if df.drop(columns=['Division']).isnull().all(axis=1).any():
+                    logging.warning(f"File {file} contains empty rows except for Division column.")
             except Exception as e:
                 logging.warning(f"Error reading file {file}: {e}")
 
@@ -80,6 +83,11 @@ def load_all_results_and_player_results(season_base_path):
 
         # Sort by Match Date, then Division, then Rubber Number
         combined_player_results_df = combined_player_results_df.sort_values(['Match Date', 'Division', 'Team', 'Rubber Number']).reset_index(drop=True)
+
+    # Sort combined_results_df by Date, then Match Week, then Division, then Home Team
+    if 'Date' in combined_results_df.columns:
+        combined_results_df['Date'] = pd.to_datetime(combined_results_df['Date'], dayfirst=True)
+        combined_results_df = combined_results_df.sort_values(['Date', 'Match Week', 'Division', 'Home Team']).reset_index(drop=True)
 
     # Save to CSV
     combined_player_results_df.to_csv(r"2024-2025/combined_player_results_df.csv")
