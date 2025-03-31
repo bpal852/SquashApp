@@ -873,8 +873,8 @@ def main():
         combined_player_results_df = pd.read_csv(os.path.join("2024-2025", "combined_player_results_df.csv"))
 
         # Convert 'Date' and 'Match Date' to datetime objects
-        combined_results_df['Date'] = pd.to_datetime(combined_results_df['Date'])
-        combined_player_results_df['Match Date'] = pd.to_datetime(combined_player_results_df['Match Date'])
+        combined_results_df['Date'] = pd.to_datetime(combined_results_df['Date'], format="%Y-%m-%d")
+        combined_player_results_df['Match Date'] = pd.to_datetime(combined_player_results_df['Match Date'], format="%Y-%m-%d")
 
         # Log unique parsed dates for verification
         parsed_results_dates = combined_results_df['Date'].dropna().unique()
