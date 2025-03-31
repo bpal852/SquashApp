@@ -771,82 +771,6 @@ def get_divisions_for_season(season_base_path, is_current_season):
         return divisions_list
 
 
-def load_all_results_and_player_results(season_base_path):
-    """
-    Load all results_df and player_results CSVs from all week_* folders and combine them, removing duplicates.
-    """
-    all_results = []
-    all_player_results = []
-
-    # Paths to the results_df and player_results directories
-    results_df_dir = os.path.join(season_base_path, "results_df")
-    player_results_dir = os.path.join(season_base_path, "player_results")
-
-    # Find all week_* folders
-    results_week_folders = glob.glob(os.path.join(results_df_dir, "week_*"))
-    player_results_week_folders = glob.glob(os.path.join(player_results_dir, "week_*"))
-
-    # Load all results_df files
-    for week_folder in results_week_folders:
-        csv_files = glob.glob(os.path.join(week_folder, "*.csv"))
-        for file in csv_files:
-            try:
-                df = pd.read_csv(file)
-                # Extract division from filename
-                filename = os.path.basename(file)
-                match = re.match(r"(.*)_results_df\.csv", filename)
-                if match:
-                    division = match.group(1)
-                else:
-                    division = "Unknown"
-                df['Division'] = division
-                # Optionally, add week information if needed
-                all_results.append(df)
-            except Exception as e:
-                logging.warning(f"Error reading file {file}: {e}")
-
-    # Load all player_results files
-    for week_folder in player_results_week_folders:
-        csv_files = glob.glob(os.path.join(week_folder, "*.csv"))
-        for file in csv_files:
-            try:
-                df = pd.read_csv(file)
-                # Extract division from filename
-                filename = os.path.basename(file)
-                match = re.match(r"(.*)_player_results\.csv", filename)
-                if match:
-                    division = match.group(1)
-                else:
-                    division = "Unknown"
-                df['Division'] = division
-                # Optionally, add week information if needed
-                all_player_results.append(df)
-            except Exception as e:
-                logging.warning(f"Error reading file {file}: {e}")
-
-    # Combine all results into a single DataFrame, remove duplicates
-    if all_results:
-        combined_results_df = pd.concat(all_results, ignore_index=True).drop_duplicates()
-    else:
-        combined_results_df = pd.DataFrame()
-
-    if all_player_results:
-        combined_player_results_df = pd.concat(all_player_results, ignore_index=True).drop_duplicates()
-    else:
-        combined_player_results_df = pd.DataFrame()
-
-    # Convert Division to string and strip spaces
-    combined_results_df['Division'] = combined_results_df['Division'].astype(str).str.strip()
-    combined_player_results_df['Division'] = combined_player_results_df['Division'].astype(str).str.strip()
-
-    # Save to CSV
-    combined_player_results_df.to_csv(r"2024-2025/combined_player_results_df.csv")
-    combined_results_df.to_csv(r"2024-2025/combined_results_df.csv")
-
-    return combined_results_df, combined_player_results_df
-
-
-
 # Start the main application
 def main():
     logging.info("Application started")
@@ -948,9 +872,9 @@ def main():
         combined_results_df = pd.read_csv(os.path.join("2024-2025", "combined_results_df.csv"))
         combined_player_results_df = pd.read_csv(os.path.join("2024-2025", "combined_player_results_df.csv"))
 
-        # Convert 'Date' and 'Match Date' to datetime objects without converting to string
-        combined_results_df['Date'] = pd.to_datetime(combined_results_df['Date'], dayfirst=True, errors='coerce')
-        combined_player_results_df['Match Date'] = pd.to_datetime(combined_player_results_df['Match Date'], dayfirst=True, errors='coerce')
+        # Convert 'Date' and 'Match Date' to datetime objects
+        combined_results_df['Date'] = pd.to_datetime(combined_results_df['Date'])
+        combined_player_results_df['Match Date'] = pd.to_datetime(combined_player_results_df['Match Date'])
 
         # Log unique parsed dates for verification
         parsed_results_dates = combined_results_df['Date'].dropna().unique()
@@ -961,6 +885,9 @@ def main():
         # Make sure Division columns are consistent
         combined_results_df['Division'] = combined_results_df['Division'].astype(str).str.strip()
         combined_player_results_df['Division'] = combined_player_results_df['Division'].astype(str).str.strip()
+
+        # Drop duplicates in combined player results
+        combined_player_results_df = combined_player_results_df[combined_player_results_df["Home/Away"] == "Home"]
 
         if combined_results_df.empty:
             st.error("No match results data available.")
@@ -1073,7 +1000,7 @@ def main():
                         result_row = rubber_results.iloc[0]
 
                         # Determine the home and away players
-                        if result_row['Team'] == row['Home Team']:
+                        if result_row['Team'] == row['Home Team']: # Change from 'Home Team' to 'Team'
                             home_player = result_row['Player Name']
                             away_player = result_row['Opponent Name']
                             score = result_row['Score']
@@ -1084,24 +1011,22 @@ def main():
                             score = result_row['Score']
                             home_won = (result_row['Result'] == "Loss")
 
-                        # Check if the score is a standard numeric score, CR, or WO
                         if score in ['CR', 'WO']:
-                            # Format the line based on whether the home player won or lost due to CR or WO
+                            # Use your existing logic to format CR/WO results.
                             if home_won:
                                 line = f"<p><strong>{rubber_number}</strong>: {home_player} beat {away_player} ({score}).</p>"
                             else:
                                 line = f"<p><strong>{rubber_number}</strong>: {home_player} lost to {away_player} ({score}).</p>"
                         else:
-                            # Split score if it's a standard numeric format
+                            # Now handle the numeric scores, and swap if needed.
                             if '-' in score:
                                 home_score, away_score = score.split('-')
-                                # Format the line based on whether the home player won or lost
+
                                 if home_won:
                                     line = f"<p><strong>{rubber_number}</strong>: {home_player} beat {away_player} {home_score}-{away_score}.</p>"
                                 else:
                                     line = f"<p><strong>{rubber_number}</strong>: {home_player} lost to {away_player} {home_score}-{away_score}.</p>"
-                            else:
-                                line = f"<p><strong>{rubber_number}</strong>: Score format invalid or missing for this match.</p>"
+
 
                         st.markdown(line, unsafe_allow_html=True)
 
