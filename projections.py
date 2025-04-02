@@ -286,7 +286,7 @@ os.makedirs(base_directories['simulated_tables'], exist_ok=True)
 os.makedirs(base_directories['simulated_fixtures'], exist_ok=True)
 
 # Process each division
-for div in divisions:
+for div in wednesday:
     logging.info(f"Processing projections for Division {div}")
 
     # Find the latest week directory for the division

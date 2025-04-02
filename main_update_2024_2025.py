@@ -17,21 +17,8 @@ year = "2024-2025"
 wait_time = 30
 
 current_divisions = {
-    "11": 436,
-    "12": 437,
-    "13A": 438,
-    "13B": 439,
-    "14": 440,
-    "15A": 441,
-    "15B": 442,
-    "Premier Masters": 443,
-    "M2": 444,
-    "M3": 445,
-    "M4": 446,
-    "Premier Ladies": 447,
-    "L2": 448,
-    "L3": 449,
-    "L4": 450,
+    "7A": 430,
+    "7B": 431
     }
 
 all_divisions = {
@@ -833,7 +820,7 @@ def home_team_won(row):
 logging.info("Starting the scraping process...")
 
 # Change dictionary if you want specific week
-for div in all_divisions.keys():
+for div in current_divisions.keys():
     logging.info(f"Processing Division {div}")
     league_id = f"D00{all_divisions[div]}"
 

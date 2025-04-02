@@ -577,7 +577,7 @@ def process_division(division, current_week, previous_week, player_mapping, all_
 
 
 # Get current week
-current_week = 20
+current_week = 25
 
 # Run the script for each division and week
 for week in range(1, current_week + 1):
