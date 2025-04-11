@@ -341,46 +341,38 @@ def load_csvs(division, season_base_path, is_current_season=True):
 def load_txts(division, season_base_path):
     """
     Load the lists of unbeaten players and players who have played every game for a given division.
+    Since the main script now always creates a TXT file (even a blank one), we simply read from it.
     """
     logging.info(f"Loading TXTs for division {division}")
 
-    # Define the paths to the data folders for the season
+    # Define the paths for the season’s unbeaten_players and played_every_game directories
     unbeaten_players_base_path = os.path.join(season_base_path, "unbeaten_players")
     played_every_game_base_path = os.path.join(season_base_path, "played_every_game")
 
-    # Initialize the lists
-    unbeaten_players = []
-    played_every_game = []
-
-    # Use find_latest_file_for_division to get the file paths
+    # Get the file paths using find_latest_file_for_division
     unbeaten_file_path = find_latest_file_for_division(unbeaten_players_base_path, division, "{}.txt")
     played_every_game_file_path = find_latest_file_for_division(played_every_game_base_path, division, "{}.txt")
 
-    # Load unbeaten players
-    if unbeaten_file_path and os.path.exists(unbeaten_file_path):
-        try:
-            with open(unbeaten_file_path, 'r') as file:
-                unbeaten_players = [line.strip() for line in file if line.strip()]
-            logging.debug(f"Loaded unbeaten players from {unbeaten_file_path}")
-        except Exception as e:
-            logging.exception(f"Error reading unbeaten players file: {unbeaten_file_path}")
-    else:
-        logging.warning(f"No unbeaten players file found for division {division}")
-        unbeaten_players = []  # Ensure it's an empty list
+    # Always try to open the unbeaten players file; if it exists but is empty, we just return an empty list.
+    try:
+        with open(unbeaten_file_path, 'r') as file:
+            unbeaten_players = [line.strip() for line in file if line.strip()]
+        logging.debug(f"Loaded unbeaten players from {unbeaten_file_path}")
+    except Exception as e:
+        logging.info(f"Unbeaten players file not found or error for division {division}. Returning an empty list.")
+        unbeaten_players = []
 
-    # Load players who have played every game
-    if played_every_game_file_path and os.path.exists(played_every_game_file_path):
-        try:
-            with open(played_every_game_file_path, 'r') as file:
-                played_every_game = [line.strip() for line in file if line.strip()]
-            logging.debug(f"Loaded players who have played every game from {played_every_game_file_path}")
-        except Exception as e:
-            logging.exception(f"Error reading played every game file: {played_every_game_file_path}")
-    else:
-        logging.warning(f"No played every game file found for division {division}")
-        played_every_game = []  # Ensure it's an empty list
+    # Always try to open the played every game file; a blank file yields an empty list.
+    try:
+        with open(played_every_game_file_path, 'r') as file:
+            played_every_game = [line.strip() for line in file if line.strip()]
+        logging.debug(f"Loaded players who have played every game from {played_every_game_file_path}")
+    except Exception as e:
+        logging.info(f"Played every game file not found or error for division {division}. Returning an empty list.")
+        played_every_game = []
 
     return unbeaten_players, played_every_game
+
 
 
 

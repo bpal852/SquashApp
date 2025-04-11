@@ -110,7 +110,8 @@ weekend = {
 }
 
 specific_divisions = {
-    "7A": 430,
+    "3": 426,
+    "4": 427,
     "7B": 431,
 }
 
@@ -957,6 +958,9 @@ for div in all_divisions.keys():
         merged_ranking_df = ranking_df_filtered.merge(summary_df[["Team", "Played"]], on="Team", how="inner")
         merged_ranking_df = merged_ranking_df.rename(columns={"Played": "Team Games Played"})
         merged_ranking_df["Team Games Played"] = merged_ranking_df["Team Games Played"].astype(int)
+        # Check to see if columns match
+        print(merged_ranking_df[['Name of Player', 'Team', 'Games Played', 'Team Games Played']])
+        # Get list of players who have played every game
         played_every_game_list = merged_ranking_df[
             (merged_ranking_df["Games Played"] == merged_ranking_df["Team Games Played"])].apply(
             lambda row: f"{row['Name of Player']} ({row['Team']})", axis=1
@@ -978,33 +982,27 @@ for div in all_divisions.keys():
     else:
         logging.info(f"No summarized data to save for Division {div}; skipping summarized_df CSV creation.")
 
-    # Save the unbeaten_list to a text file if it is not empty
-    if unbeaten_list:
-        unbeaten_players_path = os.path.join(base_directories['unbeaten_players'], week_dir, f"{div}.txt")
-        try:
-            logging.info(f"Saving unbeaten_list to {unbeaten_players_path}")
-            with open(unbeaten_players_path, 'w') as f:
-                for player in unbeaten_list:
-                    f.write(f"{player}\n")
-            logging.info(f"Successfully saved unbeaten_list to {unbeaten_players_path}")
-        except Exception as e:
-            logging.error(f"Error saving unbeaten_list to {unbeaten_players_path}: {e}")
-    else:
-        logging.info(f"No unbeaten players to save for Division {div}; skipping unbeaten_list file creation.")
+    # Save the unbeaten_list to a text file (create a blank file if no unbeaten players)
+    unbeaten_players_path = os.path.join(base_directories['unbeaten_players'], week_dir, f"{div}.txt")
+    try:
+        logging.info(f"Saving unbeaten_list to {unbeaten_players_path}")
+        with open(unbeaten_players_path, 'w') as f:
+            for player in unbeaten_list:
+                f.write(f"{player}\n")
+        logging.info(f"Successfully saved unbeaten_list to {unbeaten_players_path}")
+    except Exception as e:
+        logging.error(f"Error saving unbeaten_list to {unbeaten_players_path}: {e}")
 
-    # Save list of players who have played every game
-    if played_every_game_list:
-        played_every_game_path = os.path.join(base_directories['played_every_game'], week_dir, f"{div}.txt")
-        try:
-            logging.info(f"Saving played_every_game_list to {played_every_game_path}")
-            with open(played_every_game_path, 'w') as f:
-                for player in played_every_game_list:
-                    f.write(f"{player}\n")
-            logging.info(f"Successfully saved played_every_game_list to {played_every_game_path}")
-        except Exception as e:
-            logging.error(f"Error saving played_every_game_list to {played_every_game_path}: {e}")
-    else:
-        logging.info(f"No players who have played every game to save for Division {div}; skipping played_every_game_list file creation.")
+    # Save list of players who have played every game (create a blank file if none)
+    played_every_game_path = os.path.join(base_directories['played_every_game'], week_dir, f"{div}.txt")
+    try:
+        logging.info(f"Saving played_every_game_list to {played_every_game_path}")
+        with open(played_every_game_path, 'w') as f:
+            for player in played_every_game_list:
+                f.write(f"{player}\n")
+        logging.info(f"Successfully saved played_every_game_list to {played_every_game_path}")
+    except Exception as e:
+        logging.error(f"Error saving played_every_game_list to {played_every_game_path}: {e}")
 
     # Create Results Dataframe
 
