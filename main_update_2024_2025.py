@@ -958,8 +958,6 @@ for div in all_divisions.keys():
         merged_ranking_df = ranking_df_filtered.merge(summary_df[["Team", "Played"]], on="Team", how="inner")
         merged_ranking_df = merged_ranking_df.rename(columns={"Played": "Team Games Played"})
         merged_ranking_df["Team Games Played"] = merged_ranking_df["Team Games Played"].astype(int)
-        # Check to see if columns match
-        print(merged_ranking_df[['Name of Player', 'Team', 'Games Played', 'Team Games Played']])
         # Get list of players who have played every game
         played_every_game_list = merged_ranking_df[
             (merged_ranking_df["Games Played"] == merged_ranking_df["Team Games Played"])].apply(
