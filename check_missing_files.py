@@ -9,7 +9,7 @@ def main():
         "Premier Ladies", "L2", "L3", "L4"
     ]
 
-    weeks = range(1, 20)  # weeks 1..19
+    weeks = range(1, 23)  # weeks 1..19
 
     missing_files = []
 
