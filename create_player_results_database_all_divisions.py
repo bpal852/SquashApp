@@ -53,38 +53,67 @@ divisions_to_process = list(all_divisions.keys())
 
 def build_player_mapping(all_divisions, base_directory, week):
     """
-    Build a mapping of player names to their divisions and teams across all divisions.
+    Build a mapping of HKS_No to player info (name, division, team, order) across all divisions for a given week.
 
     Args:
-        all_divisions (dict): Dictionary of division names and their IDs.
-        base_directory (str): Base directory path where player_df files are stored.
+        all_divisions (dict): Mapping of division names to IDs (unused here except for iteration order).
+        base_directory (str): Base path where player CSVs are stored.
+        week (int): Week number to load.
 
     Returns:
-        dict: A dictionary mapping player names to their division and team.
+        dict[int, dict]: {HKS_No: { 'Player': str, 'Division': str, 'Team': str, 'Order': int }}
     """
     player_mapping = {}
-    for division in all_divisions.keys():
-        players_df_path = os.path.join(base_directory, "players_df", f"week_{week}", f"{division}_players_df.csv")
-        if not os.path.exists(players_df_path):
-            logging.warning(f"Players file for Division {division} not found at {players_df_path}. Skipping.")
+
+    for division in all_divisions:
+        csv_path = os.path.join(
+            base_directory,
+            "players_df",
+            f"week_{week}",
+            f"{division}_players_df.csv"
+        )
+        if not os.path.exists(csv_path):
+            logging.warning(f"Players file for Division '{division}' not found at {csv_path}. Skipping.")
             continue
+
         try:
-            players_df = pd.read_csv(players_df_path)
-            for _, row in players_df.iterrows():
-                player_name = row['Player']
-                team = row['Team']
-                # Get HKS number
-                hks_no = row.get('HKS No.', None)
-                player_mapping[player_name] = {
-                    'Division': division,
-                    'Team': team,
-                    'Order': row['Order'],
-                    'HKS_No': hks_no
-                }
+            df = pd.read_csv(csv_path)
         except Exception as e:
-            logging.exception(f"Error loading players for Division {division}: {e}")
+            logging.exception(f"Error reading {csv_path}: {e}")
             continue
+
+        for _, row in df.iterrows():
+            hks_raw = row.get('HKS No.', None)
+            if pd.isna(hks_raw):
+                logging.warning(f"Missing HKS_No for player '{row.get('Player', '').strip()}' in division '{division}'. Skipping.")
+                continue
+
+            try:
+                hks = int(hks_raw)
+            except ValueError:
+                logging.warning(f"Invalid HKS_No '{hks_raw}' for player '{row.get('Player', '').strip()}' in division '{division}'. Skipping.")
+                continue
+
+            name = row.get('Player', '').strip()
+            team = row.get('Team', '').strip()
+            order = row.get('Order', None)
+
+            # Warn if the same HKS_No is mapped to different names
+            if hks in player_mapping and player_mapping[hks]['Player'] != name:
+                logging.warning(
+                    f"HKS_No {hks} was previously mapped to '{player_mapping[hks]['Player']}' "
+                    f"but now found as '{name}' in division '{division}'. Overwriting."
+                )
+
+            player_mapping[hks] = {
+                'Player': name,
+                'Division': division,
+                'Team': team,
+                'Order': int(order) if pd.notna(order) else None
+            }
+
     return player_mapping
+
 
 
 def parse_result(result):
@@ -266,11 +295,12 @@ def process_division(division, current_week, previous_week, player_mapping, all_
     # For each team, get the list of active players and sort them by 'Order'
     team_players = {}
     for team in players_df['Team'].unique():
-        # Get active players for the team
-        team_data = players_df[(players_df['Team'] == team) & (players_df['Player'].isin(active_players))]
-        # Sort active players by 'Order'
-        sorted_players = team_data.sort_values('Order')['Player'].tolist()
-        team_players[team] = sorted_players
+        dfp = players_df[
+            (players_df['Team'] == team) & 
+            (players_df['Player'].isin(active_players))
+        ][['Player','HKS No.','Order']]
+        dfp = dfp.sort_values('Order')
+        team_players[team] = list(zip(dfp['Player'], dfp['HKS No.']))
 
     # Identify 'playing up' players (active_players not in current division's players_df)
     playing_up_players = active_players - set(players_df['Player'])
@@ -290,19 +320,25 @@ def process_division(division, current_week, previous_week, player_mapping, all_
         if not team_playing_up:
             continue
 
-        # Gather ordering info from the global player_mapping.
+        # Build a helper: map each name to *all* its HKS_No’s from the global mapping
+        name_to_hks_list = {}
+        for hks, info in player_mapping.items():
+            name_to_hks_list.setdefault(info['Player'], []).append(hks)
+
+        # Now gather ordering + HKS_No for playing-up players
         playing_up_info = []
         for p in team_playing_up:
-            if p in player_mapping:
-                home_division = player_mapping[p]['Division']
-                home_order = player_mapping[p]['Order']
-                hks_no = player_mapping[p]['HKS_No']
-                # Use the division ID from all_divisions for ordering 
-                # (assuming a lower division ID means a higher-ranked division)
-                division_id = all_divisions.get(home_division, float('inf'))
-                playing_up_info.append((p, division_id, home_order, hks_no))
+            hks_list = name_to_hks_list.get(p, [])
+            if hks_list:
+                # pick the “best” original division (lowest division ID) if multiple
+                best_hks = min(
+                    hks_list,
+                    key=lambda h: all_divisions.get(player_mapping[h]['Division'], float('inf'))
+                )
+                info = player_mapping[best_hks]
+                division_id = all_divisions.get(info['Division'], float('inf'))
+                playing_up_info.append((p, division_id, info['Order'], best_hks))
             else:
-                # Fallback if the player is not found in the mapping
                 playing_up_info.append((p, float('inf'), float('inf'), None))
 
         # Sort playing up players by their home division (using division ID) then by home order.
@@ -419,12 +455,18 @@ def process_division(division, current_week, previous_week, player_mapping, all_
             home_team_players = team_active_players.get(home_team, [])
             away_team_players = team_active_players.get(away_team, [])
 
-            # Sort active players by 'Order'
-            home_team_data = players_df[(players_df['Team'] == home_team) & (players_df['Player'].isin(home_team_players))]
-            home_team_players_sorted = home_team_data.sort_values('Order')['Player'].tolist()
-
-            away_team_data = players_df[(players_df['Team'] == away_team) & (players_df['Player'].isin(away_team_players))]
-            away_team_players_sorted = away_team_data.sort_values('Order')['Player'].tolist()
+            # Sort active players by 'Order' and carry HKS_No
+            ht_df = players_df[
+                (players_df['Team'] == home_team) &
+                (players_df['Player'].isin(home_team_players))
+            ][['Player','HKS No.','Order']].sort_values('Order')
+            home_team_players_sorted = list(zip(ht_df['Player'], ht_df['HKS No.']))
+        
+            at_df = players_df[
+                (players_df['Team'] == away_team) &
+                (players_df['Player'].isin(away_team_players))
+            ][['Player','HKS No.','Order']].sort_values('Order')
+            away_team_players_sorted = list(zip(at_df['Player'], at_df['HKS No.']))
                         
             # Assign players to rubbers, inserting 'Unknown' where teams have conceded
             # Initialize player indexes
@@ -451,37 +493,31 @@ def process_division(division, current_week, previous_week, player_mapping, all_
                         # If winner is 'Unknown' or 'Draw', we cannot determine who conceded
                         pass
 
-                # Assign home player
                 if home_conceded:
-                    home_players_assigned.append('Unknown')
+                        home_players_assigned.append(('Unknown', None))
                 else:
                     if home_player_idx < len(home_team_players_sorted):
                         home_players_assigned.append(home_team_players_sorted[home_player_idx])
                         home_player_idx += 1
                     else:
-                        home_players_assigned.append('Unknown')
+                        home_players_assigned.append(('Unknown', None))
 
-                # Assign away player
                 if away_conceded:
-                    away_players_assigned.append('Unknown')
+                    away_players_assigned.append(('Unknown', None))
                 else:
                     if away_player_idx < len(away_team_players_sorted):
                         away_players_assigned.append(away_team_players_sorted[away_player_idx])
                         away_player_idx += 1
                     else:
-                        away_players_assigned.append('Unknown')
+                        away_players_assigned.append(('Unknown', None))
 
             # Now, generate player match results
             for idx_rubber, rubber in enumerate(rubber_results):
                 i = rubber['Rubber Number']
                 rubber_score = rubber['Rubber Score']
                 winner_team = rubber['Winner Team']
-                home_player = home_players_assigned[idx_rubber]
-                away_player = away_players_assigned[idx_rubber]
-
-                # Look up each player's HKS_No from the player_mapping
-                home_hks_no = player_mapping.get(home_player, {}).get('HKS_No', None)
-                away_hks_no = player_mapping.get(away_player, {}).get('HKS_No', None)
+                home_player, home_hks_no = home_players_assigned[idx_rubber]
+                away_player, away_hks_no = away_players_assigned[idx_rubber]
 
                 if winner_team == 'Home':
                     result_home = 'Win'

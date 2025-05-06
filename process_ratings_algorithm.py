@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import logging
+import re
 
 # Clear any existing handlers
 logger = logging.getLogger()
@@ -17,6 +18,46 @@ stream_handler.setFormatter(formatter)
 logger.addHandler(stream_handler)
 
 # ------------------------------------------------------------------
+# Base ratings by division (same as initial‐ratings script)
+# ------------------------------------------------------------------
+division_base_ratings = {
+    # Numeric divisions
+    '2': 8000,
+    '3': 6000,
+    '4': 4000,
+    '5': 3000,
+    '6': 2000,
+    '7': 1800,
+    '8': 1600,
+    '9': 1400,
+    '10': 1200,
+    '11': 1000,
+    '12': 800,
+    '13': 600,
+    '14': 400,
+    '15': 200,
+    # Special names
+    'premier main': 18000,
+    'premier masters': 6000,
+    'm2': 2000,
+    'm3': 1600,
+    'm4': 1000,
+    'premier ladies': 6000,
+    'l2': 2000,
+    'l3': 1200,
+    'l4': 800,
+}
+
+def get_base_rating(division_str):
+    d = str(division_str).lower().strip()
+    if d in division_base_ratings:
+        return division_base_ratings[d]
+    m = re.match(r'^(\d+)', d)
+    if m and m.group(1) in division_base_ratings:
+        return division_base_ratings[m.group(1)]
+    return 1000.0
+
+# ------------------------------------------------------------------
 # 1) Ratio-based helpers
 # ------------------------------------------------------------------
 MARGIN_SCORES = {
@@ -28,7 +69,7 @@ MARGIN_SCORES = {
 def expected_fraction(LA, LB):
     return LA / (LA + LB)
 
-def ratio_update(LA, LB, A_actual, B_actual, k=0.1):
+def ratio_update(LA, LB, A_actual, B_actual, k=0.3):
     EA = expected_fraction(LA, LB)
     EB = 1 - EA
 
@@ -110,22 +151,27 @@ def main():
     df["Winner Matches Played"] = pd.NA
     df["Loser Matches Played"] = pd.NA
 
-    def get_or_create_player(hks, player_name, team_name):
+    def get_or_create_player(hks, player_name, team_name, division):
         # If HKS_No is missing, skip the row.
         if pd.isna(hks):
             logging.warning(f"HKS_No is missing for player '{player_name}' on team '{team_name}'. Skipping this row.")
             return None
-        key = int(hks)  # Use integer key
+
+        key = int(hks)
         logging.info(f"Processing player: '{player_name}' on team '{team_name}', key = '{key}'")
+
         if key not in player_data:
+            # NEW: use division base rating instead of flat 1000
+            initial = get_base_rating(division)
             player_data[key] = {
                 "player": player_name,
-                "rating": 1000.0,
+                "rating": initial,
                 "matches_played": 0,
                 "teams": {team_name}
             }
         else:
             player_data[key]["teams"].add(team_name)
+
         return key
 
 
@@ -142,7 +188,7 @@ def main():
         winner_hks = row["HKS_No"]
         winner_name = row["Player Name"]
         winner_team = row["Team"]
-        w_key = get_or_create_player(winner_hks, winner_name, winner_team)
+        w_key = get_or_create_player(winner_hks, winner_name, winner_team, row["Division"])
         if w_key is None:
             continue  # Skip this row if winner's HKS_No is missing
 
@@ -150,7 +196,7 @@ def main():
         loser_hks = row["Opponent_HKS_No"]
         loser_name = row["Opponent Name"]
         loser_team = row["Opponent Team"]
-        l_key = get_or_create_player(loser_hks, loser_name, loser_team)
+        l_key = get_or_create_player(loser_hks, loser_name, loser_team, row["Division"])
         if l_key is None:
             continue  # Skip this row if loser's HKS_No is missing
 
@@ -186,6 +232,9 @@ def main():
     # ------------------------------------------------------------------
     # Drop rows where Result != "Win"
     df = df[df["Result"] == "Win"].copy()
+
+    # Create relative difference column
+    df["rel_diff"] = (df["Post Winner Rating"] - df["Pre Winner Rating"]) / df["Pre Winner Rating"] * 100.0
 
     updated_csv = os.path.join(folder, "combined_player_results_df_updated.csv")
     df.to_csv(updated_csv, index=False)
