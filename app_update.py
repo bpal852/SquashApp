@@ -9,6 +9,8 @@ import glob
 import os
 import logging
 import traceback
+from pathlib import Path
+import json
 
 # Configure logging
 logging.basicConfig(
@@ -35,10 +37,14 @@ st.set_page_config(
 today = pd.Timestamp(datetime.now().date())
 
 # Define the season
-current_season = "2024-2025"
+current_season = "2025-2026"
 
 # Define the base directory
 base_directory = os.path.dirname(os.path.abspath(__file__))
+
+# Define the season directory
+season_dir = os.path.join(base_directory, current_season)
+os.makedirs(season_dir, exist_ok=True)  # ensure folder exists for writes
 
 def get_available_seasons(base_directory, current_season):
     """
@@ -69,35 +75,32 @@ team_win_percentage_breakdown_home_path = os.path.join(team_win_percentage_break
 team_win_percentage_breakdown_away_path = os.path.join(team_win_percentage_breakdown_path, "Away")
 team_win_percentage_breakdown_delta_path = os.path.join(team_win_percentage_breakdown_path, "Delta")
 
-all_divisions = {
-    "Premier Main": 424,
-    "2": 425,
-    "3": 426,
-    "4": 427,
-    "5": 428,
-    "6": 429,
-    "7A": 430,
-    "7B": 431,
-    "8A": 432,
-    "8B": 433,
-    "9": 434,
-    "10": 435,
-    "11": 436,
-    "12": 437,
-    "13A": 438,
-    "13B": 439,
-    "14": 440,
-    "15A": 441,
-    "15B": 442,
-    "Premier Masters": 443,
-    "M2": 444,
-    "M3": 445,
-    "M4": 446,
-    "Premier Ladies": 447,
-    "L2": 448,
-    "L3": 449,
-    "L4": 450,
-    }
+def load_divisions_simple(base_dir: str, season: str) -> dict[str, int | None]:
+    """
+    Reads config/divisions/<season>.json and returns {"5": 476, ...}.
+    Keeps ALL divisions; ignores 'enabled'.
+    """
+    cfg = Path(base_dir) / "config" / "divisions" / f"{season}.json"
+    if not cfg.exists():
+        return {}
+
+    with cfg.open("r", encoding="utf-8") as f:
+        obj = json.load(f)
+
+    out: dict[str, int | None] = {}
+    for d in obj.get("divisions", []):
+        name = d.get("name")
+        if not name:
+            continue
+        _id = d.get("id")
+        try:
+            _id = int(_id) if _id is not None else None
+        except Exception:
+            _id = None
+        out[name] = _id
+    return out
+
+all_divisions = load_divisions_simple(base_directory, current_season)
 
 # List of clubs
 clubs = [
@@ -628,7 +631,7 @@ def load_player_rankings(season_base_path, divisions_for_season):
 
     # Identify rows with missing 'HKS No.'
     missing_hksno_df = merged_df[merged_df['HKS No.'].isnull()]
-    missing_hksno_df.to_csv("2024-2025/missing_hksno.csv", index=False)
+    missing_hksno_df.to_csv(os.path.join(season_dir, "missing_hksno.csv"), index=False)
     
 
     def determine_club(team_name):
@@ -792,8 +795,20 @@ def main():
         else:
             season_base_path = os.path.join(base_directory, "previous_seasons", selected_season)
 
-        # Get divisions for the selected season
-        divisions_for_season = get_divisions_for_season(season_base_path, is_current_season)
+        all_divisions = load_divisions_simple(base_directory, selected_season)
+
+        # STRICT: load divisions JSON; error and stop if missing/invalid
+        try:
+            all_divisions = load_divisions_simple(base_directory, selected_season)  # {"5": 476, ...}
+        except (FileNotFoundError, ValueError) as e:
+            st.error(f"Divisions config error for **{selected_season}**: {e}")
+            st.stop()
+
+        # Your requested line — sort with the season-aware key
+        divisions_for_season = sorted(
+            all_divisions.keys(),
+            key=lambda x: get_division_sort_key(x, is_current_season)
+        )
 
         # Stats selection
         stats_selection = st.radio("**Select Stats Type:**", ["Player Stats", "Team Stats"])
@@ -861,8 +876,8 @@ def main():
         # Load data
         season_base_path = os.path.join(base_directory, selected_season)
         # We load the CSVs rather than generating them in the script
-        combined_results_df = pd.read_csv(os.path.join("2024-2025", "combined_results_df.csv"))
-        combined_player_results_df = pd.read_csv(os.path.join("2024-2025", "combined_player_results_df.csv"))
+        combined_results_df = pd.read_csv(os.path.join(season_dir, "combined_results_df.csv"))
+        combined_player_results_df = pd.read_csv(os.path.join(season_dir, "combined_player_results_df.csv"))
 
         # Convert 'Date' and 'Match Date' to datetime objects
         combined_results_df['Date'] = pd.to_datetime(combined_results_df['Date'], format="%Y-%m-%d")
