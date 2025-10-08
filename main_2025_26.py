@@ -16,6 +16,10 @@ from logging.handlers import RotatingFileHandler
 from pathlib import Path
 import json
 from utils.divisions_export import save_divisions_json
+import re
+
+# Global variables
+_SUMMARY_NUMS_RE = re.compile(r"(.*?)[^\d]*?(\d+)\s*(\d+)\s*(\d+)\s*(\d+)$")
 
 def build_session() -> requests.Session:
     session = requests.Session()
@@ -48,43 +52,43 @@ wait_time = 30
 
 DIVISIONS = {
     # Mondays
-    "2":                {"id": 473, "day": "Mon", "enabled": True},
-    "6":                {"id": 477, "day": "Mon", "enabled": True},
-    "10":               {"id": 482, "day": "Mon", "enabled": True},
+    "2":                {"id": 473, "day": "Mon", "enabled": False},
+    "6":                {"id": 477, "day": "Mon", "enabled": False},
+    "10":               {"id": 482, "day": "Mon", "enabled": False},
 
     # Tuesdays
-    "3":                {"id": 474, "day": "Tue", "enabled": True},
-    "4":                {"id": 475, "day": "Tue", "enabled": True},
-    "11":               {"id": 483, "day": "Tue", "enabled": True},
-    "L2":               {"id": 496, "day": "Tue", "enabled": True},
+    "3":                {"id": 474, "day": "Tue", "enabled": False},
+    "4":                {"id": 475, "day": "Tue", "enabled": False},
+    "11":               {"id": 483, "day": "Tue", "enabled": False},
+    "L2":               {"id": 496, "day": "Tue", "enabled": False},
 
     # Wednesdays
-    "7":                {"id": 478, "day": "Wed", "enabled": True},
-    "9":                {"id": 481, "day": "Wed", "enabled": True},
-    "12":               {"id": 484, "day": "Wed", "enabled": True},
-    "M2":               {"id": 492, "day": "Wed", "enabled": True},
+    "7":                {"id": 478, "day": "Wed", "enabled": False},
+    "9":                {"id": 481, "day": "Wed", "enabled": False},
+    "12":               {"id": 484, "day": "Wed", "enabled": False},
+    "M2":               {"id": 492, "day": "Wed", "enabled": False},
 
     # Thursdays
-    "Premier Main":     {"id": 472, "day": "Thu", "enabled": True},
-    "Premier Masters":  {"id": 491, "day": "Thu", "enabled": True},
-    "Premier Ladies":   {"id": 495, "day": "Thu", "enabled": True},
-    "M3":               {"id": 493, "day": "Thu", "enabled": True},
-    "M4":               {"id": 494, "day": "Thu", "enabled": True},
+    "Premier Main":     {"id": 472, "day": "Thu", "enabled": False},
+    "Premier Masters":  {"id": 491, "day": "Thu", "enabled": False},
+    "Premier Ladies":   {"id": 495, "day": "Thu", "enabled": False},
+    "M3":               {"id": 493, "day": "Thu", "enabled": False},
+    "M4":               {"id": 494, "day": "Thu", "enabled": False},
 
     # Fridays
     "5":                {"id": 476, "day": "Fri", "enabled": True},
-    "8A":               {"id": 479, "day": "Fri", "enabled": True},
-    "8B":               {"id": 480, "day": "Fri", "enabled": True},
-    "13A":              {"id": 485, "day": "Fri", "enabled": True},
-    "13B":              {"id": 486, "day": "Fri", "enabled": True},
-    "13C":              {"id": 487, "day": "Fri", "enabled": True},
-    "L3":               {"id": 497, "day": "Fri", "enabled": True},
-    "L4":               {"id": 498, "day": "Fri", "enabled": True},
+    "8A":               {"id": 479, "day": "Fri", "enabled": False},
+    "8B":               {"id": 480, "day": "Fri", "enabled": False},
+    "13A":              {"id": 485, "day": "Fri", "enabled": False},
+    "13B":              {"id": 486, "day": "Fri", "enabled": False},
+    "13C":              {"id": 487, "day": "Fri", "enabled": False},
+    "L3":               {"id": 497, "day": "Fri", "enabled": False},
+    "L4":               {"id": 498, "day": "Fri", "enabled": False},
 
     # Saturdays
-    "14":               {"id": 488, "day": "Sat", "enabled": True},
-    "15A":              {"id": 489, "day": "Sat", "enabled": True},
-    "15B":              {"id": 490, "day": "Sat", "enabled": True},
+    "14":               {"id": 488, "day": "Sat", "enabled": False},
+    "15A":              {"id": 489, "day": "Sat", "enabled": False},
+    "15B":              {"id": 490, "day": "Sat", "enabled": False},
 }
 
 # Convenience derived views
@@ -184,66 +188,93 @@ def count_valid_matches(df, rubber_index):
                 valid_matches_count[row['Away Team']] = valid_matches_count.get(row['Away Team'], 0) + 1
     return valid_matches_count
 
+def _parse_summary_row_text(txt: str):
+    """
+    Fallback parser: extract Team, Played, Won, Lost, Points from raw text.
+    Handles cases like: 'Physical Chess 1 1 0 4' (with weird spacing).
+    Returns tuple or None if it doesn't look like a data row.
+    """
+    txt = " ".join(txt.split())
+    m = _SUMMARY_NUMS_RE.match(txt)
+    if not m:
+        return None
+    team = m.group(1).strip()
+    p, w, l, pts = map(int, m.groups()[1:])
+    # sanity check to avoid header lines like 'playedwonlostpoint'
+    if not team or team.lower().startswith("played"):
+        return None
+    return [team, p, w, l, pts]
 
 def scrape_team_summary_page(league_id, year):
     """
-    Function to scrape the Team Summary page on HK squash website and store the data in a dataframe
+    Scrape Team Summary and return a non-empty DataFrame.
+    Tries both site spellings: 'team_summery' (current) then 'team_summary' (fallback).
     """
-    summary_url = url("team_summary", league_id)
+    summary_paths = ["team_summery", "team_summary"]
+    last_error = None
 
-    # Add logging to track the progress
-    logging.info(f"Scraping team summary page for league id: {league_id}, year: {year}...")
-    logging.debug(f"Constructed summary URL: {summary_url}")
+    for path in summary_paths:
+        summary_url = url(path, league_id)
+        logging.info(f"Scraping team summary page ({path}) for league id: {league_id}, year: {year}...")
+        try:
+            response = SESSION.get(summary_url, timeout=REQUEST_TIMEOUT)
+            logging.debug(f"[{path}] status: {response.status_code}")
+            if response.status_code != 200:
+                last_error = RuntimeError(f"[{path}] HTTP {response.status_code}")
+                continue
 
-    try:
-        # Send the HTTP request
-        response = SESSION.get(summary_url, timeout=REQUEST_TIMEOUT)
-        logging.debug(f"Received response with status code: {response.status_code}")
+            soup = BeautifulSoup(response.content, 'html.parser')
 
-        # Check if the response is successful
-        if response.status_code != 200:
-            logging.error(f"Failed to retrieve team summary page. Status code: {response.status_code}")
-            return pd.DataFrame()
-         
-        # Parse the HTML content
-        soup = BeautifulSoup(response.content, 'html.parser')
-        logging.debug("Parsed HTML content with BeautifulSoup")
+            # The page markup uses this structure:
+            # <div class="clearfix teamSummary-content-list">
+            #   <div class="col-xs-4">Team</div>
+            #   <div class="col-xs-2">Played</div> ...
+            rows = (soup.select("div.clearfix.teamSummary-content-list")
+                    or soup.select("div.teamSummary-content-list")
+                    or soup.select("div.teamSummary div[class*='content-list']"))
 
-        # Find the league table data
-        summary_rows = soup.find_all("div", class_="clearfix teamSummary-content-list")
-        logging.debug(f"Found {len(summary_rows)} team summary rows")
+            data = []
+            for idx, row in enumerate(rows):
+                cells = [d.get_text(strip=True) for d in row.find_all("div", recursive=False)]
+                cells = [c for c in cells if c]
+                # skip header-like rows
+                joined = "".join(cells).lower()
+                if "played" in joined and "won" in joined and "lost" in joined:
+                    continue
 
-        # Extract the league table table data from summary_rows soup element
-        summary_data_rows = []
+                if len(cells) >= 5:
+                    team = " ".join(cells[:-4]) if len(cells) > 5 else cells[0]
+                    tail = cells[-4:]
+                    try:
+                        p, w, l, pts = map(int, tail)
+                        if team and not team.lower().startswith("played"):
+                            data.append([team, p, w, l, pts])
+                    except Exception:
+                        # ignore malformed lines; we also have a fallback below if needed
+                        pass
 
-        for idx, row in enumerate(summary_rows):
-            columns = row.find_all("div", recursive=False)
-            row_data = [col.text.strip() for col in columns if col.text.strip()]
-            if row_data and len(row_data) > 1:  # To skip header rows and empty rows
-                summary_data_rows.append(row_data)
-            else:
-                logging.debug(f"Skipping row {idx} due to insufficient data: {row_data}")
+            if not data:
+                # as a fallback, try parsing the whole row text with regex (optional)
+                # if still empty, try the other spelling
+                last_error = ValueError(f"[{path}] parsed 0 data rows")
+                continue
 
-        # Check if any data was extracted
-        if not summary_data_rows:
-            logging.warning("No data rows were extracted from the team summary page.")
-            return pd.DataFrame()
-        
-        # Create DataFrame from list of lists
-        # Skip the first row as it's the header
-        headers = ["Team", "Played", "Won", "Lost", "Points"]
-        summary_df = pd.DataFrame(summary_data_rows[1:], columns=headers)
-        logging.info(f"Successfully created summary DataFrame with {len(summary_df)} rows")
+            df = pd.DataFrame(data, columns=["Team", "Played", "Won", "Lost", "Points"])
+            df[["Played", "Won", "Lost", "Points"]] = df[
+                ["Played", "Won", "Lost", "Points"]
+            ].apply(pd.to_numeric, errors="coerce").fillna(0).astype(int)
 
-        # Convert numeric columns to appropriate data types
-        summary_df[['Played', 'Won', 'Lost', 'Points']] = summary_df[['Played', 'Won', 'Lost', 'Points']].apply(pd.to_numeric, errors='coerce')
-        logging.debug("Converted numeric columns to appropriate data types")
+            logging.info(f"[{path}] Successfully created summary DataFrame with {len(df)} rows")
+            return df
 
-        return summary_df
-    
-    except Exception as e:
-        logging.exception(f"An error occured in scrape_team_summary_page: {e}")
-        return pd.DataFrame()
+        except Exception as e:
+            logging.exception(f"[{path}] Error scraping team summary: {e}")
+            last_error = e
+            continue
+
+    # If we get here, both spellings failed
+    logging.error(f"Team summary failed with both slugs for {league_id}: {last_error}")
+    raise SystemExit(1)
 
 
 def scrape_teams_page(league_id, year):
@@ -656,7 +687,6 @@ def scrape_players_page(league_id, year):
     logging.info(f"Starting scrape_players_page for league_id: {league_id}, year: {year}")
 
     players_url = url("players", league_id)
-    
     logging.debug(f"Constructed players URL: {players_url}")
 
     try:
@@ -666,8 +696,7 @@ def scrape_players_page(league_id, year):
 
         # Check if the response is successful
         if response.status_code != 200:
-            logging.error(f"Failed to retrieve players page. Status code: {response.status_code}")
-            return pd.DataFrame()
+            raise RuntimeError(f"Failed to retrieve players page. Status code: {response.status_code}")
         
         # Parse the HTML content
         soup = BeautifulSoup(response.content, 'html.parser')
@@ -682,28 +711,44 @@ def scrape_players_page(league_id, year):
 
         for idx, team_container in enumerate(team_containers):
             # Extract team name
+            team_name = None
             try:
                 team_name_div = team_container.find("div", string="team name:")
                 team_name = team_name_div.find_next_sibling().get_text(strip=True)
-                logging.debug(f"Team {idx}: Extracted team name: {team_name}")
             except Exception as e:
                 logging.warning(f"Team {idx}: Error extracting team name: {e}")
                 continue
 
-            # Initialize a list to store each player's data for this team
-            players_data = []
+            # If this team block explicitly says NO DATA, skip the whole team
+            if team_container.get_text(strip=True).upper().find("NO DATA") != -1:
+                logging.info(f"Team {idx} ('{team_name}') shows NO DATA — skipping team.")
+                continue
 
             # Extract player data
             player_rows = team_container.find_all("div", class_="players-content-list")
             logging.debug(f"Team {idx}: Found {len(player_rows)} player rows")
 
+            # Initialize a list to store each player's data for this team
+            players_data = []
+
             for player_idx, player in enumerate(player_rows):
-                # Extract data from 'col-xs-2' and 'col-xs-4' classes
+                # collect fields
                 order_rank_points = [div.get_text(strip=True) for div in player.find_all("div", class_="col-xs-2")]
                 player_name = [div.get_text(strip=True) for div in player.find_all("div", class_="col-xs-4")]
-                player_data = order_rank_points[:1] + player_name + order_rank_points[1:]
-                players_data.append(player_data)
-                logging.debug(f"Team {idx}, Player {player_idx}: Extracted data: {player_data}")
+
+                # Build row: [Order] + [Name of Players] + [HKS No., Ranking, Points]
+                row = order_rank_points[:1] + player_name + order_rank_points[1:]
+
+                # Keep only well-formed rows of length 5 and that are not header junk
+                if len(row) == 5 and row[0].isdigit():
+                    players_data.append(row)
+                else:
+                    # benign skip: headers/format noise produce zero-length or short rows
+                    logging.debug(f"Team {idx}, Player {player_idx}: skipping malformed row: {row}")
+
+            if not players_data:
+                logging.warning(f"Team '{team_name}' produced no valid player rows; skipping team.")
+                continue
 
             # Create DataFrame
             df = pd.DataFrame(players_data, columns=["Order", "Name of Players", "HKS No.", "Ranking", "Points"])
@@ -724,14 +769,12 @@ def scrape_players_page(league_id, year):
 
             time.sleep(5)
 
-        if team_dataframes:
-            # Concatenate all team dataframes
-            combined_df = pd.concat(team_dataframes, ignore_index=True)
-            logging.info(f"Concatenated all team dataframes into a single DataFrame with {len(combined_df)} rows")
-            return combined_df
-        else:
-            logging.warning("No team dataframes were created. Returning an empty DataFrame.")
-            return pd.DataFrame()    
+        if not team_dataframes:
+            raise ValueError("No valid player data found in any team block on the page.")
+
+        combined_df = pd.concat(team_dataframes, ignore_index=True)
+        logging.info(f"Concatenated all team dataframes into a single DataFrame with {len(combined_df)} rows")
+        return combined_df  
 
     except Exception as e:
         logging.exception(f"An error occured in scrape_players_page: {e}")
@@ -787,6 +830,27 @@ def home_team_won(row):
             return 'Away'
         else:
             return 'Ignore'
+        
+
+def ensure_nonempty_df(df: pd.DataFrame, name: str, div: str, hard_fail: bool = True):
+    if df is None or df.empty:
+        msg = f"{name} is empty for Division {div}."
+        if hard_fail:
+            logging.error(msg + " Aborting run to avoid writing empty CSV.")
+            raise SystemExit(1)
+        else:
+            logging.warning(msg + " Will not write CSV for this item.")
+            return False
+    return True
+
+
+def safe_save_csv(df: pd.DataFrame, path: str, name: str, div: str, allow_empty: bool = False):
+    if (df is None or df.empty) and not allow_empty:
+        logging.error(f"Refusing to save empty {name} for Division {div}: {path}")
+        raise SystemExit(1)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    df.to_csv(path, index=False)
+    logging.info(f"Saved {name} to {path}")
 
 
 # Use logging to track progress
@@ -851,24 +915,17 @@ for div in all_divisions.keys():
         logging.info(f"Successfully scraped Team Summary page for Division {div}")
     except Exception as e:
         logging.error(f"Error scraping Team Summary page for Division {div}: {e}")
-        continue
+        raise
+    
+    # Validate summary_df is not empty; hard fail if it is
+    ensure_nonempty_df(summary_df, "summary_df", div, hard_fail=True)
 
-    # Check if the summary_df is empty
-    has_summary = True
-    if summary_df.empty:
-        logging.warning(f"No data found in summary_df for Division {div}. Will still scrape Teams/Ranking/Players.")
-        has_summary = False
-
-    # Save the summary_df right away (even if empty)
+    # If we reached here, it's non-empty → save it
     week_dir = f"week_{match_week}" if 'match_week' in locals() and match_week > 0 else "week_0"
     summary_df_path = os.path.join(base_directories['summary_df'], week_dir, f"{div}_summary_df.csv")
-    os.makedirs(os.path.dirname(summary_df_path), exist_ok=True)
-    try:
-        logging.info(f"Saving summary_df to {summary_df_path}")
-        summary_df.to_csv(summary_df_path, index=False)
-        logging.info(f"Successfully saved summary_df to {summary_df_path}")
-    except Exception as e:
-        logging.error(f"Error saving summary_df to {summary_df_path}: {e}")
+    safe_save_csv(summary_df, summary_df_path, "summary_df", div, allow_empty=False)
+
+    has_summary = True
 
     time.sleep(wait_time)
 
