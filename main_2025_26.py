@@ -17,6 +17,8 @@ from pathlib import Path
 import json
 from utils.divisions_export import save_divisions_json
 import re
+# Import the function to load combined results
+from scripts.create_combined_results import load_all_results_and_player_results 
 
 # Global variables
 _SUMMARY_NUMS_RE = re.compile(r"(.*?)[^\d]*?(\d+)\s*(\d+)\s*(\d+)\s*(\d+)$")
@@ -49,6 +51,10 @@ def url(path, league_id):
 # Inputs
 year = "2025-2026"
 wait_time = 30
+
+# Repo root: if this file is at the repo root, parents[0] is fine.
+# If you move it into /scripts in future, switch to parents[1].
+REPO_ROOT = Path(os.getenv("SQUASHAPP_ROOT", Path(__file__).resolve().parents[0]))
 
 DIVISIONS = {
     # Mondays
@@ -100,37 +106,35 @@ for name, meta in DIVISIONS.items():
         weekday_groups.setdefault(meta["day"], {})[name] = meta["id"]
 
 # Save divisions JSON
-repo_root = Path(__file__).resolve().parent  # adjust if needed
-out_path = save_divisions_json(DIVISIONS, year, repo_root) 
+out_path = save_divisions_json(DIVISIONS, year, REPO_ROOT)
 print(f"Divisions JSON saved to: {out_path}")
 
 # Define base directories
 base_directories = {
-    'summary_df': f'{year}/summary_df',
-    'teams_df': f'{year}/teams_df',
-    'schedules_df': f'{year}/schedules_df',
-    'ranking_df': f'{year}/ranking_df',
-    'players_df': f'{year}/players_df',
-    'summarized_player_tables': f'{year}/summarized_player_tables',
-    'unbeaten_players': f'{year}/unbeaten_players',
-    'played_every_game': f'{year}/played_every_game',
-    'detailed_league_tables': f'{year}/detailed_league_tables',
-    'awaiting_results': f'{year}/awaiting_results',
-    'home_away_data': f'{year}/home_away_data',
-    'team_win_percentage_breakdown_home': f'{year}/team_win_percentage_breakdown/Home',
-    'team_win_percentage_breakdown_away': f'{year}/team_win_percentage_breakdown/Away',
-    'team_win_percentage_breakdown_delta': f'{year}/team_win_percentage_breakdown/Delta',
-    'team_win_percentage_breakdown_overall': f'{year}/team_win_percentage_breakdown/Overall',
-    'simulated_tables': f'{year}/simulated_tables',
-    'simulated_fixtures': f'{year}/simulated_fixtures',
-    'remaining_fixtures': f'{year}/remaining_fixtures',
-    'neutral_fixtures': f'{year}/neutral_fixtures',
-    'results_df': f'{year}/results_df',
+    'summary_df': str(REPO_ROOT / year / 'summary_df'),
+    'teams_df': str(REPO_ROOT / year / 'teams_df'),
+    'schedules_df': str(REPO_ROOT / year / 'schedules_df'),
+    'ranking_df': str(REPO_ROOT / year / 'ranking_df'),
+    'players_df': str(REPO_ROOT / year / 'players_df'),
+    'summarized_player_tables': str(REPO_ROOT / year / 'summarized_player_tables'),
+    'unbeaten_players': str(REPO_ROOT / year / 'unbeaten_players'),
+    'played_every_game': str(REPO_ROOT / year / 'played_every_game'),
+    'detailed_league_tables': str(REPO_ROOT / year / 'detailed_league_tables'),
+    'awaiting_results': str(REPO_ROOT / year / 'awaiting_results'),
+    'home_away_data': str(REPO_ROOT / year / 'home_away_data'),
+    'team_win_percentage_breakdown_home': str(REPO_ROOT / year / 'team_win_percentage_breakdown' / 'Home'),
+    'team_win_percentage_breakdown_away': str(REPO_ROOT / year / 'team_win_percentage_breakdown' / 'Away'),
+    'team_win_percentage_breakdown_delta': str(REPO_ROOT / year / 'team_win_percentage_breakdown' / 'Delta'),
+    'team_win_percentage_breakdown_overall': str(REPO_ROOT / year / 'team_win_percentage_breakdown' / 'Overall'),
+    'simulated_tables': str(REPO_ROOT / year / 'simulated_tables'),
+    'simulated_fixtures': str(REPO_ROOT / year / 'simulated_fixtures'),
+    'remaining_fixtures': str(REPO_ROOT / year / 'remaining_fixtures'),
+    'neutral_fixtures': str(REPO_ROOT / year / 'neutral_fixtures'),
+    'results_df': str(REPO_ROOT / year / 'results_df'),
 }
 
-
 # Ensure the logs directory exists
-os.makedirs(f"{year}/logs", exist_ok=True)
+os.makedirs(REPO_ROOT / year / "logs", exist_ok=True)
 
 # Clear any existing handlers
 for handler in logging.root.handlers[:]:
@@ -142,7 +146,7 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
         RotatingFileHandler(
-            f"{year}/logs/{year}_log.txt", maxBytes=5*1024*1024, backupCount=5
+            str(REPO_ROOT / year / "logs" / f"{year}_log.txt"), maxBytes=5*1024*1024, backupCount=5
         ),
         logging.StreamHandler()
     ]
@@ -1564,3 +1568,10 @@ for div in all_divisions.keys():
 
     # Wait so as not to get a connection error
     time.sleep(wait_time)
+
+# ... after scraping is complete:
+season_base_path = REPO_ROOT / year
+combined_results_df, combined_player_results_df = load_all_results_and_player_results(season_base_path)
+combined_results_df.to_csv(season_base_path / "combined_results_df.csv", index=False)
+combined_player_results_df.to_csv(season_base_path / "combined_player_results_df.csv", index=False)
+print("Post-scrape combine done.")

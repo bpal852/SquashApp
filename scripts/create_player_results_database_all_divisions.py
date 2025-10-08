@@ -14,14 +14,14 @@ REPO_ROOT = next((p for p in [BASE_DIR, *BASE_DIR.parents] if (p / "config" / "d
 
 # Create season directory if it doesn't exist
 SEASON_ROOT = REPO_ROOT / current_season
-SEASON_ROOT.mkdir(parents=True, exist_ok=True)
+(SEASON_ROOT / "logs").mkdir(exist_ok=True)
 
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler("create_player_results_database_all_divisions.log"),
+        logging.FileHandler(SEASON_ROOT / "logs" / "create_player_results_database_all_divisions.log", encoding="utf-8"),
         logging.StreamHandler()
     ]
 )
@@ -35,23 +35,79 @@ os.makedirs(out_dir, exist_ok=True)
 # Divisions to process
 def load_divisions_for_season(season: str, repo_root: Path) -> dict[str, int]:
     """
-    Accepts either a dict mapping {name: id} or a list of {name, id}.
-    Normalizes to {str(name): int(id)}.
+    Load divisions JSON and normalize to {division_name: division_id}.
+
+    Handles these shapes:
+    A) {"Premier Main": 424, "2": 425, ..., "season": "2025-2026"}
+    B) {"divisions": {"Premier Main": 424, "2": 425, ...}, "season": "..."}
+    C) {"divisions": [{"name": "Premier Main", "id": 424}, ...], "season": "..."}
+    D) [{"name": "Premier Main", "id": 424}, ...]
+    Also tolerates 'division', 'label' for name, and 'division_id', 'hks_id' for id.
     """
     path = repo_root / "config" / "divisions" / f"{season}.json"
     with open(path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
+    # If wrapped, unwrap regardless of list or dict
+    if isinstance(data, dict) and "divisions" in data:
+        data = data["divisions"]
+
+    mapping: dict[str, int] = {}
+
     if isinstance(data, dict):
-        mapping = {str(k): int(v) for k, v in data.items()}
+        # Simple mapping or dict of nested objects
+        for k, v in data.items():
+            key_lower = str(k).lower()
+            if key_lower in {"season", "year", "generated_at", "notes", "enabled_only"}:
+                continue
+            # Case 1: direct numeric id
+            try:
+                mapping[str(k)] = int(v)
+                continue
+            except (TypeError, ValueError):
+                pass
+            # Case 2: nested object with an id
+            if isinstance(v, dict):
+                id_val = (
+                    v.get("id", v.get("division_id", v.get("hks_id")))
+                )
+                if id_val is not None:
+                    try:
+                        mapping[str(k)] = int(id_val)
+                    except (TypeError, ValueError):
+                        pass
+
     elif isinstance(data, list):
-        mapping = {str(d["name"]): int(d["id"]) for d in data if "name" in d and "id" in d}
+        # List of objects
+        for d in data:
+            if not isinstance(d, dict):
+                continue
+            name = d.get("name", d.get("division", d.get("label")))
+            id_val = d.get("id", d.get("division_id", d.get("hks_id")))
+            if name is None or id_val is None:
+                continue
+            try:
+                mapping[str(name)] = int(id_val)
+            except (TypeError, ValueError):
+                continue
+
     else:
         raise ValueError(f"Unsupported divisions JSON shape at: {path}")
 
     if not mapping:
-        raise ValueError(f"No divisions found in {path}")
+        # Lightweight debug to help if this ever happens again
+        sample = None
+        if isinstance(data, dict):
+            sample = list(data.keys())[:5]
+        elif isinstance(data, list) and data and isinstance(data[0], dict):
+            sample = {k: data[0].get(k) for k in list(data[0].keys())[:5]}
+        raise ValueError(
+            f"No valid division id pairs found in {path}. "
+            f"Top-level type: {type(data).__name__}; sample: {sample}"
+        )
+
     return mapping
+
 
 all_divisions = load_divisions_for_season(current_season, REPO_ROOT)
 

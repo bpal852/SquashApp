@@ -4,16 +4,20 @@ import glob
 import re
 import logging
 import pandas as pd
+from pathlib import Path
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
 # Define paths
-base_directory = os.path.dirname(os.path.abspath(__file__))
-current_season = "2025-2026"
-out_dir = os.path.join(base_directory, current_season)
-os.makedirs(out_dir, exist_ok=True)
+# Optional override via env var (useful for jobs/servers)
+REPO_ROOT = Path(os.getenv("SQUASHAPP_ROOT", Path(__file__).resolve().parents[1]))
+# parents[1] assumes this file lives at: <repo>/scripts/this_file.py
+# If you ever move it deeper, bump the parents[...] number appropriately.
 
+current_season = "2025-2026"
+out_dir = REPO_ROOT / current_season
+out_dir.mkdir(parents=True, exist_ok=True)
 
 def load_all_results_and_player_results(season_base_path):
     """
@@ -117,4 +121,4 @@ if __name__ == "__main__":
     combined_results_df, combined_player_results_df = load_all_results_and_player_results(season_base_path)
     combined_results_df.to_csv(os.path.join(season_base_path, "combined_results_df.csv"), index=False)
     combined_player_results_df.to_csv(os.path.join(season_base_path, "combined_player_results_df.csv"), index=False)
-    logging.info("Combined data saved.")
+    logging.info(f"Combined data saved to {season_base_path}")
