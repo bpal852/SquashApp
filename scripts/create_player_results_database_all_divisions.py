@@ -4,6 +4,8 @@ import os
 import logging
 import json
 from pathlib import Path
+import re
+import glob
 
 # --- Paths & season ---
 BASE_DIR = Path(__file__).resolve().parent
@@ -14,7 +16,7 @@ REPO_ROOT = next((p for p in [BASE_DIR, *BASE_DIR.parents] if (p / "config" / "d
 
 # Create season directory if it doesn't exist
 SEASON_ROOT = REPO_ROOT / current_season
-(SEASON_ROOT / "logs").mkdir(exist_ok=True)
+(SEASON_ROOT / "logs").mkdir(parents=True, exist_ok=True)
 
 # Configure logging
 logging.basicConfig(
@@ -25,12 +27,6 @@ logging.basicConfig(
         logging.StreamHandler()
     ]
 )
-
-# Base directory
-base_directory = os.path.dirname(os.path.abspath(__file__))
-current_season = "2025-2026"
-out_dir = os.path.join(base_directory, current_season)
-os.makedirs(out_dir, exist_ok=True)
 
 # Divisions to process
 def load_divisions_for_season(season: str, repo_root: Path) -> dict[str, int]:
@@ -353,17 +349,6 @@ def process_division(division, current_week, previous_week, player_mapping, all_
     # Determine maximum number of rubbers in any match
     max_rubbers = results_df['Rubbers'].apply(lambda x: len(x) if isinstance(x, list) else 0).max()
 
-    # Assign players to each rubber based on 'Order'
-    # For each team, get the list of active players and sort them by 'Order'
-    team_players = {}
-    for team in players_df['Team'].unique():
-        dfp = players_df[
-            (players_df['Team'] == team) & 
-            (players_df['Player'].isin(active_players))
-        ][['Player','HKS No.','Order']]
-        dfp = dfp.sort_values('Order')
-        team_players[team] = list(zip(dfp['Player'], dfp['HKS No.']))
-
     # Identify 'playing up' players (active_players not in current division's players_df)
     playing_up_players = active_players - set(players_df['Player'])
     logging.info(f"Number of 'Playing Up' players in Division '{division}' during week {current_week}: {len(playing_up_players)}")
@@ -663,27 +648,49 @@ def process_division(division, current_week, previous_week, player_mapping, all_
         logging.exception(f"Error saving player results for Division '{division}', Week {current_week}: {e}")
         return
 
+# Determine the current week by checking existing week directories
+WEEK_DIR_RE = re.compile(r"week_(\d+)$")
 
-# Get current week
-current_week = 1
+def discover_weeks(season_root: Path) -> list[int]:
+    week_dirs = set()
+    for sub in ("ranking_df", "schedules_df"):
+        for p in glob.glob(str(season_root / sub / "week_*")):
+            m = WEEK_DIR_RE.search(os.path.basename(p))
+            if m:
+                try:
+                    week_dirs.add(int(m.group(1)))
+                except ValueError:
+                    pass
+    return sorted(week_dirs)
 
-# Run the script for each division and week
-for week in range(1, current_week + 1):
-    # Build the global player mapping
-    logging.info(f"Building player mapping for week {week}")
-    player_mapping = build_player_mapping(all_divisions, str(SEASON_ROOT), week)
-    previous_week = week - 1
-    for division in all_divisions.keys():
-        logging.info(f"Processing Division '{division}' for Week {week}")
-        try:
-            process_division(
-                division=division,
-                current_week=week,
-                previous_week=previous_week,
-                player_mapping=player_mapping,
-                all_divisions=all_divisions,
-                base_directory=str(SEASON_ROOT)
-            )
-        except Exception as e:
-            logging.exception(f"Unexpected error processing Division '{division}', Week {week}: {e}")
-            continue  # Proceed to the next division
+
+def run_player_results_pipeline():
+    weeks = discover_weeks(SEASON_ROOT)
+    if not weeks:
+        logging.warning("No weeks discovered under ranking_df/. Did the scraper run?")
+        return
+    logging.info(f"Weeks discovered: {weeks}")
+
+    for week in weeks:
+        logging.info(f"Building player mapping for week {week}")
+        player_mapping = build_player_mapping(all_divisions, str(SEASON_ROOT), week)
+        previous_week = week - 1
+        for division in all_divisions.keys():
+            logging.info(f"Processing Division '{division}' for Week {week}")
+            try:
+                process_division(
+                    division=division,
+                    current_week=week,
+                    previous_week=previous_week,
+                    player_mapping=player_mapping,
+                    all_divisions=all_divisions,
+                    base_directory=str(SEASON_ROOT)
+                )
+            except Exception as e:
+                logging.exception(f"Unexpected error processing Division '{division}', Week {week}: {e}")
+                continue
+
+
+# Entry point for the script
+if __name__ == "__main__":
+    run_player_results_pipeline()

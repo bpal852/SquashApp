@@ -17,8 +17,10 @@ from pathlib import Path
 import json
 from utils.divisions_export import save_divisions_json
 import re
-# Import the function to load combined results
+# Import functions from other scripts
+from scripts.create_player_results_database_all_divisions import run_player_results_pipeline
 from scripts.create_combined_results import load_all_results_and_player_results 
+
 
 # Global variables
 _SUMMARY_NUMS_RE = re.compile(r"(.*?)[^\d]*?(\d+)\s*(\d+)\s*(\d+)\s*(\d+)$")
@@ -69,32 +71,32 @@ DIVISIONS = {
     "L2":               {"id": 496, "day": "Tue", "enabled": False},
 
     # Wednesdays
-    "7":                {"id": 478, "day": "Wed", "enabled": False},
-    "9":                {"id": 481, "day": "Wed", "enabled": False},
-    "12":               {"id": 484, "day": "Wed", "enabled": False},
-    "M2":               {"id": 492, "day": "Wed", "enabled": False},
+    "7":                {"id": 478, "day": "Wed", "enabled": True},
+    "9":                {"id": 481, "day": "Wed", "enabled": True},
+    "12":               {"id": 484, "day": "Wed", "enabled": True},
+    "M2":               {"id": 492, "day": "Wed", "enabled": True},
 
     # Thursdays
-    "Premier Main":     {"id": 472, "day": "Thu", "enabled": False},
-    "Premier Masters":  {"id": 491, "day": "Thu", "enabled": False},
-    "Premier Ladies":   {"id": 495, "day": "Thu", "enabled": False},
-    "M3":               {"id": 493, "day": "Thu", "enabled": False},
-    "M4":               {"id": 494, "day": "Thu", "enabled": False},
+    "Premier Main":     {"id": 472, "day": "Thu", "enabled": True},
+    "Premier Masters":  {"id": 491, "day": "Thu", "enabled": True},
+    "Premier Ladies":   {"id": 495, "day": "Thu", "enabled": True},
+    "M3":               {"id": 493, "day": "Thu", "enabled": True},
+    "M4":               {"id": 494, "day": "Thu", "enabled": True},
 
     # Fridays
     "5":                {"id": 476, "day": "Fri", "enabled": True},
-    "8A":               {"id": 479, "day": "Fri", "enabled": False},
-    "8B":               {"id": 480, "day": "Fri", "enabled": False},
-    "13A":              {"id": 485, "day": "Fri", "enabled": False},
-    "13B":              {"id": 486, "day": "Fri", "enabled": False},
-    "13C":              {"id": 487, "day": "Fri", "enabled": False},
-    "L3":               {"id": 497, "day": "Fri", "enabled": False},
-    "L4":               {"id": 498, "day": "Fri", "enabled": False},
+    "8A":               {"id": 479, "day": "Fri", "enabled": True},
+    "8B":               {"id": 480, "day": "Fri", "enabled": True},
+    "13A":              {"id": 485, "day": "Fri", "enabled": True},
+    "13B":              {"id": 486, "day": "Fri", "enabled": True},
+    "13C":              {"id": 487, "day": "Fri", "enabled": True},
+    "L3":               {"id": 497, "day": "Fri", "enabled": True},
+    "L4":               {"id": 498, "day": "Fri", "enabled": True},
 
     # Saturdays
-    "14":               {"id": 488, "day": "Sat", "enabled": False},
-    "15A":              {"id": 489, "day": "Sat", "enabled": False},
-    "15B":              {"id": 490, "day": "Sat", "enabled": False},
+    "14":               {"id": 488, "day": "Sat", "enabled": True},
+    "15A":              {"id": 489, "day": "Sat", "enabled": True},
+    "15B":              {"id": 490, "day": "Sat", "enabled": True},
 }
 
 # Convenience derived views
@@ -901,6 +903,19 @@ for div in all_divisions.keys():
         # Create the directory if it doesn't exist
         os.makedirs(full_dir, exist_ok=True)
     
+    overall_scores_file = os.path.join(
+        base_directories['home_away_data'], week_dir, f"{div}_overall_scores.csv"
+    )
+
+    # Try to load existing; otherwise create an empty frame with numeric columns 0..4
+    if os.path.exists(overall_scores_file):
+        try:
+            overall_scores_df = pd.read_csv(overall_scores_file, header=None)
+        except Exception:
+            overall_scores_df = pd.DataFrame(columns=[0, 1, 2, 3, 4])
+    else:
+        overall_scores_df = pd.DataFrame(columns=[0, 1, 2, 3, 4])
+
     # Save the schedules_df to CSV
     schedules_df_path = os.path.join(base_directories['schedules_df'], week_dir, f"{div}_schedules_df.csv")
     try:
@@ -1181,19 +1196,50 @@ for div in all_divisions.keys():
 
     # Create results dataframe that ignores games where away team plays at home venue
     # Create dictionary of team home venues
-    if teams_df is None or teams_df.empty or {"Team Name", "Home"} - set(teams_df.columns):
-        logging.warning("teams_df empty/missing columns; skipping neutral venue + home/away venue splits")
+    if teams_df is None or teams_df.empty or not {"Team Name", "Home"}.issubset(teams_df.columns):
+        logging.warning("teams_df empty/missing columns; skipping venue classification")
         valid_matches_df = results_df.copy()
         neutral_fixtures_df = df_remaining_fixtures.iloc[0:0].copy()
     else:
         team_home_venues = teams_df.set_index("Team Name")["Home"].to_dict()
-        valid_matches_df = results_df[
-            ~results_df.apply(lambda row: team_home_venues.get(row['Away Team']) == row['Venue'], axis=1)
-        ].copy()
-        neutral_fixtures_df = df_remaining_fixtures[
-            df_remaining_fixtures.apply(lambda row: team_home_venues.get(row["Away Team"]) == row["Venue"], axis=1)
-        ].copy()
 
+        def venue_type(row):
+            hv = team_home_venues.get(row["Home Team"])
+            av = team_home_venues.get(row["Away Team"])
+            v  = row["Venue"]
+            is_home  = (hv is not None and v == hv)
+            is_away  = (av is not None and v == av)
+            if is_home and not is_away:
+                return "home"            # true home
+            if is_away and not is_home:
+                return "away"            # away team playing at (its) home
+            if is_home and is_away:
+                return "shared_home"     # both teams’ home venue (common in club leagues)
+            return "neutral"              # neither team’s home venue
+
+        results_df = results_df.copy()
+        results_df["VenueType"] = results_df.apply(venue_type, axis=1)
+
+        # Use only true home and true away for home/away advantage stats
+        valid_matches_df = results_df[results_df["VenueType"].isin(["home", "away"])].copy()
+
+        # Save “neutral-like” fixtures separately (shared_home + neutral)
+        neutral_fixtures_df = df_remaining_fixtures.copy()
+        if not neutral_fixtures_df.empty:
+            def remaining_venue_type(row):
+                av = team_home_venues.get(row["Away Team"])
+                hv = team_home_venues.get(row["Home Team"])
+                v  = row["Venue"]
+                is_home  = (hv is not None and v == hv)
+                is_away  = (av is not None and v == av)
+                if is_home and is_away:
+                    return "shared_home"
+                if (not is_home) and (not is_away):
+                    return "neutral"
+                return "other"
+            neutral_fixtures_df = neutral_fixtures_df[
+                neutral_fixtures_df.apply(remaining_venue_type, axis=1).isin(["shared_home", "neutral"])
+            ].copy()
     
     # Create folder for neutral fixtures if it doesn't exist
     os.makedirs(os.path.join(base_directories['neutral_fixtures'], week_dir), exist_ok=True)
@@ -1204,46 +1250,41 @@ for div in all_divisions.keys():
 
     # Calculate Home vs Away
     if not valid_matches_df.empty:
-        # Apply the function to 'Overall Score' column
-        valid_matches_df[['Home Overall Score', 'Away Overall Score']] = valid_matches_df['Overall Score'].apply(
-            lambda x: pd.Series(split_overall_score(x)))
+        # Split overall score into numeric columns (so later groupbys work)
+        valid_matches_df[['Home Overall Score', 'Away Overall Score']] = (
+            valid_matches_df['Overall Score'].apply(lambda x: pd.Series(split_overall_score(x)))
+        )
 
-        # Calculate the average score for home and away teams
+        # League-wide averages
         average_home_overall_score = valid_matches_df['Home Overall Score'].mean()
         average_away_overall_score = valid_matches_df['Away Overall Score'].mean()
 
-        # Apply home_team_won function to each row
+        # Winner per fixture (ignore exact ties after tiebreak)
         valid_matches_df['Winner'] = valid_matches_df.apply(home_team_won, axis=1)
+        home_win_perc = (
+            valid_matches_df[valid_matches_df["Winner"] != "Ignore"]["Winner"]
+            .value_counts(normalize=True)
+            .get("Home", 0.0)
+        )
 
-        # Calculate home team win percentage, filtering out matches where the winner is 'Ignore'
-        home_win_perc = valid_matches_df[
-            valid_matches_df["Winner"] != "Ignore"]["Winner"].value_counts(normalize=True).get("Home", 0)
-
+        # ---- per-team averages (must be inside this block so the columns exist) ----
+        average_home_scores = (
+            valid_matches_df.groupby('Home Team')['Home Overall Score']
+            .mean().rename('Average Home Score')
+        )
+        average_away_scores = (
+            valid_matches_df.groupby('Away Team')['Away Overall Score']
+            .mean().rename('Average Away Score')
+        )
+        team_average_scores = pd.concat([average_home_scores, average_away_scores], axis=1).fillna(0.0)
 
     else:
-        logging.warning("No results data to calculate home vs away statistics for Division {div}.")
-        average_home_overall_score = 0
-        average_away_overall_score = 0
-        home_win_perc = 0
-
-    # Path to the overall scores CSV file
-    overall_scores_file = os.path.join(base_directories['home_away_data'], week_dir, f"{div}_overall_scores.csv")
-
-    # Read the existing data from the CSV file into a DataFrame
-    if os.path.exists(overall_scores_file):
-        overall_scores_df = pd.read_csv(overall_scores_file, header=None)
-    else:
-        # Create an empty DataFrame with the expected columns
-        overall_scores_df = pd.DataFrame(columns=[0, 1, 2, 3, 4])
-
-    # Calculate average home score for each home team
-    average_home_scores = valid_matches_df.groupby('Home Team')['Home Overall Score'].mean().rename('Average Home Score')
-
-    # Calculate average away score for each away team
-    average_away_scores = valid_matches_df.groupby('Away Team')['Away Overall Score'].mean().rename('Average Away Score')
-
-    # Combine the two Series into one DataFrame
-    team_average_scores = pd.concat([average_home_scores, average_away_scores], axis=1)
+        logging.warning(f"No results data to calculate home vs away statistics for Division {div}.")
+        average_home_overall_score = 0.0
+        average_away_overall_score = 0.0
+        home_win_perc = 0.0
+        # empty placeholder so later code can run without additional branching
+        team_average_scores = pd.DataFrame(columns=['Average Home Score', 'Average Away Score'])
 
     # Handle missing values by filling NaN with 0 or using appropriate methods
     team_average_scores['Average Home Score'] = team_average_scores['Average Home Score'].fillna(0)
@@ -1255,18 +1296,27 @@ for div in all_divisions.keys():
 
     # Merge with teams_df to get home venue info (only if available)
     if teams_df is not None and not teams_df.empty and {"Team Name", "Home"}.issubset(set(teams_df.columns)):
+        # Keep the team name index from team_average_scores and LEFT-join venue info
         team_average_scores = team_average_scores.merge(
             teams_df[["Team Name", "Home"]],
-            left_on=team_average_scores.index,
+            left_index=True,
             right_on="Team Name",
-            how="inner"
+            how="left"   # don't drop teams if venue lookup is missing
         )
-        team_average_scores = team_average_scores[["Team Name", "Home", "Average Home Score", "Average Away Score", "home_away_diff"]]
+        # Ensure we KEEP the diff column
+        cols_to_keep = ["Team Name", "Home", "Average Home Score", "Average Away Score", "home_away_diff"]
+        team_average_scores = team_average_scores.reindex(columns=cols_to_keep)
     else:
         # If we can't attach venues, keep the team index as a column instead
-        team_average_scores = team_average_scores.reset_index().rename(columns={"index": "Team Name"})
+        team_average_scores = (
+            team_average_scores
+            .reset_index()
+            .rename(columns={"index": "Team Name"})
+        )
         team_average_scores["Home"] = ""
-        team_average_scores = team_average_scores[["Team Name", "Home", "Average Home Score", "Average Away Score", "home_away_diff"]]
+        cols_to_keep = ["Team Name", "Home", "Average Home Score", "Average Away Score", "home_away_diff"]
+        team_average_scores = team_average_scores.reindex(columns=cols_to_keep)
+
 
     # Since 'home_away_diff' may not be meaningful at this point, you can add a check
     if team_average_scores['home_away_diff'].isnull().all():
@@ -1279,9 +1329,26 @@ for div in all_divisions.keys():
     team_average_scores.to_csv(os.path.join(base_directories['home_away_data'], week_dir, f"{div}_team_average_scores.csv"), index=False)
 
     # Show home/away split by venue
-    venue_split = pd.pivot_table(data=team_average_scores,
-                                 index="Home",
-                                 values="home_away_diff").sort_values("home_away_diff", ascending=False)
+    if (
+        not team_average_scores.empty
+        and "Home" in team_average_scores.columns
+        and "home_away_diff" in team_average_scores.columns
+    ):
+        venue_split = team_average_scores.pivot_table(
+            index="Home",
+            values="home_away_diff",
+            aggfunc="mean"
+        )
+        # pivot with a single `values` returns a Series or single-column DataFrame.
+        # Handle both cases safely:
+        if isinstance(venue_split, pd.Series):
+            venue_split = venue_split.sort_values(ascending=False)
+        else:
+            venue_split = venue_split.sort_values(by="home_away_diff", ascending=False)
+    else:
+        logging.warning("Skipping venue split: required columns missing or no data.")
+        venue_split = pd.DataFrame()  # or leave it undefined
+
 
     # Analyze Teams by Rubber
 
@@ -1569,9 +1636,12 @@ for div in all_divisions.keys():
     # Wait so as not to get a connection error
     time.sleep(wait_time)
 
-# ... after scraping is complete:
+# After scraping all divisions for the week, run the player results pipeline
+run_player_results_pipeline()   
+
+# After player results are created, combine all results and player results for the season
 season_base_path = REPO_ROOT / year
 combined_results_df, combined_player_results_df = load_all_results_and_player_results(season_base_path)
 combined_results_df.to_csv(season_base_path / "combined_results_df.csv", index=False)
 combined_player_results_df.to_csv(season_base_path / "combined_player_results_df.csv", index=False)
-print("Post-scrape combine done.")
+print("Post-scrape player-results + combine done.")
