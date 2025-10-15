@@ -60,9 +60,9 @@ REPO_ROOT = Path(os.getenv("SQUASHAPP_ROOT", Path(__file__).resolve().parents[0]
 
 DIVISIONS = {
     # Mondays
-    "2":                {"id": 473, "day": "Mon", "enabled": False},
-    "6":                {"id": 477, "day": "Mon", "enabled": False},
-    "10":               {"id": 482, "day": "Mon", "enabled": False},
+    "2":                {"id": 473, "day": "Mon", "enabled": True},
+    "6":                {"id": 477, "day": "Mon", "enabled": True},
+    "10":               {"id": 482, "day": "Mon", "enabled": True},
 
     # Tuesdays
     "3":                {"id": 474, "day": "Tue", "enabled": False},
