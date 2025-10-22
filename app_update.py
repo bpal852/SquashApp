@@ -950,7 +950,7 @@ def main():
             divisions_list = ["Overall"] + sorted(divisions_in_data, key=lambda x: get_division_sort_key(x, is_current_season))
 
             # Set default division to '7B'
-            default_division = '7B'
+            default_division = '7'
 
             # Sidebar for division selection
             selected_division = st.sidebar.selectbox("Select a Division:", divisions_list, index=divisions_list.index(default_division))
