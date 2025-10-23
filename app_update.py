@@ -100,7 +100,7 @@ def load_divisions_simple(base_dir: str, season: str) -> dict[str, int | None]:
         out[name] = _id
     return out
 
-all_divisions = load_divisions_simple(base_directory, current_season)
+all_divisions = (base_directory, current_season)
 
 # List of clubs
 clubs = [
@@ -796,6 +796,9 @@ def main():
             season_base_path = os.path.join(base_directory, "previous_seasons", selected_season)
 
         all_divisions = load_divisions_simple(base_directory, selected_season)
+        if not all_divisions:
+            st.error(f"Divisions config not found or empty for {selected_season}.")
+            st.stop()
 
         # STRICT: load divisions JSON; error and stop if missing/invalid
         try:
@@ -1548,7 +1551,15 @@ def main():
                     except ValueError:
                         return x
 
-                df[numeric_cols_raw + ["Average"]] = df[numeric_cols_raw + ["Average"]].map(format_float)
+                # Build the list of columns to format (include 'Average' only if present)
+                cols_to_format = list(numeric_cols_raw)
+                if "Average" in df.columns:
+                    # ensure 'Average' is numeric before formatting
+                    df["Average"] = pd.to_numeric(df["Average"], errors="coerce")
+                    cols_to_format.append("Average")
+
+                # Element-wise format on a DataFrame
+                df[cols_to_format] = df[cols_to_format].applymap(format_float)
 
                 # Check if "Total Rubbers" is in the DataFrame and format it as integer
                 if 'Total Rubbers' in df.columns:
@@ -1714,7 +1725,8 @@ def main():
                 numeric_cols_simulated_fixtures = simulated_fixtures.select_dtypes(include=['float', 'int']).columns.drop(
                     'Match Week')
                 simulated_fixtures[numeric_cols_simulated_fixtures] = simulated_fixtures[
-                    numeric_cols_simulated_fixtures].map(lambda x: f'{x:.2f}')
+                    numeric_cols_simulated_fixtures
+                ].applymap(lambda x: f'{x:.2f}')
 
                 # Ensure the columns are numeric for vmin and vmax calculation
                 simulated_fixtures_numeric = simulated_fixtures.copy()
