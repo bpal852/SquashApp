@@ -16089,3 +16089,1740 @@ ValueError: 5 columns passed, passed data had 0 columns
 2025-10-22 16:20:39,044 - INFO - Number of players who played in Division '15B' during week 3: 31
 2025-10-22 16:20:39,049 - INFO - Number of 'Playing Up' players in Division '15B' during week 3: 0
 2025-10-22 16:20:39,082 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_3\15B_player_results.csv
+2025-10-24 11:07:32,460 - INFO - Starting the scraping process...
+2025-10-24 11:07:32,460 - INFO - Processing Division 2
+2025-10-24 11:07:32,460 - INFO - Scraping Schedules and Results page for Division 2
+2025-10-24 11:07:32,460 - INFO - Scraping schedules and results page for league id: D00473, year: 2025-2026...
+2025-10-24 11:07:32,879 - INFO - Successfully created schedules and results DataFrame with 60 rows
+2025-10-24 11:07:32,927 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 11:07:32,927 - INFO - Successfully scraped Schedules and Results page for Division 2
+2025-10-24 11:07:32,941 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_2\2_schedules_df.csv
+2025-10-24 11:07:32,949 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_2\2_schedules_df.csv
+2025-10-24 11:08:02,952 - INFO - Scraping Team Summary page for Division 2
+2025-10-24 11:08:02,952 - INFO - Scraping team summary page (team_summery) for league id: D00473, year: 2025-2026...
+2025-10-24 11:08:03,314 - INFO - [team_summery] Successfully created summary DataFrame with 5 rows
+2025-10-24 11:08:03,314 - INFO - Successfully scraped Team Summary page for Division 2
+2025-10-24 11:08:03,318 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_2\2_summary_df.csv
+2025-10-24 11:08:33,320 - INFO - Scraping Teams page for Division 2
+2025-10-24 11:08:33,321 - INFO - Starting scrape_teams_page for league id: D00473, year: 2025-2026
+2025-10-24 11:08:33,587 - INFO - Successfully created teams DataFrame with 5 rows
+2025-10-24 11:08:33,587 - INFO - Successfully scraped Teams page for Division 2
+2025-10-24 11:08:33,587 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_2\2_teams_df.csv
+2025-10-24 11:08:33,587 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_2\2_teams_df.csv
+2025-10-24 11:09:03,593 - INFO - Scraping Ranking page for Division 2
+2025-10-24 11:09:03,593 - INFO - Scraping ranking page for league id: D00473, year: 2025-2026
+2025-10-24 11:09:04,179 - INFO - Successfully created ranking DataFrame with 47 rows
+2025-10-24 11:09:04,196 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 11:09:04,196 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 11:09:04,196 - INFO - Successfully scraped Ranking page for Division 2
+2025-10-24 11:09:04,196 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_2\2_ranking_df.csv
+2025-10-24 11:09:04,213 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_2\2_ranking_df.csv
+2025-10-24 11:09:34,214 - INFO - Scraping Players page for Division 2
+2025-10-24 11:09:34,214 - INFO - Starting scrape_players_page for league_id: D00473, year: 2025-2026
+2025-10-24 11:09:34,728 - INFO - Team 1: Created DataFrame with 8 rows for team: Hong Kong Cricket Club D2
+2025-10-24 11:09:39,736 - INFO - Team 2: Created DataFrame with 8 rows for team: Hong Kong Football Club 2A
+2025-10-24 11:09:44,738 - INFO - Team 3: Created DataFrame with 8 rows for team: Hong Kong Football Club 2B
+2025-10-24 11:09:49,746 - INFO - Team 4: Created DataFrame with 9 rows for team: Kowloon Cricket Club 2
+2025-10-24 11:09:54,757 - INFO - Team 5: Created DataFrame with 12 rows for team: Young Player 2
+2025-10-24 11:09:59,769 - INFO - Concatenated all team dataframes into a single DataFrame with 45 rows
+2025-10-24 11:09:59,771 - INFO - Successfully scraped Players page for Division 2
+2025-10-24 11:09:59,771 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_2\2_players_df.csv
+2025-10-24 11:09:59,773 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_2\2_players_df.csv
+2025-10-24 11:10:29,774 - WARNING - No usable summary/ranking data for Division 2. Unable to determine players who have played every game.
+2025-10-24 11:10:29,774 - INFO - No summarized data to save for Division 2; skipping summarized_df CSV creation.
+2025-10-24 11:10:29,775 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_2\2.txt
+2025-10-24 11:10:29,776 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_2\2.txt
+2025-10-24 11:10:29,776 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_2\2.txt
+2025-10-24 11:10:29,777 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_2\2.txt
+2025-10-24 11:11:00,003 - INFO - Processing Division 6
+2025-10-24 11:11:00,003 - INFO - Scraping Schedules and Results page for Division 6
+2025-10-24 11:11:00,003 - INFO - Scraping schedules and results page for league id: D00477, year: 2025-2026...
+2025-10-24 11:11:00,510 - INFO - Successfully created schedules and results DataFrame with 132 rows
+2025-10-24 11:11:00,512 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 11:11:00,513 - INFO - Successfully scraped Schedules and Results page for Division 6
+2025-10-24 11:11:00,526 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_2\6_schedules_df.csv
+2025-10-24 11:11:00,530 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_2\6_schedules_df.csv
+2025-10-24 11:11:30,531 - INFO - Scraping Team Summary page for Division 6
+2025-10-24 11:11:30,531 - INFO - Scraping team summary page (team_summery) for league id: D00477, year: 2025-2026...
+2025-10-24 11:11:31,064 - INFO - [team_summery] Successfully created summary DataFrame with 12 rows
+2025-10-24 11:11:31,064 - INFO - Successfully scraped Team Summary page for Division 6
+2025-10-24 11:11:31,067 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_2\6_summary_df.csv
+2025-10-24 11:12:01,068 - INFO - Scraping Teams page for Division 6
+2025-10-24 11:12:01,068 - INFO - Starting scrape_teams_page for league id: D00477, year: 2025-2026
+2025-10-24 11:12:01,332 - INFO - Successfully created teams DataFrame with 12 rows
+2025-10-24 11:12:01,333 - INFO - Successfully scraped Teams page for Division 6
+2025-10-24 11:12:01,334 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_2\6_teams_df.csv
+2025-10-24 11:12:01,335 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_2\6_teams_df.csv
+2025-10-24 11:12:31,337 - INFO - Scraping Ranking page for Division 6
+2025-10-24 11:12:31,337 - INFO - Scraping ranking page for league id: D00477, year: 2025-2026
+2025-10-24 11:12:32,981 - INFO - Successfully created ranking DataFrame with 130 rows
+2025-10-24 11:12:32,993 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 11:12:32,993 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 11:12:32,994 - INFO - Successfully scraped Ranking page for Division 6
+2025-10-24 11:12:32,994 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_2\6_ranking_df.csv
+2025-10-24 11:12:32,997 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_2\6_ranking_df.csv
+2025-10-24 11:13:02,998 - INFO - Scraping Players page for Division 6
+2025-10-24 11:13:02,998 - INFO - Starting scrape_players_page for league_id: D00477, year: 2025-2026
+2025-10-24 11:13:05,065 - INFO - Team 1: Created DataFrame with 10 rows for team: Electrify Squash Div 6
+2025-10-24 11:13:10,080 - INFO - Team 2: Created DataFrame with 10 rows for team: Fusion Squash Club 1
+2025-10-24 11:13:15,095 - INFO - Team 3: Created DataFrame with 7 rows for team: Global Squash 1
+2025-10-24 11:13:20,098 - INFO - Team 4: Created DataFrame with 11 rows for team: Hong Kong Cricket Club D6
+2025-10-24 11:13:25,116 - INFO - Team 5: Created DataFrame with 12 rows for team: Hong Kong Football Club 6A
+2025-10-24 11:13:30,119 - INFO - Team 6: Created DataFrame with 12 rows for team: Hong Kong Football Club 6B
+2025-10-24 11:13:35,137 - INFO - Team 7: Created DataFrame with 11 rows for team: Hong Kong Football Club 6C
+2025-10-24 11:13:40,139 - INFO - Team 8: Created DataFrame with 12 rows for team: Kowloon Cricket Club 6A
+2025-10-24 11:13:45,157 - INFO - Team 9: Created DataFrame with 12 rows for team: Kowloon Cricket Club 6B
+2025-10-24 11:13:50,162 - INFO - Team 10: Created DataFrame with 11 rows for team: Ladies Recreation Club Div 6
+2025-10-24 11:13:55,175 - INFO - Team 11: Created DataFrame with 9 rows for team: Uncles
+2025-10-24 11:14:00,186 - INFO - Team 12: Created DataFrame with 9 rows for team: X-Alpha 3
+2025-10-24 11:14:05,187 - INFO - Concatenated all team dataframes into a single DataFrame with 126 rows
+2025-10-24 11:14:05,187 - INFO - Successfully scraped Players page for Division 6
+2025-10-24 11:14:05,187 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_2\6_players_df.csv
+2025-10-24 11:14:05,187 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_2\6_players_df.csv
+2025-10-24 11:14:35,195 - WARNING - No usable summary/ranking data for Division 6. Unable to determine players who have played every game.
+2025-10-24 11:14:35,195 - INFO - No summarized data to save for Division 6; skipping summarized_df CSV creation.
+2025-10-24 11:14:35,195 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_2\6.txt
+2025-10-24 11:14:35,197 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_2\6.txt
+2025-10-24 11:14:35,198 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_2\6.txt
+2025-10-24 11:14:35,200 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_2\6.txt
+2025-10-24 11:15:05,447 - INFO - Processing Division 10
+2025-10-24 11:15:05,447 - INFO - Scraping Schedules and Results page for Division 10
+2025-10-24 11:15:05,447 - INFO - Scraping schedules and results page for league id: D00482, year: 2025-2026...
+2025-10-24 11:15:05,967 - INFO - Successfully created schedules and results DataFrame with 132 rows
+2025-10-24 11:15:05,967 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 11:15:05,967 - INFO - Successfully scraped Schedules and Results page for Division 10
+2025-10-24 11:15:05,978 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_2\10_schedules_df.csv
+2025-10-24 11:15:05,978 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_2\10_schedules_df.csv
+2025-10-24 11:15:35,989 - INFO - Scraping Team Summary page for Division 10
+2025-10-24 11:15:35,997 - INFO - Scraping team summary page (team_summery) for league id: D00482, year: 2025-2026...
+2025-10-24 11:15:36,640 - INFO - [team_summery] Successfully created summary DataFrame with 11 rows
+2025-10-24 11:15:36,640 - INFO - Successfully scraped Team Summary page for Division 10
+2025-10-24 11:15:36,640 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_2\10_summary_df.csv
+2025-10-24 11:16:06,655 - INFO - Scraping Teams page for Division 10
+2025-10-24 11:16:06,656 - INFO - Starting scrape_teams_page for league id: D00482, year: 2025-2026
+2025-10-24 11:16:06,972 - INFO - Successfully created teams DataFrame with 11 rows
+2025-10-24 11:16:06,972 - INFO - Successfully scraped Teams page for Division 10
+2025-10-24 11:16:06,972 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_2\10_teams_df.csv
+2025-10-24 11:16:06,974 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_2\10_teams_df.csv
+2025-10-24 11:16:36,976 - INFO - Scraping Ranking page for Division 10
+2025-10-24 11:16:36,976 - INFO - Scraping ranking page for league id: D00482, year: 2025-2026
+2025-10-24 11:16:38,327 - INFO - Successfully created ranking DataFrame with 105 rows
+2025-10-24 11:16:38,339 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 11:16:38,340 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 11:16:38,340 - INFO - Successfully scraped Ranking page for Division 10
+2025-10-24 11:16:38,341 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_2\10_ranking_df.csv
+2025-10-24 11:16:38,343 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_2\10_ranking_df.csv
+2025-10-24 11:17:08,345 - INFO - Scraping Players page for Division 10
+2025-10-24 11:17:08,345 - INFO - Starting scrape_players_page for league_id: D00482, year: 2025-2026
+2025-10-24 11:17:09,705 - INFO - Team 1: Created DataFrame with 10 rows for team: Banbil
+2025-10-24 11:17:14,714 - INFO - Team 2: Created DataFrame with 7 rows for team: Bravo D10
+2025-10-24 11:17:19,722 - INFO - Team 3: Created DataFrame with 12 rows for team: Hong Kong Cricket Club D10
+2025-10-24 11:17:24,731 - INFO - Team 4: Created DataFrame with 10 rows for team: i-Mask Advance Squash Club 4
+2025-10-24 11:17:29,737 - INFO - Team 5: Created DataFrame with 8 rows for team: Kwai Tsing District Squash Club
+2025-10-24 11:17:34,752 - INFO - Team 6: Created DataFrame with 7 rows for team: Mercury
+2025-10-24 11:17:39,754 - INFO - Team 7: Created DataFrame with 9 rows for team: RELAY 1
+2025-10-24 11:17:44,772 - INFO - Team 8: Created DataFrame with 8 rows for team: Sha Tin 4
+2025-10-24 11:17:49,782 - INFO - Team 9: Created DataFrame with 10 rows for team: Squashathon Advance
+2025-10-24 11:17:54,793 - INFO - Team 10: Created DataFrame with 9 rows for team: Thunder 2
+2025-10-24 11:17:59,804 - INFO - Team 11: Created DataFrame with 12 rows for team: United Services Recreation Club 3
+2025-10-24 11:18:04,808 - INFO - Concatenated all team dataframes into a single DataFrame with 102 rows
+2025-10-24 11:18:04,809 - INFO - Successfully scraped Players page for Division 10
+2025-10-24 11:18:04,809 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_2\10_players_df.csv
+2025-10-24 11:18:04,813 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_2\10_players_df.csv
+2025-10-24 11:18:34,816 - WARNING - No usable summary/ranking data for Division 10. Unable to determine players who have played every game.
+2025-10-24 11:18:34,817 - INFO - No summarized data to save for Division 10; skipping summarized_df CSV creation.
+2025-10-24 11:18:34,817 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_2\10.txt
+2025-10-24 11:18:34,820 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_2\10.txt
+2025-10-24 11:18:34,820 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_2\10.txt
+2025-10-24 11:18:34,821 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_2\10.txt
+2025-10-24 11:19:05,097 - INFO - Processing Division 3
+2025-10-24 11:19:05,097 - INFO - Scraping Schedules and Results page for Division 3
+2025-10-24 11:19:05,098 - INFO - Scraping schedules and results page for league id: D00474, year: 2025-2026...
+2025-10-24 11:19:05,627 - INFO - Successfully created schedules and results DataFrame with 84 rows
+2025-10-24 11:19:05,630 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 11:19:05,631 - INFO - Successfully scraped Schedules and Results page for Division 3
+2025-10-24 11:19:05,637 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_2\3_schedules_df.csv
+2025-10-24 11:19:05,644 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_2\3_schedules_df.csv
+2025-10-24 11:19:35,645 - INFO - Scraping Team Summary page for Division 3
+2025-10-24 11:19:35,646 - INFO - Scraping team summary page (team_summery) for league id: D00474, year: 2025-2026...
+2025-10-24 11:19:36,161 - INFO - [team_summery] Successfully created summary DataFrame with 8 rows
+2025-10-24 11:19:36,161 - INFO - Successfully scraped Team Summary page for Division 3
+2025-10-24 11:19:36,164 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_2\3_summary_df.csv
+2025-10-24 11:20:06,165 - INFO - Scraping Teams page for Division 3
+2025-10-24 11:20:06,165 - INFO - Starting scrape_teams_page for league id: D00474, year: 2025-2026
+2025-10-24 11:20:06,949 - INFO - Successfully created teams DataFrame with 8 rows
+2025-10-24 11:20:06,950 - INFO - Successfully scraped Teams page for Division 3
+2025-10-24 11:20:06,952 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_2\3_teams_df.csv
+2025-10-24 11:20:06,953 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_2\3_teams_df.csv
+2025-10-24 11:20:36,954 - INFO - Scraping Ranking page for Division 3
+2025-10-24 11:20:36,955 - INFO - Scraping ranking page for league id: D00474, year: 2025-2026
+2025-10-24 11:20:38,719 - INFO - Successfully created ranking DataFrame with 70 rows
+2025-10-24 11:20:38,736 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 11:20:38,736 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 11:20:38,737 - INFO - Successfully scraped Ranking page for Division 3
+2025-10-24 11:20:38,737 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_2\3_ranking_df.csv
+2025-10-24 11:20:38,740 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_2\3_ranking_df.csv
+2025-10-24 11:21:08,741 - INFO - Scraping Players page for Division 3
+2025-10-24 11:21:08,741 - INFO - Starting scrape_players_page for league_id: D00474, year: 2025-2026
+2025-10-24 11:21:10,546 - INFO - Team 1: Created DataFrame with 7 rows for team: Happy Squash 1
+2025-10-24 11:21:15,556 - INFO - Team 2: Created DataFrame with 8 rows for team: Hong Kong Football Club 3A
+2025-10-24 11:21:20,569 - INFO - Team 3: Created DataFrame with 8 rows for team: Hong Kong Football Club 3B
+2025-10-24 11:21:25,584 - INFO - Team 4: Created DataFrame with 8 rows for team: Kowloon Cricket Club 3A
+2025-10-24 11:21:30,594 - INFO - Team 5: Created DataFrame with 7 rows for team: Kowloon Cricket Club 3B
+2025-10-24 11:21:35,609 - INFO - Team 6: Created DataFrame with 12 rows for team: NEXUS 1
+2025-10-24 11:21:40,619 - INFO - Team 7: Created DataFrame with 10 rows for team: United Services Recreation Club 1
+2025-10-24 11:21:45,644 - INFO - Team 8: Created DataFrame with 9 rows for team: X-Alpha 1
+2025-10-24 11:21:50,648 - INFO - Concatenated all team dataframes into a single DataFrame with 69 rows
+2025-10-24 11:21:50,649 - INFO - Successfully scraped Players page for Division 3
+2025-10-24 11:21:50,649 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_2\3_players_df.csv
+2025-10-24 11:21:50,652 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_2\3_players_df.csv
+2025-10-24 11:22:20,654 - WARNING - No usable summary/ranking data for Division 3. Unable to determine players who have played every game.
+2025-10-24 11:22:20,654 - INFO - No summarized data to save for Division 3; skipping summarized_df CSV creation.
+2025-10-24 11:22:20,654 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_2\3.txt
+2025-10-24 11:22:20,654 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_2\3.txt
+2025-10-24 11:22:20,654 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_2\3.txt
+2025-10-24 11:22:20,658 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_2\3.txt
+2025-10-24 11:22:50,851 - INFO - Processing Division 4
+2025-10-24 11:22:50,851 - INFO - Scraping Schedules and Results page for Division 4
+2025-10-24 11:22:50,851 - INFO - Scraping schedules and results page for league id: D00475, year: 2025-2026...
+2025-10-24 11:22:51,943 - INFO - Successfully created schedules and results DataFrame with 90 rows
+2025-10-24 11:22:51,943 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 11:22:51,943 - INFO - Successfully scraped Schedules and Results page for Division 4
+2025-10-24 11:22:51,963 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_2\4_schedules_df.csv
+2025-10-24 11:22:51,963 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_2\4_schedules_df.csv
+2025-10-24 11:23:21,968 - INFO - Scraping Team Summary page for Division 4
+2025-10-24 11:23:21,969 - INFO - Scraping team summary page (team_summery) for league id: D00475, year: 2025-2026...
+2025-10-24 11:23:22,565 - INFO - [team_summery] Successfully created summary DataFrame with 10 rows
+2025-10-24 11:23:22,565 - INFO - Successfully scraped Team Summary page for Division 4
+2025-10-24 11:23:22,568 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_2\4_summary_df.csv
+2025-10-24 11:23:52,570 - INFO - Scraping Teams page for Division 4
+2025-10-24 11:23:52,570 - INFO - Starting scrape_teams_page for league id: D00475, year: 2025-2026
+2025-10-24 11:23:53,988 - INFO - Successfully created teams DataFrame with 10 rows
+2025-10-24 11:23:53,988 - INFO - Successfully scraped Teams page for Division 4
+2025-10-24 11:23:53,989 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_2\4_teams_df.csv
+2025-10-24 11:23:53,991 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_2\4_teams_df.csv
+2025-10-24 11:24:23,994 - INFO - Scraping Ranking page for Division 4
+2025-10-24 11:24:23,994 - INFO - Scraping ranking page for league id: D00475, year: 2025-2026
+2025-10-24 11:24:30,662 - INFO - Successfully created ranking DataFrame with 91 rows
+2025-10-24 11:24:30,676 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 11:24:30,677 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 11:24:30,677 - INFO - Successfully scraped Ranking page for Division 4
+2025-10-24 11:24:30,678 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_2\4_ranking_df.csv
+2025-10-24 11:24:30,680 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_2\4_ranking_df.csv
+2025-10-24 11:25:00,681 - INFO - Scraping Players page for Division 4
+2025-10-24 11:25:00,681 - INFO - Starting scrape_players_page for league_id: D00475, year: 2025-2026
+2025-10-24 11:25:02,057 - INFO - Team 1: Created DataFrame with 11 rows for team: Hong Kong Cricket Club D4A
+2025-10-24 11:25:07,058 - INFO - Team 2: Created DataFrame with 9 rows for team: Hong Kong Cricket Club D4B
+2025-10-24 11:25:12,068 - INFO - Team 3: Created DataFrame with 8 rows for team: Hong Kong Football Club 4A
+2025-10-24 11:25:17,082 - INFO - Team 4: Created DataFrame with 8 rows for team: Hong Kong Football Club 4B
+2025-10-24 11:25:22,091 - INFO - Team 5: Created DataFrame with 9 rows for team: Kowloon Cricket Club 4
+2025-10-24 11:25:27,099 - INFO - Team 6: Created DataFrame with 8 rows for team: Sha Tin 1
+2025-10-24 11:25:32,109 - INFO - Team 7: Created DataFrame with 7 rows for team: The Squash Club 1
+2025-10-24 11:25:37,113 - INFO - Team 8: Created DataFrame with 9 rows for team: TNGX
+2025-10-24 11:25:42,124 - INFO - Team 9: Created DataFrame with 8 rows for team: X-Alpha 2
+2025-10-24 11:25:47,132 - INFO - Team 10: Created DataFrame with 10 rows for team: YLJR
+2025-10-24 11:25:52,142 - INFO - Concatenated all team dataframes into a single DataFrame with 87 rows
+2025-10-24 11:25:52,142 - INFO - Successfully scraped Players page for Division 4
+2025-10-24 11:25:52,142 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_2\4_players_df.csv
+2025-10-24 11:25:52,145 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_2\4_players_df.csv
+2025-10-24 11:26:22,149 - WARNING - No usable summary/ranking data for Division 4. Unable to determine players who have played every game.
+2025-10-24 11:26:22,149 - INFO - No summarized data to save for Division 4; skipping summarized_df CSV creation.
+2025-10-24 11:26:22,149 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_2\4.txt
+2025-10-24 11:26:22,149 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_2\4.txt
+2025-10-24 11:26:22,149 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_2\4.txt
+2025-10-24 11:26:22,149 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_2\4.txt
+2025-10-24 11:26:52,352 - INFO - Processing Division 11
+2025-10-24 11:26:52,352 - INFO - Scraping Schedules and Results page for Division 11
+2025-10-24 11:26:52,352 - INFO - Scraping schedules and results page for league id: D00483, year: 2025-2026...
+2025-10-24 11:26:52,804 - INFO - Successfully created schedules and results DataFrame with 132 rows
+2025-10-24 11:26:52,804 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 11:26:52,804 - INFO - Successfully scraped Schedules and Results page for Division 11
+2025-10-24 11:26:52,804 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_2\11_schedules_df.csv
+2025-10-24 11:26:52,819 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_2\11_schedules_df.csv
+2025-10-24 11:27:22,820 - INFO - Scraping Team Summary page for Division 11
+2025-10-24 11:27:22,820 - INFO - Scraping team summary page (team_summery) for league id: D00483, year: 2025-2026...
+2025-10-24 11:27:27,141 - INFO - [team_summery] Successfully created summary DataFrame with 11 rows
+2025-10-24 11:27:27,141 - INFO - Successfully scraped Team Summary page for Division 11
+2025-10-24 11:27:27,141 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_2\11_summary_df.csv
+2025-10-24 11:27:57,155 - INFO - Scraping Teams page for Division 11
+2025-10-24 11:27:57,155 - INFO - Starting scrape_teams_page for league id: D00483, year: 2025-2026
+2025-10-24 11:27:57,628 - INFO - Successfully created teams DataFrame with 11 rows
+2025-10-24 11:27:57,628 - INFO - Successfully scraped Teams page for Division 11
+2025-10-24 11:27:57,628 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_2\11_teams_df.csv
+2025-10-24 11:27:57,634 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_2\11_teams_df.csv
+2025-10-24 11:28:27,636 - INFO - Scraping Ranking page for Division 11
+2025-10-24 11:28:27,636 - INFO - Scraping ranking page for league id: D00483, year: 2025-2026
+2025-10-24 11:28:32,557 - INFO - Successfully created ranking DataFrame with 105 rows
+2025-10-24 11:28:32,559 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 11:28:32,559 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 11:28:32,559 - INFO - Successfully scraped Ranking page for Division 11
+2025-10-24 11:28:32,559 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_2\11_ranking_df.csv
+2025-10-24 11:28:32,571 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_2\11_ranking_df.csv
+2025-10-24 11:29:02,574 - INFO - Scraping Players page for Division 11
+2025-10-24 11:29:02,574 - INFO - Starting scrape_players_page for league_id: D00483, year: 2025-2026
+2025-10-24 11:29:04,228 - INFO - Team 1: Created DataFrame with 12 rows for team: 7NT
+2025-10-24 11:29:09,245 - INFO - Team 2: Created DataFrame with 12 rows for team: Alpha CUHK
+2025-10-24 11:29:14,255 - INFO - Team 3: Created DataFrame with 12 rows for team: Electrify Squash Div 11
+2025-10-24 11:29:19,265 - INFO - Team 4: Created DataFrame with 8 rows for team: GMDBB
+2025-10-24 11:29:24,280 - INFO - Team 5: Created DataFrame with 8 rows for team: i-Mask Advance Squash Club 5
+2025-10-24 11:29:29,283 - INFO - Team 6: Created DataFrame with 8 rows for team: Invader Squash
+2025-10-24 11:29:34,299 - INFO - Team 7: Created DataFrame with 8 rows for team: Sea Bear
+2025-10-24 11:29:39,300 - INFO - Team 8: Created DataFrame with 10 rows for team: South China Athletic Association
+2025-10-24 11:29:44,309 - INFO - Team 9: Created DataFrame with 9 rows for team: The Zero Squash Club D11
+2025-10-24 11:29:49,322 - INFO - Team 10: Created DataFrame with 8 rows for team: Tuen Mun Squash Club
+2025-10-24 11:29:54,328 - INFO - Team 11: Created DataFrame with 10 rows for team: ZOMA
+2025-10-24 11:29:59,337 - INFO - Concatenated all team dataframes into a single DataFrame with 105 rows
+2025-10-24 11:29:59,337 - INFO - Successfully scraped Players page for Division 11
+2025-10-24 11:29:59,337 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_2\11_players_df.csv
+2025-10-24 11:29:59,337 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_2\11_players_df.csv
+2025-10-24 11:30:29,344 - WARNING - No usable summary/ranking data for Division 11. Unable to determine players who have played every game.
+2025-10-24 11:30:29,344 - INFO - No summarized data to save for Division 11; skipping summarized_df CSV creation.
+2025-10-24 11:30:29,344 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_2\11.txt
+2025-10-24 11:30:29,344 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_2\11.txt
+2025-10-24 11:30:29,344 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_2\11.txt
+2025-10-24 11:30:29,344 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_2\11.txt
+2025-10-24 11:30:59,548 - INFO - Processing Division L2
+2025-10-24 11:30:59,548 - INFO - Scraping Schedules and Results page for Division L2
+2025-10-24 11:30:59,548 - INFO - Scraping schedules and results page for league id: D00496, year: 2025-2026...
+2025-10-24 11:31:00,074 - INFO - Successfully created schedules and results DataFrame with 60 rows
+2025-10-24 11:31:00,087 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 11:31:00,087 - INFO - Successfully scraped Schedules and Results page for Division L2
+2025-10-24 11:31:00,087 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_2\L2_schedules_df.csv
+2025-10-24 11:31:00,087 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_2\L2_schedules_df.csv
+2025-10-24 11:31:30,099 - INFO - Scraping Team Summary page for Division L2
+2025-10-24 11:31:30,099 - INFO - Scraping team summary page (team_summery) for league id: D00496, year: 2025-2026...
+2025-10-24 11:31:31,369 - INFO - [team_summery] Successfully created summary DataFrame with 6 rows
+2025-10-24 11:31:31,369 - INFO - Successfully scraped Team Summary page for Division L2
+2025-10-24 11:31:31,369 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_2\L2_summary_df.csv
+2025-10-24 11:32:01,373 - INFO - Scraping Teams page for Division L2
+2025-10-24 11:32:01,373 - INFO - Starting scrape_teams_page for league id: D00496, year: 2025-2026
+2025-10-24 11:32:01,895 - INFO - Successfully created teams DataFrame with 6 rows
+2025-10-24 11:32:01,895 - INFO - Successfully scraped Teams page for Division L2
+2025-10-24 11:32:01,895 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_2\L2_teams_df.csv
+2025-10-24 11:32:01,895 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_2\L2_teams_df.csv
+2025-10-24 11:32:31,912 - INFO - Scraping Ranking page for Division L2
+2025-10-24 11:32:31,912 - INFO - Scraping ranking page for league id: D00496, year: 2025-2026
+2025-10-24 11:32:32,639 - INFO - Successfully created ranking DataFrame with 40 rows
+2025-10-24 11:32:32,665 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 11:32:32,665 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 11:32:32,665 - INFO - Successfully scraped Ranking page for Division L2
+2025-10-24 11:32:32,665 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_2\L2_ranking_df.csv
+2025-10-24 11:32:32,665 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_2\L2_ranking_df.csv
+2025-10-24 11:33:02,671 - INFO - Scraping Players page for Division L2
+2025-10-24 11:33:02,671 - INFO - Starting scrape_players_page for league_id: D00496, year: 2025-2026
+2025-10-24 11:33:03,311 - INFO - Team 1: Created DataFrame with 9 rows for team: Hong Kong Cricket Club L2
+2025-10-24 11:33:08,316 - INFO - Team 2: Created DataFrame with 10 rows for team: Hong Kong Football Club L2A
+2025-10-24 11:33:13,326 - INFO - Team 3: Created DataFrame with 9 rows for team: Hong Kong Football Club L2B
+2025-10-24 11:33:18,332 - INFO - Team 3 ('JESSICA L2 [withdrawal]') shows NO DATA — skipping team.
+2025-10-24 11:33:18,339 - INFO - Team 5: Created DataFrame with 6 rows for team: Kowloon Cricket Club L2A
+2025-10-24 11:33:23,346 - INFO - Team 6: Created DataFrame with 6 rows for team: Kowloon Cricket Club L2B
+2025-10-24 11:33:28,350 - INFO - Concatenated all team dataframes into a single DataFrame with 40 rows
+2025-10-24 11:33:28,350 - INFO - Successfully scraped Players page for Division L2
+2025-10-24 11:33:28,350 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_2\L2_players_df.csv
+2025-10-24 11:33:28,350 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_2\L2_players_df.csv
+2025-10-24 11:33:58,356 - WARNING - No usable summary/ranking data for Division L2. Unable to determine players who have played every game.
+2025-10-24 11:33:58,356 - INFO - No summarized data to save for Division L2; skipping summarized_df CSV creation.
+2025-10-24 11:33:58,356 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_2\L2.txt
+2025-10-24 11:33:58,356 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_2\L2.txt
+2025-10-24 11:33:58,356 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_2\L2.txt
+2025-10-24 11:33:58,362 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_2\L2.txt
+2025-10-24 11:34:28,527 - INFO - Processing Division 7
+2025-10-24 11:34:28,527 - INFO - Scraping Schedules and Results page for Division 7
+2025-10-24 11:34:28,527 - INFO - Scraping schedules and results page for league id: D00478, year: 2025-2026...
+2025-10-24 11:34:29,147 - INFO - Successfully created schedules and results DataFrame with 132 rows
+2025-10-24 11:34:29,157 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 11:34:29,157 - INFO - Successfully scraped Schedules and Results page for Division 7
+2025-10-24 11:34:29,165 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\7_schedules_df.csv
+2025-10-24 11:34:29,166 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\7_schedules_df.csv
+2025-10-24 11:34:59,171 - INFO - Scraping Team Summary page for Division 7
+2025-10-24 11:34:59,171 - INFO - Scraping team summary page (team_summery) for league id: D00478, year: 2025-2026...
+2025-10-24 11:34:59,826 - INFO - [team_summery] Successfully created summary DataFrame with 11 rows
+2025-10-24 11:34:59,826 - INFO - Successfully scraped Team Summary page for Division 7
+2025-10-24 11:34:59,843 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_3\7_summary_df.csv
+2025-10-24 11:35:29,844 - INFO - Scraping Teams page for Division 7
+2025-10-24 11:35:29,844 - INFO - Starting scrape_teams_page for league id: D00478, year: 2025-2026
+2025-10-24 11:35:31,767 - INFO - Successfully created teams DataFrame with 11 rows
+2025-10-24 11:35:31,767 - INFO - Successfully scraped Teams page for Division 7
+2025-10-24 11:35:31,767 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\7_teams_df.csv
+2025-10-24 11:35:31,767 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\7_teams_df.csv
+2025-10-24 11:36:01,774 - INFO - Scraping Ranking page for Division 7
+2025-10-24 11:36:01,774 - INFO - Scraping ranking page for league id: D00478, year: 2025-2026
+2025-10-24 11:36:03,386 - INFO - Successfully created ranking DataFrame with 117 rows
+2025-10-24 11:36:03,386 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 11:36:03,386 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 11:36:03,401 - INFO - Successfully scraped Ranking page for Division 7
+2025-10-24 11:36:03,401 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\7_ranking_df.csv
+2025-10-24 11:36:03,401 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\7_ranking_df.csv
+2025-10-24 11:36:33,406 - INFO - Scraping Players page for Division 7
+2025-10-24 11:36:33,406 - INFO - Starting scrape_players_page for league_id: D00478, year: 2025-2026
+2025-10-24 11:36:36,643 - INFO - Team 1: Created DataFrame with 11 rows for team: Hong Kong Cricket Club D7A
+2025-10-24 11:36:41,649 - INFO - Team 2: Created DataFrame with 12 rows for team: Hong Kong Football Club 7A
+2025-10-24 11:36:46,666 - INFO - Team 3: Created DataFrame with 11 rows for team: Hong Kong Football Club 7B
+2025-10-24 11:36:51,672 - INFO - Team 4: Created DataFrame with 9 rows for team: i-Mask Advance Squash Club 1
+2025-10-24 11:36:56,679 - INFO - Team 5: Created DataFrame with 9 rows for team: Kinetic 1
+2025-10-24 11:37:01,696 - INFO - Team 6: Created DataFrame with 12 rows for team: Physical Chess 2
+2025-10-24 11:37:06,697 - INFO - Team 7: Created DataFrame with 10 rows for team: Social Squash Team
+2025-10-24 11:37:11,712 - INFO - Team 8: Created DataFrame with 9 rows for team: Thunder 1
+2025-10-24 11:37:16,720 - INFO - Team 9: Created DataFrame with 12 rows for team: UST
+2025-10-24 11:37:21,726 - INFO - Team 10: Created DataFrame with 6 rows for team: Xavier
+2025-10-24 11:37:26,738 - INFO - Team 11: Created DataFrame with 12 rows for team: Hong Kong Cricket Club D7B
+2025-10-24 11:37:31,744 - INFO - Concatenated all team dataframes into a single DataFrame with 113 rows
+2025-10-24 11:37:31,746 - INFO - Successfully scraped Players page for Division 7
+2025-10-24 11:37:31,747 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\7_players_df.csv
+2025-10-24 11:37:31,747 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\7_players_df.csv
+2025-10-24 11:38:01,751 - WARNING - No usable summary/ranking data for Division 7. Unable to determine players who have played every game.
+2025-10-24 11:38:01,751 - INFO - No summarized data to save for Division 7; skipping summarized_df CSV creation.
+2025-10-24 11:38:01,751 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\7.txt
+2025-10-24 11:38:01,751 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\7.txt
+2025-10-24 11:38:01,751 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\7.txt
+2025-10-24 11:38:01,751 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\7.txt
+2025-10-24 11:38:32,019 - INFO - Processing Division 9
+2025-10-24 11:38:32,019 - INFO - Scraping Schedules and Results page for Division 9
+2025-10-24 11:38:32,019 - INFO - Scraping schedules and results page for league id: D00481, year: 2025-2026...
+2025-10-24 11:38:32,382 - INFO - Successfully created schedules and results DataFrame with 90 rows
+2025-10-24 11:38:32,382 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 11:38:32,382 - INFO - Successfully scraped Schedules and Results page for Division 9
+2025-10-24 11:38:32,382 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\9_schedules_df.csv
+2025-10-24 11:38:32,382 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\9_schedules_df.csv
+2025-10-24 11:39:02,399 - INFO - Scraping Team Summary page for Division 9
+2025-10-24 11:39:02,399 - INFO - Scraping team summary page (team_summery) for league id: D00481, year: 2025-2026...
+2025-10-24 11:39:03,123 - INFO - [team_summery] Successfully created summary DataFrame with 10 rows
+2025-10-24 11:39:03,123 - INFO - Successfully scraped Team Summary page for Division 9
+2025-10-24 11:39:03,123 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_3\9_summary_df.csv
+2025-10-24 11:39:33,130 - INFO - Scraping Teams page for Division 9
+2025-10-24 11:39:33,130 - INFO - Starting scrape_teams_page for league id: D00481, year: 2025-2026
+2025-10-24 11:39:36,365 - INFO - Successfully created teams DataFrame with 10 rows
+2025-10-24 11:39:36,365 - INFO - Successfully scraped Teams page for Division 9
+2025-10-24 11:39:36,365 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\9_teams_df.csv
+2025-10-24 11:39:36,365 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\9_teams_df.csv
+2025-10-24 11:40:06,370 - INFO - Scraping Ranking page for Division 9
+2025-10-24 11:40:06,370 - INFO - Scraping ranking page for league id: D00481, year: 2025-2026
+2025-10-24 11:40:09,475 - INFO - Successfully created ranking DataFrame with 106 rows
+2025-10-24 11:40:09,491 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 11:40:09,491 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 11:40:09,491 - INFO - Successfully scraped Ranking page for Division 9
+2025-10-24 11:40:09,491 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\9_ranking_df.csv
+2025-10-24 11:40:09,502 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\9_ranking_df.csv
+2025-10-24 11:40:39,505 - INFO - Scraping Players page for Division 9
+2025-10-24 11:40:39,505 - INFO - Starting scrape_players_page for league_id: D00481, year: 2025-2026
+2025-10-24 11:40:41,026 - INFO - Team 1: Created DataFrame with 8 rows for team: BOSS
+2025-10-24 11:40:46,030 - INFO - Team 2: Created DataFrame with 12 rows for team: Centre Squash
+2025-10-24 11:40:51,040 - INFO - Team 3: Created DataFrame with 9 rows for team: HKPF Squash Team
+2025-10-24 11:40:56,057 - INFO - Team 4: Created DataFrame with 12 rows for team: Hong Kong Football Club 9
+2025-10-24 11:41:01,065 - INFO - Team 5: Created DataFrame with 6 rows for team: i-Mask Advance Squash Club 3
+2025-10-24 11:41:06,068 - INFO - Team 6: Created DataFrame with 12 rows for team: Kinetic 3
+2025-10-24 11:41:11,080 - INFO - Team 7: Created DataFrame with 12 rows for team: Kowloon Cricket Club 9
+2025-10-24 11:41:16,088 - INFO - Team 8: Created DataFrame with 12 rows for team: The Hong Kong Jockey Club Div 9
+2025-10-24 11:41:21,100 - INFO - Team 9: Created DataFrame with 12 rows for team: The Squash Club 2
+2025-10-24 11:41:26,114 - INFO - Team 10: Created DataFrame with 9 rows for team: Twister
+2025-10-24 11:41:31,121 - INFO - Concatenated all team dataframes into a single DataFrame with 104 rows
+2025-10-24 11:41:31,121 - INFO - Successfully scraped Players page for Division 9
+2025-10-24 11:41:31,121 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\9_players_df.csv
+2025-10-24 11:41:31,121 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\9_players_df.csv
+2025-10-24 11:42:01,126 - WARNING - No usable summary/ranking data for Division 9. Unable to determine players who have played every game.
+2025-10-24 11:42:01,126 - INFO - No summarized data to save for Division 9; skipping summarized_df CSV creation.
+2025-10-24 11:42:01,126 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\9.txt
+2025-10-24 11:42:01,126 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\9.txt
+2025-10-24 11:42:01,126 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\9.txt
+2025-10-24 11:42:01,126 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\9.txt
+2025-10-24 11:42:31,395 - INFO - Processing Division 12
+2025-10-24 11:42:31,395 - INFO - Scraping Schedules and Results page for Division 12
+2025-10-24 11:42:31,395 - INFO - Scraping schedules and results page for league id: D00484, year: 2025-2026...
+2025-10-24 11:42:31,794 - INFO - Successfully created schedules and results DataFrame with 132 rows
+2025-10-24 11:42:31,794 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 11:42:31,794 - INFO - Successfully scraped Schedules and Results page for Division 12
+2025-10-24 11:42:31,810 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\12_schedules_df.csv
+2025-10-24 11:42:31,810 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\12_schedules_df.csv
+2025-10-24 11:43:01,816 - INFO - Scraping Team Summary page for Division 12
+2025-10-24 11:43:01,816 - INFO - Scraping team summary page (team_summery) for league id: D00484, year: 2025-2026...
+2025-10-24 11:43:02,327 - INFO - [team_summery] Successfully created summary DataFrame with 11 rows
+2025-10-24 11:43:02,327 - INFO - Successfully scraped Team Summary page for Division 12
+2025-10-24 11:43:02,331 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_3\12_summary_df.csv
+2025-10-24 11:43:32,332 - INFO - Scraping Teams page for Division 12
+2025-10-24 11:43:32,332 - INFO - Starting scrape_teams_page for league id: D00484, year: 2025-2026
+2025-10-24 11:43:33,633 - INFO - Successfully created teams DataFrame with 11 rows
+2025-10-24 11:43:33,633 - INFO - Successfully scraped Teams page for Division 12
+2025-10-24 11:43:33,633 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\12_teams_df.csv
+2025-10-24 11:43:33,633 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\12_teams_df.csv
+2025-10-24 11:44:03,639 - INFO - Scraping Ranking page for Division 12
+2025-10-24 11:44:03,639 - INFO - Scraping ranking page for league id: D00484, year: 2025-2026
+2025-10-24 11:44:05,946 - INFO - Successfully created ranking DataFrame with 113 rows
+2025-10-24 11:44:05,946 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 11:44:05,946 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 11:44:05,946 - INFO - Successfully scraped Ranking page for Division 12
+2025-10-24 11:44:05,946 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\12_ranking_df.csv
+2025-10-24 11:44:05,962 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\12_ranking_df.csv
+2025-10-24 11:44:35,965 - INFO - Scraping Players page for Division 12
+2025-10-24 11:44:35,965 - INFO - Starting scrape_players_page for league_id: D00484, year: 2025-2026
+2025-10-24 11:44:37,500 - INFO - Team 1: Created DataFrame with 5 rows for team: CSD Squash Team
+2025-10-24 11:44:42,517 - INFO - Team 2: Created DataFrame with 12 rows for team: Global Squash 2
+2025-10-24 11:44:47,523 - INFO - Team 3: Created DataFrame with 12 rows for team: Hong Kong Football Club 12A
+2025-10-24 11:44:52,539 - INFO - Team 4: Created DataFrame with 11 rows for team: Hong Kong Football Club 12B
+2025-10-24 11:44:57,548 - INFO - Team 5: Created DataFrame with 8 rows for team: Latecomers
+2025-10-24 11:45:02,559 - INFO - Team 6: Created DataFrame with 12 rows for team: Physical Chess 4
+2025-10-24 11:45:07,570 - INFO - Team 7: Created DataFrame with 12 rows for team: Royal Hong Kong Yacht Club Div 12
+2025-10-24 11:45:12,574 - INFO - Team 8: Created DataFrame with 9 rows for team: Sha Tin 5
+2025-10-24 11:45:17,584 - INFO - Team 9: Created DataFrame with 10 rows for team: SKCSC Div 12
+2025-10-24 11:45:22,598 - INFO - Team 10: Created DataFrame with 10 rows for team: Star River 1
+2025-10-24 11:45:27,608 - INFO - Team 11: Created DataFrame with 11 rows for team: Winter Warriors
+2025-10-24 11:45:32,616 - INFO - Concatenated all team dataframes into a single DataFrame with 112 rows
+2025-10-24 11:45:32,616 - INFO - Successfully scraped Players page for Division 12
+2025-10-24 11:45:32,616 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\12_players_df.csv
+2025-10-24 11:45:32,616 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\12_players_df.csv
+2025-10-24 11:46:02,623 - WARNING - No usable summary/ranking data for Division 12. Unable to determine players who have played every game.
+2025-10-24 11:46:02,623 - INFO - No summarized data to save for Division 12; skipping summarized_df CSV creation.
+2025-10-24 11:46:02,623 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\12.txt
+2025-10-24 11:46:02,623 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\12.txt
+2025-10-24 11:46:02,623 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\12.txt
+2025-10-24 11:46:02,623 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\12.txt
+2025-10-24 11:46:33,094 - INFO - Processing Division M2
+2025-10-24 11:46:33,094 - INFO - Scraping Schedules and Results page for Division M2
+2025-10-24 11:46:33,094 - INFO - Scraping schedules and results page for league id: D00492, year: 2025-2026...
+2025-10-24 11:46:33,508 - INFO - Successfully created schedules and results DataFrame with 60 rows
+2025-10-24 11:46:33,522 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 11:46:33,522 - INFO - Successfully scraped Schedules and Results page for Division M2
+2025-10-24 11:46:33,524 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\M2_schedules_df.csv
+2025-10-24 11:46:33,524 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\M2_schedules_df.csv
+2025-10-24 11:47:03,533 - INFO - Scraping Team Summary page for Division M2
+2025-10-24 11:47:03,533 - INFO - Scraping team summary page (team_summery) for league id: D00492, year: 2025-2026...
+2025-10-24 11:47:04,476 - INFO - [team_summery] Successfully created summary DataFrame with 5 rows
+2025-10-24 11:47:04,476 - INFO - Successfully scraped Team Summary page for Division M2
+2025-10-24 11:47:04,476 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_3\M2_summary_df.csv
+2025-10-24 11:47:34,481 - INFO - Scraping Teams page for Division M2
+2025-10-24 11:47:34,481 - INFO - Starting scrape_teams_page for league id: D00492, year: 2025-2026
+2025-10-24 11:47:35,079 - INFO - Successfully created teams DataFrame with 5 rows
+2025-10-24 11:47:35,079 - INFO - Successfully scraped Teams page for Division M2
+2025-10-24 11:47:35,079 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\M2_teams_df.csv
+2025-10-24 11:47:35,096 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\M2_teams_df.csv
+2025-10-24 11:48:05,097 - INFO - Scraping Ranking page for Division M2
+2025-10-24 11:48:05,097 - INFO - Scraping ranking page for league id: D00492, year: 2025-2026
+2025-10-24 11:48:05,839 - INFO - Successfully created ranking DataFrame with 53 rows
+2025-10-24 11:48:05,843 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 11:48:05,843 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 11:48:05,843 - INFO - Successfully scraped Ranking page for Division M2
+2025-10-24 11:48:05,851 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\M2_ranking_df.csv
+2025-10-24 11:48:05,854 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\M2_ranking_df.csv
+2025-10-24 11:48:35,854 - INFO - Scraping Players page for Division M2
+2025-10-24 11:48:35,854 - INFO - Starting scrape_players_page for league_id: D00492, year: 2025-2026
+2025-10-24 11:48:36,494 - INFO - Team 1: Created DataFrame with 12 rows for team: Hong Kong Cricket Club M2
+2025-10-24 11:48:41,507 - INFO - Team 2: Created DataFrame with 9 rows for team: Hong Kong Football Club M2A
+2025-10-24 11:48:46,522 - INFO - Team 3: Created DataFrame with 9 rows for team: Hong Kong Football Club M2B
+2025-10-24 11:48:51,533 - INFO - Team 4: Created DataFrame with 13 rows for team: Ladies Recreation Club M2
+2025-10-24 11:48:56,540 - INFO - Team 5: Created DataFrame with 8 rows for team: United Services Recreation Club M2
+2025-10-24 11:49:01,546 - INFO - Concatenated all team dataframes into a single DataFrame with 51 rows
+2025-10-24 11:49:01,546 - INFO - Successfully scraped Players page for Division M2
+2025-10-24 11:49:01,546 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\M2_players_df.csv
+2025-10-24 11:49:01,546 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\M2_players_df.csv
+2025-10-24 11:49:31,551 - WARNING - No usable summary/ranking data for Division M2. Unable to determine players who have played every game.
+2025-10-24 11:49:31,551 - INFO - No summarized data to save for Division M2; skipping summarized_df CSV creation.
+2025-10-24 11:49:31,551 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\M2.txt
+2025-10-24 11:49:31,551 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\M2.txt
+2025-10-24 11:49:31,551 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\M2.txt
+2025-10-24 11:49:31,551 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\M2.txt
+2025-10-24 11:50:01,759 - INFO - Processing Division Premier Main
+2025-10-24 11:50:01,759 - INFO - Scraping Schedules and Results page for Division Premier Main
+2025-10-24 11:50:01,760 - INFO - Scraping schedules and results page for league id: D00472, year: 2025-2026...
+2025-10-24 11:50:11,773 - WARNING - Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x0000029E8FF36F10>, 'Connection to www.hksquash.org.hk timed out. (connect timeout=10)')': /public/index.php/leagues/results_schedules/id/D00472/league/Squash/year/2025-2026/pages_id/25.html
+2025-10-24 11:50:15,324 - INFO - Successfully created schedules and results DataFrame with 30 rows
+2025-10-24 11:50:15,336 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 11:50:15,336 - INFO - Successfully scraped Schedules and Results page for Division Premier Main
+2025-10-24 11:50:15,337 - WARNING - No played matches found in schedules_df for Division Premier Main. Skipping further processing.
+2025-10-24 11:50:15,342 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_0\Premier Main_schedules_df.csv
+2025-10-24 11:50:15,342 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_0\Premier Main_schedules_df.csv
+2025-10-24 11:50:45,347 - INFO - Scraping Team Summary page for Division Premier Main
+2025-10-24 11:50:45,347 - INFO - Scraping team summary page (team_summery) for league id: D00472, year: 2025-2026...
+2025-10-24 11:50:46,027 - INFO - [team_summery] Successfully created summary DataFrame with 6 rows
+2025-10-24 11:50:46,027 - INFO - Successfully scraped Team Summary page for Division Premier Main
+2025-10-24 11:50:46,027 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_0\Premier Main_summary_df.csv
+2025-10-24 11:51:16,039 - INFO - Scraping Teams page for Division Premier Main
+2025-10-24 11:51:16,039 - INFO - Starting scrape_teams_page for league id: D00472, year: 2025-2026
+2025-10-24 11:51:16,486 - INFO - Successfully created teams DataFrame with 6 rows
+2025-10-24 11:51:16,486 - INFO - Successfully scraped Teams page for Division Premier Main
+2025-10-24 11:51:16,486 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_0\Premier Main_teams_df.csv
+2025-10-24 11:51:16,486 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_0\Premier Main_teams_df.csv
+2025-10-24 11:51:46,500 - INFO - Scraping Ranking page for Division Premier Main
+2025-10-24 11:51:46,500 - INFO - Scraping ranking page for league id: D00472, year: 2025-2026
+2025-10-24 11:51:47,039 - INFO - Successfully created ranking DataFrame with 22 rows
+2025-10-24 11:51:47,056 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 11:51:47,056 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 11:51:47,056 - INFO - Successfully scraped Ranking page for Division Premier Main
+2025-10-24 11:51:47,056 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_0\Premier Main_ranking_df.csv
+2025-10-24 11:51:47,056 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_0\Premier Main_ranking_df.csv
+2025-10-24 11:52:17,064 - INFO - Scraping Players page for Division Premier Main
+2025-10-24 11:52:17,064 - INFO - Starting scrape_players_page for league_id: D00472, year: 2025-2026
+2025-10-24 11:52:17,697 - INFO - Team 1: Created DataFrame with 6 rows for team: FWD
+2025-10-24 11:52:22,704 - INFO - Team 2: Created DataFrame with 3 rows for team: Hong Kong Cricket Club D1
+2025-10-24 11:52:27,711 - INFO - Team 3: Created DataFrame with 3 rows for team: Hong Kong Football Club 1A
+2025-10-24 11:52:32,719 - INFO - Team 4: Created DataFrame with 4 rows for team: Hong Kong Football Club 1B
+2025-10-24 11:52:37,724 - INFO - Team 5: Created DataFrame with 3 rows for team: Kowloon Cricket Club 1A
+2025-10-24 11:52:42,732 - INFO - Team 6: Created DataFrame with 3 rows for team: Kowloon Cricket Club 1B
+2025-10-24 11:52:47,734 - INFO - Concatenated all team dataframes into a single DataFrame with 22 rows
+2025-10-24 11:52:47,734 - INFO - Successfully scraped Players page for Division Premier Main
+2025-10-24 11:52:47,736 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_0\Premier Main_players_df.csv
+2025-10-24 11:52:47,736 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_0\Premier Main_players_df.csv
+2025-10-24 11:53:17,740 - WARNING - No usable summary/ranking data for Division Premier Main. Unable to determine players who have played every game.
+2025-10-24 11:53:17,740 - INFO - No summarized data to save for Division Premier Main; skipping summarized_df CSV creation.
+2025-10-24 11:53:17,740 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_0\Premier Main.txt
+2025-10-24 11:53:17,742 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_0\Premier Main.txt
+2025-10-24 11:53:17,742 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_0\Premier Main.txt
+2025-10-24 11:53:17,744 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_0\Premier Main.txt
+2025-10-24 11:53:17,746 - WARNING - No data found in results_df for Division Premier Main. Skipping further processing.
+2025-10-24 11:53:17,748 - INFO - Processing Division Premier Masters
+2025-10-24 11:53:17,748 - INFO - Scraping Schedules and Results page for Division Premier Masters
+2025-10-24 11:53:17,748 - INFO - Scraping schedules and results page for league id: D00491, year: 2025-2026...
+2025-10-24 11:53:18,309 - INFO - Successfully created schedules and results DataFrame with 60 rows
+2025-10-24 11:53:18,309 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 11:53:18,309 - INFO - Successfully scraped Schedules and Results page for Division Premier Masters
+2025-10-24 11:53:18,326 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\Premier Masters_schedules_df.csv
+2025-10-24 11:53:18,326 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\Premier Masters_schedules_df.csv
+2025-10-24 11:53:48,333 - INFO - Scraping Team Summary page for Division Premier Masters
+2025-10-24 11:53:48,333 - INFO - Scraping team summary page (team_summery) for league id: D00491, year: 2025-2026...
+2025-10-24 11:53:49,550 - INFO - [team_summery] Successfully created summary DataFrame with 5 rows
+2025-10-24 11:53:49,550 - INFO - Successfully scraped Team Summary page for Division Premier Masters
+2025-10-24 11:53:49,550 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_3\Premier Masters_summary_df.csv
+2025-10-24 11:54:19,565 - INFO - Scraping Teams page for Division Premier Masters
+2025-10-24 11:54:19,565 - INFO - Starting scrape_teams_page for league id: D00491, year: 2025-2026
+2025-10-24 11:54:19,809 - INFO - Successfully created teams DataFrame with 5 rows
+2025-10-24 11:54:19,809 - INFO - Successfully scraped Teams page for Division Premier Masters
+2025-10-24 11:54:19,809 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\Premier Masters_teams_df.csv
+2025-10-24 11:54:19,809 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\Premier Masters_teams_df.csv
+2025-10-24 11:54:49,826 - INFO - Scraping Ranking page for Division Premier Masters
+2025-10-24 11:54:49,826 - INFO - Scraping ranking page for league id: D00491, year: 2025-2026
+2025-10-24 11:54:51,401 - INFO - Successfully created ranking DataFrame with 37 rows
+2025-10-24 11:54:51,401 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 11:54:51,401 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 11:54:51,401 - INFO - Successfully scraped Ranking page for Division Premier Masters
+2025-10-24 11:54:51,416 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\Premier Masters_ranking_df.csv
+2025-10-24 11:54:51,419 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\Premier Masters_ranking_df.csv
+2025-10-24 11:55:21,420 - INFO - Scraping Players page for Division Premier Masters
+2025-10-24 11:55:21,420 - INFO - Starting scrape_players_page for league_id: D00491, year: 2025-2026
+2025-10-24 11:55:23,343 - INFO - Team 1: Created DataFrame with 6 rows for team: Hong Kong Cricket Club M1A
+2025-10-24 11:55:28,352 - INFO - Team 2: Created DataFrame with 7 rows for team: Hong Kong Cricket Club M1B
+2025-10-24 11:55:33,365 - INFO - Team 3: Created DataFrame with 6 rows for team: Hong Kong Football Club M1A
+2025-10-24 11:55:38,372 - INFO - Team 4: Created DataFrame with 7 rows for team: Hong Kong Football Club M1B
+2025-10-24 11:55:43,383 - INFO - Team 5: Created DataFrame with 9 rows for team: Squashathon M+
+2025-10-24 11:55:48,386 - INFO - Concatenated all team dataframes into a single DataFrame with 35 rows
+2025-10-24 11:55:48,386 - INFO - Successfully scraped Players page for Division Premier Masters
+2025-10-24 11:55:48,386 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\Premier Masters_players_df.csv
+2025-10-24 11:55:48,386 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\Premier Masters_players_df.csv
+2025-10-24 11:56:18,392 - WARNING - No usable summary/ranking data for Division Premier Masters. Unable to determine players who have played every game.
+2025-10-24 11:56:18,392 - INFO - No summarized data to save for Division Premier Masters; skipping summarized_df CSV creation.
+2025-10-24 11:56:18,392 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\Premier Masters.txt
+2025-10-24 11:56:18,394 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\Premier Masters.txt
+2025-10-24 11:56:18,394 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\Premier Masters.txt
+2025-10-24 11:56:18,394 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\Premier Masters.txt
+2025-10-24 11:56:48,559 - INFO - Processing Division Premier Ladies
+2025-10-24 11:56:48,559 - INFO - Scraping Schedules and Results page for Division Premier Ladies
+2025-10-24 11:56:48,559 - INFO - Scraping schedules and results page for league id: D00495, year: 2025-2026...
+2025-10-24 11:56:49,651 - INFO - Successfully created schedules and results DataFrame with 30 rows
+2025-10-24 11:56:49,658 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 11:56:49,658 - INFO - Successfully scraped Schedules and Results page for Division Premier Ladies
+2025-10-24 11:56:49,658 - WARNING - No played matches found in schedules_df for Division Premier Ladies. Skipping further processing.
+2025-10-24 11:56:49,658 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_0\Premier Ladies_schedules_df.csv
+2025-10-24 11:56:49,658 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_0\Premier Ladies_schedules_df.csv
+2025-10-24 11:57:19,667 - INFO - Scraping Team Summary page for Division Premier Ladies
+2025-10-24 11:57:19,667 - INFO - Scraping team summary page (team_summery) for league id: D00495, year: 2025-2026...
+2025-10-24 11:57:19,995 - INFO - [team_summery] Successfully created summary DataFrame with 5 rows
+2025-10-24 11:57:19,995 - INFO - Successfully scraped Team Summary page for Division Premier Ladies
+2025-10-24 11:57:19,995 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_0\Premier Ladies_summary_df.csv
+2025-10-24 11:57:50,008 - INFO - Scraping Teams page for Division Premier Ladies
+2025-10-24 11:57:50,008 - INFO - Starting scrape_teams_page for league id: D00495, year: 2025-2026
+2025-10-24 11:57:50,555 - INFO - Successfully created teams DataFrame with 5 rows
+2025-10-24 11:57:50,555 - INFO - Successfully scraped Teams page for Division Premier Ladies
+2025-10-24 11:57:50,555 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_0\Premier Ladies_teams_df.csv
+2025-10-24 11:57:50,555 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_0\Premier Ladies_teams_df.csv
+2025-10-24 11:58:20,568 - INFO - Scraping Ranking page for Division Premier Ladies
+2025-10-24 11:58:20,568 - INFO - Scraping ranking page for league id: D00495, year: 2025-2026
+2025-10-24 11:58:21,071 - INFO - Successfully created ranking DataFrame with 20 rows
+2025-10-24 11:58:21,071 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 11:58:21,071 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 11:58:21,071 - INFO - Successfully scraped Ranking page for Division Premier Ladies
+2025-10-24 11:58:21,082 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_0\Premier Ladies_ranking_df.csv
+2025-10-24 11:58:21,084 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_0\Premier Ladies_ranking_df.csv
+2025-10-24 11:58:51,087 - INFO - Scraping Players page for Division Premier Ladies
+2025-10-24 11:58:51,087 - INFO - Starting scrape_players_page for league_id: D00495, year: 2025-2026
+2025-10-24 11:58:51,610 - INFO - Team 1: Created DataFrame with 3 rows for team: Hong Kong Cricket Club L1
+2025-10-24 11:58:56,623 - INFO - Team 2: Created DataFrame with 3 rows for team: Hong Kong Football Club L1
+2025-10-24 11:59:01,627 - INFO - Team 3: Created DataFrame with 4 rows for team: JESSICA L1
+2025-10-24 11:59:06,634 - INFO - Team 4: Created DataFrame with 5 rows for team: Kowloon Cricket Club L1A
+2025-10-24 11:59:11,642 - INFO - Team 5: Created DataFrame with 5 rows for team: Kowloon Cricket Club L1B
+2025-10-24 11:59:16,649 - INFO - Concatenated all team dataframes into a single DataFrame with 20 rows
+2025-10-24 11:59:16,649 - INFO - Successfully scraped Players page for Division Premier Ladies
+2025-10-24 11:59:16,649 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_0\Premier Ladies_players_df.csv
+2025-10-24 11:59:16,649 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_0\Premier Ladies_players_df.csv
+2025-10-24 11:59:46,654 - WARNING - No usable summary/ranking data for Division Premier Ladies. Unable to determine players who have played every game.
+2025-10-24 11:59:46,654 - INFO - No summarized data to save for Division Premier Ladies; skipping summarized_df CSV creation.
+2025-10-24 11:59:46,654 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_0\Premier Ladies.txt
+2025-10-24 11:59:46,654 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_0\Premier Ladies.txt
+2025-10-24 11:59:46,654 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_0\Premier Ladies.txt
+2025-10-24 11:59:46,654 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_0\Premier Ladies.txt
+2025-10-24 11:59:46,654 - WARNING - No data found in results_df for Division Premier Ladies. Skipping further processing.
+2025-10-24 11:59:46,654 - INFO - Processing Division M3
+2025-10-24 11:59:46,654 - INFO - Scraping Schedules and Results page for Division M3
+2025-10-24 11:59:46,654 - INFO - Scraping schedules and results page for league id: D00493, year: 2025-2026...
+2025-10-24 11:59:47,184 - INFO - Successfully created schedules and results DataFrame with 84 rows
+2025-10-24 11:59:47,184 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 11:59:47,184 - INFO - Successfully scraped Schedules and Results page for Division M3
+2025-10-24 11:59:47,184 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_4\M3_schedules_df.csv
+2025-10-24 11:59:47,200 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_4\M3_schedules_df.csv
+2025-10-24 12:00:17,201 - INFO - Scraping Team Summary page for Division M3
+2025-10-24 12:00:17,201 - INFO - Scraping team summary page (team_summery) for league id: D00493, year: 2025-2026...
+2025-10-24 12:00:18,839 - INFO - [team_summery] Successfully created summary DataFrame with 7 rows
+2025-10-24 12:00:18,839 - INFO - Successfully scraped Team Summary page for Division M3
+2025-10-24 12:00:18,839 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_4\M3_summary_df.csv
+2025-10-24 12:00:48,850 - INFO - Scraping Teams page for Division M3
+2025-10-24 12:00:48,850 - INFO - Starting scrape_teams_page for league id: D00493, year: 2025-2026
+2025-10-24 12:00:49,387 - INFO - Successfully created teams DataFrame with 7 rows
+2025-10-24 12:00:49,387 - INFO - Successfully scraped Teams page for Division M3
+2025-10-24 12:00:49,387 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_4\M3_teams_df.csv
+2025-10-24 12:00:49,387 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_4\M3_teams_df.csv
+2025-10-24 12:01:19,394 - INFO - Scraping Ranking page for Division M3
+2025-10-24 12:01:19,394 - INFO - Scraping ranking page for league id: D00493, year: 2025-2026
+2025-10-24 12:01:20,561 - INFO - Successfully created ranking DataFrame with 80 rows
+2025-10-24 12:01:20,579 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 12:01:20,581 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 12:01:20,581 - INFO - Successfully scraped Ranking page for Division M3
+2025-10-24 12:01:20,581 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_4\M3_ranking_df.csv
+2025-10-24 12:01:20,581 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_4\M3_ranking_df.csv
+2025-10-24 12:01:50,587 - INFO - Scraping Players page for Division M3
+2025-10-24 12:01:50,587 - INFO - Starting scrape_players_page for league_id: D00493, year: 2025-2026
+2025-10-24 12:01:52,960 - INFO - Team 1: Created DataFrame with 12 rows for team: Hong Kong Cricket Club M3
+2025-10-24 12:01:57,972 - INFO - Team 2: Created DataFrame with 14 rows for team: Hong Kong Football Club M3A
+2025-10-24 12:02:02,989 - INFO - Team 3: Created DataFrame with 13 rows for team: Hong Kong Football Club M3B
+2025-10-24 12:02:07,998 - INFO - Team 4: Created DataFrame with 13 rows for team: Kowloon Cricket Club M3
+2025-10-24 12:02:13,007 - INFO - Team 5: Created DataFrame with 9 rows for team: OSF
+2025-10-24 12:02:18,021 - INFO - Team 6: Created DataFrame with 12 rows for team: Royal Hong Kong Yacht Club M3
+2025-10-24 12:02:23,022 - INFO - Team 7: Created DataFrame with 7 rows for team: Titlows Squash Master
+2025-10-24 12:02:28,031 - INFO - Concatenated all team dataframes into a single DataFrame with 80 rows
+2025-10-24 12:02:28,031 - INFO - Successfully scraped Players page for Division M3
+2025-10-24 12:02:28,031 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\M3_players_df.csv
+2025-10-24 12:02:28,031 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\M3_players_df.csv
+2025-10-24 12:02:58,037 - WARNING - No usable summary/ranking data for Division M3. Unable to determine players who have played every game.
+2025-10-24 12:02:58,037 - INFO - No summarized data to save for Division M3; skipping summarized_df CSV creation.
+2025-10-24 12:02:58,037 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_4\M3.txt
+2025-10-24 12:02:58,037 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_4\M3.txt
+2025-10-24 12:02:58,037 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_4\M3.txt
+2025-10-24 12:02:58,037 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_4\M3.txt
+2025-10-24 12:03:28,287 - INFO - Processing Division M4
+2025-10-24 12:03:28,287 - INFO - Scraping Schedules and Results page for Division M4
+2025-10-24 12:03:28,287 - INFO - Scraping schedules and results page for league id: D00494, year: 2025-2026...
+2025-10-24 12:03:28,908 - INFO - Successfully created schedules and results DataFrame with 90 rows
+2025-10-24 12:03:28,908 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 12:03:28,924 - INFO - Successfully scraped Schedules and Results page for Division M4
+2025-10-24 12:03:28,924 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_4\M4_schedules_df.csv
+2025-10-24 12:03:28,934 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_4\M4_schedules_df.csv
+2025-10-24 12:03:58,937 - INFO - Scraping Team Summary page for Division M4
+2025-10-24 12:03:58,937 - INFO - Scraping team summary page (team_summery) for league id: D00494, year: 2025-2026...
+2025-10-24 12:04:00,184 - INFO - [team_summery] Successfully created summary DataFrame with 10 rows
+2025-10-24 12:04:00,184 - INFO - Successfully scraped Team Summary page for Division M4
+2025-10-24 12:04:00,186 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_4\M4_summary_df.csv
+2025-10-24 12:04:30,189 - INFO - Scraping Teams page for Division M4
+2025-10-24 12:04:30,189 - INFO - Starting scrape_teams_page for league id: D00494, year: 2025-2026
+2025-10-24 12:04:32,360 - INFO - Successfully created teams DataFrame with 10 rows
+2025-10-24 12:04:32,360 - INFO - Successfully scraped Teams page for Division M4
+2025-10-24 12:04:32,360 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_4\M4_teams_df.csv
+2025-10-24 12:04:32,360 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_4\M4_teams_df.csv
+2025-10-24 12:05:02,369 - INFO - Scraping Ranking page for Division M4
+2025-10-24 12:05:02,369 - INFO - Scraping ranking page for league id: D00494, year: 2025-2026
+2025-10-24 12:05:04,224 - INFO - Successfully created ranking DataFrame with 149 rows
+2025-10-24 12:05:04,242 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 12:05:04,242 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 12:05:04,242 - INFO - Successfully scraped Ranking page for Division M4
+2025-10-24 12:05:04,242 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_4\M4_ranking_df.csv
+2025-10-24 12:05:04,242 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_4\M4_ranking_df.csv
+2025-10-24 12:05:34,252 - INFO - Scraping Players page for Division M4
+2025-10-24 12:05:34,252 - INFO - Starting scrape_players_page for league_id: D00494, year: 2025-2026
+2025-10-24 12:05:36,136 - INFO - Team 1: Created DataFrame with 12 rows for team: Bolton
+2025-10-24 12:05:41,159 - INFO - Team 2: Created DataFrame with 20 rows for team: Hong Kong Club Blue
+2025-10-24 12:05:46,175 - INFO - Team 3: Created DataFrame with 16 rows for team: Hong Kong Cricket Club M4
+2025-10-24 12:05:51,185 - INFO - Team 4: Created DataFrame with 15 rows for team: Hong Kong Football Club M4A
+2025-10-24 12:05:56,189 - INFO - Team 5: Created DataFrame with 15 rows for team: Hong Kong Football Club M4B
+2025-10-24 12:06:01,201 - INFO - Team 6: Created DataFrame with 12 rows for team: Kowloon Cricket Club M4
+2025-10-24 12:06:06,222 - INFO - Team 7: Created DataFrame with 18 rows for team: Royal Hong Kong Yacht Club M4
+2025-10-24 12:06:11,230 - INFO - Team 8: Created DataFrame with 15 rows for team: SKCSC M4
+2025-10-24 12:06:16,238 - INFO - Team 9: Created DataFrame with 13 rows for team: United Services Recreation Club M4
+2025-10-24 12:06:21,255 - INFO - Team 10: Created DataFrame with 13 rows for team: WAKO
+2025-10-24 12:06:26,260 - INFO - Concatenated all team dataframes into a single DataFrame with 149 rows
+2025-10-24 12:06:26,260 - INFO - Successfully scraped Players page for Division M4
+2025-10-24 12:06:26,260 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\M4_players_df.csv
+2025-10-24 12:06:26,260 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\M4_players_df.csv
+2025-10-24 12:06:56,267 - WARNING - No usable summary/ranking data for Division M4. Unable to determine players who have played every game.
+2025-10-24 12:06:56,267 - INFO - No summarized data to save for Division M4; skipping summarized_df CSV creation.
+2025-10-24 12:06:56,267 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_4\M4.txt
+2025-10-24 12:06:56,267 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_4\M4.txt
+2025-10-24 12:06:56,267 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_4\M4.txt
+2025-10-24 12:06:56,271 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_4\M4.txt
+2025-10-24 12:07:26,574 - INFO - Processing Division 5
+2025-10-24 12:07:26,574 - INFO - Scraping Schedules and Results page for Division 5
+2025-10-24 12:07:26,574 - INFO - Scraping schedules and results page for league id: D00476, year: 2025-2026...
+2025-10-24 12:07:27,178 - INFO - Successfully created schedules and results DataFrame with 90 rows
+2025-10-24 12:07:27,178 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 12:07:27,193 - INFO - Successfully scraped Schedules and Results page for Division 5
+2025-10-24 12:07:27,195 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\5_schedules_df.csv
+2025-10-24 12:07:27,203 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\5_schedules_df.csv
+2025-10-24 12:07:57,204 - INFO - Scraping Team Summary page for Division 5
+2025-10-24 12:07:57,204 - INFO - Scraping team summary page (team_summery) for league id: D00476, year: 2025-2026...
+2025-10-24 12:07:57,680 - INFO - [team_summery] Successfully created summary DataFrame with 9 rows
+2025-10-24 12:07:57,680 - INFO - Successfully scraped Team Summary page for Division 5
+2025-10-24 12:07:57,696 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_3\5_summary_df.csv
+2025-10-24 12:08:27,700 - INFO - Scraping Teams page for Division 5
+2025-10-24 12:08:27,700 - INFO - Starting scrape_teams_page for league id: D00476, year: 2025-2026
+2025-10-24 12:08:29,246 - INFO - Successfully created teams DataFrame with 9 rows
+2025-10-24 12:08:29,246 - INFO - Successfully scraped Teams page for Division 5
+2025-10-24 12:08:29,246 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\5_teams_df.csv
+2025-10-24 12:08:29,246 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\5_teams_df.csv
+2025-10-24 12:08:59,252 - INFO - Scraping Ranking page for Division 5
+2025-10-24 12:08:59,252 - INFO - Scraping ranking page for league id: D00476, year: 2025-2026
+2025-10-24 12:09:01,010 - INFO - Successfully created ranking DataFrame with 88 rows
+2025-10-24 12:09:01,010 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 12:09:01,010 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 12:09:01,010 - INFO - Successfully scraped Ranking page for Division 5
+2025-10-24 12:09:01,010 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\5_ranking_df.csv
+2025-10-24 12:09:01,028 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\5_ranking_df.csv
+2025-10-24 12:09:31,029 - INFO - Scraping Players page for Division 5
+2025-10-24 12:09:31,029 - INFO - Starting scrape_players_page for league_id: D00476, year: 2025-2026
+2025-10-24 12:09:32,027 - INFO - Team 1: Created DataFrame with 10 rows for team: ERROR
+2025-10-24 12:09:37,049 - INFO - Team 2: Created DataFrame with 7 rows for team: Happy Squash 2
+2025-10-24 12:09:42,053 - INFO - Team 3: Created DataFrame with 10 rows for team: Hong Kong Football Club 5
+2025-10-24 12:09:47,061 - INFO - Team 4: Created DataFrame with 8 rows for team: Kowloon Cricket Club 5
+2025-10-24 12:09:52,074 - INFO - Team 5: Created DataFrame with 11 rows for team: NEXUS 2
+2025-10-24 12:09:57,089 - INFO - Team 6: Created DataFrame with 9 rows for team: Physical Chess 1
+2025-10-24 12:10:02,091 - INFO - Team 7: Created DataFrame with 7 rows for team: Sha Tin 2
+2025-10-24 12:10:07,105 - INFO - Team 8: Created DataFrame with 8 rows for team: Squashathon
+2025-10-24 12:10:12,109 - INFO - Team 9: Created DataFrame with 10 rows for team: United Services Recreation Club 2
+2025-10-24 12:10:17,119 - INFO - Concatenated all team dataframes into a single DataFrame with 80 rows
+2025-10-24 12:10:17,119 - INFO - Successfully scraped Players page for Division 5
+2025-10-24 12:10:17,119 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\5_players_df.csv
+2025-10-24 12:10:17,119 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\5_players_df.csv
+2025-10-24 12:10:47,125 - WARNING - No usable summary/ranking data for Division 5. Unable to determine players who have played every game.
+2025-10-24 12:10:47,125 - INFO - No summarized data to save for Division 5; skipping summarized_df CSV creation.
+2025-10-24 12:10:47,125 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\5.txt
+2025-10-24 12:10:47,125 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\5.txt
+2025-10-24 12:10:47,125 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\5.txt
+2025-10-24 12:10:47,125 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\5.txt
+2025-10-24 12:11:17,363 - INFO - Processing Division 8A
+2025-10-24 12:11:17,363 - INFO - Scraping Schedules and Results page for Division 8A
+2025-10-24 12:11:17,363 - INFO - Scraping schedules and results page for league id: D00479, year: 2025-2026...
+2025-10-24 12:11:17,723 - INFO - Successfully created schedules and results DataFrame with 84 rows
+2025-10-24 12:11:17,723 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 12:11:17,723 - INFO - Successfully scraped Schedules and Results page for Division 8A
+2025-10-24 12:11:17,743 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\8A_schedules_df.csv
+2025-10-24 12:11:17,746 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\8A_schedules_df.csv
+2025-10-24 12:11:47,747 - INFO - Scraping Team Summary page for Division 8A
+2025-10-24 12:11:47,747 - INFO - Scraping team summary page (team_summery) for league id: D00479, year: 2025-2026...
+2025-10-24 12:11:48,303 - INFO - [team_summery] Successfully created summary DataFrame with 7 rows
+2025-10-24 12:11:48,304 - INFO - Successfully scraped Team Summary page for Division 8A
+2025-10-24 12:11:48,306 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_3\8A_summary_df.csv
+2025-10-24 12:12:18,308 - INFO - Scraping Teams page for Division 8A
+2025-10-24 12:12:18,308 - INFO - Starting scrape_teams_page for league id: D00479, year: 2025-2026
+2025-10-24 12:12:18,504 - INFO - Successfully created teams DataFrame with 7 rows
+2025-10-24 12:12:18,504 - INFO - Successfully scraped Teams page for Division 8A
+2025-10-24 12:12:18,504 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\8A_teams_df.csv
+2025-10-24 12:12:18,504 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\8A_teams_df.csv
+2025-10-24 12:12:48,517 - INFO - Scraping Ranking page for Division 8A
+2025-10-24 12:12:48,517 - INFO - Scraping ranking page for league id: D00479, year: 2025-2026
+2025-10-24 12:12:49,295 - INFO - Successfully created ranking DataFrame with 65 rows
+2025-10-24 12:12:49,301 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 12:12:49,301 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 12:12:49,301 - INFO - Successfully scraped Ranking page for Division 8A
+2025-10-24 12:12:49,301 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\8A_ranking_df.csv
+2025-10-24 12:12:49,301 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\8A_ranking_df.csv
+2025-10-24 12:13:19,313 - INFO - Scraping Players page for Division 8A
+2025-10-24 12:13:19,313 - INFO - Starting scrape_players_page for league_id: D00479, year: 2025-2026
+2025-10-24 12:13:20,515 - INFO - Team 1: Created DataFrame with 6 rows for team: i-Mask Advance Squash Club 2
+2025-10-24 12:13:25,528 - INFO - Team 2: Created DataFrame with 9 rows for team: Kinetic 2
+2025-10-24 12:13:30,535 - INFO - Team 3: Created DataFrame with 8 rows for team: LONGVIEW
+2025-10-24 12:13:35,543 - INFO - Team 4: Created DataFrame with 11 rows for team: Physical Chess 3
+2025-10-24 12:13:40,560 - INFO - Team 5: Created DataFrame with 8 rows for team: Sha Tin 3
+2025-10-24 12:13:45,562 - INFO - Team 6: Created DataFrame with 9 rows for team: Squashathon Zero
+2025-10-24 12:13:50,575 - INFO - Team 7: Created DataFrame with 8 rows for team: TOMCAT
+2025-10-24 12:13:55,583 - INFO - Concatenated all team dataframes into a single DataFrame with 59 rows
+2025-10-24 12:13:55,583 - INFO - Successfully scraped Players page for Division 8A
+2025-10-24 12:13:55,586 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\8A_players_df.csv
+2025-10-24 12:13:55,586 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\8A_players_df.csv
+2025-10-24 12:14:25,591 - WARNING - No usable summary/ranking data for Division 8A. Unable to determine players who have played every game.
+2025-10-24 12:14:25,591 - INFO - No summarized data to save for Division 8A; skipping summarized_df CSV creation.
+2025-10-24 12:14:25,591 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\8A.txt
+2025-10-24 12:14:25,593 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\8A.txt
+2025-10-24 12:14:25,593 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\8A.txt
+2025-10-24 12:14:25,593 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\8A.txt
+2025-10-24 12:14:55,777 - INFO - Processing Division 8B
+2025-10-24 12:14:55,777 - INFO - Scraping Schedules and Results page for Division 8B
+2025-10-24 12:14:55,777 - INFO - Scraping schedules and results page for league id: D00480, year: 2025-2026...
+2025-10-24 12:14:56,173 - INFO - Successfully created schedules and results DataFrame with 60 rows
+2025-10-24 12:14:56,173 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 12:14:56,173 - INFO - Successfully scraped Schedules and Results page for Division 8B
+2025-10-24 12:14:56,190 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\8B_schedules_df.csv
+2025-10-24 12:14:56,193 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\8B_schedules_df.csv
+2025-10-24 12:15:26,195 - INFO - Scraping Team Summary page for Division 8B
+2025-10-24 12:15:26,195 - INFO - Scraping team summary page (team_summery) for league id: D00480, year: 2025-2026...
+2025-10-24 12:15:27,224 - INFO - [team_summery] Successfully created summary DataFrame with 6 rows
+2025-10-24 12:15:27,224 - INFO - Successfully scraped Team Summary page for Division 8B
+2025-10-24 12:15:27,224 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_3\8B_summary_df.csv
+2025-10-24 12:15:57,240 - INFO - Scraping Teams page for Division 8B
+2025-10-24 12:15:57,240 - INFO - Starting scrape_teams_page for league id: D00480, year: 2025-2026
+2025-10-24 12:15:57,941 - INFO - Successfully created teams DataFrame with 6 rows
+2025-10-24 12:15:57,941 - INFO - Successfully scraped Teams page for Division 8B
+2025-10-24 12:15:57,941 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\8B_teams_df.csv
+2025-10-24 12:15:57,941 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\8B_teams_df.csv
+2025-10-24 12:16:27,956 - INFO - Scraping Ranking page for Division 8B
+2025-10-24 12:16:27,956 - INFO - Scraping ranking page for league id: D00480, year: 2025-2026
+2025-10-24 12:16:28,670 - INFO - Successfully created ranking DataFrame with 58 rows
+2025-10-24 12:16:28,686 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 12:16:28,686 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 12:16:28,686 - INFO - Successfully scraped Ranking page for Division 8B
+2025-10-24 12:16:28,686 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\8B_ranking_df.csv
+2025-10-24 12:16:28,686 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\8B_ranking_df.csv
+2025-10-24 12:16:58,700 - INFO - Scraping Players page for Division 8B
+2025-10-24 12:16:58,700 - INFO - Starting scrape_players_page for league_id: D00480, year: 2025-2026
+2025-10-24 12:17:08,199 - INFO - Team 1: Created DataFrame with 9 rows for team: Fusion Squash Club 2
+2025-10-24 12:17:13,207 - INFO - Team 2: Created DataFrame with 8 rows for team: Happy Squash 3
+2025-10-24 12:17:18,219 - INFO - Team 3: Created DataFrame with 11 rows for team: Smart Squash 1
+2025-10-24 12:17:23,226 - INFO - Team 4: Created DataFrame with 9 rows for team: TNG 1
+2025-10-24 12:17:28,232 - INFO - Team 5: Created DataFrame with 10 rows for team: Vitality Squash 1
+2025-10-24 12:17:33,248 - INFO - Team 6: Created DataFrame with 9 rows for team: X-Alpha 4
+2025-10-24 12:17:38,251 - INFO - Concatenated all team dataframes into a single DataFrame with 56 rows
+2025-10-24 12:17:38,251 - INFO - Successfully scraped Players page for Division 8B
+2025-10-24 12:17:38,251 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\8B_players_df.csv
+2025-10-24 12:17:38,254 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\8B_players_df.csv
+2025-10-24 12:18:08,257 - WARNING - No usable summary/ranking data for Division 8B. Unable to determine players who have played every game.
+2025-10-24 12:18:08,257 - INFO - No summarized data to save for Division 8B; skipping summarized_df CSV creation.
+2025-10-24 12:18:08,257 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\8B.txt
+2025-10-24 12:18:08,257 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\8B.txt
+2025-10-24 12:18:08,257 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\8B.txt
+2025-10-24 12:18:08,257 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\8B.txt
+2025-10-24 12:18:38,478 - INFO - Processing Division 13A
+2025-10-24 12:18:38,478 - INFO - Scraping Schedules and Results page for Division 13A
+2025-10-24 12:18:38,478 - INFO - Scraping schedules and results page for league id: D00485, year: 2025-2026...
+2025-10-24 12:18:38,921 - INFO - Successfully created schedules and results DataFrame with 90 rows
+2025-10-24 12:18:38,921 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 12:18:38,921 - INFO - Successfully scraped Schedules and Results page for Division 13A
+2025-10-24 12:18:38,937 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\13A_schedules_df.csv
+2025-10-24 12:18:38,937 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\13A_schedules_df.csv
+2025-10-24 12:19:08,949 - INFO - Scraping Team Summary page for Division 13A
+2025-10-24 12:19:08,949 - INFO - Scraping team summary page (team_summery) for league id: D00485, year: 2025-2026...
+2025-10-24 12:19:14,458 - INFO - [team_summery] Successfully created summary DataFrame with 9 rows
+2025-10-24 12:19:14,458 - INFO - Successfully scraped Team Summary page for Division 13A
+2025-10-24 12:19:14,458 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_3\13A_summary_df.csv
+2025-10-24 12:19:44,466 - INFO - Scraping Teams page for Division 13A
+2025-10-24 12:19:44,466 - INFO - Starting scrape_teams_page for league id: D00485, year: 2025-2026
+2025-10-24 12:19:44,715 - INFO - Successfully created teams DataFrame with 9 rows
+2025-10-24 12:19:44,715 - INFO - Successfully scraped Teams page for Division 13A
+2025-10-24 12:19:44,715 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\13A_teams_df.csv
+2025-10-24 12:19:44,732 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\13A_teams_df.csv
+2025-10-24 12:20:14,734 - INFO - Scraping Ranking page for Division 13A
+2025-10-24 12:20:14,734 - INFO - Scraping ranking page for league id: D00485, year: 2025-2026
+2025-10-24 12:20:29,014 - INFO - Successfully created ranking DataFrame with 90 rows
+2025-10-24 12:20:29,030 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 12:20:29,030 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 12:20:29,030 - INFO - Successfully scraped Ranking page for Division 13A
+2025-10-24 12:20:29,030 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\13A_ranking_df.csv
+2025-10-24 12:20:29,030 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\13A_ranking_df.csv
+2025-10-24 12:20:59,042 - INFO - Scraping Players page for Division 13A
+2025-10-24 12:20:59,042 - INFO - Starting scrape_players_page for league_id: D00485, year: 2025-2026
+2025-10-24 12:21:15,062 - INFO - Team 1: Created DataFrame with 9 rows for team: Arctic Circle
+2025-10-24 12:21:20,069 - INFO - Team 2: Created DataFrame with 11 rows for team: Craigengower Cricket Club
+2025-10-24 12:21:25,082 - INFO - Team 3: Created DataFrame with 11 rows for team: Greenfield
+2025-10-24 12:21:30,090 - INFO - Team 4: Created DataFrame with 9 rows for team: MM Squash
+2025-10-24 12:21:35,093 - INFO - Team 5: Created DataFrame with 9 rows for team: North District Sports Association 1
+2025-10-24 12:21:40,102 - INFO - Team 6: Created DataFrame with 10 rows for team: Star River 2
+2025-10-24 12:21:45,118 - INFO - Team 7: Created DataFrame with 7 rows for team: Squashathon SocGen
+2025-10-24 12:21:50,125 - INFO - Team 8: Created DataFrame with 11 rows for team: The Squash Club 3
+2025-10-24 12:21:55,135 - INFO - Team 9: Created DataFrame with 11 rows for team: X-Alpha 5
+2025-10-24 12:22:00,141 - INFO - Concatenated all team dataframes into a single DataFrame with 88 rows
+2025-10-24 12:22:00,141 - INFO - Successfully scraped Players page for Division 13A
+2025-10-24 12:22:00,141 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\13A_players_df.csv
+2025-10-24 12:22:00,144 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\13A_players_df.csv
+2025-10-24 12:22:30,147 - WARNING - No usable summary/ranking data for Division 13A. Unable to determine players who have played every game.
+2025-10-24 12:22:30,147 - INFO - No summarized data to save for Division 13A; skipping summarized_df CSV creation.
+2025-10-24 12:22:30,147 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\13A.txt
+2025-10-24 12:22:30,147 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\13A.txt
+2025-10-24 12:22:30,147 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\13A.txt
+2025-10-24 12:22:30,151 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\13A.txt
+2025-10-24 12:23:00,405 - INFO - Processing Division 13B
+2025-10-24 12:23:00,405 - INFO - Scraping Schedules and Results page for Division 13B
+2025-10-24 12:23:00,405 - INFO - Scraping schedules and results page for league id: D00486, year: 2025-2026...
+2025-10-24 12:23:00,759 - INFO - Successfully created schedules and results DataFrame with 90 rows
+2025-10-24 12:23:00,759 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 12:23:00,775 - INFO - Successfully scraped Schedules and Results page for Division 13B
+2025-10-24 12:23:00,785 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\13B_schedules_df.csv
+2025-10-24 12:23:00,785 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\13B_schedules_df.csv
+2025-10-24 12:23:30,790 - INFO - Scraping Team Summary page for Division 13B
+2025-10-24 12:23:30,790 - INFO - Scraping team summary page (team_summery) for league id: D00486, year: 2025-2026...
+2025-10-24 12:23:31,378 - INFO - [team_summery] Successfully created summary DataFrame with 9 rows
+2025-10-24 12:23:31,378 - INFO - Successfully scraped Team Summary page for Division 13B
+2025-10-24 12:23:31,378 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_3\13B_summary_df.csv
+2025-10-24 12:24:01,391 - INFO - Scraping Teams page for Division 13B
+2025-10-24 12:24:01,391 - INFO - Starting scrape_teams_page for league id: D00486, year: 2025-2026
+2025-10-24 12:24:05,575 - INFO - Successfully created teams DataFrame with 9 rows
+2025-10-24 12:24:05,575 - INFO - Successfully scraped Teams page for Division 13B
+2025-10-24 12:24:05,575 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\13B_teams_df.csv
+2025-10-24 12:24:05,579 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\13B_teams_df.csv
+2025-10-24 12:24:35,581 - INFO - Scraping Ranking page for Division 13B
+2025-10-24 12:24:35,581 - INFO - Scraping ranking page for league id: D00486, year: 2025-2026
+2025-10-24 12:24:36,760 - INFO - Successfully created ranking DataFrame with 90 rows
+2025-10-24 12:24:36,760 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 12:24:36,760 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 12:24:36,760 - INFO - Successfully scraped Ranking page for Division 13B
+2025-10-24 12:24:36,760 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\13B_ranking_df.csv
+2025-10-24 12:24:36,776 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\13B_ranking_df.csv
+2025-10-24 12:25:06,778 - INFO - Scraping Players page for Division 13B
+2025-10-24 12:25:06,778 - INFO - Starting scrape_players_page for league_id: D00486, year: 2025-2026
+2025-10-24 12:25:08,446 - INFO - Team 1: Created DataFrame with 11 rows for team: Electrify Squash Div 13
+2025-10-24 12:25:13,462 - INFO - Team 2: Created DataFrame with 9 rows for team: Fusion Squash Club 3
+2025-10-24 12:25:18,466 - INFO - Team 3: Created DataFrame with 7 rows for team: Happy Squash 4
+2025-10-24 12:25:23,482 - INFO - Team 4: Created DataFrame with 9 rows for team: Hong Kong Football Club 13
+2025-10-24 12:25:28,492 - INFO - Team 5: Created DataFrame with 12 rows for team: Kinetic 4
+2025-10-24 12:25:33,503 - INFO - Team 6: Created DataFrame with 12 rows for team: Kowloon Cricket Club 13
+2025-10-24 12:25:38,511 - INFO - Team 7: Created DataFrame with 9 rows for team: Squashathon One
+2025-10-24 12:25:43,520 - INFO - Team 8: Created DataFrame with 7 rows for team: TNG 2
+2025-10-24 12:25:48,531 - INFO - Team 9: Created DataFrame with 12 rows for team: Yuen Long District Sports Association Limited
+2025-10-24 12:25:53,533 - INFO - Concatenated all team dataframes into a single DataFrame with 88 rows
+2025-10-24 12:25:53,533 - INFO - Successfully scraped Players page for Division 13B
+2025-10-24 12:25:53,533 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\13B_players_df.csv
+2025-10-24 12:25:53,533 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\13B_players_df.csv
+2025-10-24 12:26:23,539 - WARNING - No usable summary/ranking data for Division 13B. Unable to determine players who have played every game.
+2025-10-24 12:26:23,539 - INFO - No summarized data to save for Division 13B; skipping summarized_df CSV creation.
+2025-10-24 12:26:23,539 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\13B.txt
+2025-10-24 12:26:23,539 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\13B.txt
+2025-10-24 12:26:23,539 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\13B.txt
+2025-10-24 12:26:23,539 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\13B.txt
+2025-10-24 12:26:53,826 - INFO - Processing Division 13C
+2025-10-24 12:26:53,826 - INFO - Scraping Schedules and Results page for Division 13C
+2025-10-24 12:26:53,826 - INFO - Scraping schedules and results page for league id: D00487, year: 2025-2026...
+2025-10-24 12:26:54,216 - INFO - Successfully created schedules and results DataFrame with 90 rows
+2025-10-24 12:26:54,216 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 12:26:54,216 - INFO - Successfully scraped Schedules and Results page for Division 13C
+2025-10-24 12:26:54,216 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\13C_schedules_df.csv
+2025-10-24 12:26:54,216 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\13C_schedules_df.csv
+2025-10-24 12:27:24,231 - INFO - Scraping Team Summary page for Division 13C
+2025-10-24 12:27:24,231 - INFO - Scraping team summary page (team_summery) for league id: D00487, year: 2025-2026...
+2025-10-24 12:27:24,802 - INFO - [team_summery] Successfully created summary DataFrame with 9 rows
+2025-10-24 12:27:24,802 - INFO - Successfully scraped Team Summary page for Division 13C
+2025-10-24 12:27:24,802 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_3\13C_summary_df.csv
+2025-10-24 12:27:54,814 - INFO - Scraping Teams page for Division 13C
+2025-10-24 12:27:54,814 - INFO - Starting scrape_teams_page for league id: D00487, year: 2025-2026
+2025-10-24 12:27:55,061 - INFO - Successfully created teams DataFrame with 9 rows
+2025-10-24 12:27:55,061 - INFO - Successfully scraped Teams page for Division 13C
+2025-10-24 12:27:55,061 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\13C_teams_df.csv
+2025-10-24 12:27:55,061 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\13C_teams_df.csv
+2025-10-24 12:28:25,068 - INFO - Scraping Ranking page for Division 13C
+2025-10-24 12:28:25,068 - INFO - Scraping ranking page for league id: D00487, year: 2025-2026
+2025-10-24 12:28:27,000 - INFO - Successfully created ranking DataFrame with 91 rows
+2025-10-24 12:28:27,012 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 12:28:27,014 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 12:28:27,014 - INFO - Successfully scraped Ranking page for Division 13C
+2025-10-24 12:28:27,016 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\13C_ranking_df.csv
+2025-10-24 12:28:27,016 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\13C_ranking_df.csv
+2025-10-24 12:28:57,020 - INFO - Scraping Players page for Division 13C
+2025-10-24 12:28:57,020 - INFO - Starting scrape_players_page for league_id: D00487, year: 2025-2026
+2025-10-24 12:28:58,001 - INFO - Team 1: Created DataFrame with 7 rows for team: Bravo D13
+2025-10-24 12:29:03,018 - INFO - Team 2: Created DataFrame with 9 rows for team: HKIS Div 13
+2025-10-24 12:29:08,027 - INFO - Team 3: Created DataFrame with 10 rows for team: i-Mask Advance Squash Club 6
+2025-10-24 12:29:13,043 - INFO - Team 4: Created DataFrame with 11 rows for team: i-Mask Advance Squash Club 7
+2025-10-24 12:29:18,054 - INFO - Team 5: Created DataFrame with 11 rows for team: JSA 1
+2025-10-24 12:29:23,065 - INFO - Team 6: Created DataFrame with 9 rows for team: NEXUS 3
+2025-10-24 12:29:28,075 - INFO - Team 7: Created DataFrame with 12 rows for team: Smart Squash 2
+2025-10-24 12:29:33,087 - INFO - Team 8: Created DataFrame with 11 rows for team: Smart Squash 3
+2025-10-24 12:29:38,094 - INFO - Team 9: Created DataFrame with 9 rows for team: Vitality Squash 2
+2025-10-24 12:29:43,098 - INFO - Concatenated all team dataframes into a single DataFrame with 89 rows
+2025-10-24 12:29:43,098 - INFO - Successfully scraped Players page for Division 13C
+2025-10-24 12:29:43,098 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\13C_players_df.csv
+2025-10-24 12:29:43,098 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\13C_players_df.csv
+2025-10-24 12:30:13,105 - WARNING - No usable summary/ranking data for Division 13C. Unable to determine players who have played every game.
+2025-10-24 12:30:13,105 - INFO - No summarized data to save for Division 13C; skipping summarized_df CSV creation.
+2025-10-24 12:30:13,105 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\13C.txt
+2025-10-24 12:30:13,105 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\13C.txt
+2025-10-24 12:30:13,105 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\13C.txt
+2025-10-24 12:30:13,105 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\13C.txt
+2025-10-24 12:30:43,320 - INFO - Processing Division L3
+2025-10-24 12:30:43,320 - INFO - Scraping Schedules and Results page for Division L3
+2025-10-24 12:30:43,320 - INFO - Scraping schedules and results page for league id: D00497, year: 2025-2026...
+2025-10-24 12:30:43,893 - INFO - Successfully created schedules and results DataFrame with 60 rows
+2025-10-24 12:30:43,893 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 12:30:43,893 - INFO - Successfully scraped Schedules and Results page for Division L3
+2025-10-24 12:30:43,909 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\L3_schedules_df.csv
+2025-10-24 12:30:43,909 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\L3_schedules_df.csv
+2025-10-24 12:31:13,920 - INFO - Scraping Team Summary page for Division L3
+2025-10-24 12:31:13,920 - INFO - Scraping team summary page (team_summery) for league id: D00497, year: 2025-2026...
+2025-10-24 12:31:14,336 - INFO - [team_summery] Successfully created summary DataFrame with 5 rows
+2025-10-24 12:31:14,336 - INFO - Successfully scraped Team Summary page for Division L3
+2025-10-24 12:31:14,336 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_3\L3_summary_df.csv
+2025-10-24 12:31:44,342 - INFO - Scraping Teams page for Division L3
+2025-10-24 12:31:44,342 - INFO - Starting scrape_teams_page for league id: D00497, year: 2025-2026
+2025-10-24 12:31:45,241 - INFO - Successfully created teams DataFrame with 5 rows
+2025-10-24 12:31:45,241 - INFO - Successfully scraped Teams page for Division L3
+2025-10-24 12:31:45,241 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\L3_teams_df.csv
+2025-10-24 12:31:45,251 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\L3_teams_df.csv
+2025-10-24 12:32:15,254 - INFO - Scraping Ranking page for Division L3
+2025-10-24 12:32:15,254 - INFO - Scraping ranking page for league id: D00497, year: 2025-2026
+2025-10-24 12:32:15,841 - INFO - Successfully created ranking DataFrame with 44 rows
+2025-10-24 12:32:15,841 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 12:32:15,856 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 12:32:15,856 - INFO - Successfully scraped Ranking page for Division L3
+2025-10-24 12:32:15,856 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\L3_ranking_df.csv
+2025-10-24 12:32:15,856 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\L3_ranking_df.csv
+2025-10-24 12:32:45,862 - INFO - Scraping Players page for Division L3
+2025-10-24 12:32:45,862 - INFO - Starting scrape_players_page for league_id: D00497, year: 2025-2026
+2025-10-24 12:32:46,588 - INFO - Team 1: Created DataFrame with 8 rows for team: Hong Kong Cricket Club L3
+2025-10-24 12:32:51,601 - INFO - Team 2: Created DataFrame with 7 rows for team: Hong Kong Football Club L3A
+2025-10-24 12:32:56,603 - INFO - Team 3: Created DataFrame with 8 rows for team: Hong Kong Football Club L3B
+2025-10-24 12:33:01,611 - INFO - Team 4: Created DataFrame with 8 rows for team: Hong Kong Football Club L3C
+2025-10-24 12:33:06,619 - INFO - Team 5: Created DataFrame with 9 rows for team: JESSICA L3
+2025-10-24 12:33:11,628 - INFO - Concatenated all team dataframes into a single DataFrame with 40 rows
+2025-10-24 12:33:11,628 - INFO - Successfully scraped Players page for Division L3
+2025-10-24 12:33:11,628 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\L3_players_df.csv
+2025-10-24 12:33:11,631 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\L3_players_df.csv
+2025-10-24 12:33:41,634 - WARNING - No usable summary/ranking data for Division L3. Unable to determine players who have played every game.
+2025-10-24 12:33:41,634 - INFO - No summarized data to save for Division L3; skipping summarized_df CSV creation.
+2025-10-24 12:33:41,634 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\L3.txt
+2025-10-24 12:33:41,634 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\L3.txt
+2025-10-24 12:33:41,634 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\L3.txt
+2025-10-24 12:33:41,634 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\L3.txt
+2025-10-24 12:34:11,766 - INFO - Processing Division L4
+2025-10-24 12:34:11,766 - INFO - Scraping Schedules and Results page for Division L4
+2025-10-24 12:34:11,766 - INFO - Scraping schedules and results page for league id: D00498, year: 2025-2026...
+2025-10-24 12:34:12,554 - INFO - Successfully created schedules and results DataFrame with 90 rows
+2025-10-24 12:34:12,554 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 12:34:12,554 - INFO - Successfully scraped Schedules and Results page for Division L4
+2025-10-24 12:34:12,569 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\L4_schedules_df.csv
+2025-10-24 12:34:12,569 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\L4_schedules_df.csv
+2025-10-24 12:34:42,577 - INFO - Scraping Team Summary page for Division L4
+2025-10-24 12:34:42,577 - INFO - Scraping team summary page (team_summery) for league id: D00498, year: 2025-2026...
+2025-10-24 12:34:43,385 - INFO - [team_summery] Successfully created summary DataFrame with 9 rows
+2025-10-24 12:34:43,385 - INFO - Successfully scraped Team Summary page for Division L4
+2025-10-24 12:34:43,385 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_3\L4_summary_df.csv
+2025-10-24 12:35:13,401 - INFO - Scraping Teams page for Division L4
+2025-10-24 12:35:13,401 - INFO - Starting scrape_teams_page for league id: D00498, year: 2025-2026
+2025-10-24 12:35:14,145 - INFO - Successfully created teams DataFrame with 9 rows
+2025-10-24 12:35:14,145 - INFO - Successfully scraped Teams page for Division L4
+2025-10-24 12:35:14,145 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\L4_teams_df.csv
+2025-10-24 12:35:14,145 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\L4_teams_df.csv
+2025-10-24 12:35:44,161 - INFO - Scraping Ranking page for Division L4
+2025-10-24 12:35:44,161 - INFO - Scraping ranking page for league id: D00498, year: 2025-2026
+2025-10-24 12:35:45,186 - INFO - Successfully created ranking DataFrame with 87 rows
+2025-10-24 12:35:45,202 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 12:35:45,202 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 12:35:45,202 - INFO - Successfully scraped Ranking page for Division L4
+2025-10-24 12:35:45,202 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\L4_ranking_df.csv
+2025-10-24 12:35:45,216 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\L4_ranking_df.csv
+2025-10-24 12:36:15,218 - INFO - Scraping Players page for Division L4
+2025-10-24 12:36:15,218 - INFO - Starting scrape_players_page for league_id: D00498, year: 2025-2026
+2025-10-24 12:36:17,744 - INFO - Team 1: Created DataFrame with 8 rows for team: Hong Kong Cricket Club L4
+2025-10-24 12:36:22,752 - INFO - Team 2: Created DataFrame with 8 rows for team: Hong Kong Cricket Club Rockettes
+2025-10-24 12:36:27,770 - INFO - Team 3: Created DataFrame with 13 rows for team: Hong Kong Football Club L4
+2025-10-24 12:36:32,779 - INFO - Team 4: Created DataFrame with 9 rows for team: Hong Kong Football Club JSA
+2025-10-24 12:36:37,781 - INFO - Team 5: Created DataFrame with 9 rows for team: JESSICA Mochis
+2025-10-24 12:36:42,791 - INFO - Team 6: Created DataFrame with 12 rows for team: JESSICA L4
+2025-10-24 12:36:47,806 - INFO - Team 7: Created DataFrame with 10 rows for team: Kwai Tsing District Squash Club L4
+2025-10-24 12:36:52,813 - INFO - Team 8: Created DataFrame with 8 rows for team: Squashathon Ladies
+2025-10-24 12:36:57,820 - INFO - Team 9: Created DataFrame with 10 rows for team: The Squash Club L4
+2025-10-24 12:37:02,829 - INFO - Concatenated all team dataframes into a single DataFrame with 87 rows
+2025-10-24 12:37:02,829 - INFO - Successfully scraped Players page for Division L4
+2025-10-24 12:37:02,829 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\L4_players_df.csv
+2025-10-24 12:37:02,832 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\L4_players_df.csv
+2025-10-24 12:37:32,835 - WARNING - No usable summary/ranking data for Division L4. Unable to determine players who have played every game.
+2025-10-24 12:37:32,835 - INFO - No summarized data to save for Division L4; skipping summarized_df CSV creation.
+2025-10-24 12:37:32,835 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\L4.txt
+2025-10-24 12:37:32,835 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\L4.txt
+2025-10-24 12:37:32,835 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\L4.txt
+2025-10-24 12:37:32,835 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\L4.txt
+2025-10-24 12:38:03,138 - INFO - Processing Division 14
+2025-10-24 12:38:03,138 - INFO - Scraping Schedules and Results page for Division 14
+2025-10-24 12:38:03,138 - INFO - Scraping schedules and results page for league id: D00488, year: 2025-2026...
+2025-10-24 12:38:03,559 - INFO - Successfully created schedules and results DataFrame with 132 rows
+2025-10-24 12:38:03,575 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 12:38:03,575 - INFO - Successfully scraped Schedules and Results page for Division 14
+2025-10-24 12:38:03,575 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\14_schedules_df.csv
+2025-10-24 12:38:03,585 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\14_schedules_df.csv
+2025-10-24 12:38:33,588 - INFO - Scraping Team Summary page for Division 14
+2025-10-24 12:38:33,588 - INFO - Scraping team summary page (team_summery) for league id: D00488, year: 2025-2026...
+2025-10-24 12:38:34,445 - INFO - [team_summery] Successfully created summary DataFrame with 12 rows
+2025-10-24 12:38:34,445 - INFO - Successfully scraped Team Summary page for Division 14
+2025-10-24 12:38:34,445 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_3\14_summary_df.csv
+2025-10-24 12:39:04,458 - INFO - Scraping Teams page for Division 14
+2025-10-24 12:39:04,458 - INFO - Starting scrape_teams_page for league id: D00488, year: 2025-2026
+2025-10-24 12:39:04,868 - INFO - Successfully created teams DataFrame with 12 rows
+2025-10-24 12:39:04,868 - INFO - Successfully scraped Teams page for Division 14
+2025-10-24 12:39:04,868 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\14_teams_df.csv
+2025-10-24 12:39:04,873 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\14_teams_df.csv
+2025-10-24 12:39:34,876 - INFO - Scraping Ranking page for Division 14
+2025-10-24 12:39:34,876 - INFO - Scraping ranking page for league id: D00488, year: 2025-2026
+2025-10-24 12:39:38,416 - INFO - Successfully created ranking DataFrame with 120 rows
+2025-10-24 12:39:38,416 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 12:39:38,416 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 12:39:38,416 - INFO - Successfully scraped Ranking page for Division 14
+2025-10-24 12:39:38,416 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\14_ranking_df.csv
+2025-10-24 12:39:38,432 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\14_ranking_df.csv
+2025-10-24 12:40:08,436 - INFO - Scraping Players page for Division 14
+2025-10-24 12:40:08,436 - INFO - Starting scrape_players_page for league_id: D00488, year: 2025-2026
+2025-10-24 12:40:11,346 - INFO - Team 1: Created DataFrame with 8 rows for team: 8 Virtues + 1
+2025-10-24 12:40:16,367 - INFO - Team 2: Created DataFrame with 9 rows for team: Fusion Squash Club 4
+2025-10-24 12:40:21,369 - INFO - Team 3: Created DataFrame with 9 rows for team: Hong Kong Football Club 14
+2025-10-24 12:40:26,378 - INFO - Team 4: Created DataFrame with 10 rows for team: Ladies Recreation Club Div 14
+2025-10-24 12:40:31,396 - INFO - Team 5: Created DataFrame with 9 rows for team: North District Sports Association 2
+2025-10-24 12:40:36,397 - INFO - Team 6: Created DataFrame with 12 rows for team: Physical Chess 5
+2025-10-24 12:40:41,412 - INFO - Team 7: Created DataFrame with 10 rows for team: RELAY 2
+2025-10-24 12:40:46,417 - INFO - Team 8: Created DataFrame with 10 rows for team: Royal Hong Kong Yacht Club Div 14
+2025-10-24 12:40:51,432 - INFO - Team 9: Created DataFrame with 11 rows for team: Squash-On
+2025-10-24 12:40:56,446 - INFO - Team 10: Created DataFrame with 11 rows for team: The Squash Club 4
+2025-10-24 12:41:01,456 - INFO - Team 11: Created DataFrame with 12 rows for team: TKO Junior 1
+2025-10-24 12:41:06,458 - INFO - Team 12: Created DataFrame with 9 rows for team: TNG 3
+2025-10-24 12:41:11,467 - INFO - Concatenated all team dataframes into a single DataFrame with 120 rows
+2025-10-24 12:41:11,467 - INFO - Successfully scraped Players page for Division 14
+2025-10-24 12:41:11,467 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\14_players_df.csv
+2025-10-24 12:41:11,471 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\14_players_df.csv
+2025-10-24 12:41:41,474 - WARNING - No usable summary/ranking data for Division 14. Unable to determine players who have played every game.
+2025-10-24 12:41:41,474 - INFO - No summarized data to save for Division 14; skipping summarized_df CSV creation.
+2025-10-24 12:41:41,474 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\14.txt
+2025-10-24 12:41:41,474 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\14.txt
+2025-10-24 12:41:41,474 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\14.txt
+2025-10-24 12:41:41,474 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\14.txt
+2025-10-24 12:42:11,821 - INFO - Processing Division 15A
+2025-10-24 12:42:11,821 - INFO - Scraping Schedules and Results page for Division 15A
+2025-10-24 12:42:11,821 - INFO - Scraping schedules and results page for league id: D00489, year: 2025-2026...
+2025-10-24 12:42:12,463 - INFO - Successfully created schedules and results DataFrame with 84 rows
+2025-10-24 12:42:12,463 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 12:42:12,463 - INFO - Successfully scraped Schedules and Results page for Division 15A
+2025-10-24 12:42:12,463 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\15A_schedules_df.csv
+2025-10-24 12:42:12,463 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\15A_schedules_df.csv
+2025-10-24 12:42:42,478 - INFO - Scraping Team Summary page for Division 15A
+2025-10-24 12:42:42,478 - INFO - Scraping team summary page (team_summery) for league id: D00489, year: 2025-2026...
+2025-10-24 12:42:42,981 - INFO - [team_summery] Successfully created summary DataFrame with 8 rows
+2025-10-24 12:42:42,981 - INFO - Successfully scraped Team Summary page for Division 15A
+2025-10-24 12:42:42,981 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_3\15A_summary_df.csv
+2025-10-24 12:43:12,988 - INFO - Scraping Teams page for Division 15A
+2025-10-24 12:43:12,988 - INFO - Starting scrape_teams_page for league id: D00489, year: 2025-2026
+2025-10-24 12:43:13,319 - INFO - Successfully created teams DataFrame with 8 rows
+2025-10-24 12:43:13,319 - INFO - Successfully scraped Teams page for Division 15A
+2025-10-24 12:43:13,319 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\15A_teams_df.csv
+2025-10-24 12:43:13,319 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\15A_teams_df.csv
+2025-10-24 12:43:43,325 - INFO - Scraping Ranking page for Division 15A
+2025-10-24 12:43:43,325 - INFO - Scraping ranking page for league id: D00489, year: 2025-2026
+2025-10-24 12:43:44,539 - INFO - Successfully created ranking DataFrame with 81 rows
+2025-10-24 12:43:44,553 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 12:43:44,553 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 12:43:44,553 - INFO - Successfully scraped Ranking page for Division 15A
+2025-10-24 12:43:44,553 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\15A_ranking_df.csv
+2025-10-24 12:43:44,553 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\15A_ranking_df.csv
+2025-10-24 12:44:14,565 - INFO - Scraping Players page for Division 15A
+2025-10-24 12:44:14,565 - INFO - Starting scrape_players_page for league_id: D00489, year: 2025-2026
+2025-10-24 12:44:15,554 - INFO - Team 1: Created DataFrame with 12 rows for team: Dream Catchers
+2025-10-24 12:44:20,567 - INFO - Team 2: Created DataFrame with 12 rows for team: Electrify Squash Div 15
+2025-10-24 12:44:25,581 - INFO - Team 3: Created DataFrame with 6 rows for team: Happy Squash 5
+2025-10-24 12:44:30,593 - INFO - Team 4: Created DataFrame with 6 rows for team: NEXUS 4
+2025-10-24 12:44:35,603 - INFO - Team 5: Created DataFrame with 12 rows for team: RC
+2025-10-24 12:44:40,607 - INFO - Team 6: Created DataFrame with 9 rows for team: Squashathon Junior
+2025-10-24 12:44:45,617 - INFO - Team 7: Created DataFrame with 12 rows for team: TKO Junior 2
+2025-10-24 12:44:50,628 - INFO - Team 8: Created DataFrame with 12 rows for team: Vitality Squash 3
+2025-10-24 12:44:55,639 - INFO - Concatenated all team dataframes into a single DataFrame with 81 rows
+2025-10-24 12:44:55,639 - INFO - Successfully scraped Players page for Division 15A
+2025-10-24 12:44:55,639 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\15A_players_df.csv
+2025-10-24 12:44:55,643 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\15A_players_df.csv
+2025-10-24 12:45:25,644 - WARNING - No usable summary/ranking data for Division 15A. Unable to determine players who have played every game.
+2025-10-24 12:45:25,644 - INFO - No summarized data to save for Division 15A; skipping summarized_df CSV creation.
+2025-10-24 12:45:25,644 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\15A.txt
+2025-10-24 12:45:25,644 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\15A.txt
+2025-10-24 12:45:25,644 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\15A.txt
+2025-10-24 12:45:25,644 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\15A.txt
+2025-10-24 12:45:55,824 - INFO - Processing Division 15B
+2025-10-24 12:45:55,824 - INFO - Scraping Schedules and Results page for Division 15B
+2025-10-24 12:45:55,824 - INFO - Scraping schedules and results page for league id: D00490, year: 2025-2026...
+2025-10-24 12:45:56,458 - INFO - Successfully created schedules and results DataFrame with 84 rows
+2025-10-24 12:45:56,458 - INFO - Dropped 0 rows with NaN in 'Match Week'
+2025-10-24 12:45:56,458 - INFO - Successfully scraped Schedules and Results page for Division 15B
+2025-10-24 12:45:56,474 - INFO - Saving schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\15B_schedules_df.csv
+2025-10-24 12:45:56,474 - INFO - Successfully saved schedules_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\schedules_df\week_3\15B_schedules_df.csv
+2025-10-24 12:46:26,483 - INFO - Scraping Team Summary page for Division 15B
+2025-10-24 12:46:26,483 - INFO - Scraping team summary page (team_summery) for league id: D00490, year: 2025-2026...
+2025-10-24 12:46:26,935 - INFO - [team_summery] Successfully created summary DataFrame with 8 rows
+2025-10-24 12:46:26,935 - INFO - Successfully scraped Team Summary page for Division 15B
+2025-10-24 12:46:26,935 - INFO - Saved summary_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\summary_df\week_3\15B_summary_df.csv
+2025-10-24 12:46:56,951 - INFO - Scraping Teams page for Division 15B
+2025-10-24 12:46:56,951 - INFO - Starting scrape_teams_page for league id: D00490, year: 2025-2026
+2025-10-24 12:46:57,316 - INFO - Successfully created teams DataFrame with 8 rows
+2025-10-24 12:46:57,318 - INFO - Successfully scraped Teams page for Division 15B
+2025-10-24 12:46:57,318 - INFO - Saving teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\15B_teams_df.csv
+2025-10-24 12:46:57,321 - INFO - Successfully saved teams_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\teams_df\week_3\15B_teams_df.csv
+2025-10-24 12:47:27,322 - INFO - Scraping Ranking page for Division 15B
+2025-10-24 12:47:27,322 - INFO - Scraping ranking page for league id: D00490, year: 2025-2026
+2025-10-24 12:47:28,366 - INFO - Successfully created ranking DataFrame with 89 rows
+2025-10-24 12:47:28,382 - INFO - Filtered ranking DataFrame to 0 rows with 5 or more games played
+2025-10-24 12:47:28,382 - WARNING - No players have played enough games to qualify for the table.
+2025-10-24 12:47:28,382 - INFO - Successfully scraped Ranking page for Division 15B
+2025-10-24 12:47:28,382 - INFO - Saving ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\15B_ranking_df.csv
+2025-10-24 12:47:28,382 - INFO - Successfully saved ranking_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\ranking_df\week_3\15B_ranking_df.csv
+2025-10-24 12:47:58,390 - INFO - Scraping Players page for Division 15B
+2025-10-24 12:47:58,390 - INFO - Starting scrape_players_page for league_id: D00490, year: 2025-2026
+2025-10-24 12:47:59,621 - INFO - Team 1: Created DataFrame with 11 rows for team: HKIS Div 15
+2025-10-24 12:48:04,634 - INFO - Team 2: Created DataFrame with 12 rows for team: Hong Kong Cricket Club D15
+2025-10-24 12:48:09,647 - INFO - Team 3: Created DataFrame with 10 rows for team: North District Sports Association 3
+2025-10-24 12:48:14,652 - INFO - Team 4: Created DataFrame with 11 rows for team: Royal Hong Kong Yacht Club Div 15
+2025-10-24 12:48:19,659 - INFO - Team 5: Created DataFrame with 9 rows for team: Sha Tin 6
+2025-10-24 12:48:24,671 - INFO - Team 6: Created DataFrame with 12 rows for team: Squash Busters
+2025-10-24 12:48:29,679 - INFO - Team 7: Created DataFrame with 12 rows for team: Squashathon X
+2025-10-24 12:48:34,699 - INFO - Team 8: Created DataFrame with 12 rows for team: United Services Recreation Club 4
+2025-10-24 12:48:39,701 - INFO - Concatenated all team dataframes into a single DataFrame with 89 rows
+2025-10-24 12:48:39,701 - INFO - Successfully scraped Players page for Division 15B
+2025-10-24 12:48:39,701 - INFO - Saving players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\15B_players_df.csv
+2025-10-24 12:48:39,705 - INFO - Successfully saved players_df to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\15B_players_df.csv
+2025-10-24 12:49:09,707 - WARNING - No usable summary/ranking data for Division 15B. Unable to determine players who have played every game.
+2025-10-24 12:49:09,707 - INFO - No summarized data to save for Division 15B; skipping summarized_df CSV creation.
+2025-10-24 12:49:09,707 - INFO - Saving unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\15B.txt
+2025-10-24 12:49:09,707 - INFO - Successfully saved unbeaten_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\unbeaten_players\week_3\15B.txt
+2025-10-24 12:49:09,707 - INFO - Saving played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\15B.txt
+2025-10-24 12:49:09,707 - INFO - Successfully saved played_every_game_list to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\played_every_game\week_3\15B.txt
+2025-10-24 12:49:40,011 - INFO - Weeks discovered: [0, 1, 2, 3, 4]
+2025-10-24 12:49:40,011 - INFO - Building player mapping for week 0
+2025-10-24 12:49:40,233 - WARNING - HKS_No 27045 was previously mapped to 'Muhammad Ilyas Gull' but now found as 'Mohammad Gull Ilyas' in division '5'. Overwriting.
+2025-10-24 12:49:40,324 - WARNING - HKS_No 27459 was previously mapped to 'Liu Bithiah Kit Yuen' but now found as 'Liu Kit Yuen Bithiah' in division '14'. Overwriting.
+2025-10-24 12:49:40,359 - INFO - Processing Division '2' for Week 0
+2025-10-24 12:49:40,364 - WARNING - Ranking data for Division '2' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,364 - INFO - Processing Division '6' for Week 0
+2025-10-24 12:49:40,377 - WARNING - Ranking data for Division '6' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,377 - INFO - Processing Division '10' for Week 0
+2025-10-24 12:49:40,393 - WARNING - Ranking data for Division '10' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,393 - INFO - Processing Division '3' for Week 0
+2025-10-24 12:49:40,393 - WARNING - Ranking data for Division '3' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,393 - INFO - Processing Division '4' for Week 0
+2025-10-24 12:49:40,410 - WARNING - Ranking data for Division '4' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,410 - INFO - Processing Division '11' for Week 0
+2025-10-24 12:49:40,410 - WARNING - Ranking data for Division '11' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,410 - INFO - Processing Division 'L2' for Week 0
+2025-10-24 12:49:40,432 - WARNING - Ranking data for Division 'L2' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,432 - INFO - Processing Division '7' for Week 0
+2025-10-24 12:49:40,442 - WARNING - Ranking data for Division '7' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,442 - INFO - Processing Division '9' for Week 0
+2025-10-24 12:49:40,448 - WARNING - Ranking data for Division '9' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,448 - INFO - Processing Division '12' for Week 0
+2025-10-24 12:49:40,460 - WARNING - Ranking data for Division '12' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,460 - INFO - Processing Division 'M2' for Week 0
+2025-10-24 12:49:40,460 - WARNING - Ranking data for Division 'M2' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,460 - INFO - Processing Division 'Premier Main' for Week 0
+2025-10-24 12:49:40,476 - WARNING - Ranking data for Division 'Premier Main' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,476 - INFO - Processing Division 'Premier Masters' for Week 0
+2025-10-24 12:49:40,482 - WARNING - Ranking data for Division 'Premier Masters' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,482 - INFO - Processing Division 'Premier Ladies' for Week 0
+2025-10-24 12:49:40,493 - WARNING - Ranking data for Division 'Premier Ladies' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,493 - INFO - Processing Division 'M3' for Week 0
+2025-10-24 12:49:40,509 - WARNING - Ranking data for Division 'M3' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,509 - INFO - Processing Division 'M4' for Week 0
+2025-10-24 12:49:40,509 - WARNING - Ranking data for Division 'M4' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,509 - INFO - Processing Division '5' for Week 0
+2025-10-24 12:49:40,526 - WARNING - Ranking data for Division '5' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,526 - INFO - Processing Division '8A' for Week 0
+2025-10-24 12:49:40,526 - WARNING - Ranking data for Division '8A' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,526 - INFO - Processing Division '8B' for Week 0
+2025-10-24 12:49:40,543 - WARNING - Ranking data for Division '8B' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,543 - INFO - Processing Division '13A' for Week 0
+2025-10-24 12:49:40,560 - WARNING - Ranking data for Division '13A' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,560 - INFO - Processing Division '13B' for Week 0
+2025-10-24 12:49:40,560 - WARNING - Ranking data for Division '13B' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,560 - INFO - Processing Division '13C' for Week 0
+2025-10-24 12:49:40,580 - WARNING - Ranking data for Division '13C' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,580 - INFO - Processing Division 'L3' for Week 0
+2025-10-24 12:49:40,580 - WARNING - Ranking data for Division 'L3' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,580 - INFO - Processing Division 'L4' for Week 0
+2025-10-24 12:49:40,593 - WARNING - Ranking data for Division 'L4' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,593 - INFO - Processing Division '14' for Week 0
+2025-10-24 12:49:40,609 - WARNING - Ranking data for Division '14' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,609 - INFO - Processing Division '15A' for Week 0
+2025-10-24 12:49:40,609 - WARNING - Ranking data for Division '15A' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,609 - INFO - Processing Division '15B' for Week 0
+2025-10-24 12:49:40,626 - WARNING - Ranking data for Division '15B' not found for previous week -1. Skipping.
+2025-10-24 12:49:40,626 - INFO - Building player mapping for week 1
+2025-10-24 12:49:40,699 - WARNING - Players file for Division '11' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_1\11_players_df.csv. Skipping.
+2025-10-24 12:49:40,759 - WARNING - Players file for Division 'Premier Main' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_1\Premier Main_players_df.csv. Skipping.
+2025-10-24 12:49:40,769 - WARNING - Players file for Division 'Premier Ladies' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_1\Premier Ladies_players_df.csv. Skipping.
+2025-10-24 12:49:40,875 - WARNING - HKS_No 19611 was previously mapped to '* Chiu Rebecca Wing Yin' but now found as 'Chiu Rebecca Wing Yin' in division 'L3'. Overwriting.
+2025-10-24 12:49:40,942 - INFO - Processing Division '2' for Week 1
+2025-10-24 12:49:40,947 - INFO - Number of players who played in Division '2' during week 1: 20
+2025-10-24 12:49:40,961 - INFO - Number of 'Playing Up' players in Division '2' during week 1: 2
+2025-10-24 12:49:40,993 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\2_player_results.csv
+2025-10-24 12:49:40,993 - INFO - Processing Division '6' for Week 1
+2025-10-24 12:49:40,993 - INFO - Number of players who played in Division '6' during week 1: 30
+2025-10-24 12:49:41,009 - INFO - Number of 'Playing Up' players in Division '6' during week 1: 1
+2025-10-24 12:49:41,043 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\6_player_results.csv
+2025-10-24 12:49:41,043 - INFO - Processing Division '10' for Week 1
+2025-10-24 12:49:41,050 - INFO - Number of players who played in Division '10' during week 1: 20
+2025-10-24 12:49:41,059 - INFO - Number of 'Playing Up' players in Division '10' during week 1: 0
+2025-10-24 12:49:41,076 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\10_player_results.csv
+2025-10-24 12:49:41,076 - INFO - Processing Division '3' for Week 1
+2025-10-24 12:49:41,093 - INFO - Number of players who played in Division '3' during week 1: 39
+2025-10-24 12:49:41,099 - INFO - Number of 'Playing Up' players in Division '3' during week 1: 0
+2025-10-24 12:49:41,126 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\3_player_results.csv
+2025-10-24 12:49:41,126 - INFO - Processing Division '4' for Week 1
+2025-10-24 12:49:41,126 - INFO - Number of players who played in Division '4' during week 1: 30
+2025-10-24 12:49:41,141 - INFO - Number of 'Playing Up' players in Division '4' during week 1: 1
+2025-10-24 12:49:41,203 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\4_player_results.csv
+2025-10-24 12:49:41,204 - INFO - Processing Division '11' for Week 1
+2025-10-24 12:49:41,204 - WARNING - Data files for Division '11' not found for week 1. Skipping.
+2025-10-24 12:49:41,205 - INFO - Processing Division 'L2' for Week 1
+2025-10-24 12:49:41,209 - INFO - Number of players who played in Division 'L2' during week 1: 7
+2025-10-24 12:49:41,209 - INFO - Number of 'Playing Up' players in Division 'L2' during week 1: 0
+2025-10-24 12:49:41,233 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\L2_player_results.csv
+2025-10-24 12:49:41,234 - INFO - Processing Division '7' for Week 1
+2025-10-24 12:49:41,243 - INFO - Number of players who played in Division '7' during week 1: 39
+2025-10-24 12:49:41,243 - INFO - Number of 'Playing Up' players in Division '7' during week 1: 1
+2025-10-24 12:49:41,276 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\7_player_results.csv
+2025-10-24 12:49:41,276 - INFO - Processing Division '9' for Week 1
+2025-10-24 12:49:41,299 - INFO - Number of players who played in Division '9' during week 1: 50
+2025-10-24 12:49:41,302 - INFO - Number of 'Playing Up' players in Division '9' during week 1: 0
+2025-10-24 12:49:41,339 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\9_player_results.csv
+2025-10-24 12:49:41,339 - INFO - Processing Division '12' for Week 1
+2025-10-24 12:49:41,342 - INFO - Number of players who played in Division '12' during week 1: 40
+2025-10-24 12:49:41,358 - INFO - Number of 'Playing Up' players in Division '12' during week 1: 0
+2025-10-24 12:49:41,376 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\12_player_results.csv
+2025-10-24 12:49:41,376 - INFO - Processing Division 'M2' for Week 1
+2025-10-24 12:49:41,393 - INFO - Number of players who played in Division 'M2' during week 1: 20
+2025-10-24 12:49:41,393 - INFO - Number of 'Playing Up' players in Division 'M2' during week 1: 0
+2025-10-24 12:49:41,410 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\M2_player_results.csv
+2025-10-24 12:49:41,410 - INFO - Processing Division 'Premier Main' for Week 1
+2025-10-24 12:49:41,424 - WARNING - Data files for Division 'Premier Main' not found for week 1. Skipping.
+2025-10-24 12:49:41,424 - INFO - Processing Division 'Premier Masters' for Week 1
+2025-10-24 12:49:41,426 - INFO - Number of players who played in Division 'Premier Masters' during week 1: 11
+2025-10-24 12:49:41,443 - INFO - Number of 'Playing Up' players in Division 'Premier Masters' during week 1: 1
+2025-10-24 12:49:41,460 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\Premier Masters_player_results.csv
+2025-10-24 12:49:41,460 - INFO - Processing Division 'Premier Ladies' for Week 1
+2025-10-24 12:49:41,460 - WARNING - Data files for Division 'Premier Ladies' not found for week 1. Skipping.
+2025-10-24 12:49:41,460 - INFO - Processing Division 'M3' for Week 1
+2025-10-24 12:49:41,476 - INFO - Number of players who played in Division 'M3' during week 1: 20
+2025-10-24 12:49:41,476 - INFO - Number of 'Playing Up' players in Division 'M3' during week 1: 0
+2025-10-24 12:49:41,503 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\M3_player_results.csv
+2025-10-24 12:49:41,503 - INFO - Processing Division 'M4' for Week 1
+2025-10-24 12:49:41,509 - INFO - Number of players who played in Division 'M4' during week 1: 50
+2025-10-24 12:49:41,509 - INFO - Number of 'Playing Up' players in Division 'M4' during week 1: 0
+2025-10-24 12:49:41,543 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\M4_player_results.csv
+2025-10-24 12:49:41,543 - INFO - Processing Division '5' for Week 1
+2025-10-24 12:49:41,560 - INFO - Number of players who played in Division '5' during week 1: 38
+2025-10-24 12:49:41,560 - INFO - Number of 'Playing Up' players in Division '5' during week 1: 4
+2025-10-24 12:49:41,622 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\5_player_results.csv
+2025-10-24 12:49:41,622 - INFO - Processing Division '8A' for Week 1
+2025-10-24 12:49:41,633 - INFO - Number of players who played in Division '8A' during week 1: 29
+2025-10-24 12:49:41,637 - INFO - Number of 'Playing Up' players in Division '8A' during week 1: 1
+2025-10-24 12:49:41,659 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\8A_player_results.csv
+2025-10-24 12:49:41,659 - INFO - Processing Division '8B' for Week 1
+2025-10-24 12:49:41,675 - INFO - Number of players who played in Division '8B' during week 1: 25
+2025-10-24 12:49:41,675 - INFO - Number of 'Playing Up' players in Division '8B' during week 1: 0
+2025-10-24 12:49:41,708 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\8B_player_results.csv
+2025-10-24 12:49:41,709 - INFO - Processing Division '13A' for Week 1
+2025-10-24 12:49:41,709 - INFO - Number of players who played in Division '13A' during week 1: 39
+2025-10-24 12:49:41,709 - INFO - Number of 'Playing Up' players in Division '13A' during week 1: 0
+2025-10-24 12:49:41,743 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\13A_player_results.csv
+2025-10-24 12:49:41,743 - INFO - Processing Division '13B' for Week 1
+2025-10-24 12:49:41,759 - INFO - Number of players who played in Division '13B' during week 1: 27
+2025-10-24 12:49:41,759 - INFO - Number of 'Playing Up' players in Division '13B' during week 1: 1
+2025-10-24 12:49:41,793 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\13B_player_results.csv
+2025-10-24 12:49:41,793 - INFO - Processing Division '13C' for Week 1
+2025-10-24 12:49:41,809 - INFO - Number of players who played in Division '13C' during week 1: 31
+2025-10-24 12:49:41,809 - INFO - Number of 'Playing Up' players in Division '13C' during week 1: 0
+2025-10-24 12:49:41,842 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\13C_player_results.csv
+2025-10-24 12:49:41,842 - INFO - Processing Division 'L3' for Week 1
+2025-10-24 12:49:41,850 - INFO - Number of players who played in Division 'L3' during week 1: 16
+2025-10-24 12:49:41,859 - INFO - Number of 'Playing Up' players in Division 'L3' during week 1: 2
+2025-10-24 12:49:41,876 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\L3_player_results.csv
+2025-10-24 12:49:41,876 - INFO - Processing Division 'L4' for Week 1
+2025-10-24 12:49:41,894 - INFO - Number of players who played in Division 'L4' during week 1: 30
+2025-10-24 12:49:41,894 - INFO - Number of 'Playing Up' players in Division 'L4' during week 1: 0
+2025-10-24 12:49:41,926 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\L4_player_results.csv
+2025-10-24 12:49:41,926 - INFO - Processing Division '14' for Week 1
+2025-10-24 12:49:41,926 - INFO - Number of players who played in Division '14' during week 1: 47
+2025-10-24 12:49:41,947 - INFO - Number of 'Playing Up' players in Division '14' during week 1: 0
+2025-10-24 12:49:41,976 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\14_player_results.csv
+2025-10-24 12:49:41,976 - INFO - Processing Division '15A' for Week 1
+2025-10-24 12:49:41,985 - INFO - Number of players who played in Division '15A' during week 1: 37
+2025-10-24 12:49:41,994 - INFO - Number of 'Playing Up' players in Division '15A' during week 1: 0
+2025-10-24 12:49:42,009 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\15A_player_results.csv
+2025-10-24 12:49:42,009 - INFO - Processing Division '15B' for Week 1
+2025-10-24 12:49:42,025 - INFO - Number of players who played in Division '15B' during week 1: 39
+2025-10-24 12:49:42,025 - INFO - Number of 'Playing Up' players in Division '15B' during week 1: 0
+2025-10-24 12:49:42,059 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_1\15B_player_results.csv
+2025-10-24 12:49:42,059 - INFO - Building player mapping for week 2
+2025-10-24 12:49:42,205 - WARNING - Players file for Division 'Premier Main' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_2\Premier Main_players_df.csv. Skipping.
+2025-10-24 12:49:42,205 - WARNING - Players file for Division 'Premier Ladies' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_2\Premier Ladies_players_df.csv. Skipping.
+2025-10-24 12:49:42,394 - INFO - Processing Division '2' for Week 2
+2025-10-24 12:49:42,413 - INFO - Number of players who played in Division '2' during week 2: 10
+2025-10-24 12:49:42,416 - INFO - Number of 'Playing Up' players in Division '2' during week 2: 0
+2025-10-24 12:49:42,435 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\2_player_results.csv
+2025-10-24 12:49:42,435 - INFO - Processing Division '6' for Week 2
+2025-10-24 12:49:42,452 - INFO - Number of players who played in Division '6' during week 2: 52
+2025-10-24 12:49:42,452 - INFO - Number of 'Playing Up' players in Division '6' during week 2: 3
+2025-10-24 12:49:42,521 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\6_player_results.csv
+2025-10-24 12:49:42,522 - INFO - Processing Division '10' for Week 2
+2025-10-24 12:49:42,534 - INFO - Number of players who played in Division '10' during week 2: 44
+2025-10-24 12:49:42,534 - INFO - Number of 'Playing Up' players in Division '10' during week 2: 3
+2025-10-24 12:49:42,634 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\10_player_results.csv
+2025-10-24 12:49:42,634 - INFO - Processing Division '3' for Week 2
+2025-10-24 12:49:42,650 - INFO - Number of players who played in Division '3' during week 2: 29
+2025-10-24 12:49:42,650 - INFO - Number of 'Playing Up' players in Division '3' during week 2: 1
+2025-10-24 12:49:42,685 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\3_player_results.csv
+2025-10-24 12:49:42,685 - INFO - Processing Division '4' for Week 2
+2025-10-24 12:49:42,702 - INFO - Number of players who played in Division '4' during week 2: 55
+2025-10-24 12:49:42,702 - INFO - Number of 'Playing Up' players in Division '4' during week 2: 3
+2025-10-24 12:49:42,773 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\4_player_results.csv
+2025-10-24 12:49:42,773 - INFO - Processing Division '11' for Week 2
+2025-10-24 12:49:42,784 - WARNING - Ranking data for Division '11' not found for previous week 1. Skipping.
+2025-10-24 12:49:42,784 - INFO - Processing Division 'L2' for Week 2
+2025-10-24 12:49:42,801 - INFO - Number of players who played in Division 'L2' during week 2: 26
+2025-10-24 12:49:42,807 - INFO - Number of 'Playing Up' players in Division 'L2' during week 2: 0
+2025-10-24 12:49:42,818 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\L2_player_results.csv
+2025-10-24 12:49:42,818 - INFO - Processing Division '7' for Week 2
+2025-10-24 12:49:42,843 - INFO - Number of players who played in Division '7' during week 2: 53
+2025-10-24 12:49:42,850 - INFO - Number of 'Playing Up' players in Division '7' during week 2: 2
+2025-10-24 12:49:42,895 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\7_player_results.csv
+2025-10-24 12:49:42,895 - INFO - Processing Division '9' for Week 2
+2025-10-24 12:49:42,912 - INFO - Number of players who played in Division '9' during week 2: 50
+2025-10-24 12:49:42,918 - INFO - Number of 'Playing Up' players in Division '9' during week 2: 2
+2025-10-24 12:49:42,968 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\9_player_results.csv
+2025-10-24 12:49:42,969 - INFO - Processing Division '12' for Week 2
+2025-10-24 12:49:42,984 - INFO - Number of players who played in Division '12' during week 2: 44
+2025-10-24 12:49:42,984 - INFO - Number of 'Playing Up' players in Division '12' during week 2: 1
+2025-10-24 12:49:43,018 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\12_player_results.csv
+2025-10-24 12:49:43,033 - INFO - Processing Division 'M2' for Week 2
+2025-10-24 12:49:43,051 - INFO - Number of players who played in Division 'M2' during week 2: 20
+2025-10-24 12:49:43,057 - INFO - Number of 'Playing Up' players in Division 'M2' during week 2: 2
+2025-10-24 12:49:43,088 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\M2_player_results.csv
+2025-10-24 12:49:43,089 - INFO - Processing Division 'Premier Main' for Week 2
+2025-10-24 12:49:43,090 - WARNING - Data files for Division 'Premier Main' not found for week 2. Skipping.
+2025-10-24 12:49:43,090 - INFO - Processing Division 'Premier Masters' for Week 2
+2025-10-24 12:49:43,100 - INFO - Number of players who played in Division 'Premier Masters' during week 2: 11
+2025-10-24 12:49:43,100 - INFO - Number of 'Playing Up' players in Division 'Premier Masters' during week 2: 1
+2025-10-24 12:49:43,133 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\Premier Masters_player_results.csv
+2025-10-24 12:49:43,134 - INFO - Processing Division 'Premier Ladies' for Week 2
+2025-10-24 12:49:43,134 - WARNING - Data files for Division 'Premier Ladies' not found for week 2. Skipping.
+2025-10-24 12:49:43,134 - INFO - Processing Division 'M3' for Week 2
+2025-10-24 12:49:43,151 - INFO - Number of players who played in Division 'M3' during week 2: 26
+2025-10-24 12:49:43,152 - INFO - Number of 'Playing Up' players in Division 'M3' during week 2: 0
+2025-10-24 12:49:43,168 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\M3_player_results.csv
+2025-10-24 12:49:43,168 - INFO - Processing Division 'M4' for Week 2
+2025-10-24 12:49:43,184 - INFO - Number of players who played in Division 'M4' during week 2: 50
+2025-10-24 12:49:43,195 - INFO - Number of 'Playing Up' players in Division 'M4' during week 2: 0
+2025-10-24 12:49:43,219 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\M4_player_results.csv
+2025-10-24 12:49:43,219 - INFO - Processing Division '5' for Week 2
+2025-10-24 12:49:43,246 - INFO - Number of players who played in Division '5' during week 2: 38
+2025-10-24 12:49:43,251 - INFO - Number of 'Playing Up' players in Division '5' during week 2: 0
+2025-10-24 12:49:43,268 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\5_player_results.csv
+2025-10-24 12:49:43,268 - INFO - Processing Division '8A' for Week 2
+2025-10-24 12:49:43,295 - INFO - Number of players who played in Division '8A' during week 2: 20
+2025-10-24 12:49:43,301 - INFO - Number of 'Playing Up' players in Division '8A' during week 2: 2
+2025-10-24 12:49:43,336 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\8A_player_results.csv
+2025-10-24 12:49:43,336 - INFO - Processing Division '8B' for Week 2
+2025-10-24 12:49:43,352 - INFO - Number of players who played in Division '8B' during week 2: 24
+2025-10-24 12:49:43,361 - INFO - Number of 'Playing Up' players in Division '8B' during week 2: 2
+2025-10-24 12:49:43,395 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\8B_player_results.csv
+2025-10-24 12:49:43,395 - INFO - Processing Division '13A' for Week 2
+2025-10-24 12:49:43,415 - INFO - Number of players who played in Division '13A' during week 2: 39
+2025-10-24 12:49:43,417 - INFO - Number of 'Playing Up' players in Division '13A' during week 2: 2
+2025-10-24 12:49:43,468 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\13A_player_results.csv
+2025-10-24 12:49:43,468 - INFO - Processing Division '13B' for Week 2
+2025-10-24 12:49:43,484 - INFO - Number of players who played in Division '13B' during week 2: 30
+2025-10-24 12:49:43,484 - INFO - Number of 'Playing Up' players in Division '13B' during week 2: 1
+2025-10-24 12:49:43,518 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\13B_player_results.csv
+2025-10-24 12:49:43,518 - INFO - Processing Division '13C' for Week 2
+2025-10-24 12:49:43,535 - INFO - Number of players who played in Division '13C' during week 2: 23
+2025-10-24 12:49:43,535 - INFO - Number of 'Playing Up' players in Division '13C' during week 2: 0
+2025-10-24 12:49:43,568 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\13C_player_results.csv
+2025-10-24 12:49:43,568 - INFO - Processing Division 'L3' for Week 2
+2025-10-24 12:49:43,585 - INFO - Number of players who played in Division 'L3' during week 2: 16
+2025-10-24 12:49:43,596 - INFO - Number of 'Playing Up' players in Division 'L3' during week 2: 2
+2025-10-24 12:49:43,618 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\L3_player_results.csv
+2025-10-24 12:49:43,618 - INFO - Processing Division 'L4' for Week 2
+2025-10-24 12:49:43,646 - INFO - Number of players who played in Division 'L4' during week 2: 32
+2025-10-24 12:49:43,652 - INFO - Number of 'Playing Up' players in Division 'L4' during week 2: 0
+2025-10-24 12:49:43,677 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\L4_player_results.csv
+2025-10-24 12:49:43,678 - INFO - Processing Division '14' for Week 2
+2025-10-24 12:49:43,685 - INFO - Number of players who played in Division '14' during week 2: 36
+2025-10-24 12:49:43,701 - INFO - Number of 'Playing Up' players in Division '14' during week 2: 0
+2025-10-24 12:49:43,728 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\14_player_results.csv
+2025-10-24 12:49:43,728 - INFO - Processing Division '15A' for Week 2
+2025-10-24 12:49:43,744 - INFO - Number of players who played in Division '15A' during week 2: 30
+2025-10-24 12:49:43,750 - INFO - Number of 'Playing Up' players in Division '15A' during week 2: 0
+2025-10-24 12:49:43,771 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\15A_player_results.csv
+2025-10-24 12:49:43,772 - INFO - Processing Division '15B' for Week 2
+2025-10-24 12:49:43,785 - INFO - Number of players who played in Division '15B' during week 2: 27
+2025-10-24 12:49:43,785 - INFO - Number of 'Playing Up' players in Division '15B' during week 2: 0
+2025-10-24 12:49:43,842 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_2\15B_player_results.csv
+2025-10-24 12:49:43,843 - INFO - Building player mapping for week 3
+2025-10-24 12:49:43,844 - WARNING - Players file for Division '2' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\2_players_df.csv. Skipping.
+2025-10-24 12:49:43,844 - WARNING - Players file for Division '6' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\6_players_df.csv. Skipping.
+2025-10-24 12:49:43,845 - WARNING - Players file for Division '10' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\10_players_df.csv. Skipping.
+2025-10-24 12:49:43,845 - WARNING - Players file for Division '3' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\3_players_df.csv. Skipping.
+2025-10-24 12:49:43,847 - WARNING - Players file for Division '4' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\4_players_df.csv. Skipping.
+2025-10-24 12:49:43,848 - WARNING - Players file for Division '11' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\11_players_df.csv. Skipping.
+2025-10-24 12:49:43,849 - WARNING - Players file for Division 'L2' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\L2_players_df.csv. Skipping.
+2025-10-24 12:49:43,913 - WARNING - Players file for Division 'Premier Main' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\Premier Main_players_df.csv. Skipping.
+2025-10-24 12:49:43,921 - WARNING - Players file for Division 'Premier Ladies' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_3\Premier Ladies_players_df.csv. Skipping.
+2025-10-24 12:49:44,080 - INFO - Processing Division '2' for Week 3
+2025-10-24 12:49:44,080 - WARNING - Data files for Division '2' not found for week 3. Skipping.
+2025-10-24 12:49:44,080 - INFO - Processing Division '6' for Week 3
+2025-10-24 12:49:44,080 - WARNING - Data files for Division '6' not found for week 3. Skipping.
+2025-10-24 12:49:44,080 - INFO - Processing Division '10' for Week 3
+2025-10-24 12:49:44,080 - WARNING - Data files for Division '10' not found for week 3. Skipping.
+2025-10-24 12:49:44,080 - INFO - Processing Division '3' for Week 3
+2025-10-24 12:49:44,080 - WARNING - Data files for Division '3' not found for week 3. Skipping.
+2025-10-24 12:49:44,080 - INFO - Processing Division '4' for Week 3
+2025-10-24 12:49:44,095 - WARNING - Data files for Division '4' not found for week 3. Skipping.
+2025-10-24 12:49:44,096 - INFO - Processing Division '11' for Week 3
+2025-10-24 12:49:44,096 - WARNING - Data files for Division '11' not found for week 3. Skipping.
+2025-10-24 12:49:44,096 - INFO - Processing Division 'L2' for Week 3
+2025-10-24 12:49:44,096 - WARNING - Data files for Division 'L2' not found for week 3. Skipping.
+2025-10-24 12:49:44,096 - INFO - Processing Division '7' for Week 3
+2025-10-24 12:49:44,114 - INFO - Number of players who played in Division '7' during week 3: 28
+2025-10-24 12:49:44,120 - INFO - Number of 'Playing Up' players in Division '7' during week 3: 1
+2025-10-24 12:49:44,152 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_3\7_player_results.csv
+2025-10-24 12:49:44,152 - INFO - Processing Division '9' for Week 3
+2025-10-24 12:49:44,169 - INFO - Number of players who played in Division '9' during week 3: 40
+2025-10-24 12:49:44,175 - INFO - Number of 'Playing Up' players in Division '9' during week 3: 0
+2025-10-24 12:49:44,202 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_3\9_player_results.csv
+2025-10-24 12:49:44,202 - INFO - Processing Division '12' for Week 3
+2025-10-24 12:49:44,219 - INFO - Number of players who played in Division '12' during week 3: 20
+2025-10-24 12:49:44,219 - INFO - Number of 'Playing Up' players in Division '12' during week 3: 0
+2025-10-24 12:49:44,236 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_3\12_player_results.csv
+2025-10-24 12:49:44,236 - INFO - Processing Division 'M2' for Week 3
+2025-10-24 12:49:44,252 - INFO - Number of players who played in Division 'M2' during week 3: 10
+2025-10-24 12:49:44,267 - INFO - Number of 'Playing Up' players in Division 'M2' during week 3: 0
+2025-10-24 12:49:44,269 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_3\M2_player_results.csv
+2025-10-24 12:49:44,269 - INFO - Processing Division 'Premier Main' for Week 3
+2025-10-24 12:49:44,269 - WARNING - Data files for Division 'Premier Main' not found for week 3. Skipping.
+2025-10-24 12:49:44,269 - INFO - Processing Division 'Premier Masters' for Week 3
+2025-10-24 12:49:44,296 - INFO - Number of players who played in Division 'Premier Masters' during week 3: 11
+2025-10-24 12:49:44,302 - INFO - Number of 'Playing Up' players in Division 'Premier Masters' during week 3: 0
+2025-10-24 12:49:44,318 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_3\Premier Masters_player_results.csv
+2025-10-24 12:49:44,318 - INFO - Processing Division 'Premier Ladies' for Week 3
+2025-10-24 12:49:44,318 - WARNING - Data files for Division 'Premier Ladies' not found for week 3. Skipping.
+2025-10-24 12:49:44,318 - INFO - Processing Division 'M3' for Week 3
+2025-10-24 12:49:44,339 - INFO - Number of players who played in Division 'M3' during week 3: 25
+2025-10-24 12:49:44,347 - INFO - Number of 'Playing Up' players in Division 'M3' during week 3: 0
+2025-10-24 12:49:44,369 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_3\M3_player_results.csv
+2025-10-24 12:49:44,369 - INFO - Processing Division 'M4' for Week 3
+2025-10-24 12:49:44,386 - INFO - Number of players who played in Division 'M4' during week 3: 50
+2025-10-24 12:49:44,396 - INFO - Number of 'Playing Up' players in Division 'M4' during week 3: 0
+2025-10-24 12:49:44,420 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_3\M4_player_results.csv
+2025-10-24 12:49:44,420 - INFO - Processing Division '5' for Week 3
+2025-10-24 12:49:44,448 - INFO - Number of players who played in Division '5' during week 3: 39
+2025-10-24 12:49:44,451 - INFO - Number of 'Playing Up' players in Division '5' during week 3: 4
+2025-10-24 12:49:44,515 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_3\5_player_results.csv
+2025-10-24 12:49:44,516 - INFO - Processing Division '8A' for Week 3
+2025-10-24 12:49:44,530 - INFO - Number of players who played in Division '8A' during week 3: 33
+2025-10-24 12:49:44,534 - INFO - Number of 'Playing Up' players in Division '8A' during week 3: 3
+2025-10-24 12:49:44,569 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_3\8A_player_results.csv
+2025-10-24 12:49:44,569 - INFO - Processing Division '8B' for Week 3
+2025-10-24 12:49:44,597 - INFO - Number of players who played in Division '8B' during week 3: 19
+2025-10-24 12:49:44,602 - INFO - Number of 'Playing Up' players in Division '8B' during week 3: 0
+2025-10-24 12:49:44,620 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_3\8B_player_results.csv
+2025-10-24 12:49:44,621 - INFO - Processing Division '13A' for Week 3
+2025-10-24 12:49:44,634 - INFO - Number of players who played in Division '13A' during week 3: 40
+2025-10-24 12:49:44,634 - INFO - Number of 'Playing Up' players in Division '13A' during week 3: 0
+2025-10-24 12:49:44,667 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_3\13A_player_results.csv
+2025-10-24 12:49:44,667 - INFO - Processing Division '13B' for Week 3
+2025-10-24 12:49:44,667 - INFO - Number of players who played in Division '13B' during week 3: 32
+2025-10-24 12:49:44,683 - INFO - Number of 'Playing Up' players in Division '13B' during week 3: 0
+2025-10-24 12:49:44,699 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_3\13B_player_results.csv
+2025-10-24 12:49:44,714 - INFO - Processing Division '13C' for Week 3
+2025-10-24 12:49:44,729 - INFO - Number of players who played in Division '13C' during week 3: 39
+2025-10-24 12:49:44,731 - INFO - Number of 'Playing Up' players in Division '13C' during week 3: 2
+2025-10-24 12:49:44,778 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_3\13C_player_results.csv
+2025-10-24 12:49:44,778 - INFO - Processing Division 'L3' for Week 3
+2025-10-24 12:49:44,793 - INFO - Number of players who played in Division 'L3' during week 3: 16
+2025-10-24 12:49:44,799 - INFO - Number of 'Playing Up' players in Division 'L3' during week 3: 1
+2025-10-24 12:49:44,818 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_3\L3_player_results.csv
+2025-10-24 12:49:44,818 - INFO - Processing Division 'L4' for Week 3
+2025-10-24 12:49:44,838 - INFO - Number of players who played in Division 'L4' during week 3: 32
+2025-10-24 12:49:44,838 - INFO - Number of 'Playing Up' players in Division 'L4' during week 3: 0
+2025-10-24 12:49:44,868 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_3\L4_player_results.csv
+2025-10-24 12:49:44,868 - INFO - Processing Division '14' for Week 3
+2025-10-24 12:49:44,885 - INFO - Number of players who played in Division '14' during week 3: 50
+2025-10-24 12:49:44,892 - INFO - Number of 'Playing Up' players in Division '14' during week 3: 0
+2025-10-24 12:49:44,919 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_3\14_player_results.csv
+2025-10-24 12:49:44,919 - INFO - Processing Division '15A' for Week 3
+2025-10-24 12:49:44,935 - INFO - Number of players who played in Division '15A' during week 3: 30
+2025-10-24 12:49:44,947 - INFO - Number of 'Playing Up' players in Division '15A' during week 3: 0
+2025-10-24 12:49:44,968 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_3\15A_player_results.csv
+2025-10-24 12:49:44,968 - INFO - Processing Division '15B' for Week 3
+2025-10-24 12:49:44,985 - INFO - Number of players who played in Division '15B' during week 3: 31
+2025-10-24 12:49:44,985 - INFO - Number of 'Playing Up' players in Division '15B' during week 3: 0
+2025-10-24 12:49:45,002 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_3\15B_player_results.csv
+2025-10-24 12:49:45,002 - INFO - Building player mapping for week 4
+2025-10-24 12:49:45,017 - WARNING - Players file for Division '2' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\2_players_df.csv. Skipping.
+2025-10-24 12:49:45,017 - WARNING - Players file for Division '6' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\6_players_df.csv. Skipping.
+2025-10-24 12:49:45,018 - WARNING - Players file for Division '10' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\10_players_df.csv. Skipping.
+2025-10-24 12:49:45,018 - WARNING - Players file for Division '3' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\3_players_df.csv. Skipping.
+2025-10-24 12:49:45,018 - WARNING - Players file for Division '4' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\4_players_df.csv. Skipping.
+2025-10-24 12:49:45,018 - WARNING - Players file for Division '11' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\11_players_df.csv. Skipping.
+2025-10-24 12:49:45,018 - WARNING - Players file for Division 'L2' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\L2_players_df.csv. Skipping.
+2025-10-24 12:49:45,018 - WARNING - Players file for Division '7' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\7_players_df.csv. Skipping.
+2025-10-24 12:49:45,018 - WARNING - Players file for Division '9' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\9_players_df.csv. Skipping.
+2025-10-24 12:49:45,018 - WARNING - Players file for Division '12' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\12_players_df.csv. Skipping.
+2025-10-24 12:49:45,018 - WARNING - Players file for Division 'M2' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\M2_players_df.csv. Skipping.
+2025-10-24 12:49:45,018 - WARNING - Players file for Division 'Premier Main' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\Premier Main_players_df.csv. Skipping.
+2025-10-24 12:49:45,018 - WARNING - Players file for Division 'Premier Masters' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\Premier Masters_players_df.csv. Skipping.
+2025-10-24 12:49:45,018 - WARNING - Players file for Division 'Premier Ladies' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\Premier Ladies_players_df.csv. Skipping.
+2025-10-24 12:49:45,051 - WARNING - Players file for Division '5' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\5_players_df.csv. Skipping.
+2025-10-24 12:49:45,051 - WARNING - Players file for Division '8A' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\8A_players_df.csv. Skipping.
+2025-10-24 12:49:45,051 - WARNING - Players file for Division '8B' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\8B_players_df.csv. Skipping.
+2025-10-24 12:49:45,051 - WARNING - Players file for Division '13A' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\13A_players_df.csv. Skipping.
+2025-10-24 12:49:45,051 - WARNING - Players file for Division '13B' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\13B_players_df.csv. Skipping.
+2025-10-24 12:49:45,051 - WARNING - Players file for Division '13C' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\13C_players_df.csv. Skipping.
+2025-10-24 12:49:45,051 - WARNING - Players file for Division 'L3' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\L3_players_df.csv. Skipping.
+2025-10-24 12:49:45,051 - WARNING - Players file for Division 'L4' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\L4_players_df.csv. Skipping.
+2025-10-24 12:49:45,051 - WARNING - Players file for Division '14' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\14_players_df.csv. Skipping.
+2025-10-24 12:49:45,051 - WARNING - Players file for Division '15A' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\15A_players_df.csv. Skipping.
+2025-10-24 12:49:45,051 - WARNING - Players file for Division '15B' not found at C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\players_df\week_4\15B_players_df.csv. Skipping.
+2025-10-24 12:49:45,051 - INFO - Processing Division '2' for Week 4
+2025-10-24 12:49:45,051 - WARNING - Data files for Division '2' not found for week 4. Skipping.
+2025-10-24 12:49:45,051 - INFO - Processing Division '6' for Week 4
+2025-10-24 12:49:45,067 - WARNING - Data files for Division '6' not found for week 4. Skipping.
+2025-10-24 12:49:45,068 - INFO - Processing Division '10' for Week 4
+2025-10-24 12:49:45,068 - WARNING - Data files for Division '10' not found for week 4. Skipping.
+2025-10-24 12:49:45,068 - INFO - Processing Division '3' for Week 4
+2025-10-24 12:49:45,068 - WARNING - Data files for Division '3' not found for week 4. Skipping.
+2025-10-24 12:49:45,068 - INFO - Processing Division '4' for Week 4
+2025-10-24 12:49:45,068 - WARNING - Data files for Division '4' not found for week 4. Skipping.
+2025-10-24 12:49:45,068 - INFO - Processing Division '11' for Week 4
+2025-10-24 12:49:45,068 - WARNING - Data files for Division '11' not found for week 4. Skipping.
+2025-10-24 12:49:45,068 - INFO - Processing Division 'L2' for Week 4
+2025-10-24 12:49:45,068 - WARNING - Data files for Division 'L2' not found for week 4. Skipping.
+2025-10-24 12:49:45,068 - INFO - Processing Division '7' for Week 4
+2025-10-24 12:49:45,068 - WARNING - Data files for Division '7' not found for week 4. Skipping.
+2025-10-24 12:49:45,068 - INFO - Processing Division '9' for Week 4
+2025-10-24 12:49:45,068 - WARNING - Data files for Division '9' not found for week 4. Skipping.
+2025-10-24 12:49:45,068 - INFO - Processing Division '12' for Week 4
+2025-10-24 12:49:45,068 - WARNING - Data files for Division '12' not found for week 4. Skipping.
+2025-10-24 12:49:45,068 - INFO - Processing Division 'M2' for Week 4
+2025-10-24 12:49:45,068 - WARNING - Data files for Division 'M2' not found for week 4. Skipping.
+2025-10-24 12:49:45,068 - INFO - Processing Division 'Premier Main' for Week 4
+2025-10-24 12:49:45,068 - WARNING - Data files for Division 'Premier Main' not found for week 4. Skipping.
+2025-10-24 12:49:45,068 - INFO - Processing Division 'Premier Masters' for Week 4
+2025-10-24 12:49:45,068 - WARNING - Data files for Division 'Premier Masters' not found for week 4. Skipping.
+2025-10-24 12:49:45,068 - INFO - Processing Division 'Premier Ladies' for Week 4
+2025-10-24 12:49:45,068 - WARNING - Data files for Division 'Premier Ladies' not found for week 4. Skipping.
+2025-10-24 12:49:45,068 - INFO - Processing Division 'M3' for Week 4
+2025-10-24 12:49:45,095 - INFO - Number of players who played in Division 'M3' during week 4: 20
+2025-10-24 12:49:45,101 - INFO - Number of 'Playing Up' players in Division 'M3' during week 4: 0
+2025-10-24 12:49:45,119 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_4\M3_player_results.csv
+2025-10-24 12:49:45,119 - INFO - Processing Division 'M4' for Week 4
+2025-10-24 12:49:45,137 - INFO - Number of players who played in Division 'M4' during week 4: 20
+2025-10-24 12:49:45,142 - INFO - Number of 'Playing Up' players in Division 'M4' during week 4: 0
+2025-10-24 12:49:45,151 - INFO - Player match results saved to C:\Users\bpali\PycharmProjects\SquashApp\2025-2026\player_results\week_4\M4_player_results.csv
+2025-10-24 12:49:45,151 - INFO - Processing Division '5' for Week 4
+2025-10-24 12:49:45,151 - WARNING - Data files for Division '5' not found for week 4. Skipping.
+2025-10-24 12:49:45,151 - INFO - Processing Division '8A' for Week 4
+2025-10-24 12:49:45,151 - WARNING - Data files for Division '8A' not found for week 4. Skipping.
+2025-10-24 12:49:45,151 - INFO - Processing Division '8B' for Week 4
+2025-10-24 12:49:45,151 - WARNING - Data files for Division '8B' not found for week 4. Skipping.
+2025-10-24 12:49:45,167 - INFO - Processing Division '13A' for Week 4
+2025-10-24 12:49:45,168 - WARNING - Data files for Division '13A' not found for week 4. Skipping.
+2025-10-24 12:49:45,168 - INFO - Processing Division '13B' for Week 4
+2025-10-24 12:49:45,168 - WARNING - Data files for Division '13B' not found for week 4. Skipping.
+2025-10-24 12:49:45,168 - INFO - Processing Division '13C' for Week 4
+2025-10-24 12:49:45,168 - WARNING - Data files for Division '13C' not found for week 4. Skipping.
+2025-10-24 12:49:45,168 - INFO - Processing Division 'L3' for Week 4
+2025-10-24 12:49:45,168 - WARNING - Data files for Division 'L3' not found for week 4. Skipping.
+2025-10-24 12:49:45,168 - INFO - Processing Division 'L4' for Week 4
+2025-10-24 12:49:45,168 - WARNING - Data files for Division 'L4' not found for week 4. Skipping.
+2025-10-24 12:49:45,168 - INFO - Processing Division '14' for Week 4
+2025-10-24 12:49:45,168 - WARNING - Data files for Division '14' not found for week 4. Skipping.
+2025-10-24 12:49:45,168 - INFO - Processing Division '15A' for Week 4
+2025-10-24 12:49:45,168 - WARNING - Data files for Division '15A' not found for week 4. Skipping.
+2025-10-24 12:49:45,168 - INFO - Processing Division '15B' for Week 4
+2025-10-24 12:49:45,168 - WARNING - Data files for Division '15B' not found for week 4. Skipping.
