@@ -24,7 +24,12 @@ from scripts.create_combined_results import load_all_results_and_player_results
 from parsers import (
     parse_result, split_overall_score, determine_winner, normalize_rubber,
     count_games_won, count_valid_matches, _parse_summary_row_text, home_team_won
-) 
+)
+# Import scraper functions
+from scrapers import (
+    scrape_teams_page, scrape_summary_page, scrape_schedules_and_results_page,
+    scrape_ranking_page, scrape_players_page
+)
 
 
 # Global variables
@@ -171,232 +176,9 @@ logging.basicConfig(
 )
 
 
-def scrape_team_summary_page(league_id, year):
-    """
-    Scrape Team Summary and return a non-empty DataFrame.
-    Tries both site spellings: 'team_summery' (current) then 'team_summary' (fallback).
-    """
-    summary_paths = ["team_summery", "team_summary"]
-    last_error = None
-
-    for path in summary_paths:
-        summary_url = url(path, league_id)
-        logging.info(f"Scraping team summary page ({path}) for league id: {league_id}, year: {year}...")
-        try:
-            response = SESSION.get(summary_url, timeout=REQUEST_TIMEOUT)
-            logging.debug(f"[{path}] status: {response.status_code}")
-            if response.status_code != 200:
-                last_error = RuntimeError(f"[{path}] HTTP {response.status_code}")
-                continue
-
-            soup = BeautifulSoup(response.content, 'html.parser')
-
-            # The page markup uses this structure:
-            # <div class="clearfix teamSummary-content-list">
-            #   <div class="col-xs-4">Team</div>
-            #   <div class="col-xs-2">Played</div> ...
-            rows = (soup.select("div.clearfix.teamSummary-content-list")
-                    or soup.select("div.teamSummary-content-list")
-                    or soup.select("div.teamSummary div[class*='content-list']"))
-
-            data = []
-            for idx, row in enumerate(rows):
-                cells = [d.get_text(strip=True) for d in row.find_all("div", recursive=False)]
-                cells = [c for c in cells if c]
-                # skip header-like rows
-                joined = "".join(cells).lower()
-                if "played" in joined and "won" in joined and "lost" in joined:
-                    continue
-
-                if len(cells) >= 5:
-                    team = " ".join(cells[:-4]) if len(cells) > 5 else cells[0]
-                    tail = cells[-4:]
-                    try:
-                        p, w, l, pts = map(int, tail)
-                        if team and not team.lower().startswith("played"):
-                            data.append([team, p, w, l, pts])
-                    except Exception:
-                        # ignore malformed lines; we also have a fallback below if needed
-                        pass
-
-            if not data:
-                # as a fallback, try parsing the whole row text with regex (optional)
-                # if still empty, try the other spelling
-                last_error = ValueError(f"[{path}] parsed 0 data rows")
-                continue
-
-            df = pd.DataFrame(data, columns=["Team", "Played", "Won", "Lost", "Points"])
-            df[["Played", "Won", "Lost", "Points"]] = df[
-                ["Played", "Won", "Lost", "Points"]
-            ].apply(pd.to_numeric, errors="coerce").fillna(0).astype(int)
-
-            logging.info(f"[{path}] Successfully created summary DataFrame with {len(df)} rows")
-            return df
-
-        except Exception as e:
-            logging.exception(f"[{path}] Error scraping team summary: {e}")
-            last_error = e
-            continue
-
-    # If we get here, both spellings failed
-    logging.error(f"Team summary failed with both slugs for {league_id}: {last_error}")
-    raise SystemExit(1)
-
-
-def scrape_teams_page(league_id, year):
-    """
-    Function to scrape the Teams page on HK squash website and store the data in a dataframe
-    """
-    teams_url = url("teams", league_id)
-
-    logging.info(f"Starting scrape_teams_page for league id: {league_id}, year: {year}")
-    logging.debug(f"Constructed teams URL: {teams_url}")
-
-    try:
-        # Send the HTTP request
-        response = SESSION.get(teams_url, timeout=REQUEST_TIMEOUT)
-        logging.debug(f"Received response with status code: {response.status_code}")
-
-        # Check if the response is successful
-        if response.status_code != 200:
-            logging.error(f"Failed to retrieve teams page. Status code: {response.status_code}")
-            return pd.DataFrame()
-        
-        # Parse the HTML content
-        soup = BeautifulSoup(response.content, 'html.parser')
-        logging.debug("Parsed HTML content with BeautifulSoup")
-
-        # Find the team data
-        team_rows = soup.find_all("div", class_="teams-content-list")
-        logging.debug(f"Found {len(team_rows)} team rows")
-
-        # Check if any team data was found
-        if not team_rows:
-            logging.warning("No team data was found on the teams page.")
-            return pd.DataFrame()
-
-        # Initialize a list to hold all the data rows
-        team_data_rows = []
-
-        # Iterate over the rows and extract data
-        for idx, row in enumerate(team_rows):
-            columns = row.find_all("div", recursive=False)
-            row_data = [col.text.strip() for col in columns if col.text.strip()]
-            if row_data:
-                team_data_rows.append(row_data)
-                logging.debug(f"Extracted data from row {idx}: {row_data}")
-            else:
-                logging.debug(f"No data found in row {idx}, skipping")
-
-        # Check if any data was extracted
-        if not team_data_rows:
-            logging.warning("No data rows were extracted from the teams page.")
-            return pd.DataFrame()
-        
-        # Definte the expected column names
-        expected_columns = ["Team Name", "Home", "Convenor", "Email"]
-
-        # Create DataFrame from list of lists
-        teams_df = pd.DataFrame(team_data_rows, columns=expected_columns)
-        logging.info(f"Successfully created teams DataFrame with {len(teams_df)} rows")
-
-        return teams_df
-    
-    except Exception as e:
-        logging.exception(f"An error occured in scrape_teams_page: {e}")
-        return pd.DataFrame()
-
-
-def scrape_schedules_and_results_page(league_id, year):
-    """
-    Function to scrape Schedules and Results page from HK squash website and store data in a dataframe
-    """
-    schedule_url = url("results_schedules", league_id)
-
-    # Add logging to track the progress
-    logging.info(f"Scraping schedules and results page for league id: {league_id}, year: {year}...")
-    logging.debug(f"Constructed schedule URL: {schedule_url}")
-
-    try:
-        # Send the HTTP request
-        response = SESSION.get(schedule_url, timeout=REQUEST_TIMEOUT)
-        logging.debug(f"Received response with status code: {response.status_code}")
-
-        # Check if the response is successful
-        if response.status_code != 200:
-            logging.error(f"Failed to retrieve schedules and results page. Status code: {response.status_code}")
-            return pd.DataFrame()
-        
-        # Parse the HTML content
-        soup = BeautifulSoup(response.content, 'html.parser')
-        logging.debug("Parsed HTML content with BeautifulSoup")
-
-        # Initialize a list to hold all the data rows
-        data_rows = []
-
-        # Iterate over each section in the schedule
-        sections = soup.find_all('div', class_='results-schedules-content')
-        logging.debug(f"Found {len(sections)} schedule sections")
-
-        for section_idx, section in enumerate(sections) :
-            # Extract the match week and date from the title
-            title_div = section.find_previous_sibling('div', class_='clearfix results-schedules-title')
-            if title_div:
-                match_week_and_date = title_div.text.strip()
-                try:
-                    match_week_str, date = match_week_and_date.split(' - ')
-                    # Extract just the number from the match week string
-                    match_week = ''.join(filter(str.isdigit, match_week_str))
-                    # Convert match_week to integer
-                    match_week = int(match_week)
-                    logging.debug(f"Section {section_idx}: Match Week: {match_week}, Date: {date}")
-                except ValueError as e:
-                    logging.warning(f"Section {section_idx}: Error parsing match week and date: {match_week_and_date}")
-                    match_week, date = None, None  # Assign None if conversion fails
-            else:
-                logging.warning(f"Section {section_idx}: No title div found for match week and date")
-                match_week, date = None, None
-
-            # Find all 'div' elements with the class 'results-schedules-list' in the section
-            schedule_rows = section.find_all('div', class_='results-schedules-list')
-            logging.debug(f"Section {section_idx}: Found {len(schedule_rows)} schedule rows")
-
-            # Skip the first row as it's the header
-            for row_idx, row in enumerate(schedule_rows[1:], start=1):
-                columns = row.find_all('div', recursive=False)
-                row_data = [col.text.strip() for col in columns]
-
-                # Ensure the correct number of columns (add empty result if missing)
-                if len(row_data) == 5:  # Missing result
-                    row_data.append('')  # Add empty result
-                    logging.debug(f"Row {row_idx}: Missing result, added empty string")
-
-                # Add match week and date to each row
-                row_data.extend([match_week, date])
-                data_rows.append(row_data)
-                logging.debug(f"Row {row_idx}: Extracted data: {row_data}")
-
-        # Create a DataFrame from the scraped schedule data
-        column_names = ['Home Team', 'vs', 'Away Team', 'Venue', 'Time', 'Result', 'Match Week', 'Date']
-        df = pd.DataFrame(data_rows, columns=column_names)
-        logging.info(f"Successfully created schedules and results DataFrame with {len(df)} rows")
-
-        # Convert 'Match Week' to numeric and handle NaN values
-        df['Match Week'] = pd.to_numeric(df['Match Week'], errors='coerce')
-
-        # Drop rows with NaN in 'Match Week' if necessary
-        initial_row_count = len(df)
-        df = df.dropna(subset=['Match Week'])
-        logging.info(f"Dropped {initial_row_count - len(df)} rows with NaN in 'Match Week'")
-
-        # Convert 'Match Week' to integer type
-        df['Match Week'] = df['Match Week'].astype(int)
-
-        return df
-    
-    except Exception as e:
-        logging.exception(f"An error occured in scrape_schedules_and_results_page: {e}")
-        return pd.DataFrame()
+# Scraper functions are now imported from scrapers package
+# (scrape_teams_page, scrape_summary_page, scrape_schedules_and_results_page,
+#  scrape_ranking_page, scrape_players_page)
 
 
 def aggregate_wins_home(team, results_df):
@@ -522,232 +304,8 @@ def find_max_win_percentage(df, team):
     players = df[(df['Team'] == team) & (df['Win Percentage'] == max_value)]['Name of Player']
     return ", ".join(players) + f" ({max_value * 100:.1f}%)"
 
-def scrape_ranking_page(league_id, year):
-    """
-    Function to scrape the Ranking page and process it into a DataFrame.
-    """
-    ranking_url = url("ranking", league_id)
-
-    logging.info(f"Scraping ranking page for league id: {league_id}, year: {year}")
-    logging.debug(f"Constructed ranking URL: {ranking_url}")
-
-    # Send the HTTP request
-    response = SESSION.get(ranking_url, timeout=REQUEST_TIMEOUT)
-    logging.debug(f"Received response with status code: {response.status_code}")
-
-    # Check if the response is successful
-    if response.status_code != 200:
-        logging.error(f"Failed to retrieve ranking page. Status code: {response.status_code}")
-        raise Exception(f"Failed to retrieve ranking page. Status code: {response.status_code}")
-
-    # Parse the HTML content
-    soup = BeautifulSoup(response.content, 'html.parser')
-    logging.debug("Parsed HTML content with BeautifulSoup")
-
-    # Find the ranking data
-    ranking_rows = soup.find_all("div", class_="clearfix ranking-content-list")
-    logging.debug(f"Found {len(ranking_rows)} ranking rows")
-
-    # Initialize a list to hold all the data rows
-    ranking_data_rows = []
-
-    # Extract the ranking data from the soup
-    for idx, row in enumerate(ranking_rows):
-        columns = row.find_all("div", recursive=False)
-        row_data = [col.text.strip() for col in columns]
-        # Exclude rows that contain "NO DATA" or are empty
-        if "NO DATA" in row_data or not row_data or len(row_data) < 8:
-            logging.debug(f"Skipping row {idx} due to 'NO DATA' or insufficient data: {row_data}")
-            continue
-        ranking_data_rows.append(row_data)
-        logging.debug(f"Extracted data from row {idx}: {row_data}")
-
-    # Check if any data was extracted
-    if not ranking_data_rows:
-        logging.warning("No data rows were extracted from the ranking page.")
-        return None, None, None, None
-
-    # Create DataFrame
-    df = pd.DataFrame(ranking_data_rows, columns=['Position', 'Name of Player', 'Team', 'Average Points',
-                                                  'Total Game Points', 'Games Played', 'Won', 'Lost'])
-    logging.info(f"Successfully created ranking DataFrame with {len(df)} rows")
-
-    # Get Division Name and add as a column
-    try:
-        full_division_name = soup.find('a', href=lambda href: href and "leagues/detail/id" in href).text.strip()
-        division_number = full_division_name.split("Division ")[-1]
-        df['Division'] = division_number
-        logging.debug(f"Extracted division number: {division_number}")
-    except Exception as e:
-        logging.warning(f"Error extracting division number: {e}")
-        df['Division'] = ''
-
-    # Convert columns to numeric types, handling errors
-    numeric_columns = ['Average Points', 'Total Game Points', 'Games Played', 'Won', 'Lost']
-    for col in numeric_columns:
-        df[col] = pd.to_numeric(df[col], errors='coerce')
-
-    # Handle NaN values
-    df['Average Points'] = df['Average Points'].fillna(0.0)
-    df['Total Game Points'] = df['Total Game Points'].fillna(0)
-    df['Games Played'] = df['Games Played'].fillna(0)
-    df['Won'] = df['Won'].fillna(0)
-    df['Lost'] = df['Lost'].fillna(0)
-
-    # Convert to appropriate types
-    df['Total Game Points'] = df['Total Game Points'].astype(int)
-    df['Games Played'] = df['Games Played'].astype(int)
-    df['Won'] = df['Won'].astype(int)
-    df['Lost'] = df['Lost'].astype(int)
-    df['Average Points'] = df['Average Points'].astype(float)
-
-    logging.debug("Converted numeric columns to appropriate data types")
-
-    # Create Win Percentage column, handling division by zero
-    df["Win Percentage"] = df.apply(
-        lambda row: row["Won"] / row["Games Played"] if row["Games Played"] > 0 else 0, axis=1
-    )
-
-    # Create filtered DataFrame
-    ranking_df_filtered = df[df["Games Played"] >= 5]
-    logging.info(f"Filtered ranking DataFrame to {len(ranking_df_filtered)} rows with 5 or more games played")
-
-
-    # Check if ranking_df_filtered is empty
-    if ranking_df_filtered.empty:
-        logging.warning("No players have played enough games to qualify for the table.")
-        summarized_df = None
-        unbeaten_list = []
-    else:
-        # Create the summarized DataFrame
-        teams = df['Team'].unique()
-        summary_data = {
-            'Team': [],
-            'Most Games': [],
-            'Most Wins': [],
-            'Highest Win Percentage': []
-        }
-        for team in teams:
-            summary_data['Team'].append(team)
-            summary_data['Most Games'].append(find_max_players(ranking_df_filtered, team, 'Games Played'))
-            summary_data['Most Wins'].append(find_max_players(ranking_df_filtered, team, 'Won'))
-            summary_data['Highest Win Percentage'].append(find_max_win_percentage(ranking_df_filtered, team))
-
-        summarized_df = pd.DataFrame(summary_data).sort_values("Team")
-        logging.info(f"Created summarized DataFrame with {len(summarized_df)} teams")
-
-        # Get list of unbeaten players
-        unbeaten_list = ranking_df_filtered[
-            ranking_df_filtered["Lost"] == 0
-            ].apply(lambda row: f"{row['Name of Player']} ({row['Team']})", axis=1).tolist()
-        logging.info(f"Found {len(unbeaten_list)} unbeaten players")
-
-    return df, summarized_df, unbeaten_list, ranking_df_filtered
-
-
-def scrape_players_page(league_id, year):
-    """
-    Function to scrape the Players page and store data in a DataFrame.
-    """
-
-    logging.info(f"Starting scrape_players_page for league_id: {league_id}, year: {year}")
-
-    players_url = url("players", league_id)
-    logging.debug(f"Constructed players URL: {players_url}")
-
-    try:
-        # Send the HTTP request
-        response = SESSION.get(players_url, timeout=REQUEST_TIMEOUT)
-        logging.debug(f"Received response with status code: {response.status_code}")
-
-        # Check if the response is successful
-        if response.status_code != 200:
-            raise RuntimeError(f"Failed to retrieve players page. Status code: {response.status_code}")
-        
-        # Parse the HTML content
-        soup = BeautifulSoup(response.content, 'html.parser')
-        logging.debug("Parsed HTML content with BeautifulSoup")
-
-        # Dictionary to store the dataframes
-        team_dataframes = []
-
-        # Loop through each team's container
-        team_containers = soup.find_all("div", class_="players-container")
-        logging.debug(f"Found {len(team_containers)} team containers")
-
-        for idx, team_container in enumerate(team_containers):
-            # Extract team name
-            team_name = None
-            try:
-                team_name_div = team_container.find("div", string="team name:")
-                team_name = team_name_div.find_next_sibling().get_text(strip=True)
-            except Exception as e:
-                logging.warning(f"Team {idx}: Error extracting team name: {e}")
-                continue
-
-            # If this team block explicitly says NO DATA, skip the whole team
-            if team_container.get_text(strip=True).upper().find("NO DATA") != -1:
-                logging.info(f"Team {idx} ('{team_name}') shows NO DATA — skipping team.")
-                continue
-
-            # Extract player data
-            player_rows = team_container.find_all("div", class_="players-content-list")
-            logging.debug(f"Team {idx}: Found {len(player_rows)} player rows")
-
-            # Initialize a list to store each player's data for this team
-            players_data = []
-
-            for player_idx, player in enumerate(player_rows):
-                # collect fields
-                order_rank_points = [div.get_text(strip=True) for div in player.find_all("div", class_="col-xs-2")]
-                player_name = [div.get_text(strip=True) for div in player.find_all("div", class_="col-xs-4")]
-
-                # Build row: [Order] + [Name of Players] + [HKS No., Ranking, Points]
-                row = order_rank_points[:1] + player_name + order_rank_points[1:]
-
-                # Keep only well-formed rows of length 5 and that are not header junk
-                if len(row) == 5 and row[0].isdigit():
-                    players_data.append(row)
-                else:
-                    # benign skip: headers/format noise produce zero-length or short rows
-                    logging.debug(f"Team {idx}, Player {player_idx}: skipping malformed row: {row}")
-
-            if not players_data:
-                logging.warning(f"Team '{team_name}' produced no valid player rows; skipping team.")
-                continue
-
-            # Create DataFrame
-            df = pd.DataFrame(players_data, columns=["Order", "Name of Players", "HKS No.", "Ranking", "Points"])
-
-            # Convert columns to the correct data types
-            df['Order'] = pd.to_numeric(df['Order'], errors='coerce').fillna(0).astype(int)
-            df['HKS No.'] = pd.to_numeric(df['HKS No.'], errors='coerce').fillna(0).astype(int)
-            df['Ranking'] = pd.to_numeric(df['Ranking'], errors='coerce').fillna(0).astype(int)
-            df['Points'] = pd.to_numeric(df['Points'], errors='coerce').fillna(0.0).astype(float)
-            df['Team'] = team_name
-
-            # Rename column
-            df = df.rename(columns={"Name of Players": "Player"})
-
-            # Add dataframe to list
-            team_dataframes.append(df)
-            logging.info(f"Team {idx + 1}: Created DataFrame with {len(df)} rows for team: {team_name}")
-
-            time.sleep(5)
-
-        if not team_dataframes:
-            raise ValueError("No valid player data found in any team block on the page.")
-
-        combined_df = pd.concat(team_dataframes, ignore_index=True)
-        logging.info(f"Concatenated all team dataframes into a single DataFrame with {len(combined_df)} rows")
-        return combined_df  
-
-    except Exception as e:
-        logging.exception(f"An error occured in scrape_players_page: {e}")
-        return pd.DataFrame()
-    
-
-
+# Old scraper functions removed - now using scrapers package
+# (see scrapers/ranking.py and scrapers/players.py)
 
 def ensure_nonempty_df(df: pd.DataFrame, name: str, div: str, hard_fail: bool = True):
     if df is None or df.empty:
@@ -781,7 +339,7 @@ for div in current_divisions.keys():
     # Scrape Schedules and Results page
     try:
         logging.info(f"Scraping Schedules and Results page for Division {div}")
-        schedules_df = scrape_schedules_and_results_page(league_id, year)
+        schedules_df = scrape_schedules_and_results_page(league_id, year, SESSION)
         logging.info(f"Successfully scraped Schedules and Results page for Division {div}")
     except Exception as e:
         logging.error(f"Error scraping Schedules and Results page for Division {div}: {e}")
@@ -846,7 +404,7 @@ for div in current_divisions.keys():
     # Scrape Team Summary page
     try:
         logging.info(f"Scraping Team Summary page for Division {div}")
-        summary_df = scrape_team_summary_page(league_id, year)
+        summary_df = scrape_summary_page(league_id, year, SESSION)
         logging.info(f"Successfully scraped Team Summary page for Division {div}")
     except Exception as e:
         logging.error(f"Error scraping Team Summary page for Division {div}: {e}")
@@ -867,7 +425,7 @@ for div in current_divisions.keys():
     # Scrape Teams page
     try:
         logging.info(f"Scraping Teams page for Division {div}")
-        teams_df = scrape_teams_page(league_id, year)
+        teams_df = scrape_teams_page(league_id, year, SESSION)
         logging.info(f"Successfully scraped Teams page for Division {div}")
     except Exception as e:
         logging.error(f"Error scraping Teams page for Division {div}: {e}")
@@ -887,7 +445,7 @@ for div in current_divisions.keys():
     # Scrape Ranking page
     try:
         logging.info(f"Scraping Ranking page for Division {div}")
-        ranking_df, summarized_df, unbeaten_list, ranking_df_filtered = scrape_ranking_page(league_id, year)
+        ranking_df, summarized_df, unbeaten_list, ranking_df_filtered = scrape_ranking_page(league_id, year, SESSION)
         logging.info(f"Successfully scraped Ranking page for Division {div}")
     except Exception as e:
         logging.error(f"Error scraping Ranking page for Division {div}: {e}")
@@ -911,7 +469,7 @@ for div in current_divisions.keys():
     # Scrape Players page
     try:
         logging.info(f"Scraping Players page for Division {div}")
-        players_df = scrape_players_page(league_id, year)
+        players_df = scrape_players_page(league_id, year, SESSION)
         logging.info(f"Successfully scraped Players page for Division {div}")
     except Exception as e:
         logging.error(f"Error scraping Players page for Division {div}: {e}")
