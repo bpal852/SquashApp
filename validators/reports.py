@@ -40,14 +40,14 @@ class ValidationReport:
         filepath = self.report_dir / filename
         
         # Save as JSON
-        with open(filepath, 'w') as f:
+        with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(result.to_dict(), f, indent=2)
         
         self.logger.info(f"Saved validation report: {filepath}")
         
         # Also save human-readable summary
         summary_file = filepath.with_suffix('.txt')
-        with open(summary_file, 'w') as f:
+        with open(summary_file, 'w', encoding='utf-8') as f:
             f.write(result.summary())
         
         return filepath
@@ -70,7 +70,7 @@ class ValidationReport:
         total_warnings = sum(r.warning_count for r in self.results)
         
         # Write text summary
-        with open(summary_file, 'w') as f:
+        with open(summary_file, 'w', encoding='utf-8') as f:
             f.write("="*70 + "\n")
             f.write(f"VALIDATION SUMMARY REPORT - {self.year}\n")
             f.write("="*70 + "\n")
