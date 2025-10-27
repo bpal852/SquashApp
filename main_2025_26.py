@@ -30,6 +30,11 @@ from scrapers import (
     scrape_teams_page, scrape_summary_page, scrape_schedules_and_results_page,
     scrape_ranking_page, scrape_players_page
 )
+# Import validator functions
+from validators import (
+    TeamsValidator, SummaryValidator, SchedulesValidator,
+    RankingValidator, PlayersValidator, ValidationReport
+)
 
 
 # Global variables
@@ -70,6 +75,7 @@ REPO_ROOT = Path(os.getenv("SQUASHAPP_ROOT", Path(__file__).resolve().parents[0]
 
 # Configuration: Set TESTING_MODE to True for quick testing with only a few divisions
 TESTING_MODE = True  # Set to False for full production scraping
+ENABLE_VALIDATION = True  # Set to False to disable data validation
 
 DIVISIONS = {
     # Mondays
@@ -328,8 +334,50 @@ def safe_save_csv(df: pd.DataFrame, path: str, name: str, div: str, allow_empty:
     logging.info(f"Saved {name} to {path}")
 
 
+def validate_and_save(validator_class, df: pd.DataFrame, league_id: str, year: str, 
+                     division: str, validation_report: ValidationReport = None):
+    """
+    Validate a DataFrame and add result to validation report.
+    
+    Args:
+        validator_class: The validator class to use
+        df: DataFrame to validate
+        league_id: League ID
+        year: Season year
+        division: Division name
+        validation_report: ValidationReport instance (optional)
+    
+    Returns:
+        ValidationResult or None if validation disabled
+    """
+    if validation_report is None or not ENABLE_VALIDATION:
+        return None
+    
+    validator = validator_class(league_id=league_id, year=year, division=division)
+    result = validator.validate(df)
+    validation_report.add_result(result)
+    validation_report.save_individual_report(result, division)
+    
+    # Log critical errors
+    if not result.is_valid:
+        logging.warning(f"⚠️  Validation FAILED for {result.data_type} in {division}: "
+                       f"{result.error_count} errors, {result.warning_count} warnings")
+    else:
+        logging.info(f"✅ Validation passed for {result.data_type} in {division}")
+    
+    return result
+
+
 # Use logging to track progress
 logging.info("Starting the scraping process...")
+
+# Initialize validation report if validation is enabled
+if ENABLE_VALIDATION:
+    validation_report = ValidationReport(output_dir=str(REPO_ROOT / year), year=year)
+    logging.info("Data validation is ENABLED - validation reports will be generated")
+else:
+    validation_report = None
+    logging.info("Data validation is DISABLED")
 
 # Only process enabled divisions based on TESTING_MODE configuration
 for div in current_divisions.keys():
@@ -341,6 +389,9 @@ for div in current_divisions.keys():
         logging.info(f"Scraping Schedules and Results page for Division {div}")
         schedules_df = scrape_schedules_and_results_page(league_id, year, SESSION)
         logging.info(f"Successfully scraped Schedules and Results page for Division {div}")
+        
+        # Validate schedules data
+        validate_and_save(SchedulesValidator, schedules_df, league_id, year, div, validation_report)
     except Exception as e:
         logging.error(f"Error scraping Schedules and Results page for Division {div}: {e}")
         continue
@@ -406,6 +457,9 @@ for div in current_divisions.keys():
         logging.info(f"Scraping Team Summary page for Division {div}")
         summary_df = scrape_summary_page(league_id, year, SESSION)
         logging.info(f"Successfully scraped Team Summary page for Division {div}")
+        
+        # Validate summary data
+        validate_and_save(SummaryValidator, summary_df, league_id, year, div, validation_report)
     except Exception as e:
         logging.error(f"Error scraping Team Summary page for Division {div}: {e}")
         raise
@@ -427,6 +481,9 @@ for div in current_divisions.keys():
         logging.info(f"Scraping Teams page for Division {div}")
         teams_df = scrape_teams_page(league_id, year, SESSION)
         logging.info(f"Successfully scraped Teams page for Division {div}")
+        
+        # Validate teams data
+        validate_and_save(TeamsValidator, teams_df, league_id, year, div, validation_report)
     except Exception as e:
         logging.error(f"Error scraping Teams page for Division {div}: {e}")
         continue
@@ -447,6 +504,10 @@ for div in current_divisions.keys():
         logging.info(f"Scraping Ranking page for Division {div}")
         ranking_df, summarized_df, unbeaten_list, ranking_df_filtered = scrape_ranking_page(league_id, year, SESSION)
         logging.info(f"Successfully scraped Ranking page for Division {div}")
+        
+        # Validate ranking data
+        if ranking_df is not None and not ranking_df.empty:
+            validate_and_save(RankingValidator, ranking_df, league_id, year, div, validation_report)
     except Exception as e:
         logging.error(f"Error scraping Ranking page for Division {div}: {e}")
         # Stop execution if an error occurs
@@ -471,6 +532,9 @@ for div in current_divisions.keys():
         logging.info(f"Scraping Players page for Division {div}")
         players_df = scrape_players_page(league_id, year, SESSION)
         logging.info(f"Successfully scraped Players page for Division {div}")
+        
+        # Validate players data
+        validate_and_save(PlayersValidator, players_df, league_id, year, div, validation_report)
     except Exception as e:
         logging.error(f"Error scraping Players page for Division {div}: {e}")
         continue
@@ -1125,3 +1189,37 @@ combined_results_df, combined_player_results_df = load_all_results_and_player_re
 combined_results_df.to_csv(season_base_path / "combined_results_df.csv", index=False)
 combined_player_results_df.to_csv(season_base_path / "combined_player_results_df.csv", index=False)
 print("Post-scrape player-results + combine done.")
+
+# Generate and save validation report if validation was enabled
+if ENABLE_VALIDATION and validation_report is not None:
+    logging.info("\n" + "="*70)
+    logging.info("GENERATING VALIDATION REPORT")
+    logging.info("="*70)
+    
+    # Print summary to console
+    validation_report.print_summary()
+    
+    # Save summary reports
+    validation_report.save_summary_report()
+    
+    # Create and save error summary DataFrame
+    error_df = validation_report.create_error_summary_dataframe()
+    if not error_df.empty:
+        error_summary_path = season_base_path / "validation_reports" / "error_summary.csv"
+        error_df.to_csv(error_summary_path, index=False)
+        logging.info(f"Saved error summary to {error_summary_path}")
+    
+    # Log critical issues
+    if validation_report.has_errors():
+        logging.warning(f"⚠️  VALIDATION ISSUES DETECTED:")
+        failed_validations = validation_report.get_failed_validations()
+        for result in failed_validations:
+            division = result.metadata.get('division', 'N/A')
+            logging.warning(f"  • {result.data_type} ({division}): "
+                          f"{result.error_count} errors, {result.warning_count} warnings")
+    else:
+        logging.info("✅ All validations passed successfully!")
+    
+    logging.info("="*70 + "\n")
+
+logging.info("🎉 Scraping and validation complete!")
