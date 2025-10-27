@@ -1,5 +1,10 @@
 # SquashApp
 
+[![CI/CD Pipeline](https://github.com/bpal852/SquashApp/actions/workflows/ci.yml/badge.svg)](https://github.com/bpal852/SquashApp/actions/workflows/ci.yml)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A comprehensive data scraping and analysis tool for Hong Kong Squash League data, built with Python, pandas, and Streamlit.
 
 ## Overview
@@ -75,7 +80,7 @@ streamlit run app.py
 ### Running Tests
 
 ```powershell
-# Run all tests (78 tests, ~35 seconds)
+# Run all tests (128 tests, ~35 seconds)
 pytest tests/ -v
 
 # Run parser tests only (58 tests)
@@ -84,9 +89,57 @@ pytest tests/test_parsers.py -v
 # Run scraper tests only (20 tests)
 pytest tests/test_scrapers.py -v
 
+# Run validator tests only (50 tests)
+pytest tests/test_validators.py -v
+
 # Run with coverage
-pytest tests/ --cov=scrapers --cov=parsers --cov-report=html
+pytest tests/ --cov=. --cov-report=html --cov-report=term-missing
+
+# Run specific test markers
+pytest tests/ -m unit           # Unit tests only
+pytest tests/ -m integration    # Integration tests only
+pytest tests/ -m "not slow"     # Skip slow tests
 ```
+
+## CI/CD Pipeline
+
+This project uses GitHub Actions for continuous integration and deployment:
+
+### Automated Checks
+
+On every push and pull request:
+- ✅ **Multi-Python Testing**: Tests run on Python 3.9, 3.10, and 3.11
+- 🧹 **Code Formatting**: Black formatting check
+- 📦 **Import Sorting**: isort check
+- 🔍 **Linting**: Flake8 code quality analysis
+- 📊 **Test Coverage**: pytest with coverage reporting
+- 📈 **Coverage Upload**: Automatic upload to Codecov
+
+### Running CI Checks Locally
+
+```powershell
+# Install dev dependencies
+pip install pytest-cov flake8 black isort
+
+# Run formatting check
+black --check .
+
+# Run import sorting check
+isort --check-only .
+
+# Run linting
+flake8 .
+
+# Run tests with coverage
+pytest tests/ --cov=. --cov-report=html
+```
+
+### Configuration Files
+
+- `.github/workflows/ci.yml` - GitHub Actions workflow
+- `pytest.ini` - pytest configuration with markers
+- `pyproject.toml` - Black, isort, and coverage settings
+- `.flake8` - Flake8 linting configuration
 
 ## Architecture
 
@@ -100,6 +153,16 @@ All scrapers inherit from `BaseScraper`, which provides:
 - URL construction
 
 See [scrapers/README.md](scrapers/README.md) for detailed documentation.
+
+### Validators Package
+
+Data validation layer ensures data quality:
+- **TeamsValidator**: Email format, duplicates, row counts
+- **SummaryValidator**: Mathematical consistency (Won+Lost=Played)
+- **SchedulesValidator**: Date ranges, result format, match weeks
+- **RankingValidator**: Win % accuracy, score distribution
+- **PlayersValidator**: HKS numbers, order sequences
+- **ValidationReport**: JSON, text, and CSV reporting
 
 ### Parser Functions
 

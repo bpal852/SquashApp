@@ -1,0 +1,100 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Testing
+.pytest_cache/
+.tox/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+*.log
+htmlcov/
+.hypothesis/
+test_output/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# pyenv
+.python-version
+
+# Environments
+.env
+.env.local
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Application specific
+*.csv
+!requirements.txt
+*.html
+!templates/*.html
+*.log
+app_debug.log
+squash_app_debug.log
+create_player_results_database_all_divisions.log
+
+# Data directories (keep structure, ignore data)
+2025-2026/**/*.csv
+2025-2026/**/*.txt
+2025-2026/**/*.html
+previous_seasons/**/*.csv
+previous_seasons/**/*.txt
+previous_seasons/**/*.html
+
+# Validation reports
+validation_reports/*.json
+validation_reports/*.txt
+validation_reports/*.csv
+
+# Keep empty directories
+!.gitkeep
