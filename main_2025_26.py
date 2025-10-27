@@ -19,7 +19,12 @@ from utils.divisions_export import save_divisions_json
 import re
 # Import functions from other scripts
 from scripts.create_player_results_database_all_divisions import run_player_results_pipeline
-from scripts.create_combined_results import load_all_results_and_player_results 
+from scripts.create_combined_results import load_all_results_and_player_results
+# Import parser functions
+from parsers import (
+    parse_result, split_overall_score, determine_winner, normalize_rubber,
+    count_games_won, count_valid_matches, _parse_summary_row_text, home_team_won
+) 
 
 
 # Global variables
@@ -58,11 +63,14 @@ wait_time = 30
 # If you move it into /scripts in future, switch to parents[1].
 REPO_ROOT = Path(os.getenv("SQUASHAPP_ROOT", Path(__file__).resolve().parents[0]))
 
+# Configuration: Set TESTING_MODE to True for quick testing with only a few divisions
+TESTING_MODE = True  # Set to False for full production scraping
+
 DIVISIONS = {
     # Mondays
-    "2":                {"id": 473, "day": "Mon", "enabled": True},
-    "6":                {"id": 477, "day": "Mon", "enabled": True},
-    "10":               {"id": 482, "day": "Mon", "enabled": True},
+    "2":                {"id": 473, "day": "Mon", "enabled": True if TESTING_MODE else True},
+    "6":                {"id": 477, "day": "Mon", "enabled": False if TESTING_MODE else True},
+    "10":               {"id": 482, "day": "Mon", "enabled": False if TESTING_MODE else True},
 
     # Tuesdays
     "3":                {"id": 474, "day": "Tue", "enabled": False},
@@ -71,32 +79,32 @@ DIVISIONS = {
     "L2":               {"id": 496, "day": "Tue", "enabled": False},
 
     # Wednesdays
-    "7":                {"id": 478, "day": "Wed", "enabled": True},
-    "9":                {"id": 481, "day": "Wed", "enabled": True},
-    "12":               {"id": 484, "day": "Wed", "enabled": True},
-    "M2":               {"id": 492, "day": "Wed", "enabled": True},
+    "7":                {"id": 478, "day": "Wed", "enabled": False if TESTING_MODE else True},
+    "9":                {"id": 481, "day": "Wed", "enabled": False if TESTING_MODE else True},
+    "12":               {"id": 484, "day": "Wed", "enabled": False if TESTING_MODE else True},
+    "M2":               {"id": 492, "day": "Wed", "enabled": True if TESTING_MODE else True},
 
     # Thursdays
-    "Premier Main":     {"id": 472, "day": "Thu", "enabled": True},
-    "Premier Masters":  {"id": 491, "day": "Thu", "enabled": True},
-    "Premier Ladies":   {"id": 495, "day": "Thu", "enabled": True},
-    "M3":               {"id": 493, "day": "Thu", "enabled": True},
-    "M4":               {"id": 494, "day": "Thu", "enabled": True},
+    "Premier Main":     {"id": 472, "day": "Thu", "enabled": False if TESTING_MODE else True},
+    "Premier Masters":  {"id": 491, "day": "Thu", "enabled": False if TESTING_MODE else True},
+    "Premier Ladies":   {"id": 495, "day": "Thu", "enabled": False if TESTING_MODE else True},
+    "M3":               {"id": 493, "day": "Thu", "enabled": False if TESTING_MODE else True},
+    "M4":               {"id": 494, "day": "Thu", "enabled": False if TESTING_MODE else True},
 
     # Fridays
-    "5":                {"id": 476, "day": "Fri", "enabled": True},
-    "8A":               {"id": 479, "day": "Fri", "enabled": True},
-    "8B":               {"id": 480, "day": "Fri", "enabled": True},
-    "13A":              {"id": 485, "day": "Fri", "enabled": True},
-    "13B":              {"id": 486, "day": "Fri", "enabled": True},
-    "13C":              {"id": 487, "day": "Fri", "enabled": True},
-    "L3":               {"id": 497, "day": "Fri", "enabled": True},
-    "L4":               {"id": 498, "day": "Fri", "enabled": True},
+    "5":                {"id": 476, "day": "Fri", "enabled": False if TESTING_MODE else True},
+    "8A":               {"id": 479, "day": "Fri", "enabled": False if TESTING_MODE else True},
+    "8B":               {"id": 480, "day": "Fri", "enabled": False if TESTING_MODE else True},
+    "13A":              {"id": 485, "day": "Fri", "enabled": False if TESTING_MODE else True},
+    "13B":              {"id": 486, "day": "Fri", "enabled": False if TESTING_MODE else True},
+    "13C":              {"id": 487, "day": "Fri", "enabled": False if TESTING_MODE else True},
+    "L3":               {"id": 497, "day": "Fri", "enabled": False if TESTING_MODE else True},
+    "L4":               {"id": 498, "day": "Fri", "enabled": False if TESTING_MODE else True},
 
     # Saturdays
-    "14":               {"id": 488, "day": "Sat", "enabled": True},
-    "15A":              {"id": 489, "day": "Sat", "enabled": True},
-    "15B":              {"id": 490, "day": "Sat", "enabled": True},
+    "14":               {"id": 488, "day": "Sat", "enabled": False if TESTING_MODE else True},
+    "15A":              {"id": 489, "day": "Sat", "enabled": False if TESTING_MODE else True},
+    "15B":              {"id": 490, "day": "Sat", "enabled": False if TESTING_MODE else True},
 }
 
 # Convenience derived views
@@ -106,6 +114,14 @@ weekday_groups = {}
 for name, meta in DIVISIONS.items():
     if meta["enabled"]:
         weekday_groups.setdefault(meta["day"], {})[name] = meta["id"]
+
+# Print configuration info
+mode_text = "TESTING MODE (limited divisions)" if TESTING_MODE else "PRODUCTION MODE (all divisions)"
+enabled_divisions = [k for k, v in DIVISIONS.items() if v["enabled"]]
+print(f"🚀 Running in {mode_text}")
+print(f"📊 Enabled divisions ({len(enabled_divisions)}): {', '.join(enabled_divisions)}")
+runtime_estimate = f"~{len(enabled_divisions) * 2}-{len(enabled_divisions) * 3} minutes" if TESTING_MODE else "~60-90 minutes"
+print(f"⏱️  Estimated runtime: {runtime_estimate}")
 
 # Save divisions JSON
 out_path = save_divisions_json(DIVISIONS, year, REPO_ROOT)
@@ -154,62 +170,6 @@ logging.basicConfig(
     ]
 )
 
-def parse_result(result):
-    """
-    Function to parse the 'result' string
-    """
-    overall, rubbers = result.split('(')
-    rubbers = rubbers.strip(')').split(',')
-    return overall, rubbers
-
-
-def split_overall_score(score):
-    """
-    Function to split the overall score and return home and away scores
-    """
-    home_score, away_score = map(int, score.split('-'))
-    return home_score, away_score
-
-
-def determine_winner(rubber_score, home_team, away_team):
-    """
-    Function to determine the winner of a rubber
-    """
-    if pd.isna(rubber_score) or rubber_score in ['CR', 'WO']:
-        return pd.NA
-    home_score, away_score = map(int, rubber_score.split('-'))
-    return home_team if home_score > away_score else away_team
-
-
-def count_valid_matches(df, rubber_index):
-    """
-    Function to count matches excluding 'NA', 'CR', and 'WO'
-    """
-    valid_matches_count = {}
-    for _, row in df.iterrows():
-        if rubber_index < len(row['Rubbers']):
-            r = row['Rubbers'][rubber_index]
-            if pd.notna(r) and r not in ['NA', 'CR', 'WO']:
-                valid_matches_count[row['Home Team']] = valid_matches_count.get(row['Home Team'], 0) + 1
-                valid_matches_count[row['Away Team']] = valid_matches_count.get(row['Away Team'], 0) + 1
-    return valid_matches_count
-
-def _parse_summary_row_text(txt: str):
-    """
-    Fallback parser: extract Team, Played, Won, Lost, Points from raw text.
-    Handles cases like: 'Physical Chess 1 1 0 4' (with weird spacing).
-    Returns tuple or None if it doesn't look like a data row.
-    """
-    txt = " ".join(txt.split())
-    m = _SUMMARY_NUMS_RE.match(txt)
-    if not m:
-        return None
-    team = m.group(1).strip()
-    p, w, l, pts = map(int, m.groups()[1:])
-    # sanity check to avoid header lines like 'playedwonlostpoint'
-    if not team or team.lower().startswith("played"):
-        return None
-    return [team, p, w, l, pts]
 
 def scrape_team_summary_page(league_id, year):
     """
@@ -787,56 +747,7 @@ def scrape_players_page(league_id, year):
         return pd.DataFrame()
     
 
-def count_games_won(row):
-    """
-    Function to count the number of games won by each team in a match,
-    handling walkovers (WO) and conceded rubbers (CR) by referring to the 'Overall Score'.
-    """
-    home_games_won = 0
-    away_games_won = 0
 
-    # Calculate the games won from the rubbers, excluding 'CR' and 'WO'
-    for rubber in row['Rubbers']:
-        if rubber == 'CR' or rubber == 'WO':
-            continue
-        home, away = map(int, rubber.split('-'))
-        home_games_won += home
-        away_games_won += away
-
-    # Now handle the 'WO' and 'CR' rubbers by referring to the 'Overall Score'
-    if 'WO' in row['Rubbers'] or 'CR' in row['Rubbers']:
-        home_overall_score, away_overall_score = map(int, row['Overall Score'].split('-'))
-        
-        # If the home team has a higher overall score, award the missing games to them
-        # Otherwise, award the missing games to the away team
-        for rubber in row['Rubbers']:
-            if rubber == 'WO' or rubber == 'CR':
-                if home_overall_score > away_overall_score:
-                    home_games_won += 3
-                else:
-                    away_games_won += 3
-
-    return home_games_won, away_games_won
-    
-
-def home_team_won(row):
-    """Function to determine whether the home team or away team
-    won the match, using games won as a tiebreaker. If overall score
-    and games won are equal, the match is ignored.
-    """
-    if row['Home Score'] > row['Away Score']:
-        return 'Home'
-    elif row['Home Score'] < row['Away Score']:
-        return 'Away'
-    else:
-        # If overall scores are equal, use games won as tiebreaker
-        if row['Home Games Won'] > row['Away Games Won']:
-            return 'Home'
-        elif row['Home Games Won'] < row['Away Games Won']:
-            return 'Away'
-        else:
-            return 'Ignore'
-        
 
 def ensure_nonempty_df(df: pd.DataFrame, name: str, div: str, hard_fail: bool = True):
     if df is None or df.empty:
@@ -862,8 +773,8 @@ def safe_save_csv(df: pd.DataFrame, path: str, name: str, div: str, allow_empty:
 # Use logging to track progress
 logging.info("Starting the scraping process...")
 
-# Change dictionary if you want specific week
-for div in all_divisions.keys():
+# Only process enabled divisions based on TESTING_MODE configuration
+for div in current_divisions.keys():
     logging.info(f"Processing Division {div}")
     league_id = f"D00{all_divisions[div]}"
 
@@ -911,7 +822,12 @@ for div in all_divisions.keys():
     if os.path.exists(overall_scores_file):
         try:
             overall_scores_df = pd.read_csv(overall_scores_file, header=None)
-        except Exception:
+            # Ensure at least 5 columns exist
+            if overall_scores_df.shape[1] < 5:
+                logging.warning(f"overall_scores_file has {overall_scores_df.shape[1]} columns, expected 5. Creating new DataFrame.")
+                overall_scores_df = pd.DataFrame(columns=[0, 1, 2, 3, 4])
+        except Exception as e:
+            logging.exception(f"Failed to read overall_scores_file; creating new 5-col DataFrame: {e}")
             overall_scores_df = pd.DataFrame(columns=[0, 1, 2, 3, 4])
     else:
         overall_scores_df = pd.DataFrame(columns=[0, 1, 2, 3, 4])
@@ -1077,18 +993,12 @@ for div in all_divisions.keys():
     results_df['Result'] = results_df['Result'].fillna('')
 
     # Keep rows where 'Result' contains brackets (indicative of a played match)
-    results_df = results_df[results_df['Result'].str.contains(r'\(')]
+    results_df = results_df[results_df['Result'].str.contains(r'\(', na=False)]
 
     # Check if the results_df is empty
     if results_df.empty:
         logging.warning(f"No data found in results_df for Division {div}. Skipping further processing.")
         continue
-
-    def normalize_rubber(s: str) -> str:
-        s = (s or "").strip().upper()
-        if s == "W/O":  # unify variant
-            return "WO"
-        return s
 
     # Apply the parse_result function to the 'Result' column
     results_df[['Overall Score', 'Rubbers']] = results_df['Result'].apply(lambda x: pd.Series(parse_result(x)))
@@ -1569,6 +1479,14 @@ for div in all_divisions.keys():
 
     # Convert the dictionary to a DataFrame with teams as index
     total_matches_df = pd.DataFrame(total_matches_per_rubber)
+    
+    # Ensure indices are aligned before merging
+    aggregate_wins = aggregate_wins.fillna(0).astype(int)
+    total_matches_df = total_matches_df.fillna(0).astype(int)
+    
+    # Debug logging to check index alignment
+    logging.debug(f"aggregate_wins index: {list(aggregate_wins.index)}")
+    logging.debug(f"total_matches_df index: {list(total_matches_df.index)}")
 
     # Properly merge total matches and aggregate wins based on team names
     combined = aggregate_wins.merge(total_matches_df, left_index=True, right_index=True, how='outer')
@@ -1624,8 +1542,12 @@ for div in all_divisions.keys():
         today
     ]
 
-    # Assign the data to the first row
-    overall_scores_df.loc[0] = new_data
+    # Ensure DataFrame has at least one row before assignment
+    if overall_scores_df.empty:
+        overall_scores_df = pd.DataFrame([new_data], columns=[0, 1, 2, 3, 4])
+    else:
+        # Assign the data to the first row
+        overall_scores_df.loc[0] = new_data
 
     # Write the updated DataFrame back to the CSV file
     overall_scores_df.to_csv(overall_scores_file, index=False, header=None)
