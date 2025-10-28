@@ -8,6 +8,7 @@ This document describes the organization of the SquashApp codebase.
 SquashApp/
 ├── main_2025_26.py         # Main entry point for 2025-2026 season scraper
 ├── app_update.py           # Streamlit web application for data visualization
+├── parsers.py              # Core parsing functions for scraped data
 ├── requirements.txt        # Python dependencies
 ├── pyproject.toml          # Project configuration
 ├── pytest.ini              # Pytest configuration
