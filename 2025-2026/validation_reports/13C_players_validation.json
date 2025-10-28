@@ -1,0 +1,32 @@
+{
+  "validator_name": "PlayersValidator",
+  "data_type": "players",
+  "is_valid": false,
+  "timestamp": "2025-10-28T13:07:33.430963",
+  "error_count": 4,
+  "warning_count": 2,
+  "errors": [
+    "[ERROR] Order: 5 values above maximum 10",
+    "[ERROR] Ranking: 89 values below minimum 1",
+    "[ERROR] Points: 51 values above maximum 10.0",
+    "[ERROR] Player-HKS: 1 players have multiple HKS numbers"
+  ],
+  "warnings": [
+    "[WARNING] Player: 1 duplicate player names",
+    "[WARNING] Team: 8 teams have > 8 players"
+  ],
+  "info": [
+    "[INFO] dataframe: DataFrame has 89 rows",
+    "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+    "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+    "[INFO] row_count: Row count 89 within expected range [20, 200]",
+    "[INFO] Player: Duplicated players: ['Lam Tsz Ching']",
+    "[INFO] Team: 5 unique teams, avg 9.9 players/team"
+  ],
+  "metadata": {
+    "league_id": "D00487",
+    "year": "2025-2026",
+    "division": "13C",
+    "row_count": 89
+  }
+}

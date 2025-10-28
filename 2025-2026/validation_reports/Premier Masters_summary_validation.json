@@ -1,0 +1,24 @@
+{
+  "validator_name": "SummaryValidator",
+  "data_type": "summary",
+  "is_valid": true,
+  "timestamp": "2025-10-28T12:32:25.973714",
+  "error_count": 0,
+  "warning_count": 1,
+  "errors": [],
+  "warnings": [
+    "[WARNING] Points: 4 teams have points != (wins * 5)"
+  ],
+  "info": [
+    "[INFO] dataframe: DataFrame has 5 rows",
+    "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+    "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+    "[INFO] row_count: Row count 5 within expected range [4, 20]"
+  ],
+  "metadata": {
+    "league_id": "D00491",
+    "year": "2025-2026",
+    "division": "Premier Masters",
+    "row_count": 5
+  }
+}

@@ -1,10 +1,28 @@
 {
   "season": "2025-2026",
-  "generated_at": "2025-10-27T07:41:26Z",
+  "generated_at": "2025-10-28T03:46:10Z",
   "divisions": [
     {
+      "name": "Premier 1",
+      "id": 463,
+      "day": "Mon",
+      "enabled": true
+    },
+    {
+      "name": "Premier 2",
+      "id": 464,
+      "day": "Mon",
+      "enabled": true
+    },
+    {
+      "name": "1",
+      "id": 465,
+      "day": "Mon",
+      "enabled": true
+    },
+    {
       "name": "2",
-      "id": 473,
+      "id": 466,
       "day": "Mon",
       "enabled": true
     },
@@ -12,55 +30,73 @@
       "name": "6",
       "id": 477,
       "day": "Mon",
-      "enabled": false
-    },
-    {
-      "name": "10",
-      "id": 482,
-      "day": "Mon",
-      "enabled": false
-    },
-    {
-      "name": "3",
-      "id": 474,
-      "day": "Tue",
-      "enabled": false
-    },
-    {
-      "name": "4",
-      "id": 475,
-      "day": "Tue",
-      "enabled": false
-    },
-    {
-      "name": "11",
-      "id": 483,
-      "day": "Tue",
-      "enabled": false
-    },
-    {
-      "name": "L2",
-      "id": 496,
-      "day": "Tue",
-      "enabled": false
-    },
-    {
-      "name": "7",
-      "id": 478,
-      "day": "Wed",
-      "enabled": false
+      "enabled": true
     },
     {
       "name": "9",
       "id": 481,
-      "day": "Wed",
-      "enabled": false
+      "day": "Mon",
+      "enabled": true
     },
     {
-      "name": "12",
+      "name": "3",
+      "id": 467,
+      "day": "Tue",
+      "enabled": true
+    },
+    {
+      "name": "7A",
+      "id": 478,
+      "day": "Tue",
+      "enabled": true
+    },
+    {
+      "name": "10A",
+      "id": 482,
+      "day": "Tue",
+      "enabled": true
+    },
+    {
+      "name": "10B",
+      "id": 483,
+      "day": "Tue",
+      "enabled": true
+    },
+    {
+      "name": "4",
+      "id": 475,
+      "day": "Wed",
+      "enabled": true
+    },
+    {
+      "name": "7B",
+      "id": 496,
+      "day": "Wed",
+      "enabled": true
+    },
+    {
+      "name": "11",
       "id": 484,
       "day": "Wed",
-      "enabled": false
+      "enabled": true
+    },
+    {
+      "name": "L1",
+      "id": 468,
+      "day": "Wed",
+      "enabled": true
+    },
+    {
+      "name": "L2",
+      "id": 469,
+      "day": "Wed",
+      "enabled": true
+    },
+    {
+      "name": "M1",
+      "id": 470,
+      "day": "Wed",
+      "enabled": true
     },
     {
       "name": "M2",
@@ -69,100 +105,118 @@
       "enabled": true
     },
     {
-      "name": "Premier Main",
+      "name": "12A",
+      "id": 471,
+      "day": "Thu",
+      "enabled": true
+    },
+    {
+      "name": "12B",
       "id": 472,
       "day": "Thu",
-      "enabled": false
+      "enabled": true
+    },
+    {
+      "name": "12C",
+      "id": 473,
+      "day": "Thu",
+      "enabled": true
+    },
+    {
+      "name": "12D",
+      "id": 474,
+      "day": "Thu",
+      "enabled": true
     },
     {
       "name": "Premier Masters",
       "id": 491,
       "day": "Thu",
-      "enabled": false
+      "enabled": true
     },
     {
       "name": "Premier Ladies",
       "id": 495,
       "day": "Thu",
-      "enabled": false
+      "enabled": true
     },
     {
       "name": "M3",
       "id": 493,
       "day": "Thu",
-      "enabled": false
+      "enabled": true
     },
     {
       "name": "M4",
       "id": 494,
       "day": "Thu",
-      "enabled": false
+      "enabled": true
     },
     {
       "name": "5",
       "id": 476,
       "day": "Fri",
-      "enabled": false
+      "enabled": true
     },
     {
       "name": "8A",
       "id": 479,
       "day": "Fri",
-      "enabled": false
+      "enabled": true
     },
     {
       "name": "8B",
       "id": 480,
       "day": "Fri",
-      "enabled": false
+      "enabled": true
     },
     {
       "name": "13A",
       "id": 485,
       "day": "Fri",
-      "enabled": false
+      "enabled": true
     },
     {
       "name": "13B",
       "id": 486,
       "day": "Fri",
-      "enabled": false
+      "enabled": true
     },
     {
       "name": "13C",
       "id": 487,
       "day": "Fri",
-      "enabled": false
+      "enabled": true
     },
     {
       "name": "L3",
       "id": 497,
       "day": "Fri",
-      "enabled": false
+      "enabled": true
     },
     {
       "name": "L4",
       "id": 498,
       "day": "Fri",
-      "enabled": false
+      "enabled": true
     },
     {
       "name": "14",
       "id": 488,
       "day": "Sat",
-      "enabled": false
+      "enabled": true
     },
     {
       "name": "15A",
       "id": 489,
       "day": "Sat",
-      "enabled": false
+      "enabled": true
     },
     {
       "name": "15B",
       "id": 490,
       "day": "Sat",
-      "enabled": false
+      "enabled": true
     }
   ]
 }

@@ -1,0 +1,3562 @@
+{
+  "year": "2025-2026",
+  "timestamp": "2025-10-28T13:27:38.390225",
+  "summary": {
+    "total_validations": 144,
+    "passed": 61,
+    "failed": 83,
+    "total_errors": 131,
+    "total_warnings": 132
+  },
+  "results": [
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": true,
+      "timestamp": "2025-10-28T11:46:10.594795",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] dataframe: DataFrame is empty (0 rows)"
+      ],
+      "info": [],
+      "metadata": {
+        "league_id": "D00463",
+        "year": "2025-2026",
+        "division": "Premier 1"
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": true,
+      "timestamp": "2025-10-28T11:46:10.822592",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] dataframe: DataFrame is empty (0 rows)"
+      ],
+      "info": [],
+      "metadata": {
+        "league_id": "D00464",
+        "year": "2025-2026",
+        "division": "Premier 2"
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": true,
+      "timestamp": "2025-10-28T11:46:11.100120",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] dataframe: DataFrame is empty (0 rows)"
+      ],
+      "info": [],
+      "metadata": {
+        "league_id": "D00465",
+        "year": "2025-2026",
+        "division": "1"
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": true,
+      "timestamp": "2025-10-28T11:46:11.256489",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] dataframe: DataFrame is empty (0 rows)"
+      ],
+      "info": [],
+      "metadata": {
+        "league_id": "D00466",
+        "year": "2025-2026",
+        "division": "2"
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T11:46:11.654524",
+      "error_count": 1,
+      "warning_count": 2,
+      "errors": [
+        "[ERROR] vs: 132 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 13 results have unexpected format"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 132 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 132 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-22)",
+        "[INFO] Result: 13 matches played, 119 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00477",
+        "year": "2025-2026",
+        "division": "6",
+        "row_count": 132
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T11:46:43.228853",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 11 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 12 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 12 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00477",
+        "year": "2025-2026",
+        "division": "6",
+        "row_count": 12
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T11:47:13.500645",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 12 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 12 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00477",
+        "year": "2025-2026",
+        "division": "6",
+        "row_count": 12
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T11:47:44.666968",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 130 rows"
+      ],
+      "metadata": {
+        "league_id": "D00477",
+        "year": "2025-2026",
+        "division": "6",
+        "row_count": 130
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T11:49:18.656348",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 11 values above maximum 10",
+        "[ERROR] Ranking: 126 values below minimum 1",
+        "[ERROR] Points: 53 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 11 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 126 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 126 within expected range [20, 200]",
+        "[INFO] Team: 5 unique teams, avg 10.5 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00477",
+        "year": "2025-2026",
+        "division": "6",
+        "row_count": 126
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T11:50:19.524203",
+      "error_count": 1,
+      "warning_count": 3,
+      "errors": [
+        "[ERROR] vs: 90 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 15 results have unexpected format",
+        "[WARNING] Date: 45 rows have invalid dates"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 90 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 90 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-18)",
+        "[INFO] Result: 15 matches played, 75 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00481",
+        "year": "2025-2026",
+        "division": "9",
+        "row_count": 90
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T11:50:50.946042",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 9 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 10 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 10 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00481",
+        "year": "2025-2026",
+        "division": "9",
+        "row_count": 10
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T11:51:24.102816",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 10 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 10 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00481",
+        "year": "2025-2026",
+        "division": "9",
+        "row_count": 10
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T11:51:58.974585",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 108 rows"
+      ],
+      "metadata": {
+        "league_id": "D00481",
+        "year": "2025-2026",
+        "division": "9",
+        "row_count": 108
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T11:53:19.967806",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 12 values above maximum 10",
+        "[ERROR] Ranking: 104 values below minimum 1",
+        "[ERROR] Points: 57 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 8 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 104 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 104 within expected range [20, 200]",
+        "[INFO] Team: 4 unique teams, avg 10.4 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00481",
+        "year": "2025-2026",
+        "division": "9",
+        "row_count": 104
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": true,
+      "timestamp": "2025-10-28T11:54:21.166393",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] dataframe: DataFrame is empty (0 rows)"
+      ],
+      "info": [],
+      "metadata": {
+        "league_id": "D00467",
+        "year": "2025-2026",
+        "division": "3"
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T11:54:21.573070",
+      "error_count": 1,
+      "warning_count": 3,
+      "errors": [
+        "[ERROR] vs: 132 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 15 results have unexpected format",
+        "[WARNING] Date: 78 rows have invalid dates"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 132 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 132 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-22)",
+        "[INFO] Result: 15 matches played, 117 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00478",
+        "year": "2025-2026",
+        "division": "7A",
+        "row_count": 132
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T11:54:52.695645",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 9 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 11 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 11 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00478",
+        "year": "2025-2026",
+        "division": "7A",
+        "row_count": 11
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T11:55:22.969217",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 11 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 11 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00478",
+        "year": "2025-2026",
+        "division": "7A",
+        "row_count": 11
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T11:55:53.671153",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 119 rows"
+      ],
+      "metadata": {
+        "league_id": "D00478",
+        "year": "2025-2026",
+        "division": "7A",
+        "row_count": 119
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T11:57:19.785973",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 10 values above maximum 10",
+        "[ERROR] Ranking: 113 values below minimum 1",
+        "[ERROR] Points: 57 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 10 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 113 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 113 within expected range [20, 200]",
+        "[INFO] Team: 5 unique teams, avg 10.3 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00478",
+        "year": "2025-2026",
+        "division": "7A",
+        "row_count": 113
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T11:58:20.626804",
+      "error_count": 1,
+      "warning_count": 2,
+      "errors": [
+        "[ERROR] vs: 132 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 12 results have unexpected format"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 132 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 132 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-22)",
+        "[INFO] Result: 12 matches played, 120 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00482",
+        "year": "2025-2026",
+        "division": "10A",
+        "row_count": 132
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T11:58:51.482190",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 7 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 11 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 11 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00482",
+        "year": "2025-2026",
+        "division": "10A",
+        "row_count": 11
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T11:59:21.860188",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 11 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 11 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00482",
+        "year": "2025-2026",
+        "division": "10A",
+        "row_count": 11
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T11:59:53.107986",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 105 rows"
+      ],
+      "metadata": {
+        "league_id": "D00482",
+        "year": "2025-2026",
+        "division": "10A",
+        "row_count": 105
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:01:23.026592",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 4 values above maximum 10",
+        "[ERROR] Ranking: 102 values below minimum 1",
+        "[ERROR] Points: 48 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 7 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 102 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 102 within expected range [20, 200]",
+        "[INFO] Team: 5 unique teams, avg 9.3 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00482",
+        "year": "2025-2026",
+        "division": "10A",
+        "row_count": 102
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:02:23.912409",
+      "error_count": 1,
+      "warning_count": 2,
+      "errors": [
+        "[ERROR] vs: 132 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 10 results have unexpected format"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 132 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 132 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-22)",
+        "[INFO] Result: 10 matches played, 122 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00483",
+        "year": "2025-2026",
+        "division": "10B",
+        "row_count": 132
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:02:56.748558",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 7 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 11 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 11 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00483",
+        "year": "2025-2026",
+        "division": "10B",
+        "row_count": 11
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:03:31.971132",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 11 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 11 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00483",
+        "year": "2025-2026",
+        "division": "10B",
+        "row_count": 11
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:04:02.955420",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 105 rows"
+      ],
+      "metadata": {
+        "league_id": "D00483",
+        "year": "2025-2026",
+        "division": "10B",
+        "row_count": 105
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:05:28.862007",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 6 values above maximum 10",
+        "[ERROR] Ranking: 105 values below minimum 1",
+        "[ERROR] Points: 47 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 6 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 105 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 105 within expected range [20, 200]",
+        "[INFO] Team: 4 unique teams, avg 9.5 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00483",
+        "year": "2025-2026",
+        "division": "10B",
+        "row_count": 105
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:06:30.051878",
+      "error_count": 1,
+      "warning_count": 2,
+      "errors": [
+        "[ERROR] vs: 90 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 10 results have unexpected format"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 90 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 90 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-18)",
+        "[INFO] Result: 10 matches played, 80 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00475",
+        "year": "2025-2026",
+        "division": "4",
+        "row_count": 90
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:07:00.631364",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 9 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 10 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 10 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00475",
+        "year": "2025-2026",
+        "division": "4",
+        "row_count": 10
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:07:32.415249",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 10 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 10 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00475",
+        "year": "2025-2026",
+        "division": "4",
+        "row_count": 10
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:08:04.783248",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 91 rows"
+      ],
+      "metadata": {
+        "league_id": "D00475",
+        "year": "2025-2026",
+        "division": "4",
+        "row_count": 91
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:09:26.228625",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 1 values above maximum 10",
+        "[ERROR] Ranking: 87 values below minimum 1",
+        "[ERROR] Points: 47 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 5 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 87 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 87 within expected range [20, 200]",
+        "[INFO] Team: 5 unique teams, avg 8.7 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00475",
+        "year": "2025-2026",
+        "division": "4",
+        "row_count": 87
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:10:26.937923",
+      "error_count": 1,
+      "warning_count": 2,
+      "errors": [
+        "[ERROR] vs: 60 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 6 results have unexpected format"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 60 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 60 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-20)",
+        "[INFO] Result: 6 matches played, 54 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00496",
+        "year": "2025-2026",
+        "division": "7B",
+        "row_count": 60
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:10:57.675031",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 5 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 6 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 6 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00496",
+        "year": "2025-2026",
+        "division": "7B",
+        "row_count": 6
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:11:27.913776",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 6 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 6 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00496",
+        "year": "2025-2026",
+        "division": "7B",
+        "row_count": 6
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:11:58.525798",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 40 rows"
+      ],
+      "metadata": {
+        "league_id": "D00496",
+        "year": "2025-2026",
+        "division": "7B",
+        "row_count": 40
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:12:54.069263",
+      "error_count": 2,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Ranking: 40 values below minimum 1",
+        "[ERROR] Points: 22 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 3 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 40 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 40 within expected range [20, 200]",
+        "[INFO] Team: 3 unique teams, avg 8.0 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00496",
+        "year": "2025-2026",
+        "division": "7B",
+        "row_count": 40
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:13:54.852608",
+      "error_count": 1,
+      "warning_count": 3,
+      "errors": [
+        "[ERROR] vs: 132 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 15 results have unexpected format",
+        "[WARNING] Date: 78 rows have invalid dates"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 132 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 132 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-22)",
+        "[INFO] Result: 15 matches played, 117 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00484",
+        "year": "2025-2026",
+        "division": "11",
+        "row_count": 132
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:14:25.605179",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 9 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 11 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 11 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00484",
+        "year": "2025-2026",
+        "division": "11",
+        "row_count": 11
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:14:56.913736",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 11 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 11 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00484",
+        "year": "2025-2026",
+        "division": "11",
+        "row_count": 11
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:15:29.264768",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 114 rows"
+      ],
+      "metadata": {
+        "league_id": "D00484",
+        "year": "2025-2026",
+        "division": "11",
+        "row_count": 114
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:16:56.266126",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 10 values above maximum 10",
+        "[ERROR] Ranking: 112 values below minimum 1",
+        "[ERROR] Points: 53 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 9 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 112 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 112 within expected range [20, 200]",
+        "[INFO] Team: 6 unique teams, avg 10.2 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00484",
+        "year": "2025-2026",
+        "division": "11",
+        "row_count": 112
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:17:56.839804",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] dataframe: DataFrame is empty (0 rows)"
+      ],
+      "info": [],
+      "metadata": {
+        "league_id": "D00468",
+        "year": "2025-2026",
+        "division": "L1"
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:17:57.105909",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] dataframe: DataFrame is empty (0 rows)"
+      ],
+      "info": [],
+      "metadata": {
+        "league_id": "D00469",
+        "year": "2025-2026",
+        "division": "L2"
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:17:57.206147",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] dataframe: DataFrame is empty (0 rows)"
+      ],
+      "info": [],
+      "metadata": {
+        "league_id": "D00470",
+        "year": "2025-2026",
+        "division": "M1"
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:17:57.688249",
+      "error_count": 1,
+      "warning_count": 3,
+      "errors": [
+        "[ERROR] vs: 60 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 6 results have unexpected format",
+        "[WARNING] Date: 33 rows have invalid dates"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 60 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 60 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-20)",
+        "[INFO] Result: 6 matches played, 54 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00492",
+        "year": "2025-2026",
+        "division": "M2",
+        "row_count": 60
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:18:29.386046",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 3 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 5 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 5 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00492",
+        "year": "2025-2026",
+        "division": "M2",
+        "row_count": 5
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:19:00.078408",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 5 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 5 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00492",
+        "year": "2025-2026",
+        "division": "M2",
+        "row_count": 5
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:19:30.771662",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 52 rows"
+      ],
+      "metadata": {
+        "league_id": "D00492",
+        "year": "2025-2026",
+        "division": "M2",
+        "row_count": 52
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:20:26.667882",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 4 values above maximum 10",
+        "[ERROR] Ranking: 49 values below minimum 1",
+        "[ERROR] Points: 23 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 3 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 49 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 49 within expected range [20, 200]",
+        "[INFO] Team: 3 unique teams, avg 9.8 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00492",
+        "year": "2025-2026",
+        "division": "M2",
+        "row_count": 49
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:21:27.277791",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] dataframe: DataFrame is empty (0 rows)"
+      ],
+      "info": [],
+      "metadata": {
+        "league_id": "D00471",
+        "year": "2025-2026",
+        "division": "12A"
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:21:27.497867",
+      "error_count": 1,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] vs: 30 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 30 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 30 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-10)",
+        "[INFO] Result: 0 matches played, 30 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00472",
+        "year": "2025-2026",
+        "division": "12B",
+        "row_count": 30
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:21:58.231486",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Played: All teams have 0 games played (season not started?)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 6 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 6 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00472",
+        "year": "2025-2026",
+        "division": "12B",
+        "row_count": 6
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:22:29.077665",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 6 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 6 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00472",
+        "year": "2025-2026",
+        "division": "12B",
+        "row_count": 6
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:23:02.914334",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 22 rows"
+      ],
+      "metadata": {
+        "league_id": "D00472",
+        "year": "2025-2026",
+        "division": "12B",
+        "row_count": 22
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:24:03.538066",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] Ranking: 22 values below minimum 1"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 22 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 22 within expected range [20, 200]",
+        "[INFO] Team: 3 unique teams, avg 3.7 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00472",
+        "year": "2025-2026",
+        "division": "12B",
+        "row_count": 22
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:24:36.439645",
+      "error_count": 1,
+      "warning_count": 2,
+      "errors": [
+        "[ERROR] vs: 60 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 6 results have unexpected format"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 60 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 60 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-20)",
+        "[INFO] Result: 6 matches played, 54 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00473",
+        "year": "2025-2026",
+        "division": "12C",
+        "row_count": 60
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:25:09.838007",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 4 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 5 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 5 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00473",
+        "year": "2025-2026",
+        "division": "12C",
+        "row_count": 5
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:25:41.927796",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 5 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 5 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00473",
+        "year": "2025-2026",
+        "division": "12C",
+        "row_count": 5
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:26:12.393029",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 48 rows"
+      ],
+      "metadata": {
+        "league_id": "D00473",
+        "year": "2025-2026",
+        "division": "12C",
+        "row_count": 48
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:27:08.012506",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 2 values above maximum 10",
+        "[ERROR] Ranking: 45 values below minimum 1",
+        "[ERROR] Points: 21 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 2 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 45 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 45 within expected range [20, 200]",
+        "[INFO] Team: 3 unique teams, avg 9.0 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00473",
+        "year": "2025-2026",
+        "division": "12C",
+        "row_count": 45
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:28:09.805593",
+      "error_count": 1,
+      "warning_count": 2,
+      "errors": [
+        "[ERROR] vs: 84 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 8 results have unexpected format"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 84 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 84 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-21)",
+        "[INFO] Result: 8 matches played, 76 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00474",
+        "year": "2025-2026",
+        "division": "12D",
+        "row_count": 84
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:28:40.938279",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 7 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 8 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 8 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00474",
+        "year": "2025-2026",
+        "division": "12D",
+        "row_count": 8
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:29:12.185662",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 8 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 8 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00474",
+        "year": "2025-2026",
+        "division": "12D",
+        "row_count": 8
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:29:43.277233",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 70 rows"
+      ],
+      "metadata": {
+        "league_id": "D00474",
+        "year": "2025-2026",
+        "division": "12D",
+        "row_count": 70
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:30:54.821400",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 2 values above maximum 10",
+        "[ERROR] Ranking: 69 values below minimum 1",
+        "[ERROR] Points: 39 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 3 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 69 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 69 within expected range [20, 200]",
+        "[INFO] Team: 5 unique teams, avg 8.6 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00474",
+        "year": "2025-2026",
+        "division": "12D",
+        "row_count": 69
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:31:55.351173",
+      "error_count": 1,
+      "warning_count": 3,
+      "errors": [
+        "[ERROR] vs: 60 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 8 results have unexpected format",
+        "[WARNING] Date: 33 rows have invalid dates"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 60 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 60 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-20)",
+        "[INFO] Result: 8 matches played, 52 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00491",
+        "year": "2025-2026",
+        "division": "Premier Masters",
+        "row_count": 60
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:32:25.973714",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 4 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 5 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 5 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00491",
+        "year": "2025-2026",
+        "division": "Premier Masters",
+        "row_count": 5
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:32:56.208442",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 5 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 5 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00491",
+        "year": "2025-2026",
+        "division": "Premier Masters",
+        "row_count": 5
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:33:26.765031",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 37 rows"
+      ],
+      "metadata": {
+        "league_id": "D00491",
+        "year": "2025-2026",
+        "division": "Premier Masters",
+        "row_count": 37
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:34:22.553649",
+      "error_count": 2,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Ranking: 35 values below minimum 1",
+        "[ERROR] Points: 18 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 1 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 35 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 35 within expected range [20, 200]",
+        "[INFO] Team: 3 unique teams, avg 7.0 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00491",
+        "year": "2025-2026",
+        "division": "Premier Masters",
+        "row_count": 35
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:35:23.024757",
+      "error_count": 1,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] vs: 30 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 30 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 30 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-10)",
+        "[INFO] Result: 0 matches played, 30 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00495",
+        "year": "2025-2026",
+        "division": "Premier Ladies",
+        "row_count": 30
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:35:53.512450",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Played: All teams have 0 games played (season not started?)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 5 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 5 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00495",
+        "year": "2025-2026",
+        "division": "Premier Ladies",
+        "row_count": 5
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:36:24.949584",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 5 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 5 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00495",
+        "year": "2025-2026",
+        "division": "Premier Ladies",
+        "row_count": 5
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:36:55.348718",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 20 rows"
+      ],
+      "metadata": {
+        "league_id": "D00495",
+        "year": "2025-2026",
+        "division": "Premier Ladies",
+        "row_count": 20
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:37:51.321747",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] Ranking: 20 values below minimum 1"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 20 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 20 within expected range [20, 200]",
+        "[INFO] Team: 3 unique teams, avg 4.0 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00495",
+        "year": "2025-2026",
+        "division": "Premier Ladies",
+        "row_count": 20
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:38:21.708276",
+      "error_count": 1,
+      "warning_count": 3,
+      "errors": [
+        "[ERROR] vs: 84 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 12 results have unexpected format",
+        "[WARNING] Date: 48 rows have invalid dates"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 84 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 84 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-21)",
+        "[INFO] Result: 12 matches played, 72 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00493",
+        "year": "2025-2026",
+        "division": "M3",
+        "row_count": 84
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:38:52.663722",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 6 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 7 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 7 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00493",
+        "year": "2025-2026",
+        "division": "M3",
+        "row_count": 7
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:39:23.122103",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 7 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 7 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00493",
+        "year": "2025-2026",
+        "division": "M3",
+        "row_count": 7
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:39:54.261278",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 80 rows"
+      ],
+      "metadata": {
+        "league_id": "D00493",
+        "year": "2025-2026",
+        "division": "M3",
+        "row_count": 80
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:41:01.047747",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 14 values above maximum 10",
+        "[ERROR] Ranking: 80 values below minimum 1",
+        "[ERROR] Points: 39 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 6 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 80 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 80 within expected range [20, 200]",
+        "[INFO] Team: 5 unique teams, avg 11.4 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00493",
+        "year": "2025-2026",
+        "division": "M3",
+        "row_count": 80
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:42:01.862607",
+      "error_count": 1,
+      "warning_count": 3,
+      "errors": [
+        "[ERROR] vs: 90 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 20 results have unexpected format",
+        "[WARNING] Date: 50 rows have invalid dates"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 90 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 90 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-18)",
+        "[INFO] Result: 20 matches played, 70 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00494",
+        "year": "2025-2026",
+        "division": "M4",
+        "row_count": 90
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:42:32.649573",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 7 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 10 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 10 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00494",
+        "year": "2025-2026",
+        "division": "M4",
+        "row_count": 10
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:43:03.032083",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 10 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 10 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00494",
+        "year": "2025-2026",
+        "division": "M4",
+        "row_count": 10
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:43:33.912914",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 152 rows"
+      ],
+      "metadata": {
+        "league_id": "D00494",
+        "year": "2025-2026",
+        "division": "M4",
+        "row_count": 152
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:44:55.276385",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 52 values above maximum 10",
+        "[ERROR] Ranking: 152 values below minimum 1",
+        "[ERROR] Points: 62 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 10 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 152 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 152 within expected range [20, 200]",
+        "[INFO] Team: 6 unique teams, avg 15.2 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00494",
+        "year": "2025-2026",
+        "division": "M4",
+        "row_count": 152
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:45:57.423972",
+      "error_count": 1,
+      "warning_count": 3,
+      "errors": [
+        "[ERROR] vs: 90 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 13 results have unexpected format",
+        "[WARNING] Date: 55 rows have invalid dates"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 90 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 90 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-18)",
+        "[INFO] Result: 13 matches played, 77 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00476",
+        "year": "2025-2026",
+        "division": "5",
+        "row_count": 90
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:46:27.911276",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 7 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 9 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 9 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00476",
+        "year": "2025-2026",
+        "division": "5",
+        "row_count": 9
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:46:58.267243",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 9 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 9 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00476",
+        "year": "2025-2026",
+        "division": "5",
+        "row_count": 9
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:47:28.812186",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 90 rows"
+      ],
+      "metadata": {
+        "league_id": "D00476",
+        "year": "2025-2026",
+        "division": "5",
+        "row_count": 90
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:48:44.915369",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 3 values above maximum 10",
+        "[ERROR] Ranking: 82 values below minimum 1",
+        "[ERROR] Points: 46 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 5 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 82 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 82 within expected range [20, 200]",
+        "[INFO] Team: 5 unique teams, avg 9.1 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00476",
+        "year": "2025-2026",
+        "division": "5",
+        "row_count": 82
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:49:45.630899",
+      "error_count": 1,
+      "warning_count": 3,
+      "errors": [
+        "[ERROR] vs: 84 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 10 results have unexpected format",
+        "[WARNING] Date: 56 rows have invalid dates"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 84 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 84 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-21)",
+        "[INFO] Result: 10 matches played, 74 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00479",
+        "year": "2025-2026",
+        "division": "8A",
+        "row_count": 84
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:50:16.341965",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 5 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 7 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 7 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00479",
+        "year": "2025-2026",
+        "division": "8A",
+        "row_count": 7
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:50:46.950970",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 7 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 7 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00479",
+        "year": "2025-2026",
+        "division": "8A",
+        "row_count": 7
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:51:18.273730",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 65 rows"
+      ],
+      "metadata": {
+        "league_id": "D00479",
+        "year": "2025-2026",
+        "division": "8A",
+        "row_count": 65
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:52:26.594312",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 1 values above maximum 10",
+        "[ERROR] Ranking: 59 values below minimum 1",
+        "[ERROR] Points: 37 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 3 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 59 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 59 within expected range [20, 200]",
+        "[INFO] Team: 4 unique teams, avg 8.4 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00479",
+        "year": "2025-2026",
+        "division": "8A",
+        "row_count": 59
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:53:27.283507",
+      "error_count": 1,
+      "warning_count": 3,
+      "errors": [
+        "[ERROR] vs: 60 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 9 results have unexpected format",
+        "[WARNING] Date: 39 rows have invalid dates"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 60 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 60 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-20)",
+        "[INFO] Result: 9 matches played, 51 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00480",
+        "year": "2025-2026",
+        "division": "8B",
+        "row_count": 60
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:53:57.747544",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 6 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 6 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 6 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00480",
+        "year": "2025-2026",
+        "division": "8B",
+        "row_count": 6
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:54:28.108302",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 6 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 6 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00480",
+        "year": "2025-2026",
+        "division": "8B",
+        "row_count": 6
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:54:59.531822",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 59 rows"
+      ],
+      "metadata": {
+        "league_id": "D00480",
+        "year": "2025-2026",
+        "division": "8B",
+        "row_count": 59
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:56:00.791687",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 1 values above maximum 10",
+        "[ERROR] Ranking: 56 values below minimum 1",
+        "[ERROR] Points: 36 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 5 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 56 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 56 within expected range [20, 200]",
+        "[INFO] Team: 4 unique teams, avg 9.3 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00480",
+        "year": "2025-2026",
+        "division": "8B",
+        "row_count": 56
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:57:01.510711",
+      "error_count": 1,
+      "warning_count": 3,
+      "errors": [
+        "[ERROR] vs: 90 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 15 results have unexpected format",
+        "[WARNING] Date: 55 rows have invalid dates"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 90 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 90 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-18)",
+        "[INFO] Result: 15 matches played, 75 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00485",
+        "year": "2025-2026",
+        "division": "13A",
+        "row_count": 90
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:57:32.576494",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 8 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 9 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 9 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00485",
+        "year": "2025-2026",
+        "division": "13A",
+        "row_count": 9
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T12:58:02.894865",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 9 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 9 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00485",
+        "year": "2025-2026",
+        "division": "13A",
+        "row_count": 9
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:58:33.522661",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 92 rows"
+      ],
+      "metadata": {
+        "league_id": "D00485",
+        "year": "2025-2026",
+        "division": "13A",
+        "row_count": 92
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T12:59:50.234334",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 4 values above maximum 10",
+        "[ERROR] Ranking: 88 values below minimum 1",
+        "[ERROR] Points: 47 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 8 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 88 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 88 within expected range [20, 200]",
+        "[INFO] Team: 4 unique teams, avg 9.8 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00485",
+        "year": "2025-2026",
+        "division": "13A",
+        "row_count": 88
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:00:51.029210",
+      "error_count": 1,
+      "warning_count": 3,
+      "errors": [
+        "[ERROR] vs: 90 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 13 results have unexpected format",
+        "[WARNING] Date: 55 rows have invalid dates"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 90 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 90 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-18)",
+        "[INFO] Result: 13 matches played, 77 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00486",
+        "year": "2025-2026",
+        "division": "13B",
+        "row_count": 90
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T13:01:22.129966",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 8 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 9 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 9 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00486",
+        "year": "2025-2026",
+        "division": "13B",
+        "row_count": 9
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T13:01:52.865587",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 9 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 9 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00486",
+        "year": "2025-2026",
+        "division": "13B",
+        "row_count": 9
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:02:25.382922",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 90 rows"
+      ],
+      "metadata": {
+        "league_id": "D00486",
+        "year": "2025-2026",
+        "division": "13B",
+        "row_count": 90
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:03:41.772945",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 7 values above maximum 10",
+        "[ERROR] Ranking: 88 values below minimum 1",
+        "[ERROR] Points: 45 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 7 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 88 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 88 within expected range [20, 200]",
+        "[INFO] Team: 4 unique teams, avg 9.8 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00486",
+        "year": "2025-2026",
+        "division": "13B",
+        "row_count": 88
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:04:43.449817",
+      "error_count": 1,
+      "warning_count": 3,
+      "errors": [
+        "[ERROR] vs: 90 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 14 results have unexpected format",
+        "[WARNING] Date: 55 rows have invalid dates"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 90 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 90 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-18)",
+        "[INFO] Result: 14 matches played, 76 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00487",
+        "year": "2025-2026",
+        "division": "13C",
+        "row_count": 90
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T13:05:14.697310",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 6 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 9 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 9 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00487",
+        "year": "2025-2026",
+        "division": "13C",
+        "row_count": 9
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T13:05:45.591680",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 9 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 9 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00487",
+        "year": "2025-2026",
+        "division": "13C",
+        "row_count": 9
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:06:16.700874",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 91 rows"
+      ],
+      "metadata": {
+        "league_id": "D00487",
+        "year": "2025-2026",
+        "division": "13C",
+        "row_count": 91
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:07:33.430963",
+      "error_count": 4,
+      "warning_count": 2,
+      "errors": [
+        "[ERROR] Order: 5 values above maximum 10",
+        "[ERROR] Ranking: 89 values below minimum 1",
+        "[ERROR] Points: 51 values above maximum 10.0",
+        "[ERROR] Player-HKS: 1 players have multiple HKS numbers"
+      ],
+      "warnings": [
+        "[WARNING] Player: 1 duplicate player names",
+        "[WARNING] Team: 8 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 89 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 89 within expected range [20, 200]",
+        "[INFO] Player: Duplicated players: ['Lam Tsz Ching']",
+        "[INFO] Team: 5 unique teams, avg 9.9 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00487",
+        "year": "2025-2026",
+        "division": "13C",
+        "row_count": 89
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:08:35.276022",
+      "error_count": 1,
+      "warning_count": 3,
+      "errors": [
+        "[ERROR] vs: 60 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 6 results have unexpected format",
+        "[WARNING] Date: 39 rows have invalid dates"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 60 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 60 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-20)",
+        "[INFO] Result: 6 matches played, 54 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00497",
+        "year": "2025-2026",
+        "division": "L3",
+        "row_count": 60
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T13:09:05.823246",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 5 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 5 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 5 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00497",
+        "year": "2025-2026",
+        "division": "L3",
+        "row_count": 5
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T13:09:36.322237",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 5 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 5 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00497",
+        "year": "2025-2026",
+        "division": "L3",
+        "row_count": 5
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:10:07.845980",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 44 rows"
+      ],
+      "metadata": {
+        "league_id": "D00497",
+        "year": "2025-2026",
+        "division": "L3",
+        "row_count": 44
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:11:03.466771",
+      "error_count": 2,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Ranking: 40 values below minimum 1",
+        "[ERROR] Points: 21 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 1 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 40 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 40 within expected range [20, 200]",
+        "[INFO] Team: 3 unique teams, avg 8.0 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00497",
+        "year": "2025-2026",
+        "division": "L3",
+        "row_count": 40
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:12:05.658477",
+      "error_count": 1,
+      "warning_count": 3,
+      "errors": [
+        "[ERROR] vs: 90 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 14 results have unexpected format",
+        "[WARNING] Date: 55 rows have invalid dates"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 90 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 90 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-18)",
+        "[INFO] Result: 14 matches played, 76 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00498",
+        "year": "2025-2026",
+        "division": "L4",
+        "row_count": 90
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T13:12:36.912042",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 7 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 9 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 9 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00498",
+        "year": "2025-2026",
+        "division": "L4",
+        "row_count": 9
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T13:13:07.168128",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 9 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 9 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00498",
+        "year": "2025-2026",
+        "division": "L4",
+        "row_count": 9
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:13:37.707817",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 87 rows"
+      ],
+      "metadata": {
+        "league_id": "D00498",
+        "year": "2025-2026",
+        "division": "L4",
+        "row_count": 87
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:14:53.804575",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 5 values above maximum 10",
+        "[ERROR] Ranking: 87 values below minimum 1",
+        "[ERROR] Points: 43 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 6 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 87 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 87 within expected range [20, 200]",
+        "[INFO] Team: 5 unique teams, avg 9.7 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00498",
+        "year": "2025-2026",
+        "division": "L4",
+        "row_count": 87
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:15:54.569682",
+      "error_count": 1,
+      "warning_count": 3,
+      "errors": [
+        "[ERROR] vs: 132 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 20 results have unexpected format",
+        "[WARNING] Date: 90 rows have invalid dates"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 132 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 132 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-22)",
+        "[INFO] Result: 20 matches played, 112 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00488",
+        "year": "2025-2026",
+        "division": "14",
+        "row_count": 132
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:16:25.363200",
+      "error_count": 1,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Points: 1 values below minimum 0"
+      ],
+      "warnings": [
+        "[WARNING] Points: 10 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 12 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 12 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00488",
+        "year": "2025-2026",
+        "division": "14",
+        "row_count": 12
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T13:16:55.639079",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 12 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 12 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00488",
+        "year": "2025-2026",
+        "division": "14",
+        "row_count": 12
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:17:26.446935",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 120 rows"
+      ],
+      "metadata": {
+        "league_id": "D00488",
+        "year": "2025-2026",
+        "division": "14",
+        "row_count": 120
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:18:57.717571",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 6 values above maximum 10",
+        "[ERROR] Ranking: 120 values below minimum 1",
+        "[ERROR] Points: 65 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 11 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 120 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 120 within expected range [20, 200]",
+        "[INFO] Team: 5 unique teams, avg 10.0 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00488",
+        "year": "2025-2026",
+        "division": "14",
+        "row_count": 120
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:19:58.578854",
+      "error_count": 1,
+      "warning_count": 3,
+      "errors": [
+        "[ERROR] vs: 84 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 13 results have unexpected format",
+        "[WARNING] Date: 60 rows have invalid dates"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 84 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 84 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-21)",
+        "[INFO] Result: 13 matches played, 71 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00489",
+        "year": "2025-2026",
+        "division": "15A",
+        "row_count": 84
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": true,
+      "timestamp": "2025-10-28T13:20:30.372323",
+      "error_count": 0,
+      "warning_count": 1,
+      "errors": [],
+      "warnings": [
+        "[WARNING] Points: 8 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 8 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 8 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00489",
+        "year": "2025-2026",
+        "division": "15A",
+        "row_count": 8
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T13:21:02.940198",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 8 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 8 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00489",
+        "year": "2025-2026",
+        "division": "15A",
+        "row_count": 8
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:21:33.524841",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 81 rows"
+      ],
+      "metadata": {
+        "league_id": "D00489",
+        "year": "2025-2026",
+        "division": "15A",
+        "row_count": 81
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:22:44.474219",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 10 values above maximum 10",
+        "[ERROR] Ranking: 81 values below minimum 1",
+        "[ERROR] Points: 44 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 6 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 81 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 81 within expected range [20, 200]",
+        "[INFO] Team: 3 unique teams, avg 10.1 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00489",
+        "year": "2025-2026",
+        "division": "15A",
+        "row_count": 81
+      }
+    },
+    {
+      "validator_name": "SchedulesValidator",
+      "data_type": "schedules",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:23:45.357595",
+      "error_count": 1,
+      "warning_count": 3,
+      "errors": [
+        "[ERROR] vs: 84 rows have vs != \"vs\""
+      ],
+      "warnings": [
+        "[WARNING] Date: Expected type datetime, got object",
+        "[WARNING] Result: 15 results have unexpected format",
+        "[WARNING] Date: 60 rows have invalid dates"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 84 rows",
+        "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+        "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+        "[INFO] row_count: Row count 84 within expected range [10, 500]",
+        "[INFO] Match Week: Data spans 1 weeks (weeks 1-21)",
+        "[INFO] Result: 15 matches played, 69 upcoming/unplayed"
+      ],
+      "metadata": {
+        "league_id": "D00490",
+        "year": "2025-2026",
+        "division": "15B",
+        "row_count": 84
+      }
+    },
+    {
+      "validator_name": "SummaryValidator",
+      "data_type": "summary",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:24:15.900727",
+      "error_count": 1,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Points: 1 values below minimum 0"
+      ],
+      "warnings": [
+        "[WARNING] Points: 7 teams have points != (wins * 5)"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 8 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+        "[INFO] row_count: Row count 8 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00490",
+        "year": "2025-2026",
+        "division": "15B",
+        "row_count": 8
+      }
+    },
+    {
+      "validator_name": "TeamsValidator",
+      "data_type": "teams",
+      "is_valid": true,
+      "timestamp": "2025-10-28T13:24:47.909853",
+      "error_count": 0,
+      "warning_count": 0,
+      "errors": [],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 8 rows",
+        "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+        "[INFO] null_check: No null values in required columns: {'Team Name'}",
+        "[INFO] row_count: Row count 8 within expected range [4, 20]"
+      ],
+      "metadata": {
+        "league_id": "D00490",
+        "year": "2025-2026",
+        "division": "15B",
+        "row_count": 8
+      }
+    },
+    {
+      "validator_name": "RankingValidator",
+      "data_type": "ranking",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:25:18.445515",
+      "error_count": 1,
+      "warning_count": 0,
+      "errors": [
+        "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+      ],
+      "warnings": [],
+      "info": [
+        "[INFO] dataframe: DataFrame has 89 rows"
+      ],
+      "metadata": {
+        "league_id": "D00490",
+        "year": "2025-2026",
+        "division": "15B",
+        "row_count": 89
+      }
+    },
+    {
+      "validator_name": "PlayersValidator",
+      "data_type": "players",
+      "is_valid": false,
+      "timestamp": "2025-10-28T13:26:29.782278",
+      "error_count": 3,
+      "warning_count": 1,
+      "errors": [
+        "[ERROR] Order: 10 values above maximum 10",
+        "[ERROR] Ranking: 89 values below minimum 1",
+        "[ERROR] Points: 46 values above maximum 10.0"
+      ],
+      "warnings": [
+        "[WARNING] Team: 8 teams have > 8 players"
+      ],
+      "info": [
+        "[INFO] dataframe: DataFrame has 89 rows",
+        "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+        "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+        "[INFO] row_count: Row count 89 within expected range [20, 200]",
+        "[INFO] Team: 4 unique teams, avg 11.1 players/team"
+      ],
+      "metadata": {
+        "league_id": "D00490",
+        "year": "2025-2026",
+        "division": "15B",
+        "row_count": 89
+      }
+    }
+  ]
+}

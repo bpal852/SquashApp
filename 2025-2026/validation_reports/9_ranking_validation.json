@@ -1,0 +1,21 @@
+{
+  "validator_name": "RankingValidator",
+  "data_type": "ranking",
+  "is_valid": false,
+  "timestamp": "2025-10-28T11:51:58.974585",
+  "error_count": 1,
+  "warning_count": 0,
+  "errors": [
+    "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+  ],
+  "warnings": [],
+  "info": [
+    "[INFO] dataframe: DataFrame has 108 rows"
+  ],
+  "metadata": {
+    "league_id": "D00481",
+    "year": "2025-2026",
+    "division": "9",
+    "row_count": 108
+  }
+}

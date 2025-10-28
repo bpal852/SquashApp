@@ -1,0 +1,29 @@
+{
+  "validator_name": "SchedulesValidator",
+  "data_type": "schedules",
+  "is_valid": false,
+  "timestamp": "2025-10-28T12:10:26.937923",
+  "error_count": 1,
+  "warning_count": 2,
+  "errors": [
+    "[ERROR] vs: 60 rows have vs != \"vs\""
+  ],
+  "warnings": [
+    "[WARNING] Date: Expected type datetime, got object",
+    "[WARNING] Result: 6 results have unexpected format"
+  ],
+  "info": [
+    "[INFO] dataframe: DataFrame has 60 rows",
+    "[INFO] columns: All required columns present: {'Match Week', 'Result', 'Home Team', 'Away Team', 'Date', 'Venue', 'Time', 'vs'}",
+    "[INFO] null_check: No null values in required columns: {'Away Team', 'Match Week', 'vs', 'Home Team'}",
+    "[INFO] row_count: Row count 60 within expected range [10, 500]",
+    "[INFO] Match Week: Data spans 1 weeks (weeks 1-20)",
+    "[INFO] Result: 6 matches played, 54 upcoming/unplayed"
+  ],
+  "metadata": {
+    "league_id": "D00496",
+    "year": "2025-2026",
+    "division": "7B",
+    "row_count": 60
+  }
+}

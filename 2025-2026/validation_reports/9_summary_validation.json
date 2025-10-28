@@ -1,0 +1,24 @@
+{
+  "validator_name": "SummaryValidator",
+  "data_type": "summary",
+  "is_valid": true,
+  "timestamp": "2025-10-28T11:50:50.946042",
+  "error_count": 0,
+  "warning_count": 1,
+  "errors": [],
+  "warnings": [
+    "[WARNING] Points: 9 teams have points != (wins * 5)"
+  ],
+  "info": [
+    "[INFO] dataframe: DataFrame has 10 rows",
+    "[INFO] columns: All required columns present: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+    "[INFO] null_check: No null values in required columns: {'Points', 'Lost', 'Won', 'Played', 'Team'}",
+    "[INFO] row_count: Row count 10 within expected range [4, 20]"
+  ],
+  "metadata": {
+    "league_id": "D00481",
+    "year": "2025-2026",
+    "division": "9",
+    "row_count": 10
+  }
+}

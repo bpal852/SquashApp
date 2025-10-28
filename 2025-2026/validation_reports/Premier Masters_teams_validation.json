@@ -1,0 +1,22 @@
+{
+  "validator_name": "TeamsValidator",
+  "data_type": "teams",
+  "is_valid": true,
+  "timestamp": "2025-10-28T12:32:56.208442",
+  "error_count": 0,
+  "warning_count": 0,
+  "errors": [],
+  "warnings": [],
+  "info": [
+    "[INFO] dataframe: DataFrame has 5 rows",
+    "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+    "[INFO] null_check: No null values in required columns: {'Team Name'}",
+    "[INFO] row_count: Row count 5 within expected range [4, 20]"
+  ],
+  "metadata": {
+    "league_id": "D00491",
+    "year": "2025-2026",
+    "division": "Premier Masters",
+    "row_count": 5
+  }
+}
