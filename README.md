@@ -1,0 +1,528 @@
+# SquashApp
+
+[![CI/CD Pipeline](https://github.com/bpal852/SquashApp/actions/workflows/ci.yml/badge.svg)](https://github.com/bpal852/SquashApp/actions/workflows/ci.yml)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+A comprehensive data scraping and analysis tool for Hong Kong Squash League data, built with Python, pandas, and Streamlit.
+
+## Overview
+
+SquashApp scrapes match results, player statistics, and team standings from the Hong Kong Squash website, processes the data, and provides interactive visualizations through a Streamlit dashboard.
+
+## Features
+
+- **Web Scraping**: Modular scrapers for teams, schedules, rankings, and player data
+- **Data Processing**: Robust parsing of match results and player statistics
+- **Analysis**: Home/away performance, win percentages, player rankings
+- **Visualization**: Interactive Streamlit dashboard with multiple views
+- **Historical Data**: Support for multiple seasons (2016-present)
+- **Testing Mode**: Fast development mode (2 divisions vs 28)
+
+## Project Structure
+
+```
+SquashApp/
+├── config/                # Configuration management
+│   ├── settings.py        # Environment-aware config (dev/test/prod)
+│   ├── __init__.py        # Package exports
+│   └── README.md          # Configuration documentation
+├── scrapers/              # Modular web scraping package
+│   ├── base.py            # BaseScraper with retry logic
+│   ├── teams.py           # Team information scraper
+│   ├── summary.py         # Match summary scraper
+│   ├── schedules.py       # Fixtures and results scraper
+│   ├── ranking.py         # Player rankings scraper
+│   └── players.py         # Player details scraper
+├── validators/            # Data validation package
+│   ├── base.py            # BaseValidator with validation logic
+│   ├── teams.py           # Team data validator
+│   ├── summary.py         # Summary data validator
+│   ├── schedules.py       # Schedule data validator
+│   ├── ranking.py         # Ranking data validator
+│   ├── players.py         # Player data validator
+│   └── reports.py         # Validation reporting
+├── tests/                 # Comprehensive test suite (168 tests)
+│   ├── test_config.py     # 40 configuration tests
+│   ├── test_parsers.py    # 58 parser tests
+│   ├── test_scrapers.py   # 20 scraper tests (mocked HTTP)
+│   └── test_validators.py # 50 validator tests
+├── previous_seasons/      # Historical season data
+├── 2025-2026/            # Current season data
+├── parsers.py            # Pure parsing functions
+├── main_2025_26.py       # Main orchestration script
+└── app.py                # Streamlit dashboard
+```
+
+## Quick Start
+
+### Installation
+
+```powershell
+# Clone repository
+git clone https://github.com/bpal852/SquashApp.git
+cd SquashApp
+
+# Create virtual environment
+python -m venv venv
+venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### Running the Scraper
+
+```powershell
+# Full scrape (all 28 divisions, 60-90 minutes)
+python main_2025_26.py
+
+# Testing mode (2 divisions, 4-6 minutes)
+# Set TESTING_MODE = True in main_2025_26.py
+python main_2025_26.py
+```
+
+### Running the Dashboard
+
+```powershell
+streamlit run app.py
+```
+
+### Running Tests
+
+```powershell
+# Run all tests (168 tests, ~35 seconds)
+pytest tests/ -v
+
+# Run parser tests only (58 tests)
+pytest tests/test_parsers.py -v
+
+# Run scraper tests only (20 tests)
+pytest tests/test_scrapers.py -v
+
+# Run validator tests only (50 tests)
+pytest tests/test_validators.py -v
+
+# Run config tests only (40 tests)
+pytest tests/test_config.py -v
+
+# Run with coverage
+pytest tests/ --cov=. --cov-report=html --cov-report=term-missing
+
+# Run specific test markers
+pytest tests/ -m unit           # Unit tests only
+pytest tests/ -m integration    # Integration tests only
+pytest tests/ -m "not slow"     # Skip slow tests
+```
+
+## Configuration Management
+
+SquashApp uses an environment-aware configuration system that separates settings for development, testing, and production.
+
+### Configuration Environments
+
+**Production** (default): All 36 divisions enabled, full scraping
+```powershell
+python main_2025_26.py
+# Runtime: ~60-90 minutes
+```
+
+**Development**: Limited divisions (3) for faster development
+```powershell
+$env:SQUASH_ENV = "development"
+python main_2025_26.py
+# Runtime: ~6-9 minutes
+```
+
+**Testing**: Minimal divisions (2) for automated tests
+```powershell
+$env:SQUASH_ENV = "testing"
+python main_2025_26.py
+# Runtime: ~4-6 minutes
+```
+
+### Configuration Structure
+
+All settings are defined in `config/settings.py`:
+
+```python
+from config import get_config
+
+# Get configuration for current environment
+config = get_config()
+
+# Access settings
+base_url = config.BASE_URL
+divisions = config.get_enabled_divisions()
+wait_time = config.WAIT_TIME
+```
+
+### Key Configuration Options
+
+| Setting | Development | Testing | Production |
+|---------|-------------|---------|------------|
+| Enabled Divisions | 3 | 2 | 36 |
+| Wait Time (sec) | 5 | 1 | 30 |
+| Log Level | DEBUG | WARNING | INFO |
+| Runtime Estimate | 6-9 min | 4-6 min | 60-90 min |
+
+### Environment Detection
+
+The system automatically detects the environment from the `SQUASH_ENV` environment variable:
+
+```powershell
+# Windows PowerShell
+$env:SQUASH_ENV = "development"
+
+# Linux/Mac
+export SQUASH_ENV=development
+```
+
+If not set, defaults to **production**.
+
+### Configuration Features
+
+✅ **Type-safe**: Using dataclasses and type hints  
+✅ **Validated**: Automatic validation on initialization  
+✅ **Centralized**: Single source of truth for all settings  
+✅ **Environment-aware**: Different settings per environment  
+✅ **Testable**: Comprehensive unit tests (40 tests)  
+✅ **Documented**: Full documentation in `config/README.md`  
+
+See [config/README.md](config/README.md) for detailed configuration documentation.
+
+## CI/CD Pipeline
+
+This project uses GitHub Actions for continuous integration and deployment:
+
+### Automated Checks
+
+On every push and pull request:
+- ✅ **Multi-Python Testing**: Tests run on Python 3.9, 3.10, and 3.11
+- 🧹 **Code Formatting**: Black formatting check
+- 📦 **Import Sorting**: isort check
+- 🔍 **Linting**: Flake8 code quality analysis
+- 📊 **Test Coverage**: pytest with coverage reporting
+- 📈 **Coverage Upload**: Automatic upload to Codecov
+
+### Running CI Checks Locally
+
+```powershell
+# Install dev dependencies
+pip install pytest-cov flake8 black isort
+
+# Run formatting check
+black --check .
+
+# Run import sorting check
+isort --check-only .
+
+# Run linting
+flake8 .
+
+# Run tests with coverage
+pytest tests/ --cov=. --cov-report=html
+```
+
+### Configuration Files
+
+- `.github/workflows/ci.yml` - GitHub Actions workflow
+- `pytest.ini` - pytest configuration with markers
+- `pyproject.toml` - Black, isort, and coverage settings
+- `.flake8` - Flake8 linting configuration
+
+## Architecture
+
+### Scrapers Package
+
+All scrapers inherit from `BaseScraper`, which provides:
+- Session management with connection pooling
+- Retry logic (3 attempts with exponential backoff)
+- Timeout handling (30 seconds)
+- Automatic logging
+- URL construction
+
+See [scrapers/README.md](scrapers/README.md) for detailed documentation.
+
+### Validators Package
+
+Data validation layer ensures data quality:
+- **TeamsValidator**: Email format, duplicates, row counts
+- **SummaryValidator**: Mathematical consistency (Won+Lost=Played)
+- **SchedulesValidator**: Date ranges, result format, match weeks
+- **RankingValidator**: Win % accuracy, score distribution
+- **PlayersValidator**: HKS numbers, order sequences
+- **ValidationReport**: JSON, text, and CSV reporting
+
+### Parser Functions
+
+Pure functions in `parsers.py` handle data transformation:
+- `parse_result()` - Parse match scores (e.g., "3-2", "WO", "CR")
+- `count_games_won()` - Count games from rubber results
+- `normalize_rubber()` - Format rubber results consistently
+- `determine_winner()` - Calculate match winner
+- `format_rubbers()` - Format rubber lists
+- `parse_home_away_scores()` - Extract home/away scores
+- `extract_match_details()` - Parse match metadata
+- `extract_match_result()` - Parse result strings
+
+All functions have comprehensive unit tests with 100% coverage.
+
+### Testing Strategy
+
+**Parser Tests (58 tests)**
+- Direct function calls with various inputs
+- Normal cases, edge cases, error conditions
+- Fast execution (milliseconds)
+
+**Scraper Tests (20 tests)**
+- Mocked HTTP responses using `unittest.mock`
+- No network dependencies
+- Controlled test scenarios
+- Tests all edge cases (404, empty pages, malformed HTML)
+- Fast execution (~30 seconds total)
+
+See [tests/README.md](tests/README.md) for detailed testing documentation.
+
+## Data Flow
+
+```
+1. Scrape → 2. Parse → 3. Transform → 4. Analyze → 5. Visualize
+
+1. Scrapers fetch HTML from HK Squash website
+2. Parsers extract structured data from HTML
+3. Data transformations (merge, filter, aggregate)
+4. Statistical analysis (rankings, win %, trends)
+5. Streamlit dashboard displays results
+```
+
+## Key Components
+
+### main_2025_26.py
+
+Main orchestration script that:
+1. Reads division configuration
+2. Scrapes data for each division
+3. Processes and transforms data
+4. Saves results to CSV files
+5. Generates analysis outputs
+
+**TESTING_MODE**: Set to `True` for fast development (scrapes only 2 divisions)
+
+### app.py
+
+Streamlit dashboard providing:
+- **Team Stats**: Detailed league tables, match results, team analysis
+- **Player Stats**: Individual player performance, rankings
+- **Historical Data**: Multi-season comparisons
+- Interactive filters and visualizations
+
+### parsers.py
+
+Pure parsing functions with no side effects:
+- Type-safe conversions
+- Robust error handling
+- Comprehensive test coverage
+- Easy to test and maintain
+
+## Testing Mode
+
+For rapid development and testing:
+
+```python
+# In main_2025_26.py
+TESTING_MODE = True  # Only scrapes 2 divisions
+```
+
+**Benefits:**
+- 4-6 minutes vs 60-90 minutes
+- Same code paths as production
+- Validates core functionality
+- Faster iteration during development
+
+## Recent Improvements (October 2025)
+
+### 🎯 Refactoring & Testing
+
+**Phase 1: Parser Extraction**
+- ✅ Extracted 8 parsing functions to `parsers.py`
+- ✅ Created 58 comprehensive unit tests
+- ✅ Fixed pandas warnings (FutureWarning, SettingWithCopyWarning)
+- ✅ Added TESTING_MODE for fast development
+
+**Phase 2: Scraper Modularization**
+- ✅ Created `scrapers/` package with 5 specialized scrapers
+- ✅ Implemented `BaseScraper` with retry logic and session management
+- ✅ Removed 400+ lines of duplicate code from main script
+- ✅ Improved maintainability and testability
+
+**Phase 3: Scraper Testing**
+- ✅ Created 20 unit tests with mocked HTTP responses
+- ✅ Tests run offline in 30 seconds
+- ✅ Platform-agnostic type assertions
+- ✅ Comprehensive edge case coverage
+
+**Phase 4: Data Validation**
+- ✅ Created `validators/` package with 5 specialized validators
+- ✅ Implemented validation reporting (JSON, text, CSV)
+- ✅ Added 50 comprehensive validator tests
+- ✅ Integrated into main pipeline with ENABLE_VALIDATION flag
+
+**Phase 5: CI/CD Pipeline**
+- ✅ Created GitHub Actions workflow with multi-Python testing (3.9, 3.10, 3.11)
+- ✅ Added code quality checks (Black, isort, Flake8)
+- ✅ Configured pytest with markers and coverage reporting
+- ✅ Updated documentation with badges and CI/CD instructions
+
+**Phase 6: Configuration Management**
+- ✅ Created `config/` package with environment-aware settings
+- ✅ Implemented Development, Testing, and Production configurations
+- ✅ Added 40 comprehensive config tests
+- ✅ Centralized all hardcoded values (URLs, timeouts, divisions, flags)
+- ✅ Added configuration validation and documentation
+
+**Total Impact:**
+- **168 tests** (all passing)
+- **6 new packages**: scrapers, validators, config, plus 3 test modules
+- Reduced main script by **500+ lines**
+- Improved code organization and maintainability
+- Enhanced reliability and testability
+- Faster development cycle with environment-aware configuration
+
+## Dependencies
+
+Key packages:
+- `beautifulsoup4` - HTML parsing
+- `pandas` - Data manipulation
+- `requests` - HTTP client
+- `streamlit` - Dashboard framework
+- `pytest` - Testing framework
+
+See `requirements.txt` for complete list.
+
+## Data Files
+
+### Current Season (2025-2026/)
+```
+├── schedules_df/          # Match schedules by division/week
+├── results_df/            # Match results
+├── summary_df/            # Team standings
+├── teams_df/              # Team rosters
+├── players_df/            # Player rosters
+├── ranking_df/            # Player rankings
+├── player_results/        # Individual match results
+├── detailed_league_tables/ # Full league tables
+├── home_away_data/        # Home/away analysis
+├── team_win_percentage_breakdown/ # Win % by rubber position
+└── combined_*.csv         # Aggregated data across divisions
+```
+
+### Historical Seasons
+```
+previous_seasons/
+├── 2016-2017/
+├── 2017-2018/
+├── 2018-2019/
+├── 2019-2020/
+├── 2021-2022/
+├── 2022-2023/
+├── 2023-2024/
+└── 2024-2025/
+```
+
+## Contributing
+
+### Branch Strategy
+
+- `main` - Stable production branch
+- `feature/*` - Feature development branches
+
+Current development branch: `feature/refactor-parsers-and-testing`
+
+### Making Changes
+
+1. Create a feature branch
+2. Write tests for new functionality
+3. Ensure all tests pass (`pytest tests/ -v`)
+4. Update documentation
+5. Submit pull request
+
+### Code Style
+
+- Follow PEP 8 conventions
+- Write descriptive function names
+- Add docstrings to functions
+- Keep functions focused (single responsibility)
+- Use type hints where appropriate
+
+## Error Handling
+
+All scrapers implement robust error handling:
+- **HTTP Errors**: Retry with exponential backoff
+- **Timeouts**: 30-second timeout per request
+- **Empty Pages**: Return empty DataFrames
+- **Malformed Data**: Log warnings and skip bad data
+- **NO DATA**: Handle gracefully (common for certain divisions)
+
+## Logging
+
+Configure logging level in scripts:
+```python
+import logging
+logging.basicConfig(level=logging.INFO)
+```
+
+**Log Levels:**
+- `INFO` - Successful operations, progress updates
+- `WARNING` - Recoverable issues, missing data
+- `ERROR` - Failed operations, critical issues
+
+## Performance
+
+**Full Scrape (28 divisions):**
+- Duration: 60-90 minutes
+- Requests: ~150 HTTP requests
+- Data: ~500+ CSV files generated
+
+**Testing Mode (2 divisions):**
+- Duration: 4-6 minutes
+- Requests: ~10 HTTP requests
+- Data: Subset of CSV files
+
+**Test Suite:**
+- Duration: ~35 seconds
+- Tests: 78 tests
+- Coverage: Comprehensive (scrapers + parsers)
+
+## Known Issues
+
+1. **Website Typo**: HK Squash website uses "team_summery" (misspelled) - handled with fallback logic
+2. **NO DATA Teams**: Some divisions have teams with no player data - gracefully skipped
+3. **Inconsistent HTML**: Website HTML structure varies slightly - robust parsing handles this
+
+## Future Improvements
+
+- [ ] Add integration tests for full workflow
+- [ ] Implement data validation layer
+- [ ] Add API endpoint for programmatic access
+- [ ] Create automated daily scraping schedule
+- [ ] Add player ELO rating system
+- [ ] Implement match prediction models
+- [ ] Add email notifications for results
+- [ ] Create mobile-responsive dashboard
+
+## License
+
+This project is for personal use. Data is sourced from the Hong Kong Squash website.
+
+## Contact
+
+**Repository**: https://github.com/bpal852/SquashApp  
+**Branch**: feature/refactor-parsers-and-testing
+
+## Acknowledgments
+
+- Hong Kong Squash for providing match data
+- Streamlit for the dashboard framework
+- pytest for the excellent testing framework

@@ -10,7 +10,9 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 ,Bedouillat Vincent,Centre Squash,21.0,42,2,1,1,9,0.5
 ,Chevaux Alexander,Centre Squash,21.0,21,1,1,0,9,1.0
 ,Kan Ken Chun Kit,The Squash Club 2,21.0,21,1,1,0,9,1.0
+,Choy Yuk Kwong Donnie,Kowloon Cricket Club 9,21.0,21,1,1,0,9,1.0
 ,Shum Hin Yeung Almond,The Hong Kong Jockey Club Div 9,21.0,21,1,1,0,9,1.0
+,Osmund Ronnie,Kowloon Cricket Club 9,20.0,60,3,2,1,9,0.6666666666666666
 ,Lee Lawrence Chi Hung,Hong Kong Football Club 9,19.5,39,2,2,0,9,1.0
 ,Lau Eric Chi Wai,Twister,19.5,39,2,2,0,9,1.0
 ,Lee Dennis Yuk Kai,The Hong Kong Jockey Club Div 9,19.0,57,3,2,1,9,0.6666666666666666
@@ -18,8 +20,8 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 ,Chan Sze Long,Twister,18.0,36,2,2,0,9,1.0
 ,Law King Wai,Twister,18.0,36,2,2,0,9,1.0
 ,Wright Martin,Hong Kong Football Club 9,18.0,36,2,2,0,9,1.0
-,Ho Wai Ying,BOSS,18.0,18,1,1,0,9,1.0
 ,Cheung Ka Lun Alan,Centre Squash,18.0,36,2,1,1,9,0.5
+,Fong Wai Kuen,BOSS,18.0,18,1,1,0,9,1.0
 ,Wan Man Fai,Kinetic 3,18.0,18,1,1,0,9,1.0
 ,Woo Heng Che Stephen,The Hong Kong Jockey Club Div 9,18.0,18,1,1,0,9,1.0
 ,Lee Henry Kwok Chung,Kinetic 3,18.0,18,1,1,0,9,1.0
@@ -27,22 +29,22 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 ,Ngan Wynn,The Squash Club 2,18.0,18,1,1,0,9,1.0
 ,Wong Ken Tat Tai,Twister,17.0,51,3,1,2,9,0.3333333333333333
 ,Hui Prodipto,Kinetic 3,16.5,33,2,1,1,9,0.5
-,Ip Thomas Shun Moon,BOSS,16.5,33,2,1,1,9,0.5
-,Osmund Ronnie,Kowloon Cricket Club 9,16.5,33,2,1,1,9,0.5
+,Ip Thomas Shun Moon,BOSS,15.0,45,3,2,1,9,0.6666666666666666
 ,Lee Rachel Wing Yan,Twister,15.0,30,2,2,0,9,1.0
 ,Ren Jean-Philippe,Centre Squash,15.0,30,2,2,0,9,1.0
 ,Luk Raymond Yiu Fai,BOSS,15.0,30,2,2,0,9,1.0
+,Ho Peter,Kowloon Cricket Club 9,15.0,15,1,1,0,9,1.0
+,Ho Wai Ying,BOSS,15.0,30,2,1,1,9,0.5
 ,Au Wai Lun,i-Mask Advance Squash Club 3,15.0,45,3,1,2,9,0.3333333333333333
 ,Jones Robert F.,Hong Kong Football Club 9,15.0,15,1,1,0,9,1.0
 ,Yip Mark Tuck Keong,Twister,15.0,15,1,1,0,9,1.0
 ,Fetiveau Jeremy Didier Claude,Centre Squash,15.0,15,1,1,0,9,1.0
-,Li Kelvin Hon Hun,BOSS,15.0,30,2,0,2,9,0.0
 ,Lau Shing Chung Simon,HKPF Squash Team,15.0,30,2,0,2,9,0.0
+,Li Kelvin Hon Hun,BOSS,14.0,42,3,0,3,9,0.0
 ,Kirpalani Arun,Hong Kong Football Club 9,13.5,27,2,1,1,9,0.5
 ,Tsang Yan Kiu,HKPF Squash Team,12.0,12,1,1,0,9,1.0
 ,Hsu Marvin,The Hong Kong Jockey Club Div 9,12.0,36,3,1,2,9,0.3333333333333333
 ,Mo Li Hung Calvin,i-Mask Advance Squash Club 3,12.0,36,3,1,2,9,0.3333333333333333
-,Wong Michael,BOSS,12.0,24,2,1,1,9,0.5
 ,Murray David,Hong Kong Football Club 9,12.0,24,2,1,1,9,0.5
 ,Sze To Shiu Keung,Twister,12.0,12,1,1,0,9,1.0
 ,Raffo Jason Kevin,Centre Squash,12.0,12,1,1,0,9,1.0
@@ -58,15 +60,17 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 ,Tong Franco Sui Lun,The Hong Kong Jockey Club Div 9,10.5,21,2,1,1,9,0.5
 ,Wong Wilson Wai Shing,Kinetic 3,9.0,18,2,1,1,9,0.5
 ,Vaswani Arun,Kinetic 3,9.0,9,1,1,0,9,1.0
+,Ebrahim Adnan Azhar,Kowloon Cricket Club 9,9.0,9,1,0,1,9,0.0
 ,Chan Hei Ching Boris,i-Mask Advance Squash Club 3,9.0,9,1,0,1,9,0.0
 ,Chan Alex Siu Kun,Kowloon Cricket Club 9,9.0,9,1,0,1,9,0.0
 ,Fung Thomas Ho On,The Squash Club 2,9.0,9,1,0,1,9,0.0
 ,Chan Chi Ming,i-Mask Advance Squash Club 3,9.0,9,1,0,1,9,0.0
 ,Hinchcliffe Michael,Centre Squash,9.0,18,2,0,2,9,0.0
+,Wong Michael,BOSS,8.0,24,3,1,2,9,0.3333333333333333
 ,Leung Man Wah,HKPF Squash Team,8.0,24,3,0,3,9,0.0
 ,Chan Nicky Wai Yi,The Squash Club 2,7.5,15,2,1,1,9,0.5
+,Wan Pauline Yuen Ping,Kowloon Cricket Club 9,7.5,15,2,0,2,9,0.0
 ,Fung Bruce Wai Ho,BOSS,6.0,6,1,0,1,9,0.0
-,Wan Pauline Yuen Ping,Kowloon Cricket Club 9,6.0,6,1,0,1,9,0.0
 ,Chan Gordon Yiu Cheong,Hong Kong Football Club 9,6.0,6,1,0,1,9,0.0
 ,Curtil Ludovic,Centre Squash,6.0,6,1,0,1,9,0.0
 ,Leung Joey Tsz Yu,i-Mask Advance Squash Club 3,3.0,3,1,0,1,9,0.0
@@ -83,13 +87,11 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 ,Siu William Chak Man,HKPF Squash Team,2.0,6,3,0,3,9,0.0
 ,Tyen Cedric Kwong Hui,The Hong Kong Jockey Club Div 9,0.0,0,1,0,1,9,0.0
 ,Chow Mark Yu Cheuk,Kowloon Cricket Club 9,0.0,0,1,0,1,9,0.0
-,Fong Wai Kuen,BOSS,0.0,0,0,0,0,9,0.0
 ,Tam Chiu Wai,HKPF Squash Team,0.0,0,0,0,0,9,0.0
 ,Yip Aaron Man Hau,Kowloon Cricket Club 9,0.0,0,0,0,0,9,0.0
 ,Wong John Ying Man,The Hong Kong Jockey Club Div 9,0.0,0,0,0,0,9,0.0
 ,Shekhawat Tushar,Centre Squash,0.0,0,0,0,0,9,0.0
 ,Chan Po Sing,HKPF Squash Team,0.0,0,0,0,0,9,0.0
-,Choy Yuk Kwong Donnie,Kowloon Cricket Club 9,0.0,0,0,0,0,9,0.0
 ,Chan Bill Kwok Ming,HKPF Squash Team,0.0,0,0,0,0,9,0.0
 ,Chau Hang Henry,Kinetic 3,0.0,0,0,0,0,9,0.0
 ,Cheung Coco Oi Yan,Kowloon Cricket Club 9,0.0,0,0,0,0,9,0.0
