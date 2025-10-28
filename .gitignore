@@ -74,14 +74,13 @@ dmypy.json
 .streamlit/secrets.toml
 
 # Application specific
-*.csv
-!requirements.txt
-*.html
-!templates/*.html
 *.log
-app_debug.log
-squash_app_debug.log
-create_player_results_database_all_divisions.log
+
+# Organized directories
+logs/
+data/
+outputs/
+legacy/
 
 # Data directories (keep structure, ignore data)
 2025-2026/**/*.csv
@@ -95,6 +94,9 @@ previous_seasons/**/*.html
 validation_reports/*.json
 validation_reports/*.txt
 validation_reports/*.csv
+
+# Test outputs
+test_output/
 
 # Keep empty directories
 !.gitkeep
