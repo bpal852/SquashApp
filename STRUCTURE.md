@@ -7,6 +7,7 @@ This document describes the organization of the SquashApp codebase.
 ```
 SquashApp/
 ├── main_2025_26.py         # Main entry point for 2025-2026 season scraper
+├── app_update.py           # Streamlit web application for data visualization
 ├── requirements.txt        # Python dependencies
 ├── pyproject.toml          # Project configuration
 ├── pytest.ini              # Pytest configuration
@@ -210,14 +211,13 @@ Old scripts from previous architecture (pre-refactoring).
 
 ```
 legacy/
-├── app.py                  # Old Streamlit app
-├── app_update.py           # Old update script
+├── app.py                  # Old Streamlit app (superseded by app_update.py)
 ├── main.py                 # Old main script
 ├── main_update_2024_2025.py  # Old seasonal update
 └── parsers.py              # Old monolithic parser (now in parsers/)
 ```
 
-**Note:** These files are kept for reference but are no longer used. The functionality has been refactored into the modular packages.
+**Note:** These files are kept for reference but are no longer used. The functionality has been refactored into the modular packages. The current Streamlit app is `app_update.py` at the root.
 
 ## 🚀 Development Workflow
 
@@ -231,12 +231,15 @@ source venv/bin/activate  # Mac/Linux
 # 2. Install dependencies
 pip install -r requirements.txt
 
-# 3. Run in development mode
+# 3. Run the scraper in development mode
 $env:SQUASH_ENV = "development"  # Windows PowerShell
 export SQUASH_ENV=development    # Mac/Linux
 python main_2025_26.py
 
-# 4. Run tests
+# 4. Run the Streamlit app
+streamlit run app_update.py
+
+# 5. Run tests
 pytest -v
 ```
 
@@ -270,7 +273,8 @@ pytest -v
 6. **Output** → Generate reports in `outputs/`
 
 ### Key Files
-- `main_2025_26.py` - Main orchestration script
+- `main_2025_26.py` - Main orchestration script for scraping
+- `app_update.py` - Streamlit web application for visualization
 - `config/settings.py` - Centralized configuration
 - `requirements.txt` - All Python dependencies
 - `.gitignore` - What to exclude from Git
