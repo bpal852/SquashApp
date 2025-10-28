@@ -9,7 +9,14 @@ from .base import BaseValidator, ValidationResult
 class RankingValidator(BaseValidator):
     """Validates player ranking data."""
     
-    REQUIRED_COLUMNS = {'Player', 'Games', 'Won', 'Lost', 'W %', 'Team'}
+    # Accept both old and new column naming conventions
+    REQUIRED_COLUMNS = {'Name of Player', 'Games Played', 'Won', 'Lost', 'Win Percentage', 'Team'}
+    # Alternative column names for backward compatibility
+    ALTERNATIVE_COLUMN_MAP = {
+        'Player': 'Name of Player',
+        'Games': 'Games Played',
+        'W %': 'Win Percentage'
+    }
     SCORE_COLUMNS = {'5-0', '4-1', '3-2', '2-3', '1-4', '0-5'}
     EXPECTED_MIN_PLAYERS = 20  # Most divisions have at least 20 players
     EXPECTED_MAX_PLAYERS = 200  # Most divisions have at most 200 players
@@ -39,16 +46,16 @@ class RankingValidator(BaseValidator):
             return result
         
         # Check no null values in critical columns
-        critical_columns = {'Player', 'Games', 'Won', 'Lost', 'Team'}
+        critical_columns = {'Name of Player', 'Games Played', 'Won', 'Lost', 'Team'}
         self._check_no_null_values(df, critical_columns, result)
         
         # Check data types
         expected_types = {
-            'Player': 'str',
-            'Games': 'int',
+            'Name of Player': 'str',
+            'Games Played': 'int',
             'Won': 'int',
             'Lost': 'int',
-            'W %': 'float',
+            'Win Percentage': 'float',
             'Team': 'str',
         }
         self._check_data_types(df, expected_types, result)
@@ -58,13 +65,13 @@ class RankingValidator(BaseValidator):
                                     self.EXPECTED_MAX_PLAYERS, result)
         
         # Check value ranges
-        if 'Games' in df.columns:
-            self._check_value_range(df, 'Games', 0, 100, result)
+        if 'Games Played' in df.columns:
+            self._check_value_range(df, 'Games Played', 0, 100, result)
             
             # Check for players with 0 games
-            zero_games = (df['Games'] == 0).sum()
+            zero_games = (df['Games Played'] == 0).sum()
             if zero_games > 0:
-                result.add_warning('Games',
+                result.add_warning('Games Played',
                     f'{zero_games} players have 0 games (should they be excluded?)')
         
         if 'Won' in df.columns:
@@ -73,32 +80,32 @@ class RankingValidator(BaseValidator):
         if 'Lost' in df.columns:
             self._check_value_range(df, 'Lost', 0, 100, result)
         
-        if 'W %' in df.columns:
-            self._check_value_range(df, 'W %', 0.0, 100.0, result)
+        if 'Win Percentage' in df.columns:
+            self._check_value_range(df, 'Win Percentage', 0.0, 1.0, result)
             
-            # Check for win% = 100 (unbeaten players)
-            unbeaten = (df['W %'] == 100.0).sum()
+            # Check for win% = 1.0 (unbeaten players)
+            unbeaten = (df['Win Percentage'] == 1.0).sum()
             if unbeaten > 0:
-                result.add_info('W %', f'{unbeaten} unbeaten players')
+                result.add_info('Win Percentage', f'{unbeaten} unbeaten players')
         
-        # Check mathematical consistency: Won + Lost should equal Games
-        if all(col in df.columns for col in ['Games', 'Won', 'Lost']):
-            inconsistent = df[df['Games'] != df['Won'] + df['Lost']]
+        # Check mathematical consistency: Won + Lost should equal Games Played
+        if all(col in df.columns for col in ['Games Played', 'Won', 'Lost']):
+            inconsistent = df[df['Games Played'] != df['Won'] + df['Lost']]
             if len(inconsistent) > 0:
                 result.add_error('consistency',
-                    f'{len(inconsistent)} players have Won+Lost != Games')
+                    f'{len(inconsistent)} players have Won+Lost != Games Played')
         
         # Check win percentage calculation
-        if all(col in df.columns for col in ['Won', 'Games', 'W %']):
+        if all(col in df.columns for col in ['Won', 'Games Played', 'Win Percentage']):
             # Filter out players with 0 games
-            with_games = df[df['Games'] > 0].copy()
+            with_games = df[df['Games Played'] > 0].copy()
             if len(with_games) > 0:
-                expected_pct = (with_games['Won'] / with_games['Games'] * 100).round(1)
-                actual_pct = with_games['W %'].round(1)
+                expected_pct = (with_games['Won'] / with_games['Games Played']).round(3)
+                actual_pct = with_games['Win Percentage'].round(3)
                 mismatch = (expected_pct != actual_pct).sum()
                 
                 if mismatch > 0:
-                    result.add_warning('W %',
+                    result.add_warning('Win Percentage',
                         f'{mismatch} players have incorrect win percentage')
         
         # Check score distribution columns if present
@@ -107,21 +114,21 @@ class RankingValidator(BaseValidator):
             result.add_info('score_columns',
                 f'Score distribution columns present: {score_cols_present}')
             
-            # Check that score columns sum to Games
-            if 'Games' in df.columns:
+            # Check that score columns sum to Games Played
+            if 'Games Played' in df.columns:
                 score_sum = df[score_cols_present].sum(axis=1)
-                games = df['Games']
+                games = df['Games Played']
                 mismatch = (score_sum != games).sum()
                 
                 if mismatch > 0:
                     result.add_warning('score_distribution',
-                        f'{mismatch} players have score distribution sum != Games')
+                        f'{mismatch} players have score distribution sum != Games Played')
         
         # Check for duplicate players
-        if 'Player' in df.columns:
-            duplicates = df['Player'].duplicated().sum()
+        if 'Name of Player' in df.columns:
+            duplicates = df['Name of Player'].duplicated().sum()
             if duplicates > 0:
-                result.add_warning('Player',
+                result.add_warning('Name of Player',
                     f'{duplicates} duplicate player names (same name, different teams?)')
         
         # Team distribution

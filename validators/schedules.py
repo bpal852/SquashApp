@@ -59,11 +59,13 @@ class SchedulesValidator(BaseValidator):
         self._check_row_count_range(df, self.EXPECTED_MIN_MATCHES,
                                     self.EXPECTED_MAX_MATCHES, result)
         
-        # Check "vs" column always equals "vs"
+        # Check "vs" column contains expected values
         if 'vs' in df.columns:
-            non_vs = df[df['vs'] != 'vs']
-            if len(non_vs) > 0:
-                result.add_error('vs', f'{len(non_vs)} rows have vs != "vs"')
+            # Accept both "vs" and "v" as valid values
+            valid_vs_values = {'vs', 'v', 'V', 'VS'}
+            invalid_vs = df[~df['vs'].isin(valid_vs_values)]
+            if len(invalid_vs) > 0:
+                result.add_error('vs', f'{len(invalid_vs)} rows have invalid vs value (expected "vs" or "v")')
         
         # Check for same home and away team
         if 'Home Team' in df.columns and 'Away Team' in df.columns:

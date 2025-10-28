@@ -58,7 +58,8 @@ class PlayersValidator(BaseValidator):
         
         # Check value ranges
         if 'Order' in df.columns:
-            self._check_value_range(df, 'Order', 1, 10, result)
+            # Allow up to 15 players per team (some teams have more than 10)
+            self._check_value_range(df, 'Order', 1, 15, result)
             
             # Check Order distribution per team
             if 'Team' in df.columns:
@@ -95,9 +96,10 @@ class PlayersValidator(BaseValidator):
                 result.add_info('Ranking',
                     f'{missing_ranking} players have no ranking')
             
+            # Allow 0 for unranked players, and check for reasonable range
             valid_rankings = df['Ranking'].dropna()
             if len(valid_rankings) > 0:
-                self._check_value_range(df, 'Ranking', 1, 10000, result)
+                self._check_value_range(df, 'Ranking', 0, 10000, result)
         
         if 'Points' in df.columns:
             missing_points = df['Points'].isna().sum()
@@ -107,7 +109,8 @@ class PlayersValidator(BaseValidator):
             
             valid_points = df['Points'].dropna()
             if len(valid_points) > 0:
-                self._check_value_range(df, 'Points', 0.0, 10.0, result)
+                # Allow up to 15 points (some players have higher points)
+                self._check_value_range(df, 'Points', 0.0, 15.0, result)
         
         # Check for duplicate players
         if 'Player' in df.columns:

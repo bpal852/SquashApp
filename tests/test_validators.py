@@ -112,11 +112,11 @@ def invalid_schedules_df():
 def valid_ranking_df():
     """Valid ranking DataFrame."""
     return pd.DataFrame({
-        'Player': ['Player A', 'Player B', 'Player C', 'Player D'],
-        'Games': [10, 10, 10, 10],
+        'Name of Player': ['Player A', 'Player B', 'Player C', 'Player D'],
+        'Games Played': [10, 10, 10, 10],
         'Won': [8, 5, 3, 2],
         'Lost': [2, 5, 7, 8],
-        'W %': [80.0, 50.0, 30.0, 20.0],
+        'Win Percentage': [0.8, 0.5, 0.3, 0.2],
         'Team': ['Team A', 'Team A', 'Team B', 'Team B'],
         '5-0': [2, 1, 0, 0],
         '5-1': [1, 2, 1, 0],
@@ -135,11 +135,11 @@ def valid_ranking_df():
 def invalid_ranking_df():
     """Invalid ranking DataFrame with calculation errors."""
     return pd.DataFrame({
-        'Player': ['Player A', 'Player B', 'Player C'],
-        'Games': [10, 10, 10],
+        'Name of Player': ['Player A', 'Player B', 'Player C'],
+        'Games Played': [10, 10, 10],
         'Won': [8, 5, 3],
         'Lost': [2, 5, 7],
-        'W %': [85.0, 50.0, 30.0],  # Player A should be 80.0, not 85.0
+        'Win Percentage': [0.85, 0.5, 0.3],  # Player A should be 0.8, not 0.85
         'Team': ['Team A', 'Team A', 'Team B'],
         '5-0': [2, 1, 0],
         '5-1': [1, 2, 1],
@@ -427,7 +427,7 @@ class TestRankingValidator:
         # RankingValidator treats issues as warnings
         assert result.warning_count > 0
         # Should detect incorrect win percentage
-        assert any('w %' in str(w).lower() or 'win %' in str(w).lower() 
+        assert any('win percentage' in str(w).lower()
                   for w in result.warnings)
     
     def test_invalid_games_sum(self, invalid_ranking_df):
