@@ -109,8 +109,8 @@ class PlayersValidator(BaseValidator):
             
             valid_points = df['Points'].dropna()
             if len(valid_points) > 0:
-                # Allow up to 15 points (some players have higher points)
-                self._check_value_range(df, 'Points', 0.0, 15.0, result)
+                # Allow up to 27 points to match ranking Average Points max
+                self._check_value_range(df, 'Points', 0.0, 27.0, result)
         
         # Check for duplicate players
         if 'Player' in df.columns:

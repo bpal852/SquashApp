@@ -11,6 +11,8 @@ class RankingValidator(BaseValidator):
     
     # Accept both old and new column naming conventions
     REQUIRED_COLUMNS = {'Name of Player', 'Games Played', 'Won', 'Lost', 'Win Percentage', 'Team'}
+    # Optional columns that may be present
+    OPTIONAL_COLUMNS = {'Average Points', 'Total Game Points', 'Position'}
     # Alternative column names for backward compatibility
     ALTERNATIVE_COLUMN_MAP = {
         'Player': 'Name of Player',
@@ -87,6 +89,16 @@ class RankingValidator(BaseValidator):
             unbeaten = (df['Win Percentage'] == 1.0).sum()
             if unbeaten > 0:
                 result.add_info('Win Percentage', f'{unbeaten} unbeaten players')
+        
+        # Validate optional columns if present
+        if 'Average Points' in df.columns:
+            self._check_value_range(df, 'Average Points', 0.0, 27.0, result)
+        
+        if 'Total Game Points' in df.columns:
+            self._check_value_range(df, 'Total Game Points', 0, 1000, result)
+        
+        if 'Position' in df.columns:
+            self._check_value_range(df, 'Position', 1, 200, result)
         
         # Check mathematical consistency: Won + Lost should equal Games Played
         if all(col in df.columns for col in ['Games Played', 'Won', 'Lost']):
