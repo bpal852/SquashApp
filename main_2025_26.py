@@ -17,6 +17,10 @@ from pathlib import Path
 import json
 from utils.divisions_export import save_divisions_json
 import re
+
+# Import configuration
+from config import get_config, print_config_summary
+
 # Import functions from other scripts
 from scripts.create_player_results_database_all_divisions import run_player_results_pipeline
 from scripts.create_combined_results import load_all_results_and_player_results
@@ -40,12 +44,19 @@ from validators import (
 # Global variables
 _SUMMARY_NUMS_RE = re.compile(r"(.*?)[^\d]*?(\d+)\s*(\d+)\s*(\d+)\s*(\d+)$")
 
+# Load configuration
+config = get_config()
+
+# Print configuration summary
+print_config_summary(config)
+
 def build_session() -> requests.Session:
+    """Build a requests session with retry logic based on config."""
     session = requests.Session()
     retries = Retry(
-        total=5,
-        backoff_factor=1.5,
-        status_forcelist=[429, 500, 502, 503, 504],
+        total=config.RETRY_TOTAL,
+        backoff_factor=config.RETRY_BACKOFF_FACTOR,
+        status_forcelist=config.RETRY_STATUS_FORCELIST,
         allowed_methods=["GET"],
         raise_on_status=False
     )
@@ -55,127 +66,49 @@ def build_session() -> requests.Session:
     return session
 
 SESSION = build_session()
-REQUEST_TIMEOUT = (10, 30)
 
-# Constants and Configurations
-BASE = "https://www.hksquash.org.hk/public/index.php/leagues"
-PAGES_ID = "25"  # parametrize in case the federation changes it later
+# Extract frequently used config values for backward compatibility
+REQUEST_TIMEOUT = config.REQUEST_TIMEOUT
+BASE = config.BASE_URL
+PAGES_ID = config.PAGES_ID
+year = config.SEASON_YEAR
+wait_time = config.WAIT_TIME
+ENABLE_VALIDATION = config.ENABLE_VALIDATION
+DIVISIONS = config.DIVISIONS
+REPO_ROOT = config.REPO_ROOT
 
 def url(path, league_id):
+    """Build URL for API endpoints (legacy function, consider using config.build_url())."""
     return f"{BASE}/{path}/id/{league_id}/league/Squash/year/{year}/pages_id/{PAGES_ID}.html"
 
-
-# Inputs
-year = "2025-2026"
-wait_time = 30
-
-# Repo root: if this file is at the repo root, parents[0] is fine.
-# If you move it into /scripts in future, switch to parents[1].
-REPO_ROOT = Path(os.getenv("SQUASHAPP_ROOT", Path(__file__).resolve().parents[0]))
-
-# Configuration: Set TESTING_MODE to True for quick testing with only a few divisions
-TESTING_MODE = True  # Set to False for full production scraping
-ENABLE_VALIDATION = True  # Set to False to disable data validation
-
-DIVISIONS = {
-    # Mondays
-    "2":                {"id": 473, "day": "Mon", "enabled": True if TESTING_MODE else True},
-    "6":                {"id": 477, "day": "Mon", "enabled": False if TESTING_MODE else True},
-    "10":               {"id": 482, "day": "Mon", "enabled": False if TESTING_MODE else True},
-
-    # Tuesdays
-    "3":                {"id": 474, "day": "Tue", "enabled": False},
-    "4":                {"id": 475, "day": "Tue", "enabled": False},
-    "11":               {"id": 483, "day": "Tue", "enabled": False},
-    "L2":               {"id": 496, "day": "Tue", "enabled": False},
-
-    # Wednesdays
-    "7":                {"id": 478, "day": "Wed", "enabled": False if TESTING_MODE else True},
-    "9":                {"id": 481, "day": "Wed", "enabled": False if TESTING_MODE else True},
-    "12":               {"id": 484, "day": "Wed", "enabled": False if TESTING_MODE else True},
-    "M2":               {"id": 492, "day": "Wed", "enabled": True if TESTING_MODE else True},
-
-    # Thursdays
-    "Premier Main":     {"id": 472, "day": "Thu", "enabled": False if TESTING_MODE else True},
-    "Premier Masters":  {"id": 491, "day": "Thu", "enabled": False if TESTING_MODE else True},
-    "Premier Ladies":   {"id": 495, "day": "Thu", "enabled": False if TESTING_MODE else True},
-    "M3":               {"id": 493, "day": "Thu", "enabled": False if TESTING_MODE else True},
-    "M4":               {"id": 494, "day": "Thu", "enabled": False if TESTING_MODE else True},
-
-    # Fridays
-    "5":                {"id": 476, "day": "Fri", "enabled": False if TESTING_MODE else True},
-    "8A":               {"id": 479, "day": "Fri", "enabled": False if TESTING_MODE else True},
-    "8B":               {"id": 480, "day": "Fri", "enabled": False if TESTING_MODE else True},
-    "13A":              {"id": 485, "day": "Fri", "enabled": False if TESTING_MODE else True},
-    "13B":              {"id": 486, "day": "Fri", "enabled": False if TESTING_MODE else True},
-    "13C":              {"id": 487, "day": "Fri", "enabled": False if TESTING_MODE else True},
-    "L3":               {"id": 497, "day": "Fri", "enabled": False if TESTING_MODE else True},
-    "L4":               {"id": 498, "day": "Fri", "enabled": False if TESTING_MODE else True},
-
-    # Saturdays
-    "14":               {"id": 488, "day": "Sat", "enabled": False if TESTING_MODE else True},
-    "15A":              {"id": 489, "day": "Sat", "enabled": False if TESTING_MODE else True},
-    "15B":              {"id": 490, "day": "Sat", "enabled": False if TESTING_MODE else True},
-}
-
-# Convenience derived views
-all_divisions = {k: v["id"] for k, v in DIVISIONS.items()}
-current_divisions = {k: v["id"] for k, v in DIVISIONS.items() if v["enabled"]}  # or a filtered subset if you want
-weekday_groups = {}
-for name, meta in DIVISIONS.items():
-    if meta["enabled"]:
-        weekday_groups.setdefault(meta["day"], {})[name] = meta["id"]
-
-# Print configuration info
-mode_text = "TESTING MODE (limited divisions)" if TESTING_MODE else "PRODUCTION MODE (all divisions)"
-enabled_divisions = [k for k, v in DIVISIONS.items() if v["enabled"]]
-print(f"🚀 Running in {mode_text}")
-print(f"📊 Enabled divisions ({len(enabled_divisions)}): {', '.join(enabled_divisions)}")
-runtime_estimate = f"~{len(enabled_divisions) * 2}-{len(enabled_divisions) * 3} minutes" if TESTING_MODE else "~60-90 minutes"
-print(f"⏱️  Estimated runtime: {runtime_estimate}")
+# Convenience derived views from config
+all_divisions = config.get_all_divisions()
+current_divisions = config.get_enabled_divisions()
+weekday_groups = config.get_weekday_groups()
 
 # Save divisions JSON
 out_path = save_divisions_json(DIVISIONS, year, REPO_ROOT)
-print(f"Divisions JSON saved to: {out_path}")
+print(f"\n📁 Divisions JSON saved to: {out_path}")
 
-# Define base directories
-base_directories = {
-    'summary_df': str(REPO_ROOT / year / 'summary_df'),
-    'teams_df': str(REPO_ROOT / year / 'teams_df'),
-    'schedules_df': str(REPO_ROOT / year / 'schedules_df'),
-    'ranking_df': str(REPO_ROOT / year / 'ranking_df'),
-    'players_df': str(REPO_ROOT / year / 'players_df'),
-    'summarized_player_tables': str(REPO_ROOT / year / 'summarized_player_tables'),
-    'unbeaten_players': str(REPO_ROOT / year / 'unbeaten_players'),
-    'played_every_game': str(REPO_ROOT / year / 'played_every_game'),
-    'detailed_league_tables': str(REPO_ROOT / year / 'detailed_league_tables'),
-    'awaiting_results': str(REPO_ROOT / year / 'awaiting_results'),
-    'home_away_data': str(REPO_ROOT / year / 'home_away_data'),
-    'team_win_percentage_breakdown_home': str(REPO_ROOT / year / 'team_win_percentage_breakdown' / 'Home'),
-    'team_win_percentage_breakdown_away': str(REPO_ROOT / year / 'team_win_percentage_breakdown' / 'Away'),
-    'team_win_percentage_breakdown_delta': str(REPO_ROOT / year / 'team_win_percentage_breakdown' / 'Delta'),
-    'team_win_percentage_breakdown_overall': str(REPO_ROOT / year / 'team_win_percentage_breakdown' / 'Overall'),
-    'simulated_tables': str(REPO_ROOT / year / 'simulated_tables'),
-    'simulated_fixtures': str(REPO_ROOT / year / 'simulated_fixtures'),
-    'remaining_fixtures': str(REPO_ROOT / year / 'remaining_fixtures'),
-    'neutral_fixtures': str(REPO_ROOT / year / 'neutral_fixtures'),
-    'results_df': str(REPO_ROOT / year / 'results_df'),
-}
+# Get base directories from config
+base_directories = config.get_output_directories()
 
 # Ensure the logs directory exists
-os.makedirs(REPO_ROOT / year / "logs", exist_ok=True)
+os.makedirs(base_directories['logs'], exist_ok=True)
 
 # Clear any existing handlers
 for handler in logging.root.handlers[:]:
     logging.root.removeHandler(handler)
 
-# Configure logging
+# Configure logging from config
 logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
+    level=getattr(logging, config.LOG_LEVEL),
+    format=config.LOG_FORMAT,
     handlers=[
         RotatingFileHandler(
-            str(REPO_ROOT / year / "logs" / f"{year}_log.txt"), maxBytes=5*1024*1024, backupCount=5
+            str(config.get_log_file_path()), 
+            maxBytes=config.LOG_MAX_BYTES, 
+            backupCount=config.LOG_BACKUP_COUNT
         ),
         logging.StreamHandler()
     ]

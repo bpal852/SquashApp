@@ -24,23 +24,35 @@ SquashApp scrapes match results, player statistics, and team standings from the 
 
 ```
 SquashApp/
-├── scrapers/               # Modular web scraping package
+├── config/                # Configuration management
+│   ├── settings.py        # Environment-aware config (dev/test/prod)
+│   ├── __init__.py        # Package exports
+│   └── README.md          # Configuration documentation
+├── scrapers/              # Modular web scraping package
 │   ├── base.py            # BaseScraper with retry logic
 │   ├── teams.py           # Team information scraper
 │   ├── summary.py         # Match summary scraper
 │   ├── schedules.py       # Fixtures and results scraper
 │   ├── ranking.py         # Player rankings scraper
 │   └── players.py         # Player details scraper
-├── tests/                 # Comprehensive test suite
+├── validators/            # Data validation package
+│   ├── base.py            # BaseValidator with validation logic
+│   ├── teams.py           # Team data validator
+│   ├── summary.py         # Summary data validator
+│   ├── schedules.py       # Schedule data validator
+│   ├── ranking.py         # Ranking data validator
+│   ├── players.py         # Player data validator
+│   └── reports.py         # Validation reporting
+├── tests/                 # Comprehensive test suite (168 tests)
+│   ├── test_config.py     # 40 configuration tests
 │   ├── test_parsers.py    # 58 parser tests
-│   └── test_scrapers.py   # 20 scraper tests (mocked HTTP)
-├── config/                # Division configurations
+│   ├── test_scrapers.py   # 20 scraper tests (mocked HTTP)
+│   └── test_validators.py # 50 validator tests
 ├── previous_seasons/      # Historical season data
 ├── 2025-2026/            # Current season data
 ├── parsers.py            # Pure parsing functions
 ├── main_2025_26.py       # Main orchestration script
 └── app.py                # Streamlit dashboard
-
 ```
 
 ## Quick Start
@@ -80,7 +92,7 @@ streamlit run app.py
 ### Running Tests
 
 ```powershell
-# Run all tests (128 tests, ~35 seconds)
+# Run all tests (168 tests, ~35 seconds)
 pytest tests/ -v
 
 # Run parser tests only (58 tests)
@@ -92,6 +104,9 @@ pytest tests/test_scrapers.py -v
 # Run validator tests only (50 tests)
 pytest tests/test_validators.py -v
 
+# Run config tests only (40 tests)
+pytest tests/test_config.py -v
+
 # Run with coverage
 pytest tests/ --cov=. --cov-report=html --cov-report=term-missing
 
@@ -100,6 +115,82 @@ pytest tests/ -m unit           # Unit tests only
 pytest tests/ -m integration    # Integration tests only
 pytest tests/ -m "not slow"     # Skip slow tests
 ```
+
+## Configuration Management
+
+SquashApp uses an environment-aware configuration system that separates settings for development, testing, and production.
+
+### Configuration Environments
+
+**Production** (default): All 36 divisions enabled, full scraping
+```powershell
+python main_2025_26.py
+# Runtime: ~60-90 minutes
+```
+
+**Development**: Limited divisions (3) for faster development
+```powershell
+$env:SQUASH_ENV = "development"
+python main_2025_26.py
+# Runtime: ~6-9 minutes
+```
+
+**Testing**: Minimal divisions (2) for automated tests
+```powershell
+$env:SQUASH_ENV = "testing"
+python main_2025_26.py
+# Runtime: ~4-6 minutes
+```
+
+### Configuration Structure
+
+All settings are defined in `config/settings.py`:
+
+```python
+from config import get_config
+
+# Get configuration for current environment
+config = get_config()
+
+# Access settings
+base_url = config.BASE_URL
+divisions = config.get_enabled_divisions()
+wait_time = config.WAIT_TIME
+```
+
+### Key Configuration Options
+
+| Setting | Development | Testing | Production |
+|---------|-------------|---------|------------|
+| Enabled Divisions | 3 | 2 | 36 |
+| Wait Time (sec) | 5 | 1 | 30 |
+| Log Level | DEBUG | WARNING | INFO |
+| Runtime Estimate | 6-9 min | 4-6 min | 60-90 min |
+
+### Environment Detection
+
+The system automatically detects the environment from the `SQUASH_ENV` environment variable:
+
+```powershell
+# Windows PowerShell
+$env:SQUASH_ENV = "development"
+
+# Linux/Mac
+export SQUASH_ENV=development
+```
+
+If not set, defaults to **production**.
+
+### Configuration Features
+
+✅ **Type-safe**: Using dataclasses and type hints  
+✅ **Validated**: Automatic validation on initialization  
+✅ **Centralized**: Single source of truth for all settings  
+✅ **Environment-aware**: Different settings per environment  
+✅ **Testable**: Comprehensive unit tests (40 tests)  
+✅ **Documented**: Full documentation in `config/README.md`  
+
+See [config/README.md](config/README.md) for detailed configuration documentation.
 
 ## CI/CD Pipeline
 
@@ -272,12 +363,32 @@ TESTING_MODE = True  # Only scrapes 2 divisions
 - ✅ Platform-agnostic type assertions
 - ✅ Comprehensive edge case coverage
 
+**Phase 4: Data Validation**
+- ✅ Created `validators/` package with 5 specialized validators
+- ✅ Implemented validation reporting (JSON, text, CSV)
+- ✅ Added 50 comprehensive validator tests
+- ✅ Integrated into main pipeline with ENABLE_VALIDATION flag
+
+**Phase 5: CI/CD Pipeline**
+- ✅ Created GitHub Actions workflow with multi-Python testing (3.9, 3.10, 3.11)
+- ✅ Added code quality checks (Black, isort, Flake8)
+- ✅ Configured pytest with markers and coverage reporting
+- ✅ Updated documentation with badges and CI/CD instructions
+
+**Phase 6: Configuration Management**
+- ✅ Created `config/` package with environment-aware settings
+- ✅ Implemented Development, Testing, and Production configurations
+- ✅ Added 40 comprehensive config tests
+- ✅ Centralized all hardcoded values (URLs, timeouts, divisions, flags)
+- ✅ Added configuration validation and documentation
+
 **Total Impact:**
-- 78 tests (all passing)
-- Reduced main script by 400+ lines
-- Improved code organization
-- Enhanced reliability
-- Faster development cycle
+- **168 tests** (all passing)
+- **6 new packages**: scrapers, validators, config, plus 3 test modules
+- Reduced main script by **500+ lines**
+- Improved code organization and maintainability
+- Enhanced reliability and testability
+- Faster development cycle with environment-aware configuration
 
 ## Dependencies
 
