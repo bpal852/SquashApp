@@ -213,6 +213,20 @@ class BaseValidator:
         if len(series) == 0:
             return True
         
+        # Try to convert to numeric if needed (handles string columns)
+        if series.dtype == 'object':
+            try:
+                series = pd.to_numeric(series, errors='coerce')
+                series = series.dropna()  # Drop any values that couldn't be converted
+            except Exception:
+                # If conversion fails, skip validation for this column
+                result.add_warning(column, 
+                    f'Column contains non-numeric values, skipping range validation')
+                return True
+        
+        if len(series) == 0:
+            return True
+        
         all_valid = True
         
         if min_val is not None:
