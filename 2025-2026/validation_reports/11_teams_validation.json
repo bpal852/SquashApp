@@ -2,19 +2,19 @@
   "validator_name": "TeamsValidator",
   "data_type": "teams",
   "is_valid": true,
-  "timestamp": "2025-10-28T12:14:56.913736",
+  "timestamp": "2025-10-29T16:37:45.085000",
   "error_count": 0,
   "warning_count": 0,
   "errors": [],
   "warnings": [],
   "info": [
     "[INFO] dataframe: DataFrame has 11 rows",
-    "[INFO] columns: All required columns present: {'Email', 'Home', 'Convenor', 'Team Name'}",
+    "[INFO] columns: All required columns present: {'Team Name', 'Convenor', 'Home', 'Email'}",
     "[INFO] null_check: No null values in required columns: {'Team Name'}",
     "[INFO] row_count: Row count 11 within expected range [4, 20]"
   ],
   "metadata": {
-    "league_id": "D00484",
+    "league_id": "D00483",
     "year": "2025-2026",
     "division": "11",
     "row_count": 11

@@ -1,16 +1,21 @@
 {
   "validator_name": "RankingValidator",
   "data_type": "ranking",
-  "is_valid": false,
-  "timestamp": "2025-10-28T12:36:55.348718",
-  "error_count": 1,
-  "warning_count": 0,
-  "errors": [
-    "[ERROR] columns: Missing required columns: {'Games', 'W %', 'Player'}"
+  "is_valid": true,
+  "timestamp": "2025-10-29T17:07:24.336921",
+  "error_count": 0,
+  "warning_count": 2,
+  "errors": [],
+  "warnings": [
+    "[WARNING] Win Percentage: Expected type float, got int64",
+    "[WARNING] Games Played: 20 players have 0 games (should they be excluded?)"
   ],
-  "warnings": [],
   "info": [
-    "[INFO] dataframe: DataFrame has 20 rows"
+    "[INFO] dataframe: DataFrame has 20 rows",
+    "[INFO] columns: All required columns present: {'Games Played', 'Team', 'Win Percentage', 'Won', 'Lost', 'Name of Player'}",
+    "[INFO] null_check: No null values in required columns: {'Games Played', 'Team', 'Won', 'Lost', 'Name of Player'}",
+    "[INFO] row_count: Row count 20 within expected range [20, 200]",
+    "[INFO] Team: 3 unique teams, avg 4.0 players/team"
   ],
   "metadata": {
     "league_id": "D00495",

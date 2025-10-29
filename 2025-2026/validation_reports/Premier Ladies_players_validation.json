@@ -1,17 +1,15 @@
 {
   "validator_name": "PlayersValidator",
   "data_type": "players",
-  "is_valid": false,
-  "timestamp": "2025-10-28T12:37:51.321747",
-  "error_count": 1,
+  "is_valid": true,
+  "timestamp": "2025-10-29T17:08:19.676633",
+  "error_count": 0,
   "warning_count": 0,
-  "errors": [
-    "[ERROR] Ranking: 20 values below minimum 1"
-  ],
+  "errors": [],
   "warnings": [],
   "info": [
     "[INFO] dataframe: DataFrame has 20 rows",
-    "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Team', 'Order', 'HKS No.', 'Player'}",
+    "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Player', 'Order', 'Team', 'HKS No.'}",
     "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
     "[INFO] row_count: Row count 20 within expected range [20, 200]",
     "[INFO] Team: 3 unique teams, avg 4.0 players/team"
