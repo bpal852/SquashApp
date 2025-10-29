@@ -103,8 +103,8 @@ class TestBaseConfig:
         """Test BaseConfig has divisions defined."""
         config = BaseConfig()
         assert len(config.DIVISIONS) > 0
-        assert "Premier 1" in config.DIVISIONS
-        assert config.DIVISIONS["Premier 1"]["id"] == 463
+        assert "2" in config.DIVISIONS
+        assert config.DIVISIONS["2"]["id"] == 473
     
     def test_get_enabled_divisions(self):
         """Test getting enabled divisions."""
@@ -180,9 +180,9 @@ class TestDevelopmentConfig:
         # Should have limited divisions enabled
         enabled = config.get_enabled_divisions()
         assert len(enabled) == 3
-        assert "Premier 1" in enabled
-        assert "Premier 2" in enabled
-        assert "1" in enabled
+        assert "2" in enabled
+        assert "6" in enabled
+        assert "10" in enabled
 
 
 class TestTestingConfig:

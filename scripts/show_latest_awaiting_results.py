@@ -53,7 +53,7 @@ def load_divisions_for_season(season: str) -> Dict[str, int]:
     if not path.exists():
         raise FileNotFoundError(f"Divisions JSON not found: {path}")
 
-    with path.open("r", encoding="utf-8") as f:
+    with path.open("r", encoding="utf-8-sig") as f:
         data = json.load(f)
 
     if isinstance(data, dict):

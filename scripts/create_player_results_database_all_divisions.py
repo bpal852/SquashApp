@@ -41,7 +41,7 @@ def load_divisions_for_season(season: str, repo_root: Path) -> dict[str, int]:
     Also tolerates 'division', 'label' for name, and 'division_id', 'hks_id' for id.
     """
     path = repo_root / "config" / "divisions" / f"{season}.json"
-    with open(path, "r", encoding="utf-8") as f:
+    with open(path, "r", encoding="utf-8-sig") as f:
         data = json.load(f)
 
     # If wrapped, unwrap regardless of list or dict

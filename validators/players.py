@@ -58,8 +58,19 @@ class PlayersValidator(BaseValidator):
         
         # Check value ranges
         if 'Order' in df.columns:
-            # Allow up to 15 players per team (some teams have more than 10)
-            self._check_value_range(df, 'Order', 1, 15, result)
+            # Different divisions have different max team sizes
+            # Default: 12, L2/L3/L4: 15, M4: 20, Premier Main/Ladies: 10
+            max_order = 20  # Set to highest possible to avoid false errors
+            if self.division in ['Premier Main', 'Premier Ladies']:
+                max_order = 10
+            elif self.division in ['L2', 'L3', 'L4']:
+                max_order = 15
+            elif self.division == 'M4':
+                max_order = 20
+            else:
+                max_order = 12
+            
+            self._check_value_range(df, 'Order', 1, max_order, result)
             
             # Check Order distribution per team
             if 'Team' in df.columns:
@@ -137,20 +148,33 @@ class PlayersValidator(BaseValidator):
                 result.add_warning('Team',
                     f'{len(small_teams)} teams have < 3 players')
             
-            large_teams = team_counts[team_counts > 8]
+            # Check for large teams based on division-specific limits
+            max_team_size = 20  # Default to highest possible
+            if self.division in ['Premier Main', 'Premier Ladies']:
+                max_team_size = 10
+            elif self.division in ['L2', 'L3', 'L4']:
+                max_team_size = 15
+            elif self.division == 'M4':
+                max_team_size = 20
+            else:
+                max_team_size = 12
+            
+            large_teams = team_counts[team_counts > max_team_size]
             if len(large_teams) > 0:
                 result.add_warning('Team',
-                    f'{len(large_teams)} teams have > 8 players')
+                    f'{len(large_teams)} teams have > {max_team_size} players (max for this division)')
         
-        # Check Player-HKS No. uniqueness
+        # Check Player-HKS No. consistency (but allow duplicate player names)
         if 'Player' in df.columns and 'HKS No.' in df.columns:
-            # Group by player and check if they have multiple HKS numbers
+            # Players with same name can exist (different people), so this is now just info
+            # Only flag if same player name has MULTIPLE different HKS numbers
             player_hks = df.dropna(subset=['HKS No.']).groupby('Player')['HKS No.'].nunique()
             multiple_hks = player_hks[player_hks > 1]
             
             if len(multiple_hks) > 0:
-                result.add_error('Player-HKS',
-                    f'{len(multiple_hks)} players have multiple HKS numbers')
+                # This is OK - same name, different people with different HKS numbers
+                result.add_info('Player-HKS',
+                    f'{len(multiple_hks)} player names have multiple HKS numbers (likely different people with same name)')
         
         self._log_result(result)
         return result

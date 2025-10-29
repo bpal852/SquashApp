@@ -89,33 +89,24 @@ class BaseConfig:
     # Format: "Division Name": {"id": int, "day": str, "enabled": bool}
     DIVISIONS: Dict[str, Dict[str, Any]] = {
         # Mondays
-        "Premier 1": {"id": 463, "day": "Mon", "enabled": True},
-        "Premier 2": {"id": 464, "day": "Mon", "enabled": True},
-        "1": {"id": 465, "day": "Mon", "enabled": True},
-        "2": {"id": 466, "day": "Mon", "enabled": True},
+        "2": {"id": 473, "day": "Mon", "enabled": True},
         "6": {"id": 477, "day": "Mon", "enabled": True},
-        "9": {"id": 481, "day": "Mon", "enabled": True},
+        "10": {"id": 482, "day": "Mon", "enabled": True},
         
         # Tuesdays
-        "3": {"id": 467, "day": "Tue", "enabled": True},
-        "7A": {"id": 478, "day": "Tue", "enabled": True},
-        "10A": {"id": 482, "day": "Tue", "enabled": True},
-        "10B": {"id": 483, "day": "Tue", "enabled": True},
+        "3": {"id": 474, "day": "Tue", "enabled": True},
+        "4": {"id": 475, "day": "Tue", "enabled": True},
+        "11": {"id": 483, "day": "Tue", "enabled": True},
+        "L2": {"id": 496, "day": "Tue", "enabled": True},
         
         # Wednesdays
-        "4": {"id": 475, "day": "Wed", "enabled": True},
-        "7B": {"id": 496, "day": "Wed", "enabled": True},
-        "11": {"id": 484, "day": "Wed", "enabled": True},
-        "L1": {"id": 468, "day": "Wed", "enabled": True},
-        "L2": {"id": 469, "day": "Wed", "enabled": True},
-        "M1": {"id": 470, "day": "Wed", "enabled": True},
+        "7": {"id": 478, "day": "Wed", "enabled": True},
+        "9": {"id": 481, "day": "Wed", "enabled": True},
+        "12": {"id": 484, "day": "Wed", "enabled": True},
         "M2": {"id": 492, "day": "Wed", "enabled": True},
         
         # Thursdays
-        "12A": {"id": 471, "day": "Thu", "enabled": True},
-        "12B": {"id": 472, "day": "Thu", "enabled": True},
-        "12C": {"id": 473, "day": "Thu", "enabled": True},
-        "12D": {"id": 474, "day": "Thu", "enabled": True},
+        "Premier Main": {"id": 472, "day": "Thu", "enabled": True},
         "Premier Masters": {"id": 491, "day": "Thu", "enabled": True},
         "Premier Ladies": {"id": 495, "day": "Thu", "enabled": True},
         "M3": {"id": 493, "day": "Thu", "enabled": True},
@@ -242,28 +233,19 @@ class DevelopmentConfig(BaseConfig):
     
     # Enable only a subset of divisions for faster testing
     DIVISIONS: Dict[str, Dict[str, Any]] = {
-        "Premier 1": {"id": 463, "day": "Mon", "enabled": True},
-        "Premier 2": {"id": 464, "day": "Mon", "enabled": True},
-        "1": {"id": 465, "day": "Mon", "enabled": True},
+        "2": {"id": 473, "day": "Mon", "enabled": True},
+        "6": {"id": 477, "day": "Mon", "enabled": True},
+        "10": {"id": 482, "day": "Mon", "enabled": True},
         # All other divisions disabled in dev mode
-        "2": {"id": 466, "day": "Mon", "enabled": False},
-        "6": {"id": 477, "day": "Mon", "enabled": False},
-        "9": {"id": 481, "day": "Mon", "enabled": False},
-        "3": {"id": 467, "day": "Tue", "enabled": False},
-        "7A": {"id": 478, "day": "Tue", "enabled": False},
-        "10A": {"id": 482, "day": "Tue", "enabled": False},
-        "10B": {"id": 483, "day": "Tue", "enabled": False},
-        "4": {"id": 475, "day": "Wed", "enabled": False},
-        "7B": {"id": 496, "day": "Wed", "enabled": False},
-        "11": {"id": 484, "day": "Wed", "enabled": False},
-        "L1": {"id": 468, "day": "Wed", "enabled": False},
-        "L2": {"id": 469, "day": "Wed", "enabled": False},
-        "M1": {"id": 470, "day": "Wed", "enabled": False},
+        "3": {"id": 474, "day": "Tue", "enabled": False},
+        "4": {"id": 475, "day": "Tue", "enabled": False},
+        "11": {"id": 483, "day": "Tue", "enabled": False},
+        "L2": {"id": 496, "day": "Tue", "enabled": False},
+        "7": {"id": 478, "day": "Wed", "enabled": False},
+        "9": {"id": 481, "day": "Wed", "enabled": False},
+        "12": {"id": 484, "day": "Wed", "enabled": False},
         "M2": {"id": 492, "day": "Wed", "enabled": False},
-        "12A": {"id": 471, "day": "Thu", "enabled": False},
-        "12B": {"id": 472, "day": "Thu", "enabled": False},
-        "12C": {"id": 473, "day": "Thu", "enabled": False},
-        "12D": {"id": 474, "day": "Thu", "enabled": False},
+        "Premier Main": {"id": 472, "day": "Thu", "enabled": False},
         "Premier Masters": {"id": 491, "day": "Thu", "enabled": False},
         "Premier Ladies": {"id": 495, "day": "Thu", "enabled": False},
         "M3": {"id": 493, "day": "Thu", "enabled": False},
@@ -292,8 +274,8 @@ class TestingConfig(BaseConfig):
     
     # Minimal divisions for fast tests
     DIVISIONS: Dict[str, Dict[str, Any]] = {
-        "Premier 1": {"id": 463, "day": "Mon", "enabled": True},
-        "Premier 2": {"id": 464, "day": "Mon", "enabled": True},
+        "2": {"id": 473, "day": "Mon", "enabled": True},
+        "6": {"id": 477, "day": "Mon", "enabled": True},
     }
 
 

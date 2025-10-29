@@ -70,11 +70,11 @@ class RankingValidator(BaseValidator):
         if 'Games Played' in df.columns:
             self._check_value_range(df, 'Games Played', 0, 100, result)
             
-            # Check for players with 0 games
+            # Players with 0 games are normal (registered but haven't played yet)
             zero_games = (df['Games Played'] == 0).sum()
             if zero_games > 0:
-                result.add_warning('Games Played',
-                    f'{zero_games} players have 0 games (should they be excluded?)')
+                result.add_info('Games Played',
+                    f'{zero_games} players have 0 games (registered but not yet played)')
         
         if 'Won' in df.columns:
             self._check_value_range(df, 'Won', 0, 100, result)

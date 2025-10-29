@@ -84,7 +84,7 @@ def load_divisions_simple(base_dir: str, season: str) -> dict[str, int | None]:
     if not cfg.exists():
         return {}
 
-    with cfg.open("r", encoding="utf-8") as f:
+    with cfg.open("r", encoding="utf-8-sig") as f:
         obj = json.load(f)
 
     out: dict[str, int | None] = {}

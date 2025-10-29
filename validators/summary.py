@@ -75,7 +75,8 @@ class SummaryValidator(BaseValidator):
             self._check_value_range(df, 'Lost', 0, 100, result)
         
         if 'Points' in df.columns:
-            self._check_value_range(df, 'Points', 0, 500, result)
+            # Points can be negative due to walkovers (WO = -1 point each)
+            self._check_value_range(df, 'Points', -50, 500, result)
         
         # Check mathematical consistency: Won + Lost should equal Played
         if all(col in df.columns for col in ['Played', 'Won', 'Lost']):
@@ -87,13 +88,13 @@ class SummaryValidator(BaseValidator):
                     result.add_error('consistency',
                         f"Team '{row['Team']}': {row['Won']}+{row['Lost']} != {row['Played']}")
         
-        # Check points calculation (typically 5 points per win)
+        # Check points calculation (typically 5 points per win, but can have bonuses/penalties)
         if all(col in df.columns for col in ['Won', 'Points']):
             expected_points = df['Won'] * 5
             points_mismatch = df[df['Points'] != expected_points]
             if len(points_mismatch) > 0:
-                result.add_warning('Points',
-                    f'{len(points_mismatch)} teams have points != (wins * 5)')
+                result.add_info('Points',
+                    f'{len(points_mismatch)} teams have points != (wins * 5) - likely due to bonus points or walkover penalties')
         
         self._log_result(result)
         return result
