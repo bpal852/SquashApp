@@ -1,24 +1,11 @@
-import os
+﻿import os
 import pandas as pd
 import logging
 import re
-
-# Clear any existing handlers
-logger = logging.getLogger()
-if logger.hasHandlers():
-    logger.handlers.clear()
-
-# Set level to INFO
-logger.setLevel(logging.INFO)
-
-# Create a stream handler for the terminal and set a formatter
-stream_handler = logging.StreamHandler()
-formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-stream_handler.setFormatter(formatter)
-logger.addHandler(stream_handler)
+from pathlib import Path
 
 # ------------------------------------------------------------------
-# Base ratings by division (same as initial‐ratings script)
+# Base ratings by division (same as initialâ€ratings script)
 # ------------------------------------------------------------------
 division_base_ratings = {
     # Numeric divisions
@@ -38,14 +25,14 @@ division_base_ratings = {
     '15': 200,
     # Special names
     'premier main': 18000,
-    'premier masters': 6000,
-    'm2': 2000,
-    'm3': 1600,
-    'm4': 1000,
-    'premier ladies': 6000,
-    'l2': 2000,
-    'l3': 1200,
-    'l4': 800,
+    'premier masters': 4000, # div 4
+    'm2': 2000, # div 6
+    'm3': 1800, # div 7
+    'm4': 1200, # div 10
+    'premier ladies': 8000, # div 2
+    'l2': 2000, # div 6
+    'l3': 1600, # div 8
+    'l4': 600, # div 13
 }
 
 def get_base_rating(division_str):
@@ -82,42 +69,108 @@ def ratio_update(LA, LB, A_actual, B_actual, k=0.3):
 
     return LA_new, LB_new
 
-def main():
-    folder = r"C:\Users\bpali\PycharmProjects\SquashApp\2024-2025"
+def process_ratings_algorithm(base_folder=None, current_season="2025-2026", previous_season="2024-2025"):
+    """
+    Process player ratings using ratio-based algorithm.
+    Carries over ratings from previous season and processes current season matches.
+    
+    Args:
+        base_folder: Base folder path (defaults to script location's parent)
+        current_season: Current season folder name
+        previous_season: Previous season folder name
+    """
+    # ------------------------------------------------------------------
+    # Season configuration
+    # ------------------------------------------------------------------
+    if base_folder is None:
+        base_folder = Path(__file__).parent.parent.parent  # Go up to repo root
+    else:
+        base_folder = Path(base_folder)
+    
+    previous_season_folder = base_folder / "previous_seasons" / previous_season
+    current_season_folder = base_folder / current_season
 
     # ------------------------------------------------------------------
-    # 2) Read initial ratings => (player, team) -> rating
-    #    Also store matches played = 0
+    # 2) Read initial ratings from previous season's final results
+    #    If a player doesn't exist, use division-based initial rating
     # ------------------------------------------------------------------
-    init_csv = os.path.join(folder, "all_initial_ratings.csv")
-    df_init = pd.read_csv(init_csv)
-
-    # Make sure column is integer
-    df_init["HKS_No"] = pd.to_numeric(df_init["HKS_No"], errors="coerce")
-
-    # Rename column name to avoid spaces
-    df_init.rename(columns={"Initial Rating": "Initial_Rating"}, inplace=True)
-
+    logging.info("="*70)
+    logging.info("PROCESSING PLAYER RATINGS ALGORITHM")
+    logging.info("="*70)
+    logging.info(f"Loading final ratings from {previous_season} season...")
+    
+    # Try to load previous season's final ratings
+    previous_ratings_csv = previous_season_folder / "ratio_results.csv"
+    
     player_data = {}
-    for row in df_init.itertuples(index=False):
-        p = getattr(row, "Player", "").strip()  # proper name
-        t = getattr(row, "Team", "").strip()
-        r = getattr(row, "Initial_Rating", 1000.0)  # default rating is 1000.0
-        hks = getattr(row, "HKS_No", None)
-        if pd.isna(hks):
-            continue  # If HKS_No is missing, you may want to skip this player entirely.
-        key = int(hks)  # use the integer value as the key
-        player_data[key] = {
-            "player": p,
-            "rating": float(r),
-            "matches_played": 0,
-            "teams": {t}
-        }
+    
+    if os.path.exists(previous_ratings_csv):
+        df_prev = pd.read_csv(previous_ratings_csv)
+        logging.info(f"Loaded {len(df_prev)} players from previous season")
+        logging.info(f"Columns in previous season data: {df_prev.columns.tolist()}")
+        
+        # Load previous season's ratings as starting point
+        # Use iterrows instead of itertuples to avoid column name conversion issues
+        for idx, row in df_prev.iterrows():
+            hks = row.get("HKS_No", None)
+            if pd.isna(hks):
+                continue
+            
+            key = int(hks)
+            # Access column with exact name including space
+            final_rating = row.get("Final Rating", 1000.0)
+            
+            player_data[key] = {
+                "player": row.get("Player", "").strip(),
+                "rating": float(final_rating),
+                "matches_played": 0,  # Reset match count for new season
+                "teams": set()  # Will be populated from current season data
+            }
+        
+        logging.info(f"Initialized {len(player_data)} players with ratings from 2024-2025")
+        # Log a sample of loaded players
+        sample_keys = list(player_data.keys())[:5]
+        for key in sample_keys:
+            logging.info(f"  Sample: HKS {key} = {player_data[key]['player']} with rating {player_data[key]['rating']:.2f}")
+    else:
+        logging.warning(f"Previous season ratings not found at {previous_ratings_csv}")
+        logging.warning("Will use division-based initial ratings for all players")
+    
+    # Also check if current season has initial ratings for NEW players
+    current_init_csv = current_season_folder / "all_initial_ratings.csv"
+    if os.path.exists(current_init_csv):
+        df_current_init = pd.read_csv(current_init_csv)
+        logging.info(f"Found {len(df_current_init)} players in current season initial ratings")
+        
+        # For any NEW players not in player_data, add them with initial ratings
+        df_current_init["HKS_No"] = pd.to_numeric(df_current_init["HKS No."], errors="coerce")
+        df_current_init.rename(columns={"Initial Rating": "Initial_Rating"}, inplace=True)
+        
+        new_players_count = 0
+        for row in df_current_init.itertuples(index=False):
+            hks = getattr(row, "HKS_No", None)
+            if pd.isna(hks):
+                continue
+            
+            key = int(hks)
+            if key not in player_data:
+                player_data[key] = {
+                    "player": getattr(row, "Player", "").strip(),
+                    "rating": float(getattr(row, "Initial_Rating", 1000.0)),
+                    "matches_played": 0,
+                    "teams": {getattr(row, "Team", "").strip()}
+                }
+                new_players_count += 1
+        
+        logging.info(f"Added {new_players_count} new players from current season initial ratings")
+    else:
+        logging.info(f"No initial ratings file found at {current_init_csv}")
 
     # ------------------------------------------------------------------
-    # 3) Read combined_player_results_df => skip unwanted rows
+    # 3) Read combined_player_results_df from CURRENT SEASON => skip unwanted rows
     # ------------------------------------------------------------------
-    results_csv = os.path.join(folder, "combined_player_results_df.csv")
+    results_csv = current_season_folder / "combined_player_results_df.csv"
+    logging.info(f"Loading match results from {results_csv}")
     df = pd.read_csv(results_csv)
 
     # Rename "HKS No." and "Opponent HKS No." to avoid spaces
@@ -158,10 +211,9 @@ def main():
             return None
 
         key = int(hks)
-        logging.info(f"Processing player: '{player_name}' on team '{team_name}', key = '{key}'")
 
         if key not in player_data:
-            # NEW: use division base rating instead of flat 1000
+            # NEW player not in previous season data: use division base rating
             initial = get_base_rating(division)
             player_data[key] = {
                 "player": player_name,
@@ -169,7 +221,9 @@ def main():
                 "matches_played": 0,
                 "teams": {team_name}
             }
+            logging.info(f"New player: '{player_name}' (HKS {key}) initialized with rating {initial} based on division {division}")
         else:
+            # Existing player: just add the team
             player_data[key]["teams"].add(team_name)
 
         return key
@@ -227,6 +281,13 @@ def main():
         df.at[idx, "Winner Matches Played"] = player_data[w_key]["matches_played"]
         df.at[idx, "Loser Matches Played"]  = player_data[l_key]["matches_played"]
 
+    logging.info(f"Processed {len(df[df['Result'] == 'Win'])} matches")
+    logging.info(f"Total players in database: {len(player_data)}")
+    
+    # Count how many players have played matches this season
+    players_with_matches = sum(1 for p in player_data.values() if p['matches_played'] > 0)
+    logging.info(f"Players with matches in 2025-2026: {players_with_matches}")
+
     # ------------------------------------------------------------------
     # 5) Output #1: Updated version of combined_player_results_df
     # ------------------------------------------------------------------
@@ -236,8 +297,9 @@ def main():
     # Create relative difference column
     df["rel_diff"] = (df["Post Winner Rating"] - df["Pre Winner Rating"]) / df["Pre Winner Rating"] * 100.0
 
-    updated_csv = os.path.join(folder, "combined_player_results_df_updated.csv")
+    updated_csv = current_season_folder / "combined_player_results_df_updated.csv"
     df.to_csv(updated_csv, index=False)
+    logging.info(f"Saved updated matches to {updated_csv}")
 
     # ------------------------------------------------------------------
     # 6) Output #2: Final ratio results => each player's final rating + matches
@@ -256,12 +318,15 @@ def main():
     final_df = pd.DataFrame(final_rows)
     final_df.sort_values("Final Rating", ascending=False, inplace=True, ignore_index=True)
 
-    ratio_csv = os.path.join(folder, "ratio_results.csv")
+    ratio_csv = current_season_folder / "ratio_results.csv"
     final_df.to_csv(ratio_csv, index=False)
-    print("Done!")
-    print(f"Updated matches CSV => {updated_csv}")
-    print(f"Final ratio results => {ratio_csv}")
+    logging.info("="*70)
+    logging.info(f"Updated matches CSV => {updated_csv}")
+    logging.info(f"Final ratio results => {ratio_csv}")
+    logging.info("="*70)
+    logging.info("PLAYER RATINGS ALGORITHM COMPLETED")
+    logging.info("="*70)
 
 
 if __name__ == "__main__":
-    main()
+    process_ratings_algorithm()

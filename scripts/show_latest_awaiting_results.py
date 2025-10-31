@@ -34,7 +34,7 @@ def setup_logging() -> logging.Logger:
 
 logger = setup_logging()
 
-REPO_ROOT = Path(os.getenv("SQUASHAPP_ROOT", Path(__file__).resolve().parents[0]))
+REPO_ROOT = Path(os.getenv("SQUASHAPP_ROOT", Path(__file__).resolve().parents[1]))
 CONFIG_DIR = REPO_ROOT / "config" / "divisions"
 
 def season_dir(season: str) -> Path:
@@ -55,6 +55,10 @@ def load_divisions_for_season(season: str) -> Dict[str, int]:
 
     with path.open("r", encoding="utf-8-sig") as f:
         data = json.load(f)
+
+    # Handle new format: {"season": "2025-2026", "divisions": [...]}
+    if isinstance(data, dict) and "divisions" in data:
+        data = data["divisions"]
 
     if isinstance(data, dict):
         return {str(k): int(v) for k, v in data.items()}

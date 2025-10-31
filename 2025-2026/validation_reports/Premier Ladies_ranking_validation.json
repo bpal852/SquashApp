@@ -2,19 +2,19 @@
   "validator_name": "RankingValidator",
   "data_type": "ranking",
   "is_valid": true,
-  "timestamp": "2025-10-29T17:07:24.336921",
+  "timestamp": "2025-10-29T20:48:11.750143",
   "error_count": 0,
-  "warning_count": 2,
+  "warning_count": 1,
   "errors": [],
   "warnings": [
-    "[WARNING] Win Percentage: Expected type float, got int64",
-    "[WARNING] Games Played: 20 players have 0 games (should they be excluded?)"
+    "[WARNING] Win Percentage: Expected type float, got int64"
   ],
   "info": [
     "[INFO] dataframe: DataFrame has 20 rows",
-    "[INFO] columns: All required columns present: {'Games Played', 'Team', 'Win Percentage', 'Won', 'Lost', 'Name of Player'}",
-    "[INFO] null_check: No null values in required columns: {'Games Played', 'Team', 'Won', 'Lost', 'Name of Player'}",
+    "[INFO] columns: All required columns present: {'Won', 'Games Played', 'Win Percentage', 'Name of Player', 'Lost', 'Team'}",
+    "[INFO] null_check: No null values in required columns: {'Won', 'Games Played', 'Name of Player', 'Lost', 'Team'}",
     "[INFO] row_count: Row count 20 within expected range [20, 200]",
+    "[INFO] Games Played: 20 players have 0 games (registered but not yet played)",
     "[INFO] Team: 3 unique teams, avg 4.0 players/team"
   ],
   "metadata": {

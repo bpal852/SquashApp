@@ -1,0 +1,25 @@
+{
+  "validator_name": "RankingValidator",
+  "data_type": "ranking",
+  "is_valid": true,
+  "timestamp": "2025-10-29T20:07:21.900165",
+  "error_count": 0,
+  "warning_count": 0,
+  "errors": [],
+  "warnings": [],
+  "info": [
+    "[INFO] dataframe: DataFrame has 105 rows",
+    "[INFO] columns: All required columns present: {'Won', 'Games Played', 'Win Percentage', 'Name of Player', 'Lost', 'Team'}",
+    "[INFO] null_check: No null values in required columns: {'Won', 'Games Played', 'Name of Player', 'Lost', 'Team'}",
+    "[INFO] row_count: Row count 105 within expected range [20, 200]",
+    "[INFO] Games Played: 29 players have 0 games (registered but not yet played)",
+    "[INFO] Win Percentage: 28 unbeaten players",
+    "[INFO] Team: 6 unique teams, avg 9.5 players/team"
+  ],
+  "metadata": {
+    "league_id": "D00482",
+    "year": "2025-2026",
+    "division": "10",
+    "row_count": 105
+  }
+}

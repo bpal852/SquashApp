@@ -59,11 +59,10 @@ class PlayersValidator(BaseValidator):
         # Check value ranges
         if 'Order' in df.columns:
             # Different divisions have different max team sizes
-            # Default: 12, L2/L3/L4: 15, M4: 20, Premier Main/Ladies: 10
-            max_order = 20  # Set to highest possible to avoid false errors
+            # L2/L3/L4/Premier Masters/M2/M3: 15, M4: 20, Premier Main/Ladies: 10, others: 12
             if self.division in ['Premier Main', 'Premier Ladies']:
                 max_order = 10
-            elif self.division in ['L2', 'L3', 'L4']:
+            elif self.division in ['L2', 'L3', 'L4', 'Premier Masters', 'M2', 'M3']:
                 max_order = 15
             elif self.division == 'M4':
                 max_order = 20
@@ -149,10 +148,9 @@ class PlayersValidator(BaseValidator):
                     f'{len(small_teams)} teams have < 3 players')
             
             # Check for large teams based on division-specific limits
-            max_team_size = 20  # Default to highest possible
             if self.division in ['Premier Main', 'Premier Ladies']:
                 max_team_size = 10
-            elif self.division in ['L2', 'L3', 'L4']:
+            elif self.division in ['L2', 'L3', 'L4', 'Premier Masters', 'M2', 'M3']:
                 max_team_size = 15
             elif self.division == 'M4':
                 max_team_size = 20

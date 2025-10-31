@@ -795,17 +795,45 @@ def main():
         else:
             season_base_path = os.path.join(base_directory, "previous_seasons", selected_season)
 
+        # Try to load divisions from config, but for previous seasons allow fallback to data discovery
         all_divisions = load_divisions_simple(base_directory, selected_season)
+        
         if not all_divisions:
-            st.error(f"Divisions config not found or empty for {selected_season}.")
-            st.stop()
-
-        # STRICT: load divisions JSON; error and stop if missing/invalid
-        try:
-            all_divisions = load_divisions_simple(base_directory, selected_season)  # {"5": 476, ...}
-        except (FileNotFoundError, ValueError) as e:
-            st.error(f"Divisions config error for **{selected_season}**: {e}")
-            st.stop()
+            if selected_season == current_season:
+                # For current season, config is required
+                st.error(f"Divisions config not found or empty for {selected_season}.")
+                st.stop()
+            else:
+                # For previous seasons, try to infer divisions from available data files
+                st.warning(f"Divisions config not found for {selected_season}. Inferring divisions from data files...")
+                
+                # Try multiple patterns to find division files
+                patterns_to_try = [
+                    (os.path.join(season_base_path, "schedules"), "*_schedules.csv", "_schedules.csv"),
+                    (os.path.join(season_base_path, "schedules"), "schedules_*.csv", "schedules_"),
+                    (os.path.join(season_base_path, "schedules_df"), "*_schedules_df.csv", "_schedules_df.csv"),
+                    (os.path.join(season_base_path, "ranking_df"), "*_ranking_df.csv", "_ranking_df.csv"),
+                ]
+                
+                all_divisions = {}
+                for folder_path, pattern, suffix in patterns_to_try:
+                    if os.path.exists(folder_path):
+                        files = glob.glob(os.path.join(folder_path, pattern))
+                        if files:
+                            for file in files:
+                                basename = os.path.basename(file)
+                                # Handle both "10_schedules.csv" and "schedules_10.csv" patterns
+                                if suffix.startswith("_"):
+                                    div_name = basename.replace(suffix, "")
+                                else:
+                                    div_name = basename.replace(suffix, "").replace(".csv", "")
+                                all_divisions[div_name] = None  # No ID available for old seasons
+                            logging.info(f"Inferred {len(all_divisions)} divisions from {folder_path} for {selected_season}")
+                            break
+                
+                if not all_divisions:
+                    st.error(f"Could not find divisions for {selected_season}.")
+                    st.stop()
 
         # Your requested line — sort with the season-aware key
         divisions_for_season = sorted(
@@ -1113,7 +1141,25 @@ def main():
     # Now proceed based on the selected section
     if selected_section == "Player Info":
         # Handle 'Player Info' section
-        # Code for 'Player Info' from previous code
+        # Load combined_player_results_df for date filtering
+        try:
+            combined_player_results_df = pd.read_csv(os.path.join(season_base_path, "combined_player_results_df.csv"))
+            combined_player_results_df['Match Date'] = pd.to_datetime(combined_player_results_df['Match Date'], format="%Y-%m-%d")
+            logging.info(f"Loaded combined_player_results_df with {len(combined_player_results_df)} records for {selected_season}")
+        except Exception as e:
+            logging.warning(f"Could not load combined_player_results_df for {selected_season}: {e}")
+            combined_player_results_df = pd.DataFrame()
+
+        try:
+            ratio_results_path = os.path.join(season_base_path, "ratio_results.csv")
+            ratio_results_df = pd.read_csv(ratio_results_path)
+            ratio_results_df = ratio_results_df.rename(columns={"HKS_No": "HKS No.", "Final Rating": "Elo Rating"})
+            ratio_results_df["HKS No."] = pd.to_numeric(ratio_results_df.get("HKS No."), errors="coerce")
+            ratio_results_df["Elo Rating"] = pd.to_numeric(ratio_results_df.get("Elo Rating"), errors="coerce")
+            logging.info(f"Loaded ratio_results_df with {len(ratio_results_df)} records for {selected_season}")
+        except Exception as e:
+            logging.warning(f"Could not load ratio_results.csv for {selected_season}: {e}")
+            ratio_results_df = pd.DataFrame()
 
         def aggregate_club(x):
             """
@@ -1139,6 +1185,17 @@ def main():
         # List of clubs
         list_of_clubs = ["Overall"] + sorted(clubs)
 
+        # Extract unique months from combined_player_results_df for month filtering
+        if not combined_player_results_df.empty:
+            # Get unique months from Match Date
+            unique_dates = combined_player_results_df['Match Date'].dropna().dt.to_period('M').unique()
+            unique_months = sorted([pd.Period(m) for m in unique_dates], reverse=True)
+            month_options = ["All Months"] + [m.strftime('%B %Y') for m in unique_months]
+            logging.info(f"Found {len(unique_months)} unique months in player results")
+        else:
+            month_options = ["All Months"]
+            logging.warning("combined_player_results_df is empty, only 'All Months' option available")
+
         # Title
         st.title("**Player Rankings**")
 
@@ -1146,17 +1203,46 @@ def main():
         st.write('<br>', unsafe_allow_html=True)
 
         # Adjust the fractions to control the width of each column
-        col1, col2 = st.columns([1, 3])
+        col1, col2, col3 = st.columns([1, 1, 2])
 
         # Find the index for "Hong Kong Cricket Club"
         default_club_index = list_of_clubs.index("Hong Kong Cricket Club")
 
         # Plotting the chart in the first column
         with col1:
+            selected_month = st.selectbox("**Select month:**", month_options, index=0)
+        
+        with col2:
             club = st.selectbox("**Select club:**", list_of_clubs, index=default_club_index)
 
+        # Filter rankings by selected month
+        filtered_rankings_df = all_rankings_df.copy()
+        
+        if selected_month != "All Months" and not combined_player_results_df.empty:
+            # Parse the selected month
+            selected_month_period = pd.Period(selected_month, freq='M')
+            
+            # Filter player results to selected month
+            month_mask = combined_player_results_df['Match Date'].dt.to_period('M') == selected_month_period
+            players_in_month = combined_player_results_df[month_mask][['HKS No.', 'Player Name', 'Team']].drop_duplicates()
+            
+            logging.info(f"Found {len(players_in_month)} unique players in {selected_month}")
+            
+            # Filter rankings to only include players who played in the selected month
+            # Match by HKS No. if available, otherwise by Name
+            if 'HKS No.' in filtered_rankings_df.columns:
+                filtered_rankings_df = filtered_rankings_df[
+                    filtered_rankings_df['HKS No.'].isin(players_in_month['HKS No.'])
+                ]
+            else:
+                filtered_rankings_df = filtered_rankings_df[
+                    filtered_rankings_df['Name of Player'].isin(players_in_month['Player Name'])
+                ]
+            
+            st.info(f"Showing rankings for players who competed in {selected_month}")
+
         if club != "Overall":
-            aggregated_df = all_rankings_df.groupby(['HKS No.', 'Name of Player', 'Club']).agg({
+            aggregated_df = filtered_rankings_df.groupby(['HKS No.', 'Name of Player', 'Club']).agg({
                 'Division': lambda x: ', '.join(sorted(set(str(d) for d in x))),  # Aggregate divisions
                 'Average Points': 'mean',  # Calculate the mean of average points
                 'Total Game Points': 'sum',  # Sum of total game points
@@ -1165,7 +1251,7 @@ def main():
                 'Lost': 'sum',  # Sum of games lost
             }).reset_index()
         else:
-            aggregated_df = all_rankings_df.groupby(['HKS No.', 'Name of Player']).agg({
+            aggregated_df = filtered_rankings_df.groupby(['HKS No.', 'Name of Player']).agg({
                 'Club': aggregate_club_overall,  # Use the custom aggregation for clubs
                 'Division': lambda x: ', '.join(sorted(set(x.astype(str)))),  # Aggregate divisions
                 'Average Points': 'mean',  # Calculate the mean of average points
@@ -1181,14 +1267,35 @@ def main():
         # Create Avg Pts column
         aggregated_df['Avg Pts'] = (aggregated_df['Total Game Points'] / aggregated_df['Games Played']).fillna(0)
 
+        # Merge Elo ratings from ratio_results.csv when available
+        if 'HKS No.' in aggregated_df.columns:
+            aggregated_df['HKS No.'] = pd.to_numeric(aggregated_df['HKS No.'], errors='coerce')
+        if not ratio_results_df.empty and 'HKS No.' in aggregated_df.columns:
+            aggregated_df = aggregated_df.merge(
+                ratio_results_df[['HKS No.', 'Elo Rating']],
+                on='HKS No.',
+                how='left'
+            )
+        if 'Elo Rating' not in aggregated_df.columns:
+            aggregated_df['Elo Rating'] = pd.NA
+
         # Continue with reduced dataframe
-        aggregated_df_reduced = aggregated_df[[
+        columns_to_keep = [
             "HKS No.", "Name of Player", "Club", "Division", "Games Played", "Won", "Lost", "Win Percentage", "Avg Pts"
-        ]].rename(columns={
+        ]
+        if 'Elo Rating' in aggregated_df.columns:
+            columns_to_keep.append('Elo Rating')
+
+        aggregated_df_reduced = aggregated_df[columns_to_keep].rename(columns={
             "Name of Player": "Player",
             "Games Played": "Games",
             "Win Percentage": "Win %"
         })
+
+        if 'Elo Rating' in aggregated_df_reduced.columns:
+            column_order = list(aggregated_df_reduced.columns)
+            column_order.insert(column_order.index('Avg Pts'), column_order.pop(column_order.index('Elo Rating')))
+            aggregated_df_reduced = aggregated_df_reduced[column_order]
 
         # Sort functionality
         with col1:
@@ -1208,22 +1315,28 @@ def main():
         ascending = True if sort_order == "Ascending" else False
         sorted_df = filtered_df.sort_values(by=sort_column, ascending=ascending)
 
+        numeric_alignment_columns = [col for col in ['Games', 'Won', 'Lost', 'Win %', 'Avg Pts', 'Elo Rating'] if col in sorted_df.columns]
+
         # Apply styles and formatting to sorted_df
-        sorted_df = sorted_df.style.set_properties(
+        sorted_df_styled = sorted_df.style.set_properties(
             subset=['Player', "Division"], **{'text-align': 'left'}).hide(axis="index")
-        sorted_df = sorted_df.set_properties(
-            subset=['Games', "Won", "Lost", "Win %", "Avg Pts"], **{'text-align': 'right'}
+        sorted_df_styled = sorted_df_styled.set_properties(
+            subset=numeric_alignment_columns, **{'text-align': 'right'}
         )
 
         # Format the columns to display as desired
-        sorted_df = sorted_df.format({
+        format_map = {
             "HKS No.": "{:.0f}",
             "Win %": "{:.1f}",
             "Avg Pts": "{:.1f}"
-        })
+        }
+        if 'Elo Rating' in sorted_df.columns:
+            format_map['Elo Rating'] = "{:,.0f}"
+
+        sorted_df_styled = sorted_df_styled.format(format_map)
 
         # Convert DataFrame to HTML, hide the index, and apply minimal styling for spacing
-        html = sorted_df.to_html()
+        html = sorted_df_styled.to_html()
 
         # Line break
         st.write('<br>', unsafe_allow_html=True)

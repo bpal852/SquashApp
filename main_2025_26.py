@@ -77,6 +77,16 @@ ENABLE_VALIDATION = config.ENABLE_VALIDATION
 DIVISIONS = config.DIVISIONS
 REPO_ROOT = config.REPO_ROOT
 
+# Import the ratings algorithm processor (needs REPO_ROOT to be defined first)
+import importlib.util
+spec = importlib.util.spec_from_file_location(
+    "process_ratings_algorithm",
+    REPO_ROOT / "scripts" / "SquashLevels style ratings" / "process_ratings_algorithm.py"
+)
+process_ratings_module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(process_ratings_module)
+process_ratings_algorithm = process_ratings_module.process_ratings_algorithm
+
 def url(path, league_id):
     """Build URL for API endpoints (legacy function, consider using config.build_url())."""
     return f"{BASE}/{path}/id/{league_id}/league/Squash/year/{year}/pages_id/{PAGES_ID}.html"
@@ -108,11 +118,18 @@ logging.basicConfig(
         RotatingFileHandler(
             str(config.get_log_file_path()), 
             maxBytes=config.LOG_MAX_BYTES, 
-            backupCount=config.LOG_BACKUP_COUNT
+            backupCount=config.LOG_BACKUP_COUNT,
+            encoding='utf-8'
         ),
         logging.StreamHandler()
     ]
 )
+
+# Configure StreamHandler to use utf-8 encoding
+for handler in logging.root.handlers:
+    if isinstance(handler, logging.StreamHandler) and not isinstance(handler, RotatingFileHandler):
+        handler.setStream(open(handler.stream.fileno(), mode='w', encoding='utf-8', buffering=1, closefd=False))
+
 
 
 # Scraper functions are now imported from scrapers package
@@ -1122,6 +1139,15 @@ combined_results_df, combined_player_results_df = load_all_results_and_player_re
 combined_results_df.to_csv(season_base_path / "combined_results_df.csv", index=False)
 combined_player_results_df.to_csv(season_base_path / "combined_player_results_df.csv", index=False)
 print("Post-scrape player-results + combine done.")
+
+# Process ratings algorithm after combined files are saved
+logging.info("Processing player ratings algorithm...")
+try:
+    process_ratings_algorithm(base_folder=REPO_ROOT, current_season=year, previous_season="2024-2025")
+    logging.info("Player ratings processed successfully")
+except Exception as e:
+    logging.error(f"Error processing player ratings: {e}")
+    logging.exception("Full traceback:")
 
 # Generate and save validation report if validation was enabled
 if ENABLE_VALIDATION and validation_report is not None:

@@ -1,19 +1,15 @@
 {
   "validator_name": "PlayersValidator",
   "data_type": "players",
-  "is_valid": false,
-  "timestamp": "2025-10-29T17:15:21.854889",
-  "error_count": 1,
-  "warning_count": 1,
-  "errors": [
-    "[ERROR] Order: 10 values above maximum 15"
-  ],
-  "warnings": [
-    "[WARNING] Team: 10 teams have > 8 players"
-  ],
+  "is_valid": true,
+  "timestamp": "2025-10-29T20:56:09.384271",
+  "error_count": 0,
+  "warning_count": 0,
+  "errors": [],
+  "warnings": [],
   "info": [
     "[INFO] dataframe: DataFrame has 152 rows",
-    "[INFO] columns: All required columns present: {'Points', 'Ranking', 'Player', 'Order', 'Team', 'HKS No.'}",
+    "[INFO] columns: All required columns present: {'Order', 'HKS No.', 'Ranking', 'Player', 'Points', 'Team'}",
     "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
     "[INFO] row_count: Row count 152 within expected range [20, 200]",
     "[INFO] Team: 6 unique teams, avg 15.2 players/team"
