@@ -1,6 +1,7 @@
-from pathlib import Path
-from datetime import datetime
 import json
+from datetime import datetime
+from pathlib import Path
+
 
 def save_divisions_json(divisions: dict, season: str, repo_root: Path) -> Path:
     """

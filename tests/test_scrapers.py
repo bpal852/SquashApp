@@ -5,21 +5,22 @@ Tests all scrapers with mocked HTTP responses to ensure parsing logic works corr
 without making actual network requests.
 """
 
-import pytest
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import MagicMock, Mock, patch
+
 import pandas as pd
+import pytest
 from bs4 import BeautifulSoup
 
-from scrapers.teams import TeamsScraper
-from scrapers.summary import TeamSummaryScraper
-from scrapers.schedules import SchedulesAndResultsScraper
-from scrapers.ranking import RankingScraper
 from scrapers.players import PlayersScraper
-
+from scrapers.ranking import RankingScraper
+from scrapers.schedules import SchedulesAndResultsScraper
+from scrapers.summary import TeamSummaryScraper
+from scrapers.teams import TeamsScraper
 
 # ============================================================================
 # Test Fixtures - Reusable mock data
 # ============================================================================
+
 
 @pytest.fixture
 def mock_session():
@@ -200,9 +201,10 @@ def players_html():
 # TeamsScraper Tests
 # ============================================================================
 
+
 class TestTeamsScraper:
     """Test cases for TeamsScraper"""
-    
+
     def test_successful_scrape(self, mock_session, teams_html):
         """Test successful scraping with valid HTML"""
         # Setup mock response
@@ -210,44 +212,44 @@ class TestTeamsScraper:
         mock_response.status_code = 200
         mock_response.content = teams_html
         mock_session.get.return_value = mock_response
-        
+
         # Execute
         scraper = TeamsScraper(session=mock_session)
         df = scraper.scrape("D00473", "2025-2026")
-        
+
         # Verify
         assert len(df) == 2
         assert list(df.columns) == ["Team Name", "Home", "Convenor", "Email"]
-        assert df.iloc[0]['Team Name'] == 'Kowloon Cricket Club 2'
-        assert df.iloc[0]['Home'] == 'Hong Kong Cricket Club'
-        assert df.iloc[0]['Convenor'] == 'John Smith'
-        assert df.iloc[0]['Email'] == 'john.smith@kcc.com'
-        assert df.iloc[1]['Team Name'] == 'Hong Kong Football Club 2A'
-    
+        assert df.iloc[0]["Team Name"] == "Kowloon Cricket Club 2"
+        assert df.iloc[0]["Home"] == "Hong Kong Cricket Club"
+        assert df.iloc[0]["Convenor"] == "John Smith"
+        assert df.iloc[0]["Email"] == "john.smith@kcc.com"
+        assert df.iloc[1]["Team Name"] == "Hong Kong Football Club 2A"
+
     def test_empty_page(self, mock_session):
         """Test handling of page with no team data"""
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.content = b"<html><body>NO DATA</body></html>"
         mock_session.get.return_value = mock_response
-        
+
         scraper = TeamsScraper(session=mock_session)
         df = scraper.scrape("D00473", "2025-2026")
-        
+
         assert df.empty
-    
+
     def test_http_error_404(self, mock_session):
         """Test handling of 404 error"""
         mock_response = Mock()
         mock_response.status_code = 404
         mock_response.content = b"Not Found"
         mock_session.get.return_value = mock_response
-        
+
         scraper = TeamsScraper(session=mock_session)
         df = scraper.scrape("D00473", "2025-2026")
-        
+
         assert df.empty
-    
+
     def test_malformed_html(self, mock_session):
         """Test handling of malformed HTML"""
         mock_response = Mock()
@@ -260,10 +262,10 @@ class TestTeamsScraper:
         </body></html>
         """
         mock_session.get.return_value = mock_response
-        
+
         scraper = TeamsScraper(session=mock_session)
         df = scraper.scrape("D00473", "2025-2026")
-        
+
         # Should handle gracefully - may be empty or partial
         assert isinstance(df, pd.DataFrame)
 
@@ -272,62 +274,63 @@ class TestTeamsScraper:
 # TeamSummaryScraper Tests
 # ============================================================================
 
+
 class TestTeamSummaryScraper:
     """Test cases for TeamSummaryScraper"""
-    
+
     def test_successful_scrape_summery_spelling(self, mock_session, summary_html):
         """Test successful scraping with 'team_summery' spelling"""
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.content = summary_html
         mock_session.get.return_value = mock_response
-        
+
         scraper = TeamSummaryScraper(session=mock_session)
         df = scraper.scrape("D00473", "2025-2026")
-        
+
         assert len(df) == 2
         assert list(df.columns) == ["Team", "Played", "Won", "Lost", "Points"]
-        assert df.iloc[0]['Team'] == 'Kowloon Cricket Club 2'
-        assert df.iloc[0]['Played'] == 2
-        assert df.iloc[0]['Won'] == 2
-        assert df.iloc[0]['Lost'] == 0
-        assert df.iloc[0]['Points'] == 10
-        
+        assert df.iloc[0]["Team"] == "Kowloon Cricket Club 2"
+        assert df.iloc[0]["Played"] == 2
+        assert df.iloc[0]["Won"] == 2
+        assert df.iloc[0]["Lost"] == 0
+        assert df.iloc[0]["Points"] == 10
+
         # Check data types (use kind='i' to allow int32 or int64)
-        assert df['Played'].dtype.kind == 'i'  # integer type
-        assert df['Won'].dtype.kind == 'i'
-        assert df['Lost'].dtype.kind == 'i'
-        assert df['Points'].dtype.kind == 'i'
-    
+        assert df["Played"].dtype.kind == "i"  # integer type
+        assert df["Won"].dtype.kind == "i"
+        assert df["Lost"].dtype.kind == "i"
+        assert df["Points"].dtype.kind == "i"
+
     def test_fallback_to_summary_spelling(self, mock_session, summary_html):
         """Test fallback to 'team_summary' spelling if first fails"""
         # First call fails, second succeeds
         mock_response_fail = Mock()
         mock_response_fail.status_code = 404
-        
+
         mock_response_success = Mock()
         mock_response_success.status_code = 200
         mock_response_success.content = summary_html
-        
+
         mock_session.get.side_effect = [mock_response_fail, mock_response_success]
-        
+
         scraper = TeamSummaryScraper(session=mock_session)
         df = scraper.scrape("D00473", "2025-2026")
-        
+
         assert len(df) == 2
-        assert df.iloc[0]['Team'] == 'Kowloon Cricket Club 2'
-    
+        assert df.iloc[0]["Team"] == "Kowloon Cricket Club 2"
+
     def test_both_spellings_fail(self, mock_session):
         """Test that SystemExit is raised when both spellings fail"""
         mock_response = Mock()
         mock_response.status_code = 404
         mock_session.get.return_value = mock_response
-        
+
         scraper = TeamSummaryScraper(session=mock_session)
-        
+
         with pytest.raises(SystemExit):
             scraper.scrape("D00473", "2025-2026")
-    
+
     def test_header_row_filtering(self, mock_session):
         """Test that header rows are filtered out"""
         html_with_header = b"""
@@ -348,51 +351,52 @@ class TestTeamSummaryScraper:
             </div>
         </body></html>
         """
-        
+
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.content = html_with_header
         mock_session.get.return_value = mock_response
-        
+
         scraper = TeamSummaryScraper(session=mock_session)
         df = scraper.scrape("D00473", "2025-2026")
-        
+
         assert len(df) == 1
-        assert df.iloc[0]['Team'] == 'Real Team'
+        assert df.iloc[0]["Team"] == "Real Team"
 
 
 # ============================================================================
 # SchedulesAndResultsScraper Tests
 # ============================================================================
 
+
 class TestSchedulesAndResultsScraper:
     """Test cases for SchedulesAndResultsScraper"""
-    
+
     def test_successful_scrape(self, mock_session, schedules_html):
         """Test successful scraping with valid HTML"""
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.content = schedules_html
         mock_session.get.return_value = mock_response
-        
+
         scraper = SchedulesAndResultsScraper(session=mock_session)
         df = scraper.scrape("D00473", "2025-2026")
-        
+
         assert len(df) == 2
-        assert list(df.columns) == ['Home Team', 'vs', 'Away Team', 'Venue', 'Time', 'Result', 'Match Week', 'Date']
-        
+        assert list(df.columns) == ["Home Team", "vs", "Away Team", "Venue", "Time", "Result", "Match Week", "Date"]
+
         # Check first row (completed match)
-        assert df.iloc[0]['Home Team'] == 'Kowloon CC 2'
-        assert df.iloc[0]['Away Team'] == 'HKFC 2A'
-        assert df.iloc[0]['Result'] == '5-0'
-        assert df.iloc[0]['Match Week'] == 1
-        assert df.iloc[0]['Date'] == '2025-09-09'
-        
+        assert df.iloc[0]["Home Team"] == "Kowloon CC 2"
+        assert df.iloc[0]["Away Team"] == "HKFC 2A"
+        assert df.iloc[0]["Result"] == "5-0"
+        assert df.iloc[0]["Match Week"] == 1
+        assert df.iloc[0]["Date"] == "2025-09-09"
+
         # Check second row (upcoming match)
-        assert df.iloc[1]['Home Team'] == 'HKFC 2B'
-        assert df.iloc[1]['Result'] == ''  # No result yet
-        assert df.iloc[1]['Match Week'] == 1
-    
+        assert df.iloc[1]["Home Team"] == "HKFC 2B"
+        assert df.iloc[1]["Result"] == ""  # No result yet
+        assert df.iloc[1]["Match Week"] == 1
+
     def test_match_week_extraction(self, mock_session):
         """Test extraction of match week number"""
         html = b"""
@@ -408,18 +412,18 @@ class TestSchedulesAndResultsScraper:
             </div>
         </body></html>
         """
-        
+
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.content = html
         mock_session.get.return_value = mock_response
-        
+
         scraper = SchedulesAndResultsScraper(session=mock_session)
         df = scraper.scrape("D00473", "2025-2026")
-        
-        assert df.iloc[0]['Match Week'] == 5
-        assert df.iloc[0]['Date'] == '2025-10-15'
-    
+
+        assert df.iloc[0]["Match Week"] == 5
+        assert df.iloc[0]["Date"] == "2025-10-15"
+
     def test_missing_result_column(self, mock_session):
         """Test handling when result column is missing"""
         html = b"""
@@ -435,53 +439,54 @@ class TestSchedulesAndResultsScraper:
             </div>
         </body></html>
         """
-        
+
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.content = html
         mock_session.get.return_value = mock_response
-        
+
         scraper = SchedulesAndResultsScraper(session=mock_session)
         df = scraper.scrape("D00473", "2025-2026")
-        
+
         assert len(df) == 1
-        assert df.iloc[0]['Result'] == ''  # Should add empty result
+        assert df.iloc[0]["Result"] == ""  # Should add empty result
 
 
 # ============================================================================
 # RankingScraper Tests
 # ============================================================================
 
+
 class TestRankingScraper:
     """Test cases for RankingScraper"""
-    
+
     def test_successful_scrape(self, mock_session, ranking_html):
         """Test successful scraping with valid HTML"""
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.content = ranking_html
         mock_session.get.return_value = mock_response
-        
+
         scraper = RankingScraper(session=mock_session)
         ranking_df, summarized_df, unbeaten_list, ranking_df_filtered = scraper.scrape("D00473", "2025-2026")
-        
+
         # Check main ranking DataFrame
         assert len(ranking_df) == 3
-        assert 'Win Percentage' in ranking_df.columns
-        assert ranking_df.iloc[0]['Name of Player'] == 'John Smith'
-        assert ranking_df.iloc[0]['Games Played'] == 6
-        assert ranking_df.iloc[0]['Won'] == 5
-        assert ranking_df.iloc[0]['Lost'] == 1
-        
+        assert "Win Percentage" in ranking_df.columns
+        assert ranking_df.iloc[0]["Name of Player"] == "John Smith"
+        assert ranking_df.iloc[0]["Games Played"] == 6
+        assert ranking_df.iloc[0]["Won"] == 5
+        assert ranking_df.iloc[0]["Lost"] == 1
+
         # Check win percentage calculation
-        assert ranking_df.iloc[0]['Win Percentage'] == pytest.approx(5/6)
-        
+        assert ranking_df.iloc[0]["Win Percentage"] == pytest.approx(5 / 6)
+
         # Check filtered DataFrame (>= 5 games)
         assert len(ranking_df_filtered) == 2  # Bob has only 4 games
-        
+
         # Check Division column
-        assert all(ranking_df['Division'] == '2')
-    
+        assert all(ranking_df["Division"] == "2")
+
     def test_filtering_less_than_5_games(self, mock_session):
         """Test that players with < 5 games are filtered"""
         html = b"""
@@ -497,19 +502,19 @@ class TestRankingScraper:
             </div>
         </body></html>
         """
-        
+
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.content = html
         mock_session.get.return_value = mock_response
-        
+
         scraper = RankingScraper(session=mock_session)
         ranking_df, summarized_df, unbeaten_list, ranking_df_filtered = scraper.scrape("D00473", "2025-2026")
-        
+
         assert len(ranking_df) == 2
         assert len(ranking_df_filtered) == 1  # Only Player 1 has >= 5 games
-        assert ranking_df_filtered.iloc[0]['Name of Player'] == 'Player 1'
-    
+        assert ranking_df_filtered.iloc[0]["Name of Player"] == "Player 1"
+
     def test_unbeaten_players(self, mock_session):
         """Test identification of unbeaten players"""
         html = b"""
@@ -525,18 +530,18 @@ class TestRankingScraper:
             </div>
         </body></html>
         """
-        
+
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.content = html
         mock_session.get.return_value = mock_response
-        
+
         scraper = RankingScraper(session=mock_session)
         ranking_df, summarized_df, unbeaten_list, ranking_df_filtered = scraper.scrape("D00473", "2025-2026")
-        
+
         assert len(unbeaten_list) == 1
-        assert 'Unbeaten Player (Team A)' in unbeaten_list
-    
+        assert "Unbeaten Player (Team A)" in unbeaten_list
+
     def test_no_data_handling(self, mock_session):
         """Test handling when NO DATA is present"""
         html = b"""
@@ -546,15 +551,15 @@ class TestRankingScraper:
             </div>
         </body></html>
         """
-        
+
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.content = html
         mock_session.get.return_value = mock_response
-        
+
         scraper = RankingScraper(session=mock_session)
         ranking_df, summarized_df, unbeaten_list, ranking_df_filtered = scraper.scrape("D00473", "2025-2026")
-        
+
         assert ranking_df is None
         assert summarized_df is None
         assert unbeaten_list == []
@@ -565,34 +570,35 @@ class TestRankingScraper:
 # PlayersScraper Tests
 # ============================================================================
 
+
 class TestPlayersScraper:
     """Test cases for PlayersScraper"""
-    
+
     def test_successful_scrape(self, mock_session, players_html):
         """Test successful scraping with valid HTML"""
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.content = players_html
         mock_session.get.return_value = mock_response
-        
+
         scraper = PlayersScraper(session=mock_session)
         df = scraper.scrape("D00473", "2025-2026")
-        
+
         assert len(df) == 3
-        assert list(df.columns) == ['Order', 'Player', 'HKS No.', 'Ranking', 'Points', 'Team']
-        
+        assert list(df.columns) == ["Order", "Player", "HKS No.", "Ranking", "Points", "Team"]
+
         # Check first player
-        assert df.iloc[0]['Player'] == 'John Smith'
-        assert df.iloc[0]['Order'] == 1
-        assert df.iloc[0]['HKS No.'] == 12345
-        assert df.iloc[0]['Ranking'] == 150
-        assert df.iloc[0]['Points'] == 4.5
-        assert df.iloc[0]['Team'] == 'Kowloon Cricket Club 2'
-        
+        assert df.iloc[0]["Player"] == "John Smith"
+        assert df.iloc[0]["Order"] == 1
+        assert df.iloc[0]["HKS No."] == 12345
+        assert df.iloc[0]["Ranking"] == 150
+        assert df.iloc[0]["Points"] == 4.5
+        assert df.iloc[0]["Team"] == "Kowloon Cricket Club 2"
+
         # Check player from second team
-        assert df.iloc[2]['Player'] == 'Bob Wilson'
-        assert df.iloc[2]['Team'] == 'HKFC 2A'
-    
+        assert df.iloc[2]["Player"] == "Bob Wilson"
+        assert df.iloc[2]["Team"] == "HKFC 2A"
+
     def test_no_data_team_handling(self, mock_session):
         """Test handling of teams with NO DATA"""
         html = b"""
@@ -615,18 +621,18 @@ class TestPlayersScraper:
             </div>
         </body></html>
         """
-        
+
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.content = html
         mock_session.get.return_value = mock_response
-        
+
         scraper = PlayersScraper(session=mock_session)
         df = scraper.scrape("D00473", "2025-2026")
-        
+
         assert len(df) == 1  # Only Team A should be included
-        assert df.iloc[0]['Team'] == 'Team A'
-    
+        assert df.iloc[0]["Team"] == "Team A"
+
     def test_malformed_player_rows(self, mock_session):
         """Test handling of malformed player rows"""
         html = b"""
@@ -648,45 +654,45 @@ class TestPlayersScraper:
             </div>
         </body></html>
         """
-        
+
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.content = html
         mock_session.get.return_value = mock_response
-        
+
         scraper = PlayersScraper(session=mock_session)
         df = scraper.scrape("D00473", "2025-2026")
-        
+
         assert len(df) == 1  # Only valid player should be included
-        assert df.iloc[0]['Player'] == 'Valid Player'
-    
+        assert df.iloc[0]["Player"] == "Valid Player"
+
     def test_numeric_conversions(self, mock_session, players_html):
         """Test that numeric fields are properly converted"""
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.content = players_html
         mock_session.get.return_value = mock_response
-        
+
         scraper = PlayersScraper(session=mock_session)
         df = scraper.scrape("D00473", "2025-2026")
-        
+
         # Check data types (use kind to allow int32/int64, float32/float64)
-        assert df['Order'].dtype.kind == 'i'  # integer type
-        assert df['HKS No.'].dtype.kind == 'i'  # integer type
-        assert df['Ranking'].dtype.kind == 'i'  # integer type
-        assert df['Points'].dtype.kind == 'f'  # float type
-    
+        assert df["Order"].dtype.kind == "i"  # integer type
+        assert df["HKS No."].dtype.kind == "i"  # integer type
+        assert df["Ranking"].dtype.kind == "i"  # integer type
+        assert df["Points"].dtype.kind == "f"  # float type
+
     def test_no_teams_found(self, mock_session):
         """Test handling when no valid teams are found"""
         html = b"<html><body>NO DATA</body></html>"
-        
+
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.content = html
         mock_session.get.return_value = mock_response
-        
+
         scraper = PlayersScraper(session=mock_session)
-        
+
         with pytest.raises(ValueError, match="No valid player data found"):
             scraper.scrape("D00473", "2025-2026")
 
