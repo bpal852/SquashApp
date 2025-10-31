@@ -82,18 +82,10 @@ data/
 outputs/
 legacy/
 
-# Data directories (keep structure, ignore data)
-2025-2026/**/*.csv
-2025-2026/**/*.txt
-2025-2026/**/*.html
-previous_seasons/**/*.csv
-previous_seasons/**/*.txt
-previous_seasons/**/*.html
-
 # Validation reports
-validation_reports/*.json
-validation_reports/*.txt
-validation_reports/*.csv
+**/validation_reports/**/*.txt
+**/validation_reports/**/*.json
+**/validation_reports/**/*.csv
 
 # Test outputs
 test_output/
