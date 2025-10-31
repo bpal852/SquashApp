@@ -2,7 +2,7 @@
   "validator_name": "SummaryValidator",
   "data_type": "summary",
   "is_valid": true,
-  "timestamp": "2025-10-29T20:47:11.237197",
+  "timestamp": "2025-10-31T17:59:13.572315",
   "error_count": 0,
   "warning_count": 1,
   "errors": [],
@@ -11,8 +11,8 @@
   ],
   "info": [
     "[INFO] dataframe: DataFrame has 5 rows",
-    "[INFO] columns: All required columns present: {'Won', 'Points', 'Played', 'Lost', 'Team'}",
-    "[INFO] null_check: No null values in required columns: {'Won', 'Points', 'Played', 'Lost', 'Team'}",
+    "[INFO] columns: All required columns present: {'Won', 'Team', 'Points', 'Lost', 'Played'}",
+    "[INFO] null_check: No null values in required columns: {'Won', 'Team', 'Points', 'Lost', 'Played'}",
     "[INFO] row_count: Row count 5 within expected range [4, 20]"
   ],
   "metadata": {

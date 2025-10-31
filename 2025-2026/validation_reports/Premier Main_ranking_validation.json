@@ -2,25 +2,24 @@
   "validator_name": "RankingValidator",
   "data_type": "ranking",
   "is_valid": true,
-  "timestamp": "2025-10-29T20:41:41.064288",
+  "timestamp": "2025-10-31T17:53:15.582797",
   "error_count": 0,
-  "warning_count": 1,
+  "warning_count": 0,
   "errors": [],
-  "warnings": [
-    "[WARNING] Win Percentage: Expected type float, got int64"
-  ],
+  "warnings": [],
   "info": [
-    "[INFO] dataframe: DataFrame has 22 rows",
-    "[INFO] columns: All required columns present: {'Won', 'Games Played', 'Win Percentage', 'Name of Player', 'Lost', 'Team'}",
-    "[INFO] null_check: No null values in required columns: {'Won', 'Games Played', 'Name of Player', 'Lost', 'Team'}",
-    "[INFO] row_count: Row count 22 within expected range [20, 200]",
-    "[INFO] Games Played: 22 players have 0 games (registered but not yet played)",
-    "[INFO] Team: 3 unique teams, avg 3.7 players/team"
+    "[INFO] dataframe: DataFrame has 23 rows",
+    "[INFO] columns: All required columns present: {'Won', 'Team', 'Name of Player', 'Games Played', 'Lost', 'Win Percentage'}",
+    "[INFO] null_check: No null values in required columns: {'Won', 'Team', 'Name of Player', 'Games Played', 'Lost'}",
+    "[INFO] row_count: Row count 23 within expected range [20, 200]",
+    "[INFO] Games Played: 17 players have 0 games (registered but not yet played)",
+    "[INFO] Win Percentage: 3 unbeaten players",
+    "[INFO] Team: 3 unique teams, avg 3.8 players/team"
   ],
   "metadata": {
     "league_id": "D00472",
     "year": "2025-2026",
     "division": "Premier Main",
-    "row_count": 22
+    "row_count": 23
   }
 }
