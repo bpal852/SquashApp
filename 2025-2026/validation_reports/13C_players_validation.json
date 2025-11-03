@@ -2,7 +2,7 @@
   "validator_name": "PlayersValidator",
   "data_type": "players",
   "is_valid": true,
-  "timestamp": "2025-11-02T22:31:26.627070",
+  "timestamp": "2025-11-03T14:01:56.490894",
   "error_count": 0,
   "warning_count": 1,
   "errors": [],
@@ -11,7 +11,7 @@
   ],
   "info": [
     "[INFO] dataframe: DataFrame has 89 rows",
-    "[INFO] columns: All required columns present: {'Team', 'Player', 'Order', 'HKS No.', 'Points', 'Ranking'}",
+    "[INFO] columns: All required columns present: {'Order', 'Points', 'HKS No.', 'Team', 'Player', 'Ranking'}",
     "[INFO] null_check: No null values in required columns: {'Player', 'Team'}",
     "[INFO] row_count: Row count 89 within expected range [20, 200]",
     "[INFO] Player: Duplicated players: ['Lam Tsz Ching']",
