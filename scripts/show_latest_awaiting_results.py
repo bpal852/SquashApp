@@ -204,6 +204,18 @@ def main() -> None:
     if cols:
         print("\nAwaiting Results:")
         print(df[cols].to_string(index=False))
+
+        # Also show only HKCC fixtures if we have the necessary columns
+        hkcc_mask = None
+        if {"Home Team", "Away Team"}.issubset(df.columns):
+            hkcc_mask = (
+                df["Home Team"].astype(str).str.contains("Hong Kong Cricket Club", case=False, na=False)
+                | df["Away Team"].astype(str).str.contains("Hong Kong Cricket Club", case=False, na=False)
+            )
+
+        if hkcc_mask is not None and hkcc_mask.any():
+            print("\nAwaiting Results (HKCC fixtures):")
+            print(df.loc[hkcc_mask, cols].to_string(index=False))
     else:
         # Fallback: show a compact head if expected columns are absent
         print("\nAwaiting Results (first 20 rows):")

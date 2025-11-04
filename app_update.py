@@ -721,6 +721,30 @@ def load_player_rankings(season_base_path, divisions_for_season):
             st.error(f"Missing columns in players data: {', '.join(missing_columns)}")
             return pd.DataFrame()
 
+        # Precompute lookups to support filling identifiers and identifying "playing up" fixtures
+        players_df_all["_team_norm"] = players_df_all["Team"].astype(str).str.strip().str.lower()
+        registered_teams_lookup = (
+            players_df_all.groupby("Name of Player")["_team_norm"]
+            .apply(lambda s: {team for team in s if team and team != "nan"})
+            .to_dict()
+        )
+        players_df_all.drop(columns="_team_norm", inplace=True)
+
+        if "Division" in players_df_all.columns:
+            registered_divisions_lookup = (
+                players_df_all.groupby("Name of Player")["Division"]
+                .apply(lambda s: {str(div).strip() for div in s.dropna().astype(str)})
+                .to_dict()
+            )
+        else:
+            registered_divisions_lookup = {}
+
+        player_hks_lookup = (
+            players_df_all.dropna(subset=["HKS No."])
+            .groupby("Name of Player")["HKS No."]
+            .first()
+        )
+
         merged_df = pd.merge(
             ranking_df_all,
             players_df_all[["Name of Player", "Team", "HKS No."]],
@@ -736,7 +760,46 @@ def load_player_rankings(season_base_path, divisions_for_season):
     if "HKS No." not in merged_df.columns:
         logging.error("'HKS No.' column is missing after merging.")
 
-    # Handle missing HKS No. (these should be players who 'played up')
+    # Fill missing HKS numbers using the player's registered information, then flag remaining gaps
+    if not player_hks_lookup.empty:
+        merged_df["HKS No."] = merged_df["HKS No."].fillna(merged_df["Name of Player"].map(player_hks_lookup))
+
+    merged_df["_team_norm"] = merged_df["Team"].astype(str).str.strip().str.lower()
+
+    def _is_playing_up(row: pd.Series) -> bool:
+        player_name = row["Name of Player"]
+        team_norm = row["_team_norm"]
+        if team_norm == "nan":
+            team_norm = ""
+        registered_teams = registered_teams_lookup.get(player_name)
+        if registered_teams:
+            if team_norm and team_norm in registered_teams:
+                return False
+            if team_norm and team_norm not in registered_teams:
+                return True
+        registered_divisions = registered_divisions_lookup.get(player_name)
+        division_value = row.get("Division")
+        if pd.notna(division_value) and registered_divisions is not None:
+            division_str = str(division_value).strip()
+            if division_str and division_str not in registered_divisions:
+                return True
+        return False
+
+    merged_df["Playing Up"] = merged_df.apply(_is_playing_up, axis=1)
+    merged_df.drop(columns="_team_norm", inplace=True)
+
+    def _format_division_label(row: pd.Series):
+        division_value = row.get("Division")
+        if pd.isna(division_value):
+            return pd.NA
+        division_text = str(division_value).strip()
+        if not division_text or division_text.lower() == "nan":
+            return pd.NA
+        return f"{division_text} (Playing Up)" if row.get("Playing Up") else division_text
+
+    merged_df["Division Display"] = merged_df.apply(_format_division_label, axis=1)
+
+    # Handle missing HKS No. (these should be players who remain unmatched after all lookups)
     missing_hksno = merged_df["HKS No."].isnull().sum()
     if missing_hksno > 0:
         logging.warning(f"{missing_hksno} entries have missing HKS No. after merge.")
@@ -1385,36 +1448,51 @@ def main():
 
             st.info(f"Showing rankings for players who competed in {selected_month}")
 
+        division_display_col = "Division Display" if "Division Display" in filtered_rankings_df.columns else "Division"
+
+        def aggregate_division_labels(series: pd.Series) -> str:
+            ordered: list[str] = []
+            for value in series:
+                if pd.isna(value):
+                    continue
+                text = str(value).strip()
+                if not text or text.lower() == "nan":
+                    continue
+                if text not in ordered:
+                    ordered.append(text)
+            return ", ".join(ordered)
+
+        aggregation_common: dict[str, object] = {
+            division_display_col: aggregate_division_labels,
+            "Average Points": "mean",
+            "Total Game Points": "sum",
+            "Games Played": "sum",
+            "Won": "sum",
+            "Lost": "sum",
+        }
+
+        if "Playing Up" in filtered_rankings_df.columns:
+            aggregation_common["Playing Up"] = "sum"
+
         if club != "Overall":
             aggregated_df = (
                 filtered_rankings_df.groupby(["HKS No.", "Name of Player", "Club"])
-                .agg(
-                    {
-                        "Division": lambda x: ", ".join(sorted(set(str(d) for d in x))),  # Aggregate divisions
-                        "Average Points": "mean",  # Calculate the mean of average points
-                        "Total Game Points": "sum",  # Sum of total game points
-                        "Games Played": "sum",  # Sum of games played
-                        "Won": "sum",  # Sum of games won
-                        "Lost": "sum",  # Sum of games lost
-                    }
-                )
+                .agg(aggregation_common)
                 .reset_index()
             )
         else:
+            aggregation_with_club = {"Club": aggregate_club_overall, **aggregation_common}
             aggregated_df = (
                 filtered_rankings_df.groupby(["HKS No.", "Name of Player"])
-                .agg(
-                    {
-                        "Club": aggregate_club_overall,  # Use the custom aggregation for clubs
-                        "Division": lambda x: ", ".join(sorted(set(x.astype(str)))),  # Aggregate divisions
-                        "Average Points": "mean",  # Calculate the mean of average points
-                        "Total Game Points": "sum",  # Sum of total game points
-                        "Games Played": "sum",  # Sum of games played
-                        "Won": "sum",  # Sum of games won
-                        "Lost": "sum",  # Sum of games lost
-                    }
-                )
+                .agg(aggregation_with_club)
                 .reset_index()
+            )
+
+        aggregated_df = aggregated_df.rename(columns={division_display_col: "Division"})
+        if "Playing Up" in aggregated_df.columns:
+            aggregated_df = aggregated_df.rename(columns={"Playing Up": "Played Up"})
+            aggregated_df["Played Up"] = (
+                pd.to_numeric(aggregated_df["Played Up"], errors="coerce").fillna(0).astype(int)
             )
 
         # Now calculate 'Win Percentage' outside the aggregation step
@@ -1443,6 +1521,9 @@ def main():
             "Win Percentage",
             "Avg Pts",
         ]
+        if "Played Up" in aggregated_df.columns:
+            insert_at = columns_to_keep.index("Division") + 1 if "Division" in columns_to_keep else len(columns_to_keep)
+            columns_to_keep.insert(insert_at, "Played Up")
         if "Elo Rating" in aggregated_df.columns:
             columns_to_keep.append("Elo Rating")
 
@@ -1475,7 +1556,9 @@ def main():
         sorted_df = filtered_df.sort_values(by=sort_column, ascending=ascending)
 
         numeric_alignment_columns = [
-            col for col in ["Games", "Won", "Lost", "Win %", "Avg Pts", "Elo Rating"] if col in sorted_df.columns
+            col
+            for col in ["Games", "Won", "Lost", "Win %", "Avg Pts", "Elo Rating", "Played Up"]
+            if col in sorted_df.columns
         ]
 
         # Apply styles and formatting to sorted_df
@@ -1486,6 +1569,8 @@ def main():
 
         # Format the columns to display as desired
         format_map = {"HKS No.": "{:.0f}", "Win %": "{:.1f}", "Avg Pts": "{:.1f}"}
+        if "Played Up" in sorted_df.columns:
+            format_map["Played Up"] = "{:.0f}"
         if "Elo Rating" in sorted_df.columns:
             format_map["Elo Rating"] = "{:,.0f}"
 
