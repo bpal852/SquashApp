@@ -357,7 +357,7 @@ else:
     logging.info("Data validation is DISABLED")
 
 # Only process enabled divisions based on TESTING_MODE configuration
-for div in current_divisions.keys():
+for div in all_divisions.keys():
     logging.info(f"Processing Division {div}")
     league_id = f"D00{all_divisions[div]}"
 

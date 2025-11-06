@@ -1,14 +1,14 @@
 Player,HKS_No,Teams,Final Rating,Matches Played
 Wong Chi Him,28658,Hong Kong Cricket Club D1,26906.648761295983,1
 Leung Henry Chi Hin,28706,,23960.3500549393,0
-Lau Tsz Kwan,28722,,22654.776244448512,0
+Lau Tsz Kwan,28722,Hong Kong Football Club 1A,22534.613523603788,1
 Tang Ming Hong,28463,,21998.40847190056,0
 Chung Yat Long,29836,,20664.27662603042,0
 Ho Samuel Ka Hei,29856,FWD,19952.738915231177,1
-Ling To Yu,29264,,19643.767711480858,0
+Ling To Yu,29264,Hong Kong Football Club 1A,19499.697123671333,1
 Au Lap Man Rex,30742,,19203.186261695304,0
 Lam Harley Yat Ting,29568,Hong Kong Cricket Club D1,17426.11299543303,1
-Lee Max Ho Yin,27346,,16696.54631254487,0
+Lee Max Ho Yin,27346,Hong Kong Football Club 1A,16523.935258053283,1
 Lam Matthew Shing Fung,30524,,15960.633732739892,0
 To Wai Lok,30276,,15816.32304417604,0
 Yip Tsz Fung,28146,,15320.661155859852,0
@@ -22,7 +22,7 @@ Chan Linclon Wui Ki,30211,Kowloon Cricket Club 2,11578.486769762741,2
 Wong Wing Kuen,31953,Kowloon Cricket Club 2,11554.540544502608,2
 Lo Chris Cheuk Hin,28838,Kowloon Cricket Club 2,11242.999918745096,3
 Low Mark Chun Kit,33935,Hong Kong Football Club 2A,11226.685920950269,3
-Lai Long Ching,31373,Hong Kong Football Club 2B,10288.98768551141,1
+Lai Long Ching,31373,"Hong Kong Football Club 1B, Hong Kong Football Club 2B",10343.561288079296,2
 Ward Andrew,30509,"Hong Kong Football Club 2A, Hong Kong Football Club M1B",10234.43926429351,6
 Ho Tomato Tze Lok,28466,"Hong Kong Football Club 2A, Hong Kong Football Club L1",9757.021860288402,2
 Kwong Anson Yu Shun,24673,,9638.166179955648,0
@@ -33,7 +33,7 @@ Yuen Tsun Hei,28800,Kowloon Cricket Club 2,9199.435272180317,4
 Ho Tze Ho Hugo,28462,Kowloon Cricket Club 2,9075.371054170433,2
 Lee Tin Hang,31713,Hong Kong Football Club 2B,8942.675248879286,1
 Chiu Ho Fai,25295,"Hong Kong Cricket Club D1, Hong Kong Cricket Club D2, Hong Kong Cricket Club M1A",8891.568820848099,6
-Cheng Ting To Brogan,32047,Hong Kong Football Club 2B,8643.145188319939,2
+Cheng Ting To Brogan,32047,"Hong Kong Football Club 1B, Hong Kong Football Club 2B",8706.535421094712,3
 Mak Tsun Hei,31616,FWD,8588.973136514345,1
 Fung Ching Hei,30881,,8582.295898500897,0
 Ho Ka On,30209,Kowloon Cricket Club 3A,8492.76472389881,3
@@ -63,9 +63,9 @@ Broughton Samuel,33216,Hong Kong Football Club 2A,7282.750999585359,1
 Tulloch Gillem,29779,,7215.760273482517,0
 Cheung Vincent Cheuk Yin,20566,The Squash Club 1,7154.579124534141,3
 Lee Ka Yi,28366,JESSICA L1,7141.548654892079,1
+Wong Anson,30552,"Hong Kong Football Club 1B, Hong Kong Football Club 2B",7077.0525624720685,4
 Hill Peter,22148,Hong Kong Cricket Club D2,7062.869229923923,3
 Wong King Ngo,27410,,7040.0,0
-Wong Anson,30552,Hong Kong Football Club 2B,7004.63771216735,3
 Ho Chun Hin,32733,Young Player 2,6999.551331892229,1
 Cheung Tsz Ching,32309,"Kowloon Cricket Club L1B, Young Player 2",6947.447419997769,2
 Tse Toby Yee Lam,31163,Young Player 2,6844.286561779917,1
@@ -83,15 +83,16 @@ Ng Ka Tsun Derek,31608,Kowloon Cricket Club 3A,6659.882693057304,1
 Luen Tsz Yu,29357,Kowloon Cricket Club 3B,6636.209100305895,3
 Cheng Nga Ching,29632,"Kowloon Cricket Club L1A, Young Player 2",6632.61599115024,2
 Fung Ivan Ngo Long,27214,Kowloon Cricket Club 3A,6618.874196949419,2
+Lai Pong Yin,30572,X-Alpha 1,6589.026845688755,1
 Yeung Tsung Chit Karson,32845,Young Player 2,6545.987405798047,1
-Hon Michael Tsz San,29749,TNGX,6521.592050123528,1
-Lai Pong Yin,30572,,6505.701021723835,0
 Zhang James,30858,Hong Kong Football Club M1A,6504.946702228755,2
 Wan Tsz Ho,28147,Kowloon Cricket Club 6A,6472.673820334936,2
+Hon Michael Tsz San,29749,TNGX,6465.792925082242,2
 Chu Kenny King Chun,29354,Kowloon Cricket Club 3B,6415.987224891923,3
 Phatraprasit Arnold Sun,32517,,6400.0,0
 Liu Steve Tsun Man,28134,X-Alpha 1,6380.676212792067,1
 Wai Pak Lam,32175,Kowloon Cricket Club 4,6313.967390845127,2
+* Ho Kwan Yin,31464,X-Alpha 1,6301.279640671983,4
 Lau Pak To,31467,Young Player 2,6240.165361275302,2
 Wong Kirstie Po Yui,30423,Hong Kong Cricket Club D2,6215.142702592508,2
 Chan Chun Ching,30600,Kowloon Cricket Club 3B,6173.274589401617,2
@@ -100,50 +101,49 @@ Yip Tsz Ho,31331,"Kowloon Cricket Club 2, Kowloon Cricket Club 3B",6149.21430535
 Anthony Nigel,34996,Hong Kong Football Club 3B,6127.093059635481,2
 Chan Kun Kei,30008,,6120.681818940337,0
 Chu Alex Kwok Kee,29475,Kowloon Cricket Club 3A,6113.638029716936,3
+* Kwan Wan Hei,31960,X-Alpha 1,6112.660070712827,4
+Ma Tsz Lok,28087,X-Alpha 1,6102.866390560693,1
 Kwok Ka Ho,30837,Kowloon Cricket Club 3B,6085.765349109221,1
-Lam Ka Lok Gary,27193,TNGX,6057.853507368152,3
-* Ho Kwan Yin,31464,X-Alpha 1,6034.194677709442,3
 Chan Hok Nam,30431,Hong Kong Football Club 3A,6026.107196457461,2
 Nihalani Rajesh,25743,,6013.192517443833,0
 Kwan Wan Lok,32501,X-Alpha 1,6009.40229085914,2
 Lam Po Ying,31022,,5978.916192906844,0
-* Kwan Wan Hei,31960,X-Alpha 1,5890.996644888767,3
+Mak Tsun Hin,29748,TNGX,5941.0413538446155,3
+Lam Ka Lok Gary,27193,TNGX,5915.943526223646,4
 Chan Nelson Kai Chi,27853,Kowloon Cricket Club 3A,5846.359909324969,1
 Cheung Zexiang Kevin,35488,Hong Kong Football Club 3B,5830.918407091965,1
+Wai Wing Yin,30403,TNGX,5814.2579814097935,4
 Luk Anson Chi Tao,29934,ERROR,5787.879727202478,5
-Mak Tsun Hin,29748,TNGX,5787.016081518577,2
 Wong King Yat,27411,,5772.260781928262,0
 Lau Si Chun,31961,NEXUS 1,5767.933571513391,1
 Soo Sean Tsung Jie,30498,"Hong Kong Football Club 3A, Hong Kong Football Club M1A",5745.735733551883,6
 Tang Helen,32404,,5741.500097632129,0
-Wai Wing Yin,30403,TNGX,5728.260799057795,3
 Leung Tsz Yu,28952,,5658.349956455759,0
 Leung Ka Huen,31882,"JESSICA L1, Young Player 2",5621.590792586243,2
 Hartley Alexander,34570,Hong Kong Football Club M1A,5604.145134269767,1
 Wong Tsz Lok Prince,29098,X-Alpha 1,5571.6592028725445,2
 Lau Tin Lok,30095,Hong Kong Cricket Club D2,5524.382928991852,2
 Cheng Pik Ching,31149,Happy Squash 1,5519.6670858390735,2
-Lau King Yat,28445,Hong Kong Football Club 3B,5515.38058736172,1
 Yip Tony Tsun Yuen,27909,United Services Recreation Club 1,5429.2183964756405,1
 Lee Tsz Long Max,29210,Hong Kong Football Club 4B,5352.255292227016,3
 Chan Nathaniel Rong Jye,34467,Hong Kong Football Club 3B,5301.710277639315,1
+Lau King Yat,28445,Hong Kong Football Club 3B,5271.259325357791,2
 Ng Yat Long,30044,X-Alpha 2,5253.579865978294,1
 Lam Chi Lok,29623,,5233.909863213672,0
 Wai Sze Wing,31176,Hong Kong Cricket Club D2,5193.568352642284,1
 Tsang Cheuk Fung,30037,Hong Kong Football Club 4A,5188.619749319193,1
-Liu Sung Yan,32206,Hong Kong Football Club 3B,5167.774691619945,2
 Li Ho Hin,31810,NEXUS 1,5165.256704827744,2
 Lu Tsz Ho,31809,NEXUS 1,5143.01718689791,2
 Fung Ji Yang,27548,United Services Recreation Club 1,5140.2896593619,2
+Liu Sung Yan,32206,Hong Kong Football Club 3B,5101.585193700135,3
 Head Phil,26831,"Hong Kong Cricket Club D4A, Hong Kong Cricket Club M2",5097.277201303733,4
-Khosa Ashwin,28695,Hong Kong Football Club 3B,5052.736182308977,1
 Lai Michael Cheuk Fung,29351,Kowloon Cricket Club 5,5046.41969443007,1
 Chapman William,32994,Hong Kong Football Club 4A,5045.091483998764,2
-Au Ling Fung,29395,TNGX,5036.266135300459,2
 Yim Gi Ping,30306,Sha Tin 1,4999.887596405597,3
 Lo Pui Yin Chloe,32618,,4981.783296070443,0
+Khosa Ashwin,28695,Hong Kong Football Club 3B,4966.110060054053,2
+Au Ling Fung,29395,TNGX,4946.61077633562,3
 Liang Chun Wai,32879,United Services Recreation Club 1,4936.074555768949,2
-Wong Ho Kiu,33161,Hong Kong Football Club 3B,4926.606690186414,3
 Shieh Ho Chuen,29478,,4913.364058735465,0
 Yu Yin Tao,30322,,4900.253980564009,0
 Tong Tsz Chun,28839,Hong Kong Football Club 3A,4886.033581349997,2
@@ -157,6 +157,7 @@ Chan Cheuk Fung,30554,Hong Kong Football Club 4A,4764.483240447234,3
 Lo Alex Chun Wai,30601,ERROR,4756.400405375041,1
 Chu Ho Yin,29583,Kowloon Cricket Club 5,4752.767526860581,2
 Yuen Tsz Long,32641,United Services Recreation Club 1,4751.11652205996,1
+Wong Ho Kiu,33161,Hong Kong Football Club 3B,4741.230839126993,4
 To Kai Kong,27190,,4720.3989640421705,0
 Lee Ka Man Carmen,23756,,4717.520663607383,0
 Cheuk Kian Chun Yin,32087,,4669.174952698126,0
@@ -167,7 +168,7 @@ Tang Chun Long,28868,NEXUS 1,4533.633973717497,1
 Chan Matthew Yaw Jye,31845,Hong Kong Football Club 4B,4533.183767814174,2
 Appan Janak,31193,Hong Kong Football Club 4A,4521.542685492184,3
 Chan Joey Ho Ling,26290,Kowloon Cricket Club 4,4512.174189809327,1
-Tam Cho Nga Mariko,31335,Hong Kong Football Club L1,4508.233056662268,1
+Tam Cho Nga Mariko,31335,"Hong Kong Football Club L1, Hong Kong Football Club L2B",4481.408142101466,2
 Caves Christopher,29552,Ladies Recreation Club M2,4473.192783549095,1
 Chan Kai Lam,32414,,4466.452233725998,0
 Au Ling Yu,31896,"Kowloon Cricket Club 5, Kowloon Cricket Club L1A",4442.695188974395,2
@@ -190,7 +191,6 @@ Cheung Chi Yan,33749,Hong Kong Football Club 3A,4223.9295119722165,2
 Tso Vincent Shu Wah,28473,NEXUS 1,4212.495773667911,2
 Mak Wai Fung,33451,YLJR,4199.693577289357,2
 Chui King Yin,30019,X-Alpha 2,4193.114910833162,2
-Salahuddin,33374,"Hong Kong Cricket Club D4B, Hong Kong Cricket Club M1B",4168.607563734685,4
 Leung Shiu Moon,30690,Squashathon M+,4157.610854842547,3
 Wong Pak Long Alan,29565,X-Alpha 2,4128.700681434209,2
 Lam Jannis Wing Hei,29160,,4127.659666809716,0
@@ -203,17 +203,17 @@ Disler Simon William,30967,,4088.468312395696,0
 Chan Man Fung,33599,YLJR,4087.516168475812,2
 Chan Ho Hei,32710,YLJR,4082.2062736850116,2
 Li Tsz Yau,31480,Happy Squash 1,4076.2547494319456,1
+Salahuddin,33374,"Hong Kong Cricket Club D4B, Hong Kong Cricket Club M1B",4057.657307820391,5
 Liou King Long,29771,Hong Kong Football Club 4B,4026.4246495288967,1
 Li James King Hei,27539,,4026.32240252824,0
 Chan Jason,25873,,3989.387728376242,0
 Wong Arthur Man Pok,30334,Sha Tin 1,3961.900172681076,2
 Lee Sum Yuet,30293,"Happy Squash 1, Kowloon Cricket Club L2A",3957.217524849624,5
+West Steven,28550,"Hong Kong Cricket Club D4B, Hong Kong Cricket Club M1A",3887.4931946191223,5
 So Obadiah Sing Yan,27099,Hong Kong Football Club 4A,3883.2853086877267,1
 Schaefer Rishad,31281,"Hong Kong Cricket Club D4A, Hong Kong Football Club M1B",3872.64501619224,4
 Shum Peter,28254,Hong Kong Football Club 4B,3862.931963738289,1
-West Steven,28550,"Hong Kong Cricket Club D4B, Hong Kong Cricket Club M1A",3854.513748348274,4
 Hibberd Christian,32018,,3843.479270934077,0
-Lau Wai Tung,31957,"Kowloon Cricket Club 6B, Kowloon Cricket Club L2B",3827.1691799566347,4
 Cheung Pak Hin Milo,33359,United Services Recreation Club 1,3807.756473985911,3
 Chiu Rebecca Wing Yin,19611,,3762.2572132044775,0
 Chu Ho Ching,32732,United Services Recreation Club 1,3723.5355178654236,2
@@ -228,20 +228,21 @@ Kwok Lai Yin,28693,X-Alpha 2,3645.3566083184082,2
 Or  Ka Ming,32468,Hong Kong Football Club 4B,3643.0685498637517,3
 Chan Marco Sin Hang,29696,Sha Tin 1,3634.968038094846,2
 Tang Ching Sum,33280,Hong Kong Football Club 5,3591.2706377973655,1
+Lau Wai Tung,31957,"Kowloon Cricket Club 6B, Kowloon Cricket Club L2B",3567.7910019815786,5
 Pak Jethro Sek Huen,28675,,3567.199738583433,0
 Ho Yiu Wah Hendry,29182,"Kowloon Cricket Club 6B, Kowloon Cricket Club M3",3556.524470602712,5
-Chan Anson Chi Him,32158,Happy Squash 2,3552.9726120283635,4
-Cranston Robert,35003,Hong Kong Cricket Club D4B,3511.5049313441923,2
+Chan Anson Chi Him,32158,Happy Squash 2,3533.6523164433684,5
 Ng Kai Yuen Gary,30841,Squashathon,3509.0055892153455,1
 Lau Ka Leung,32178,,3494.3433506865163,0
 Ng Tsz Chun,31310,"Squashathon, Squashathon M+",3486.6068788912535,7
 Leung Kwan Ching,26242,ERROR,3478.64431620714,4
+Cranston Robert,35003,Hong Kong Cricket Club D4B,3458.7874416027303,3
 Yeung Kai San,32232,The Squash Club 1,3453.208686868936,3
 Li Ho Sum,32815,Kowloon Cricket Club 5,3446.7261400482867,3
 Cassidy Makaela Lin,33732,"Hong Kong Football Club 3B, Hong Kong Football Club 5, Hong Kong Football Club L1, Hong Kong Football Club L2A",3439.7455238555945,5
 Yip Ho Cheong,30630,Physical Chess 1,3433.380388409581,4
+Tang Lok Yin,32958,"Kowloon Cricket Club 3A, Kowloon Cricket Club 4, Kowloon Cricket Club L2B",3423.501568732352,4
 Tsang Chi Hin,28080,United Services Recreation Club 2,3421.1093559338196,2
-Tang Lok Yin,32958,"Kowloon Cricket Club 3A, Kowloon Cricket Club 4, Kowloon Cricket Club L2B",3403.251521729039,3
 Lee Hei Nam,29293,ERROR,3391.0267713043268,4
 Chung King Lam,31455,Physical Chess 1,3381.5849056460415,1
 Chou Pak Lam Wilson,32369,"Hong Kong Football Club 4A, Hong Kong Football Club M1B",3375.373064864933,2
@@ -252,6 +253,7 @@ Barmont Alexandre,31125,Hong Kong Football Club M2A,3314.979565071344,2
 Tam Thomas Siu Ying,29928,Physical Chess 1,3301.2481976115846,1
 Chan Terence Yiu Ki,26462,,3285.5510931317203,0
 Wong Ryan Chun Hung,30048,Electrify Squash Div 6,3274.113430252955,2
+Lam Yin Tung,32973,"ERROR, Hong Kong Football Club L2B",3264.554324091157,4
 Yu Wang Chi,30229,X-Alpha 3,3260.284410311228,2
 Cheuk Chun Hei,31201,Physical Chess 1,3192.8539522864653,3
 Li Sum Yin,29877,"Kowloon Cricket Club 5, Kowloon Cricket Club L1B",3189.5303707810567,2
@@ -266,7 +268,6 @@ Wu Renee,31142,Hong Kong Football Club L2B,3112.8213099325053,1
 Choi Ho Laam,30063,,3098.242581744572,0
 Tse Long Hin,31630,,3094.514702305983,0
 Tam Kal Wai,28281,,3058.093559898475,0
-Lam Yin Tung,32973,ERROR,3057.349053157525,3
 Khan Bilal,32454,United Services Recreation Club 2,3053.523548160269,1
 Tang Hoo Lang,31737,Squashathon,3053.458086666826,4
 Fung King To,31654,The Squash Club 1,3051.831901412968,3
@@ -290,40 +291,41 @@ Cheng Steven Wai Kit,29784,"Squashathon, Squashathon M+",2831.0047473389054,4
 Wu Shun Kei,33310,NEXUS 2,2818.499396186551,2
 Nihalani Manoj,25742,Hong Kong Football Club M2B,2808.850327566213,2
 Liu Chun Hin Heron,27474,Xavier,2807.529786468892,3
+Ho Ka Wing Janice,28776,Kowloon Cricket Club L2B,2804.5652438444217,3
 Lai Chun Yip Leo,28316,,2800.0733556779137,0
 Chiu Hau Ching,33483,"Hong Kong Football Club 5, Hong Kong Football Club L2A",2799.5951458820455,2
 Skinn Christopher Andrew,31975,,2797.5150020143788,0
-Choi Celia Uen Shan,28862,,2795.2155193051067,0
 Leung Kelvin Siu Fung,28438,Sha Tin 2,2791.163659890159,4
 Wei Stephen J.,33719,,2790.315358840945,0
 Sheethal Kumar Palash,33207,Hong Kong Cricket Club D4B,2774.38109848696,2
 Choi John Wing Yiu,18277,,2771.139572931446,0
 Lau Justin Kai Tung,29005,Squashathon Zero,2769.2055944442372,2
 Tse Percy Cheung Ka,25028,i-Mask Advance Squash Club 4,2753.099477515451,1
+Lui Ka Ho Vincent,30408,"Hong Kong Football Club 4B, Hong Kong Football Club 5",2715.5609399185255,5
+Tung Wing Yan,30551,"Kowloon Cricket Club 6B, Kowloon Cricket Club L2B",2709.7880191137892,7
 Kan Ken Chun Kit,23916,"SKCSC M4, The Squash Club 2",2707.9957376342286,2
 da Silva Juan,33553,United Services Recreation Club 2,2705.31736165842,1
 Tai Jacky Tsz Ki,29380,,2702.6710307723906,0
-Lui Ka Ho Vincent,30408,"Hong Kong Football Club 4B, Hong Kong Football Club 5",2700.8741711134035,4
 Chan Chun Kit,29089,,2698.648007172752,0
 Cheng August Huan-Chen,32844,Hong Kong Football Club 4B,2695.647605598545,1
 Lee Ka Fai Peterson,29316,,2689.256307909661,0
 Wong Chi Hang Frankie,30932,UST,2671.655469061824,1
-Ho Ka Wing Janice,28776,Kowloon Cricket Club L2B,2658.995123470457,2
+Tang Ching Yan,33895,Hong Kong Cricket Club D4B,2648.4025034404503,2
 Leung Dick Kan Fai,16988,,2646.520391501167,0
 Li Tsz Ho,33268,NEXUS 2,2646.264295811011,2
 Ma Michael Chung Wai,30637,Sha Tin 2,2642.9913585861336,3
+Choi Celia Uen Shan,28862,Hong Kong Football Club L2B,2642.18783752232,1
 Chan Ka Long Leo,31679,The Squash Club 1,2641.161916642101,3
 Lam Yuen Sarm,33499,YLJR,2635.8810337816444,2
 Law Tom Kwok Keung,26368,,2622.2088128213773,0
-Tung Wing Yan,30551,"Kowloon Cricket Club 6B, Kowloon Cricket Club L2B",2620.554409934482,6
 Achouch Frank,29549,"Hong Kong Cricket Club D4A, Hong Kong Cricket Club D6, Hong Kong Cricket Club M1B, Hong Kong Cricket Club M2",2619.3915144969537,6
 Chan Siu Ting,29747,,2618.181818181818,0
-Tang Ching Yan,33895,Hong Kong Cricket Club D4B,2602.080397767358,1
 Katsande Danai,32382,Hong Kong Football Club 6C,2598.3180003787947,2
 Wong Ching Nam,29907,i-Mask Advance Squash Club 1,2589.810251322157,1
 Cheng Victor Kwok Wai,20440,"Kowloon Cricket Club 6B, Royal Hong Kong Yacht Club M3",2586.392974609732,7
 Wong Tsz Him,28210,,2585.969309528185,0
 Li Yuen Yau,31323,X-Alpha 3,2582.2233341906644,1
+Chan Chi Ming Keith,33725,Hong Kong Football Club 5,2547.5021096080745,3
 Lambert Jack Masaki,33679,,2545.5263325698065,0
 Lo Sing Chi,28563,,2544.9915561288803,0
 Chow Hester Yuk Ting,29479,United Services Recreation Club 2,2539.189247304609,3
@@ -338,12 +340,12 @@ Leung Sum Yi,31709,Squashathon,2480.896941732134,1
 Tang Kam Keung,29980,,2479.176487895584,0
 Chan Tat Wing,27911,,2473.088099943103,0
 Yu Wai To,17506,,2457.437254738367,0
+Au Pak Ki,33260,Hong Kong Football Club 5,2456.0374736058275,1
 Chow Tat Keung,20356,i-Mask Advance Squash Club 2,2450.5327219628784,1
 Tam Raymond Kin Wai,28747,,2440.912238216177,0
 Mohammad Gull Ilyas,27045,"United Services Recreation Club 2, United Services Recreation Club M2",2440.0880054876047,5
 Chiang Ieng Long,34922,Physical Chess 1,2434.7271929351864,2
 Yeung Himmy Cheuk Him,30409,"Hong Kong Football Club 5, Hong Kong Football Club 7B",2429.1741269212007,4
-Chan Chi Ming Keith,33725,Hong Kong Football Club 5,2428.434046115238,2
 Chan Olivia,29170,Hong Kong Football Club 7B,2428.380334412604,2
 Lau Yan Kiu,28444,Global Squash 1,2415.7409538429392,2
 Fung Gary Fuk Ming,20199,Kowloon Cricket Club M3,2411.4740542478194,2
@@ -355,11 +357,10 @@ Janes Gareth,28987,"Hong Kong Cricket Club D6, Hong Kong Cricket Club M2",2388.0
 Li Samuel Kwok Sing,27166,Hong Kong Football Club 7B,2387.57383854447,1
 Cheng Tak Kwong,17999,"Kowloon Cricket Club 6A, Kowloon Cricket Club M3",2385.6784756723764,5
 Lai Ming Chak Marco,29769,X-Alpha 3,2377.325739063143,2
+Au Pak Lun,33259,Hong Kong Football Club 5,2376.722660561452,1
 Cheung Dickson Yuk Kuen,20318,Kowloon Cricket Club M3,2370.616661112614,3
 Poon Ho Kar James,26416,The Squash Club 2,2369.5240975542847,3
-Cheung Tin Yui,33657,"Happy Squash 2, Hong Kong Cricket Club L2",2365.4992823328103,6
 Lau Kwai Hong,20790,Hong Kong Cricket Club D7A,2364.4294625105686,2
-Au Pak Lun,33259,,2363.756000948905,0
 Rach Duncan Ai,34073,Hong Kong Football Club 6B,2363.4026109809115,2
 Wong Chung Ching Karen,29078,Hong Kong Football Club 6B,2353.9186060772013,2
 Chan Ming Yan Calvin,28809,Global Squash 1,2352.1659709944847,2
@@ -367,11 +368,9 @@ Kan Ho Yin Alex,29844,Global Squash 1,2349.4980504686546,3
 Li Clarissa,31901,"Happy Squash 2, Hong Kong Football Club L3A",2349.428459904547,3
 Tse Sio Kit,34945,,2342.0715884462224,0
 Lai Thomas Chun Sang,28207,Physical Chess 1,2339.432482938244,3
-Au Pak Ki,33260,,2338.0510514802445,0
 Li Ka Man,33285,Kowloon Cricket Club L2A,2329.429065383506,2
 Li Shun Yiu,27277,Star River 1,2323.136103216628,2
 Fung Thomas Ho On,25980,The Squash Club 2,2322.7503468574237,1
-Law Hei Yau,32467,"Happy Squash 2, Hong Kong Football Club L3B",2321.3882201852784,5
 Dai Kwun San Harry,29167,Physical Chess 2,2313.736602567967,1
 Leong Se Chun,35096,,2312.165475166924,0
 Ramachandran Arjun,33857,Hong Kong Football Club 6B,2308.102172210665,3
@@ -388,7 +387,9 @@ Lo Ho Yin Terry,28403,Hong Kong Football Club 6A,2270.0462865238746,1
 Raducki Stephen,32152,"Hong Kong Football Club 6A, Hong Kong Football Club M2A",2269.8365387104404,5
 Au Jovi Chun Tat,19464,Kowloon Cricket Club M3,2262.3312393533274,1
 Ladharam Sunesh,30483,"Hong Kong Football Club 7A, Hong Kong Football Club M2A, Hong Kong Football Club M3A",2259.081826945068,6
+Tsang Yan Kiu,31880,"HKPF Squash Team, Kwai Tsing District Squash Club",2254.94153060688,3
 Li Pinky Wing Shan,27906,Kowloon Cricket Club 6A,2252.8206157918958,1
+Cheung Tin Yui,33657,"Happy Squash 2, Hong Kong Cricket Club L2",2249.516960642161,7
 Hathiramani Dinesh,21930,"Hong Kong Football Club 6A, Hong Kong Football Club M3A",2247.736735092266,3
 Au Siu Fai,20788,"Hong Kong Football Club 6B, Hong Kong Football Club 7B, Hong Kong Football Club M4A",2247.031882474224,7
 Van Gregory,34505,Hong Kong Football Club 6A,2240.4176549080753,1
@@ -400,6 +401,7 @@ Mei Tian Xiao,34209,,2212.04712652831,0
 Swan Owen,32975,"Ladies Recreation Club Div 6, Ladies Recreation Club M2",2210.565540163189,4
 Moreu Horacio,33587,Ladies Recreation Club M2,2206.5301303615806,2
 Chan Hoi Hei,33185,Sha Tin 2,2205.769233212077,4
+Law Hei Yau,32467,"Happy Squash 2, Hong Kong Football Club L3B",2204.2426641501647,6
 Leung Chi On,31982,"Ladies Recreation Club Div 6, Ladies Recreation Club M2",2204.1269348388228,3
 Tanner Julian,28057,"Hong Kong Football Club 6C, Hong Kong Football Club M3B",2203.2694751715026,3
 Leung Phoebe Hei Ting,28221,Kowloon Cricket Club 6B,2192.4671028693338,1
@@ -409,7 +411,6 @@ Ko Toby Ho Yin,28189,HKPF Squash Team,2186.181591873097,3
 Cheung Tsz Loi Linus,31484,,2182.0307596406383,0
 Wong Yuen Kiu,31681,ERROR,2180.6194715375977,1
 Chan Yin Wang,33565,NEXUS 2,2178.9842098499867,1
-Tsang Yan Kiu,31880,"HKPF Squash Team, Kwai Tsing District Squash Club",2177.687488121973,2
 Ho Hoi Kiu Bernice,32377,Hong Kong Football Club L2A,2177.585827900417,2
 Sha Steven,30809,,2174.4950520480866,0
 Ho Helen Sin Man,27854,"Hong Kong Cricket Club L3, i-Mask Advance Squash Club 1",2169.9891212608604,6
@@ -438,7 +439,7 @@ Lau Karen Siu Ying,25833,JESSICA L3,2103.763807026498,1
 Pudwill Alexander Stephan,33947,Hong Kong Football Club 6C,2102.6518083170495,2
 Bidal Jay,32927,"United Services Recreation Club 2, United Services Recreation Club M2",2101.6050303854922,3
 Cheung Ringo Hon Lam,30560,"Sha Tin 1, Sha Tin 2",2098.1135632283376,4
-Ip Hayley Hoi Ning,29265,,2088.4784045388856,0
+Leung Ka Hei,33708,Hong Kong Cricket Club D4B,2087.738041404768,2
 Law Hong Ting Kelvin,30201,Global Squash 1,2086.8103735911095,3
 Chan Yan Yu,33270,Smart Squash 1,2086.724479809,4
 Yiu Cheuk Hei,33743,Sha Tin 2,2084.5069694546664,2
@@ -453,7 +454,6 @@ Lamb Russell,32993,Hong Kong Cricket Club M2,2059.3514945134084,1
 Joel Neoh Eu Jin,34942,,2051.5660526313586,0
 Porter Darrell Lee,34504,"Hong Kong Football Club 6B, Hong Kong Football Club 7A",2051.1202607916575,3
 Ng Paul Lap Yan,27257,,2042.156452056228,0
-Leung Ka Hei,33708,Hong Kong Cricket Club D4B,2039.9505948934018,1
 Ting Philip Wai Man,29290,Hong Kong Football Club M3A,2039.9320115766836,1
 Chu Daniel Ching Kwok,29330,,2034.1367967738047,0
 Lip Tsz Ho,32848,Sha Tin 3,2033.352112525321,2
@@ -461,6 +461,7 @@ Lam Jillian,32422,,2028.9292621104864,0
 Mong Hoi Ching Norman,26529,SKCSC M4,2028.5352234333186,5
 Lam Allen Kar Fai,29546,Hong Kong Football Club M2A,2024.6034400540889,1
 Derouet Yann,33109,"Hong Kong Football Club 6A, Hong Kong Football Club M2B",2021.5272039275158,4
+Ip Hayley Hoi Ning,29265,Hong Kong Football Club L2B,2017.3627409893904,1
 Chung Ho Yin Will,32853,Smart Squash 1,2012.8595756855443,3
 Wong Hin Chor,26793,The Squash Club 2,2012.7533483238249,3
 Tam Wai Nam,30697,RELAY 1,2011.3906601848505,3
@@ -529,10 +530,10 @@ Lei Ka Hei,34920,,1861.8181818181813,0
 Cross David,28751,Hong Kong Football Club M2B,1852.6581850732534,3
 Chan Wan Fei,30098,UST,1850.7631024938128,1
 Tang Chun Keung Nick,28507,Physical Chess 2,1844.9694066132593,1
-Lin Chun Wah,29885,"Alpha CUHK, WAKO",1843.534314965969,3
 Bhammer Vishal,27832,"Hong Kong Cricket Club D7A, Hong Kong Cricket Club M3",1840.2818625312632,3
 Cheng Jonathan Yee Fung,24154,"Royal Hong Kong Yacht Club M3, United Services Recreation Club 3",1840.1022900577311,6
 Ko Dorothy Sin Ting,27799,,1840.0,0
+Lin Chun Wah,29885,"Alpha CUHK, WAKO",1838.3084859011958,3
 Lee Chun Hin,29389,,1837.649416763339,0
 Chiang Chi Shing Michael,29348,,1835.38003170952,0
 Samtani Rakesh,29647,Kowloon Cricket Club M4,1827.416121334197,3
@@ -559,7 +560,6 @@ Chan Ho Yu,27237,i-Mask Advance Squash Club 3,1775.339310399858,3
 Chevaux Alexander,34489,Centre Squash,1775.0648732475013,1
 Po Long Huen Mavis,33373,NEXUS 2,1773.9541936094824,2
 Chow Kar Wah,23072,"GMDBB, Hong Kong Football Club M4A",1772.0351541437233,5
-Fong Ming Fung,31400,,1769.1924124577024,0
 Hazari Ajay,21638,,1769.0637462143063,0
 Lai Kwok Wai Wilfred,25178,"Hong Kong Cricket Club D10, United Services Recreation Club M4",1767.8267199673967,6
 Trivedi Anirudh,32217,,1764.6838064746707,0
@@ -582,7 +582,7 @@ Lipsham David John,34542,,1741.722387356435,0
 Wong Long Seng Anson,32046,Physical Chess 4,1737.08327801122,2
 Lulla Vikram,28609,,1732.3825170882037,0
 Leung Ka Shun,31055,,1729.7543886980104,0
-Wu Ka Ho,34383,Kwai Tsing District Squash Club,1728.9837602270395,1
+Wu Ka Ho,34383,Kwai Tsing District Squash Club,1724.5997190240714,2
 Ip Chun Keung,25979,,1724.0721909949,0
 Thornton Rory,35112,,1722.794131889255,0
 Freeman Neil,33713,"Hong Kong Cricket Club D6, Hong Kong Cricket Club D7B, Hong Kong Cricket Club M3",1722.5781145003464,7
@@ -590,17 +590,18 @@ Ngo Joshua,34578,"Hong Kong Cricket Club D7A, Hong Kong Cricket Club M2",1716.95
 Lee Ho Ting,28391,Global Squash 1,1711.3584841572208,3
 Shetty Adarsh,31977,,1711.3173243925312,0
 Lee Lawrence Chi Hung,28004,"Hong Kong Football Club 9, Hong Kong Football Club M3A",1711.087999917198,3
+Fong Ming Fung,31400,Squashathon Advance,1706.4298413626864,1
 Mok Ivan Tsz Pui,29744,Physical Chess 3,1704.1126949132408,3
 Siu Chen Dong,31614,Thunder 1,1702.3569446438116,3
 Dickson Robert,30938,"Hong Kong Cricket Club D7B, Hong Kong Cricket Club M4",1701.8032895730753,4
 Mo Shing Tsang,33899,X-Alpha 4,1701.544049277393,2
 Wong Siu Sun,32736,,1701.439156143382,0
-Li Kin Lok,33498,Happy Squash 2,1699.672968353557,3
 Li Ivan Chun Wing,31319,LONGVIEW,1696.9117254203745,1
 Yung Lok,32072,i-Mask Advance Squash Club 2,1696.139424496259,2
 Cheung Coco Oi Yan,26154,,1694.4410249660166,0
 Chan Andy Kin Wing,21950,"Kowloon Cricket Club 6A, Kowloon Cricket Club M3",1693.4163719175558,3
 Kirpalani Shaun,33211,Hong Kong Football Club 9,1690.6357788531282,3
+Li Kin Lok,33498,Happy Squash 2,1690.3492137763328,4
 Chow Yuen Ching,33782,X-Alpha 4,1689.942988941183,1
 Soo Gene,30113,"Hong Kong Football Club 6B, Hong Kong Football Club M3A",1687.6842525582972,2
 Wu Cheuk Io,34923,,1687.272727272727,0
@@ -610,8 +611,8 @@ Dalpathraj Sheethal Kumar,31120,Hong Kong Cricket Club M4,1684.1975438628094,2
 Kareena Sashikumar,35489,JESSICA L3,1684.0587351509023,1
 Wong Ching Yui Dominic,31771,Social Squash Team,1681.869741168086,1
 Yip Chiu Ming,30988,Kinetic 1,1680.8510617633692,1
-Clissold Aaron,33854,,1680.0,0
 Tang Quok Yung Eric,27417,,1680.0,0
+Clissold Aaron,33854,,1680.0,0
 Li Bing Hei,27850,,1672.6831978627183,0
 Osmund Ronnie,11516,"Kowloon Cricket Club 9, Kowloon Cricket Club M3",1670.8882770609252,4
 Chan King Hei,33822,Smart Squash 1,1668.61737783756,1
@@ -697,7 +698,6 @@ Lowth Simon,31970,,1542.986375395859,0
 Tam Chiu Wai,28782,,1540.0000000000002,0
 Mok Shing Hei,33030,X-Alpha 3,1539.650526723373,1
 Padgaonkar Ashwin,30116,"Hong Kong Football Club 7A, Hong Kong Football Club M3B",1536.4479776857324,3
-Foo Chit Man,31569,"i-Mask Advance Squash Club 2, i-Mask Advance Squash Club 5",1536.1839899358154,2
 * Lee Dennis Yuk Kai,27426,The Hong Kong Jockey Club Div 9,1535.8036916565923,3
 Michael Ben Lin,34717,"Ladies Recreation Club Div 6, Ladies Recreation Club M2",1533.1623329554297,2
 Kan David,27733,,1532.0444031299558,0
@@ -727,6 +727,7 @@ Wong Pok Hin,34926,,1483.3348607878108,0
 Yap Yau Kwan,33086,Sha Tin 2,1483.129203516267,1
 Shiu Ricky Kwok Leung,25975,,1482.505742643282,0
 Ng Matthew Ka Wai,27908,,1482.2392254894285,0
+Foo Chit Man,31569,"i-Mask Advance Squash Club 2, i-Mask Advance Squash Club 5",1481.1307718997289,3
 Weatherall Roland,27780,,1479.5482942801648,0
 Kunz Nicholas,34442,,1477.7337250606652,0
 Andersson Greger,27672,,1476.1416991676133,0
@@ -866,9 +867,9 @@ Ku Wai Hang William,30782,United Services Recreation Club M4,1282.6288564752365,
 Ho Wai Ying,27451,BOSS,1282.1698766343259,2
 Cheng Ping Kuen Thomas,28667,Mercury,1280.6723058552984,1
 Chui Danny Kam Wah,14775,"LONGVIEW, WAKO",1280.0015348672339,5
-Ng Kien Hoon,24614,,1280.0,0
-Casey Paul,25110,,1280.0,0
 Lo Samuel Ho Lam,26731,,1280.0,0
+Casey Paul,25110,,1280.0,0
+Ng Kien Hoon,24614,,1280.0,0
 Tang Ching On,34009,Hong Kong Cricket Club L3,1279.8307550983209,3
 Lai Tsz Pang,35425,"Alpha CUHK, WAKO",1278.1835391130803,5
 Lee Kwan Ho,31167,,1274.3618946431038,0
@@ -891,7 +892,6 @@ Di Fonzo Thomas,35491,Squashathon Advance,1245.3115992454802,1
 Chan Alex Siu Kun,4263,Kowloon Cricket Club 9,1244.4499346543703,1
 Cheung Alan Wing Lun,25168,Thunder 2,1242.8178613946347,2
 Longuepee Francis,27002,Royal Hong Kong Yacht Club M3,1241.0377726587697,1
-Chong Siu Fung,34391,The Squash Club 3,1239.1418361560854,4
 Li Ying Huen,33770,,1237.6677741065614,0
 Lau Ching Yin,33080,,1236.5991073413463,0
 Man Angela Pui Kei,26243,Hong Kong Football Club L3C,1232.887632861627,3
@@ -903,6 +903,7 @@ Au Shun Wai Wilson,34204,UST,1223.6086704866595,1
 Ren Jean-Philippe,34928,Centre Squash,1223.4810103143263,2
 Chan Pak Lun,34507,Sha Tin 4,1222.694368080611,1
 Chau Hang Henry,24568,,1222.404887103403,0
+Li Keung Shing,23473,Kwai Tsing District Squash Club,1220.5365599990641,2
 Mirapuri Rajesh,29742,,1220.341649796028,0
 Leung Eugene Chi Hang,27774,Thunder 2,1219.3750542002551,1
 Coutarel Brice Pierre Robert,34057,,1217.599703790858,0
@@ -912,10 +913,10 @@ Chan Tsz Yan Joyce,34063,Hong Kong Football Club L3C,1213.854506837822,4
 Bachani Vinay Suresh,32772,"Kowloon Cricket Club M4, MM Squash",1213.0668942617074,4
 Mercalfe Stephen Fraser,33662,,1212.767067384738,0
 Tang Raymond Wai Ming,25572,,1211.800193056019,0
+Lam Alan Wing Lun,25458,TOMCAT,1211.7698914896146,4
 Lo Fai Tuen Jack,31548,Thunder 2,1208.7389293802585,2
 Tse Ray,28736,"Royal Hong Kong Yacht Club Div 12, Royal Hong Kong Yacht Club M4",1208.33197152775,6
 So Li Chuan John,33576,,1207.6248041870142,0
-Li Keung Shing,23473,Kwai Tsing District Squash Club,1206.1792093667905,1
 Cheng Chi Wah,25693,Thunder 2,1204.7908650693191,1
 Chan Kin Hung Kit,26668,SKCSC M4,1204.2755042035465,5
 Kwok Alvina,33224,Hong Kong Cricket Club D7B,1203.9124781795763,1
@@ -929,6 +930,7 @@ Kundamal Khiron,33187,Kowloon Cricket Club 13,1197.0837009554791,1
 Leung Kam Yau Hardy,26513,South China Athletic Association,1197.0440103284661,1
 Ho Gary Ming Fai,23479,,1194.9571960130795,0
 Tang Man Shing,21136,Kowloon Cricket Club M3,1193.8503824849936,2
+Lam Chi Chris,33243,Kwai Tsing District Squash Club,1193.732519539564,2
 Lam Dennis Wun Cheung,23911,,1192.4672772067065,0
 Chow Pui Sing,23591,Bravo D13,1192.016316709201,3
 Leung Kwok Wai,12026,Star River 2,1187.648107835921,4
@@ -939,6 +941,7 @@ Lee Hok Chung,33491,North District Sports Association 2,1185.245170650702,1
 Pun Zhe Xin Keira,33687,JESSICA Mochis,1184.556316994708,2
 Li Yuen Man,33313,X-Alpha 4,1182.9102653366579,2
 Ton Ken-Edouard,35404,Banbil,1180.5810297998587,1
+Chong Siu Fung,34391,The Squash Club 3,1179.8057894201306,4
 Hui Prodipto,29872,Kinetic 3,1176.0406474287533,2
 Fraser Peter,21519,,1172.717221452656,0
 Siu Cecilia Ching Man,22723,,1170.9090909090908,0
@@ -946,7 +949,6 @@ Tan Hui Ting,35174,,1169.2338932129333,0
 Ng Kwong Yi,34820,i-Mask Advance Squash Club 4,1168.7412075395214,1
 Daigneavlt Christian,33667,"United Services Recreation Club 3, United Services Recreation Club M4",1168.60112747368,4
 Ip Thomas Shun Moon,22604,BOSS,1167.6339897456596,3
-Lam Alan Wing Lun,25458,TOMCAT,1166.4951536631315,3
 Chung Tsam Yee,34148,"The Squash Club 4, The Squash Club L4",1164.3191004312791,7
 Fu Ivan Fuk Cheong,27126,Titlows Squash Master,1159.3097655362878,4
 Chada Neil,35026,,1158.6811481494408,0
@@ -966,17 +968,15 @@ Wong Gary Ming Ho,29032,,1141.792332200938,0
 Blackburn Timothy Joseph,35405,Hong Kong Club Blue,1141.2984093216564,2
 Luk Raymond Yiu Fai,12899,BOSS,1141.1091014554213,2
 Leow Kin Leung,33698,,1140.9526928181615,0
-Ko Yat Ming,25882,Tuen Mun Squash Club,1140.757132458791,1
 Hong Cheuk Yip Gary,28194,Bravo D10,1139.7864152926772,2
 Ho Sung Hon,34912,Thunder 2,1139.556398712676,1
-Li Paul Lok San,33797,,1138.9244569125483,0
 Leung Siu Lun,34143,,1136.5837301446186,0
 Huang Kai Tao,34612,,1135.679398786286,0
-Lam Chi Chris,33243,Kwai Tsing District Squash Club,1135.5671689940611,1
 Gaffney Noel Patrick,32858,"LONGVIEW, WAKO",1134.7803602975457,3
 Lam Pak Kei Chris,28198,LONGVIEW,1134.169124749903,1
 Wong Javy Ki Ling,26016,"Hong Kong Football Club L3B, Hong Kong Football Club M4B, The Hong Kong Jockey Club Div 9",1133.9490457425368,4
 Au Wai Keung,30435,,1132.1728903183982,0
+Brettell David,19505,"Invader Squash, Kowloon Cricket Club M4",1122.8739099431193,3
 Huang Rui Wen,33836,,1122.4325051450255,0
 Chang Willon Wing Leung,22427,,1120.0,0
 Tse Deona Kit Yee,20568,,1120.0,0
@@ -986,7 +986,7 @@ Leung Chi Lok,33999,X-Alpha 4,1115.8529827793277,1
 Yip Hoi Yiu,31330,i-Mask Advance Squash Club 5,1113.2700801142119,1
 Li Ka Kit,32568,Sha Tin 3,1112.8340414955967,4
 Chen Ying Ting,35472,Bravo D10,1111.9432089006127,2
-Lee Leo Chi Kin,27894,Kwai Tsing District Squash Club,1111.6875389280638,1
+Lee Leo Chi Kin,27894,Kwai Tsing District Squash Club,1106.3808958248344,2
 Onillon Jean-Charles,34538,,1105.6589517919845,0
 Tsang Wai Kit Paul,23712,Kowloon Cricket Club M4,1104.3319023416109,4
 Gollop Stephen,26674,"Bolton, Hong Kong Football Club 9",1102.2663604270147,5
@@ -1008,13 +1008,13 @@ Tse Wai Hong,28394,Kinetic 3,1083.032148280296,3
 Lee Wing Lam,30753,i-Mask Advance Squash Club 1,1081.652049826969,1
 Bradbury Adrian,25380,"Hong Kong Cricket Club D10, Hong Kong Cricket Club M4",1081.3385802514474,3
 Erro Davide,30077,Hong Kong Club Blue,1080.837616446751,1
+Li Paul Lok San,33797,Squashathon Advance,1080.587141349041,1
 Lo Wai Kiu Bobby,23640,Titlows Squash Master,1080.3336555081394,2
 Yu Chi Keung,23608,"United Services Recreation Club 3, United Services Recreation Club M4",1079.6774647881298,6
 Tiu Man Kit,32010,,1078.8359568433405,0
 Fung Wing Hing,33786,Sha Tin 4,1078.4833092637098,1
 Sze To Shiu Keung,27376,Twister,1075.8985317143952,1
 Tsang Patrick Hing Suen,24706,,1074.8619688894812,0
-Brettell David,19505,Kowloon Cricket Club M4,1073.8433509082083,2
 Chen Ricky C,34536,"Royal Hong Kong Yacht Club Div 12, Royal Hong Kong Yacht Club M3",1072.5246793050994,5
 Zhang Wei,34529,,1071.9326516564622,0
 Teng Fredric,31138,Hong Kong Club Blue,1068.2297321567373,2
@@ -1023,10 +1023,13 @@ Lee Hoi Yu,33269,North District Sports Association 1,1065.097762130801,5
 Chan Koon Yan Boris,35177,7NT,1063.3653080112554,1
 Chui Horace,33180,Craigengower Cricket Club,1062.5610918578,2
 Au Shuk Ting,31750,"JESSICA L3, The Squash Club 2",1062.3836765885624,3
+Kwan Michael Siu Ming,27902,The Zero Squash Club D11,1061.8958050308438,2
 Chan Po Sing,7420,,1057.2344478299367,0
+Ko Yat Ming,25882,Tuen Mun Squash Club,1057.224006119168,2
 Simmons Shirndre-Lee,34672,Hong Kong Cricket Club Rockettes,1053.8984511925678,3
 Chung Shun Yeung,35022,Sha Tin 1,1051.4313779671058,2
 Chau Kwok Hung,19205,,1050.8239098052811,0
+Li Bruce Chi Fai,28820,The Zero Squash Club D11,1050.5553036311376,2
 Tang Terry Kin Ming,26179,Titlows Squash Master,1050.3781370208733,1
 Feng Shuang,35359,Bravo D10,1050.1505064213256,3
 Chan Christine Yik Tat,27830,"Hong Kong Football Club 7B, Hong Kong Football Club M4A",1043.8975026140401,4
@@ -1040,8 +1043,6 @@ Simons Paul,32299,,1033.3333333333337,0
 Chan Penny Miu Kwan,22757,,1032.8123597761255,0
 Cheng Wing Hei Timothy,29128,,1028.750015051026,0
 Griffiths John David,33926,"Hong Kong Cricket Club D10, Hong Kong Cricket Club M4",1021.5112002360021,4
-Li Bruce Chi Fai,28820,The Zero Squash Club D11,1021.0757708853777,1
-Kwan Michael Siu Ming,27902,The Zero Squash Club D11,1020.5540899876466,1
 Tai Dhubal Koon Ho,28400,South China Athletic Association,1019.2045366370062,1
 Leung Ka Lau,19059,,1018.9743435492496,0
 Thambidrai Sunil James,33666,Winter Warriors,1017.3898634601621,2
@@ -1059,7 +1060,6 @@ To Felix Ka Hei,28389,Kinetic 3,1000.9347000633273,1
 Ho Fai,26511,,1000.8145973607736,0
 Ho Stephen Wing Yuen,25235,,1000.1257431679747,0
 Lo Yue Hin,34090,Hong Kong Club Blue,998.6837593525964,3
-Ma Chun Wah,30385,Tuen Mun Squash Club,994.6018686397256,1
 Lau Douglas Kin Chung,32197,CSD Squash Team,994.3186955631513,1
 Ho Yu Hin Kenneth,32645,Star River 1,993.2224122538372,1
 Lee Maurice King Sun,18213,,993.1336377143404,0
@@ -1067,6 +1067,7 @@ Lo Wing Man Veronica,31507,"Hong Kong Football Club 12B, Hong Kong Football Club
 Yip Kent Chi Bun,25547,"Kowloon Cricket Club 9, Kowloon Cricket Club M3",991.6041964573172,3
 Leong David Kam Ho,29173,Kinetic 3,991.4527650893431,1
 Ngan Xyan,30421,,989.7837466726204,0
+Leung Sui Sang Darren,29711,The Zero Squash Club D11,988.2790082829732,2
 Yau Lucas Haoxiang,33870,Vitality Squash 2,987.9017061994404,1
 Ng Coleman Shung Ching,11000,United Services Recreation Club M4,986.9452305261326,1
 Chung King Long Jacqueline,33463,Hong Kong Cricket Club L3,982.8656426873649,3
@@ -1083,8 +1084,8 @@ Li Kelvin Hon Hun,22460,BOSS,973.6188287113771,3
 Yeung Leo Kin Lai,29263,i-Mask Advance Squash Club 4,971.4872649127648,2
 Tang Thomas Sek Khuen,24182,,971.4285714285714,0
 Leung Suen Yan Tiffany,33758,Hong Kong Football Club L3B,966.4752383433752,2
+Ma Chun Wah,30385,Tuen Mun Squash Club,966.4251474347403,2
 Law Tsz Ting,34134,Hong Kong Football Club L3A,966.119642178596,3
-Leung Sui Sang Darren,29711,The Zero Squash Club D11,966.0136257889037,1
 Tang Chi On,22252,TOMCAT,964.4508536359938,2
 Wu Chi Wai,24705,Arctic Circle,962.3404664020369,4
 Hui Man Fai,32681,i-Mask Advance Squash Club 4,961.7950446996055,1
@@ -1093,6 +1094,7 @@ Openshaw Michael,30134,,959.0021739682428,0
 Chan Raymond Tsan Fai,23067,Titlows Squash Master,958.9481044684992,3
 Law Yuen Fung,32698,RELAY 1,957.6322487403459,1
 Wong Ka Ming Alan,30543,,956.6293061061854,0
+Lai Kam Fai,27441,The Zero Squash Club D11,954.3410507748237,1
 Chan Kar Wai Cynthia,23951,,949.2404362478384,0
 Lai Herbert Chan Wah,27482,"SKCSC Div 12, SKCSC M4",948.3060564953718,5
 Lou Eddie Kuong Fai,23024,i-Mask Advance Squash Club 4,948.2990547174367,1
@@ -1139,6 +1141,7 @@ Wu Kan Wah Kit,13158,,912.4772871773396,0
 Lau Hin Wang,33459,,910.6467888803114,0
 Luk Jeffery Chi Heng,31182,Sea Bear,908.8466976327112,1
 Yuen Lok Hang,34671,Physical Chess 3,908.6875428117247,1
+Lau Chun Kin,34520,Electrify Squash Div 11,908.2971225507805,1
 Koeman Arthur,22974,Hong Kong Cricket Club M4,906.9896995331528,3
 Peaker Mark,28616,Hong Kong Club Blue,902.8022675364191,1
 Lam Francis Fu Yuen,25420,,902.7174588145542,0
@@ -1149,13 +1152,11 @@ Tse Jason Tsz Chun,30658,,894.8104094422672,0
 Chen Wai Man,28455,,892.6217334486197,0
 So Stephanie Yuen Ting,34241,,892.5127565910052,0
 Cao Yu,34274,TNG 1,889.4591552832333,1
-Liu Vincent Wing Sang,28127,Invader Squash,887.1316626762468,1
 Tse Chun Kit,34428,,884.8436818144725,0
 Leung Chi Man,28540,,884.2105263157895,0
 Cheng Chi Kin Austin,28857,Tuen Mun Squash Club,883.6367261435643,1
 Yung Kai Sing,32148,Titlows Squash Master,881.8735803843327,3
 Wu Minyan,34941,Bravo D10,881.0818548672635,3
-Leung Freddie Ping Wah,24157,Invader Squash,880.4453335472359,1
 Lau Chi Wai,27682,Alpha CUHK,879.5515796257421,1
 Cumberlege Edward Jeremy Parbury,35395,Royal Hong Kong Yacht Club Div 12,877.5877265126475,2
 Gupta Akhil,32819,Winter Warriors,876.7238940702676,1
@@ -1174,21 +1175,22 @@ Chan Willie Wai Hung,23991,,863.3092698775048,0
 Wong Michael,27420,BOSS,863.2430030125893,3
 Garland Keith Roy,30585,,863.1578947368421,0
 Lam Arthur Chi Keung,17126,South China Athletic Association,861.8583481757792,1
-Chu Chun Yin,34670,,861.2120086229338,0
+Leung Freddie Ping Wah,24157,Invader Squash,860.1521910974714,2
 Hutchins Darren,34716,Royal Hong Kong Yacht Club Div 12,860.1452945697572,1
 Chan Shun Ting,34127,Happy Squash 3,859.9234030397294,4
 Kwan Kay Ho Kelvin,28556,"Hong Kong Football Club 12A, Hong Kong Football Club M4B",859.0194401730564,2
 Ho Kwan Ho,33614,,858.7839476616966,0
 Hinchcliffe Robert Bruce,2306,Hong Kong Club Blue,858.6918395508649,1
 Leung Patrick Pak Chiu,12880,SKCSC Div 12,857.1480709711973,1
+Lam Cheuk Yin,31194,Electrify Squash Div 11,855.836713738017,1
 Tang Keng Io,28504,Kinetic 3,855.5258035954738,2
 Vaswani Arun,29172,Kinetic 3,855.0434947621042,1
 Tang Hon Leung,29873,,851.2337194553271,0
+Liu Vincent Wing Sang,28127,Invader Squash,851.1947684302954,2
 Singh Deep Karman Pal,35398,Winter Warriors,849.2123837894475,1
 Kendall Charles Richard,26162,Hong Kong Club Blue,848.4987247308018,1
 Wong King Yi Kimmy,29418,,847.9039465466693,0
 Ho Yuen Wang Samson,31150,,846.8425804278834,0
-Lau Chun Kin,34520,,846.3241567882202,0
 Lee Yat Long,33249,Physical Chess 4,846.1152637732355,1
 Ng Chi Ming,29984,Global Squash 2,843.7097584334175,2
 Leung Yip Kan,28528,South China Athletic Association,843.1197640481003,1
@@ -1203,7 +1205,6 @@ Man Hok Him,32057,,834.6504982642218,0
 Tsang Sin Kei Ophelia,29752,Kwai Tsing District Squash Club L4,834.5403737605624,4
 Fu Wei,35020,,833.7452909950727,0
 Tang Chi Kin,29423,,832.8681504988709,0
-Lam Cheuk Yin,31194,,832.2591059161244,0
 Chau Gordon,32776,,830.6117237025154,0
 Leung Tsun Man,33088,North District Sports Association 1,827.8839968858857,1
 Leung Lilian Wai Shan,28446,"Hong Kong Cricket Club L3, Hong Kong Cricket Club L4, The Zero Squash Club D11",825.1510995251602,4
@@ -1213,12 +1214,12 @@ Chew Alexander,33208,Hong Kong Football Club 12A,823.9818163804434,3
 Yam Tsz Hei,34218,"Sha Tin 3, Sha Tin 5",823.7649375421012,3
 Wei Miles Abraham,34139,,823.4119547828209,0
 Matsuo Serina,34056,,823.2996784032069,0
+Leung Hok Sum,31309,Squashathon Advance,821.5184009215094,1
 Poon Patrick Lai Keung,23444,,821.4221075642735,0
 Pun William,34033,Fusion Squash Club 2,821.2406919853636,2
 Tse Tin Yui,34042,X-Alpha 5,820.9829248688894,2
 Tam Kwan Ho,29359,Physical Chess 4,820.6304528056643,1
 Ngan Joan,34156,"The Squash Club 4, The Squash Club L4",820.238494037995,6
-Leung Hok Sum,31309,,819.4406130938683,0
 Ho Wai Keung,31612,"Royal Hong Kong Yacht Club Div 14, Royal Hong Kong Yacht Club M4",819.2898253598887,4
 Lau John Wai Nang,29027,,818.8175133774738,0
 Siu William Chak Man,26273,HKPF Squash Team,818.6139834924174,3
@@ -1231,12 +1232,14 @@ Mahfooz Hamza Farrukh,34986,,812.3005851250408,0
 Wong Alan Yuk Lun,17359,,811.0304333085687,0
 Leung Yuk Chiu James,32561,Global Squash 2,809.6026158032821,2
 Ku Ken,31927,,809.2882397235126,0
+Chu Chun Yin,34670,Tuen Mun Squash Club,807.8274880263268,1
 Chau Phil,32598,Hong Kong Football Club M4A,807.5797081367731,1
 Sutch Jeremy,33574,,807.4189863620788,0
 Cheng Samantha Ho Yan,27915,The Squash Club 4,805.222679119594,1
 Chong Tin Hang,34091,"i-Mask Advance Squash Club 1, i-Mask Advance Squash Club 4",804.4463152889525,4
 Hughes Trevor,28593,,803.1837015420552,0
 Wong Ka Hei,32054,,803.0029626237454,0
+Chan Paul Chiu Hung,24511,Tuen Mun Squash Club,802.3692468700957,1
 Tsang Timmy Kwok Tim,30269,ZOMA,801.6403957664342,1
 Yip Siu Hong,34093,,801.5154948640911,0
 Lee Chun Tak,33815,,800.0,0
@@ -1249,11 +1252,11 @@ Bowdern Darren Raymond,35017,,795.1073373463764,0
 Leung Ka Luen Wilson,28829,Squashathon Advance,792.3592078103989,1
 Wong Doug Chung Tak,25011,SKCSC Div 12,791.1140279799714,1
 Somers Jonathan,35023,Bolton,790.8499574618352,3
+Lee Ching Long,33881,Electrify Squash Div 11,789.7511953281945,1
 Yuen Amos Wing Keung,14217,,789.268504865628,0
 Clayton Iain Michael,34641,"Royal Hong Kong Yacht Club Div 12, Royal Hong Kong Yacht Club M4",785.5980491619669,4
 Chan Chi Wah,34752,Star River 1,785.4043534667296,2
 Ho Kwok Kei,28307,,783.8724508346909,0
-Chan Paul Chiu Hung,24511,,782.4796553960146,0
 Hon Wai Lam,32183,i-Mask Advance Squash Club 7,781.6550368142969,3
 Ling Siu Ki Brian,27484,SKCSC Div 12,778.9856889944924,3
 Yeung Samuel Albert,32056,,778.2130560485375,0
@@ -1262,14 +1265,13 @@ Chan Simon,32548,Craigengower Cricket Club,772.6409047678886,2
 Cheng Chung Wing Raymond,25367,,770.5482290845586,0
 Bai Bowen,33955,,768.0787003134985,0
 Cheung Chi Hei,31223,Global Squash 2,767.5154350537687,3
-Wong Simpson Yau Shan,30245,Invader Squash,766.2899894693164,1
 Tam Tsz Lung,33865,TNG 1,766.0272615591155,2
 Lui Danny Wai Kit,15150,,762.8363799699202,0
 Wong Ken Ka Leung,21983,SKCSC Div 12,761.9666513373376,1
 Wong Shing Yin,34060,GMDBB,761.7178467585424,1
 Healy Richard,30272,Hong Kong Cricket Club M4,761.1618317186402,1
+Tam Ming Wai,34250,The Squash Club 3,759.7314233024501,2
 Sung Iris,22099,"Hong Kong Football Club 12B, Hong Kong Football Club M4A",758.8310279762122,3
-Poon Kings Kin Sun,19666,Invader Squash,758.5361810103233,1
 Buttifant Barry John,8048,,757.737091946646,0
 Lam Tsun Yin,35408,CSD Squash Team,756.867093350092,1
 Tan Nicholas,28259,Hong Kong Football Club 12B,754.7994597847556,1
@@ -1280,10 +1282,10 @@ Tse Cheuk Lam,35109,,749.0795180722891,0
 Leung Keith Koon Chung,34985,Royal Hong Kong Yacht Club Div 12,748.2690761618908,1
 Yip Edmund Kin Man,29325,Star River 2,746.3941645245029,2
 Tsang Patrick Kai Chi,32921,Craigengower Cricket Club,745.4163451618907,1
+Leung Long Hin,33985,Electrify Squash Div 11,745.1071496854051,1
 Miao Xin,34991,,744.9746959714669,0
 Dhillon K Singh,32632,,744.0892659323629,0
 Lee Nok Tin,34214,JSA 1,744.044258244816,1
-Lee Ching Long,33881,,743.6538315112007,0
 Tilbrook Nicolas,27086,,743.4948245806871,0
 Dua Jigyasa,34108,,743.3067590940062,0
 Chan Kwong Ching Darren,31352,Physical Chess 4,742.1656585999276,1
@@ -1292,6 +1294,7 @@ Cheung Fung Yee Ida,27556,Global Squash 2,740.7217538008529,1
 Bei Chi Ting,34242,JSA 1,740.6798604906679,2
 Cheng Chuen,26785,South China Athletic Association,737.6676791635109,1
 Wong Yin Cheuk,32066,Sha Tin 5,736.7962780072063,2
+Poon Kings Kin Sun,19666,Invader Squash,736.6364426906607,2
 Au Shing Wai,23013,Invader Squash,735.7022645267369,1
 Zhang Ting Ze,34019,,735.448844414646,0
 Putt Alasdair,34502,"Hong Kong Football Club 12A, Hong Kong Football Club M4B",735.1106830861771,2
@@ -1312,14 +1315,11 @@ Lanversin Julien,34516,,716.7286448027187,0
 Liu Yuet Kan,35482,SKCSC Div 12,716.6364253239394,2
 Mitchell Aiteina,33774,Hong Kong Football Club 12B,714.8506837226909,3
 Koon Long Ying,33474,TNG 1,712.6747170349424,1
-Tam Ming Wai,34250,The Squash Club 3,712.6048179091149,2
 Wong Jace,33866,,711.9445508522061,0
 Lui Ho Yin,31555,,710.3535487559194,0
 Lin Zixuan Emma,33884,Hong Kong Football Club JSA,710.315197001894,1
-Leung Long Hin,33985,,710.0125586399,0
 Lam Ka Yin,35004,Hong Kong Cricket Club Rockettes,709.5221558073994,5
 Chan Hong Ting,34128,Happy Squash 3,709.4219481109161,3
-Loo Long Hui,32648,Squashathon Advance,707.4105319807082,1
 To Peter,25986,,706.9892963084313,0
 Tam Yat Yin,33440,Yuen Long District Sports Association Limited,706.6948869656226,1
 Smith Robert,11930,Hong Kong Cricket Club M4,705.5236544435933,1
@@ -1331,12 +1331,12 @@ Jiang Ziwei Forrest,34810,,700.4804635932242,0
 Debnam Nicholas James,28702,Hong Kong Club Blue,700.2398400867418,1
 Tang Wing Keung,27121,The Squash Club 3,699.7502220051573,5
 Lau Sze Tung,33961,Happy Squash 4,699.6088693709374,2
+Loo Long Hui,32648,Squashathon Advance,698.9901074121717,2
 Rickett Nicholas Grant,34503,,698.1818181818181,0
 Goran Manojlovic,34808,,697.8250258921667,0
+Wong Kelvin Ka Wing,32082,Squashathon Advance,696.5680999456615,2
 Choy Siu Sang,27487,Sea Bear,695.6257726587314,1
-Lau Sui Ho,34472,Tuen Mun Squash Club,695.2862189260568,1
 Mok Ka Chun,34386,,694.5920291152719,0
-Wong Kelvin Ka Wing,32082,Squashathon Advance,693.2588272896623,1
 Dogra Vijendra Singh Balbirsing,33777,Royal Hong Kong Yacht Club Div 14,691.8705129124141,2
 Mak Derek Kam Yuen,7883,"HKPF Squash Team, WAKO",691.6933752957152,2
 Tam Rony Kwok Ki,12029,"SKCSC M4, Star River 2",691.3073374596344,5
@@ -1346,6 +1346,7 @@ Chen Mickey Youlin,34032,,688.7855625688372,0
 Chan Peggy,18995,,686.2155164255252,0
 Hewitt Stephen,35067,,685.9145022262439,0
 Ng Simon Chi Ming,6025,"Hong Kong Football Club 12B, Hong Kong Football Club M4A",684.148043173958,2
+Wong Simpson Yau Shan,30245,Invader Squash,681.6948390468086,2
 Chow Ka Lun,30089,,676.33099361207,0
 Tsang Tzu Hao,35018,Bolton,676.2461836194902,1
 Luk Thomas Yun Tong,23978,,675.665759558732,0
@@ -1364,6 +1365,7 @@ Cheung Brian Sheung Yan,31242,Arctic Circle,664.0106249329684,3
 Lee Ka Yi,25734,,663.2681859414388,0
 Kan Yu Hin,28957,Global Squash 2,661.6332799861974,1
 Kang Sen Yu,34510,Bravo D13,661.2213461538462,1
+Lau Sui Ho,34472,Tuen Mun Squash Club,660.9195232727747,2
 Cheung Kee Wing,25181,ZOMA,660.654769669977,1
 Lai Yiu Wa,30682,Greenfield,660.4159331216645,2
 Wong Yeuk Yik,34565,"The Squash Club 4, The Squash Club L4",659.8084668801193,4
@@ -1373,10 +1375,10 @@ Tsang Wun Ying,34576,The Squash Club L4,658.3973834691918,2
 Mok Fuk Kam,26005,,655.9185190475448,0
 Cheung Ryan Hayden,34267,,655.8125795221905,0
 Wang Xiao Yi,34805,,655.76252226625,0
-Choi Hiu Yeung,32300,Arctic Circle,655.1470016195059,3
 Han William Jialun,35178,JSA 1,654.7904479682923,2
 Rambaud- Chanoz Nicolas,34493,Squashathon SocGen,654.0777355525241,4
 Cheung Ken Wai Luen,31177,ZOMA,653.3032378559159,1
+Choi Hiu Yeung,32300,Arctic Circle,652.6047731096395,3
 Kwan Hoi Ching,33900,,651.9397566151051,0
 Tang Yik Lam Cherise,33931,X-Alpha 4,650.7357934686021,1
 Kandlakunta Raghunath,33130,Winter Warriors,649.6481407925785,1
@@ -1419,8 +1421,8 @@ Tan Xin,34902,i-Mask Advance Squash Club 6,619.4253145266114,2
 Chiu Yin Ching Taylor,33888,,615.5172294865914,0
 Lai Gary Kin Yeung,26995,,610.8203395280576,0
 Chan Connie Chau Wah,29783,CSD Squash Team,610.424192546515,1
-Yim Ka Chun,35565,Squashathon SocGen,609.0000000000001,1
 Lai Chak Hin,34691,Smart Squash 2,609.0000000000001,1
+Yim Ka Chun,35565,Squashathon SocGen,609.0000000000001,1
 Wong Yi Ching,34457,"Hong Kong Football Club JSA, Hong Kong Football Club L3B, Squashathon One",608.932349114194,8
 Tan Tianle,34901,i-Mask Advance Squash Club 6,608.3884375878134,2
 Ho Chun Lok,33910,Smart Squash 2,607.2808939519576,1
@@ -1482,17 +1484,16 @@ Lau Yuk Yee,35467,Kwai Tsing District Squash Club L4,568.9651319457876,1
 Tam Ka Yu,30813,i-Mask Advance Squash Club 7,568.497219034409,1
 Lin Elizabeth,35426,HKIS Div 13,567.6627999657436,1
 Tse Tin Yiu,34041,X-Alpha 5,567.5889551747098,2
-Wong Marcus,34976,MM Squash,567.1771222125933,3
 Le Angelina Elizabeth,34306,Hong Kong Football Club L4,566.6118632588558,3
 Lin Hei Wo Howard,35048,i-Mask Advance Squash Club 6,566.2434086826156,1
 Lam Audrey Lok Yi,33941,Hong Kong Football Club JSA,566.1803899207005,1
 Leung Wai Ki,31764,,565.8888981953602,0
 Liu Cheuk Wang,34676,Smart Squash 2,565.563243271628,1
+Wong Marcus,34976,MM Squash,565.2530074427789,3
 Ha Henry Kam Bo,19665,WAKO,564.854061282258,1
 Wong Kai Hong,35283,Electrify Squash Div 13,564.4453334921859,2
 Chung Wing Yin,32610,"Squashathon Ladies, Squashathon One",564.218241083166,4
 Koh Yi LIn,35487,Kinetic 4,562.780404645916,1
-Lee Kin Ping,33290,"Squashathon SocGen, Squashathon X",562.336032623578,2
 Chan Cedric,34738,Smart Squash 3,561.5288992443325,2
 Lam Ching Yee,35192,The Squash Club L4,561.5032199969842,1
 Lai Ming Yau Martin,34441,,559.0779852718844,0
@@ -1502,7 +1503,6 @@ Le Aaron Quang,34307,Hong Kong Football Club 13,558.1832711039739,1
 Lam Wai Ming,5239,"Hong Kong Football Club 12A, Hong Kong Football Club M4A",557.4859506139525,3
 Cheung Chun Ning,32547,,556.9423696361354,0
 Lin Jia Li,35473,Bravo D13,556.3768288379983,1
-Leung Yuk Ming,34030,,554.4728296843014,0
 Chung Wai Ting,29719,Kwai Tsing District Squash Club L4,554.4232876259802,2
 Bai Yuet,34086,,552.0198694988356,0
 Leung Yat Hei,33089,North District Sports Association 1,550.9687277495416,5
@@ -1514,9 +1514,11 @@ Wan Esther,33570,"Hong Kong Football Club 13, Hong Kong Football Club L3A, Hong 
 Lathia Areeb,34871,Squashathon SocGen,548.6487430148018,4
 Ma Ka Ho,35578,MM Squash,545.010807144046,2
 Huen Sze Chit,34275,Yuen Long District Sports Association Limited,543.0463093541458,4
+Lee Kin Ping,33290,"Squashathon SocGen, Squashathon X",542.711160354518,2
 Hong Hang Shan,33432,Arctic Circle,542.6144149835993,1
 Wong Wing Hing,34166,,541.6885960418898,0
 Ng Ka Wai Devana,35344,Yuen Long District Sports Association Limited,541.1599514460593,2
+Leung Yuk Ming,34030,Electrify Squash Div 11,540.3788682760434,1
 Lau Ted Hei Yuen,25050,Greenfield,540.1717893074095,1
 Zhou Cheng  Yuan,34850,MM Squash,539.9496755908812,3
 Cheung Hoi Ying,34236,The Squash Club L4,539.6094802878074,2
@@ -1592,9 +1594,9 @@ Ho Peter,33863,"Kowloon Cricket Club 13, Kowloon Cricket Club 9",485.62806743388
 Chan Hin Chiu,30090,,484.2433852785766,0
 Cheung Hau Yat,34652,Kinetic 4,483.9916437548209,1
 Chui Benjamin,32813,Royal Hong Kong Yacht Club Div 15,483.32631602784954,2
-Wu Zhen Xi,34709,,480.0,0
 Shao Bang Jie,34380,,480.0,0
 Skinner Clare Jane Marian,34990,,480.0,0
+Wu Zhen Xi,34709,,480.0,0
 Fong Sze Yu Ella,34880,Happy Squash 4,477.5866808553032,2
 Chen Peak Julian,34350,Ladies Recreation Club Div 14,476.81325415696637,3
 Yang Xinxiao,35132,,474.4929815350651,0
@@ -1728,12 +1730,12 @@ Oei Yin Chun Kyle,34843,,349.09090909090907,0
 Laracy William,34779,Hong Kong Football Club 14,347.7248727896323,4
 Cheung Chak Hang,34534,Electrify Squash Div 13,345.53594752100236,1
 Cheng Chi Yung,34757,North District Sports Association 3,343.51167308937113,3
+Ip Laam,34347,X-Alpha 5,342.9748064844601,2
 Chum Dylan Dzongsar,33920,HKIS Div 13,342.87503035151514,2
 Wong Ying Tung,34535,,342.8181818181818,0
 Adjemian Antoine,34077,Ladies Recreation Club Div 14,342.76667395209734,1
 Chan Tsz Hin Benjamin,34878,Electrify Squash Div 13,341.7152193646111,2
-Ip Laam,34347,X-Alpha 5,341.46252758913954,2
-Yip Tin Rong,34586,Happy Squash 5,337.7857576679977,4
+Yip Tin Rong,34586,Happy Squash 5,338.5444808430754,4
 Lau Hug Chun Felix,35171,Electrify Squash Div 13,337.5980733240654,5
 Liu Riley,35050,Fusion Squash Club 4,337.0700823081739,4
 Han Julian O,34563,Hong Kong Football Club 14,335.79519718667984,3
@@ -1764,7 +1766,7 @@ Verma Kanay,33958,,287.2659741718871,0
 Pang Man Hei,34407,Sha Tin 6,286.66519222875,4
 "Lee Tsak Ying, Carol",34035,Squash-On,286.4908511018018,3
 Wong Chi Kin,34479,Squashathon One,285.7676077321032,3
-Dong Ka Chung Jacky,21062,Royal Hong Kong Yacht Club Div 15,282.71135321568653,2
+Dong Ka Chung Jacky,21062,Royal Hong Kong Yacht Club Div 15,282.7442340647775,2
 Lam Ethan Hon Yin,33738,Hong Kong Cricket Club D15,278.60541903054656,2
 Heng Ashton,33868,8 Virtues + 1,276.91440457781954,1
 Lee Man Yu,34988,TKO Junior 1,275.03419784863206,2
@@ -1774,6 +1776,7 @@ Lau Sai Kit Ethan,34698,i-Mask Advance Squash Club 7,271.4089927357747,2
 Chan Chun Ho,34950,"Physical Chess 4, Physical Chess 5",269.8745986487232,3
 Chan Yuen Hei,34951,,263.2068318139925,0
 Au Pak Yin,34047,i-Mask Advance Squash Club 6,260.5092785003586,2
+Wong Tsz Him,34806,The Zero Squash Club D11,257.0587048850506,2
 Yau Ming Chi,35064,"Squashathon Junior, Squashathon SocGen",256.8622637874689,5
 Chung Yui On Jake,34325,RELAY 2,256.2877747189156,1
 Tsang Ka Lei Carrie,30714,Squashathon X,255.43553869955468,3
@@ -1785,7 +1788,7 @@ Tam Wai Pui,33493,,248.54792292117472,0
 Davey Lucas Philip,34240,Hong Kong Cricket Club D15,247.91023742368807,3
 Lum Suet Man Belinda,35005,Electrify Squash Div 15,247.40610669811292,1
 Tin Nok Lam,34814,"Physical Chess 4, Physical Chess 5",246.98660697484587,3
-Agarwal Priyaan,34577,Hong Kong Cricket Club D15,246.39978400665478,3
+Agarwal Priyaan,34577,Hong Kong Cricket Club D15,246.75651528270606,3
 Ho Yik Siu Andy,31285,Physical Chess 5,245.41927752659657,1
 Hung Pak Hin,34300,,245.3009619125475,0
 Jue Emily Xiao Ran,34589,"Hong Kong Football Club JSA, TNG 2",245.08099659742578,3
@@ -1797,11 +1800,10 @@ Huang William Yijia,34963,Hong Kong Cricket Club D15,236.67738910731904,2
 Yu Chung Wo,35574,NEXUS 4,236.38337485494168,3
 Choi Chin Lok,34415,Electrify Squash Div 15,235.7969631296024,2
 Chung Chun Ho,34866,LONGVIEW,235.64476633214636,1
-Mak Jaden,34673,United Services Recreation Club 4,234.8430900719301,2
+Mak Jaden,34673,United Services Recreation Club 4,235.1836421683089,2
 Fung Tin Lok,34816,Physical Chess 5,233.73185303119354,2
 Chow Hoi Ying,35315,Squash Busters,232.7400296765881,2
 Cheng Nic,34567,RELAY 2,231.81961299366117,3
-Wong Tsz Him,34806,The Zero Squash Club D11,231.50188318531977,1
 Lam Tsz Wang,34660,i-Mask Advance Squash Club 7,231.37336193301826,3
 Zou Rongzan,34768,TKO Junior 2,230.93002878809546,3
 Chang Nga Pui,35131,United Services Recreation Club 4,230.6052048616618,1
@@ -1820,6 +1822,7 @@ Tse Sheung Wa,34161,Squashathon One,221.42613212344324,2
 Poon Yik Fan,34315,i-Mask Advance Squash Club 7,221.32178365670347,2
 Chiu Yuet Yi,34206,"JESSICA Mochis, TNG 3",220.98795467928707,2
 Wu Jiang Johnny,34594,TKO Junior 2,220.13617757191614,2
+Fan Yan Pui Jedidiah,35203,Happy Squash 5,220.13617757191614,2
 Chong Ka Yuen Calix,35310,Squash Busters,219.48093594630004,2
 Cho Yat Long,35197,Squashathon Junior,219.27765664448796,3
 Wong Tsz Chun,34974,,218.8005527105658,0
@@ -1837,16 +1840,15 @@ Wong Icarus Ho Hoi,27377,Sha Tin 6,211.33446963557057,1
 Jain Ankur,35553,Vitality Squash 3,210.94597757191616,1
 Fung Lai Wa,35299,North District Sports Association 3,210.81585057308394,2
 Mui Wai Hin,35311,Squash Busters,210.74718716035048,1
+Chan Yu Hin,34418,RC,210.2609765837841,3
+Wang Wai Kuen,35440,Squash Busters,210.2,1
+Lam Hiu Tung,35433,Squash Busters,210.2,1
 Cheung Diana,35085,Squashathon Junior,210.2,1
 Jain Advik,35554,Vitality Squash 3,210.2,1
-Fan Yan Pui Jedidiah,35203,Happy Squash 5,210.2,1
-Lam Hiu Tung,35433,Squash Busters,210.2,1
-Wang Wai Kuen,35440,Squash Busters,210.2,1
 Hsu Ming Hin,35229,Dream Catchers,209.96136164794586,3
 Leung Alexandria Si Qing,35069,Vitality Squash 3,209.41498204207284,1
 Wu James,35479,TKO Junior 2,209.41498204207284,1
 Chan Nathan Tze Ho,34246,"Squashathon One, Squashathon X",208.97445864430344,2
-Chan Heng Yau,35207,Happy Squash 5,208.69278808931819,1
 Wan Kang Hao,35117,TKO Junior 2,207.89982439950606,4
 Zhu Youwei,34971,,207.0828999930945,0
 Kwong Alexander,34345,,206.9771724313184,0
@@ -1860,7 +1862,6 @@ Xie Ho Yu,34799,NEXUS 4,204.96367477194383,2
 Lin Hei Chi Amber,34048,i-Mask Advance Squash Club 6,204.67410472310905,1
 Ho Lok Hei,33325,,204.5965258244672,0
 Lam Shun Yan,31501,North District Sports Association 3,204.3799459909078,2
-Leung Tsz Ngo Daren,34868,RC,204.2847502357189,2
 Rui Filipe Da Silva Fernandes,35558,Royal Hong Kong Yacht Club Div 15,204.27096827259342,2
 Tang Tin Ming Helios,34414,RC,203.74597757191614,1
 Chung Yin Lok Aiden,34273,United Services Recreation Club 4,202.93193109593636,2
@@ -1868,8 +1869,9 @@ Mei Tianle,34771,Fusion Squash Club 4,201.9311338329973,2
 Lam Ching Feng,35282,Dream Catchers,201.49278808931817,1
 Chen Zimo Ethan,34905,Vitality Squash 3,201.40653047329636,2
 Chak Wai Suen,34870,Squashathon Junior,200.86230333991446,2
-Ma Cheuk Nam,35231,Squashathon Junior,200.22478204207283,2
 Nie Rongrong,35572,Royal Hong Kong Yacht Club Div 15,200.22478204207283,2
+Ma Cheuk Nam,35231,Squashathon Junior,200.22478204207283,2
+Tam Chuen Shing,35337,"North District Sports Association 3, Squashathon SocGen",200.12021202824835,4
 Lai Long Kin,35828,Electrify Squash Div 15,199.82,2
 Lu Zi He,35217,Squashathon Junior,199.5356492164121,2
 Lai Man Po,35351,Electrify Squash Div 15,199.45535782547117,2
@@ -1877,18 +1879,15 @@ Tse Lai Sze Vivian,35006,,199.25863993061355,0
 Lee Tin Yau,34629,Fusion Squash Club 3,199.13041932918412,2
 Zhao Michael Ziyu,34973,,198.96359338061467,0
 Wong Wing Lam,35280,TKO Junior 2,198.69577757191612,2
-Chan Yu Hin,34418,RC,198.69577757191612,2
 Grewal Nimrita Noor,35149,,198.59650792533608,0
 Chan Lok Man,34290,,198.5752881202343,0
 Lau Man Kit,35827,Electrify Squash Div 15,198.03594186767904,1
 Leung Kin Ho,34831,,197.7634965891369,0
 Chow Qing,34269,,196.87879420757892,0
-Tam Chuen Shing,35337,"North District Sports Association 3, Squashathon SocGen",196.4323028238102,4
 Cheung Hei Sun,33691,,196.28865599098333,0
 Lo Lok Him,34908,Sha Tin 6,196.2848548934842,2
 Fong Pak Kiu Gaspar,35227,Dream Catchers,195.8541710307325,3
 Cai Demi Xinya,34238,,195.5555555555556,0
-Chi Ho Sum,34896,Happy Squash 5,195.08166378209293,4
 Ieong Chi Cheng,35098,,195.0218495810905,0
 Tam Erin,34575,,194.4726193165867,0
 Cheung Vinus,34277,Happy Squash 4,194.36497962798828,1
@@ -1901,6 +1900,7 @@ Lam Tsz Ching,34579,i-Mask Advance Squash Club 7,193.47462878473573,3
 Lee Yee Ching,34299,,193.280569468525,0
 Wan Yiu Hong,34817,,193.0127939420329,0
 Ko Tsun Kiu,34879,,192.97473828409807,0
+Leung Tsz Ngo Daren,34868,RC,192.663981996208,1
 Lam Yuk Ying,35421,North District Sports Association 3,191.71419790976452,1
 Wong Wui Man,34740,Electrify Squash Div 13,191.54961077419605,1
 Leung Kai Man Stephen,35492,Royal Hong Kong Yacht Club Div 15,191.1893008342071,1
@@ -1908,17 +1908,17 @@ Tam Hei Long,34681,,191.0540918090816,0
 Hong Xue Yan,35335,North District Sports Association 3,191.01673299296107,1
 Chu Tsz Pik,34353,,190.9513144099408,0
 Cai Hok Hei,35382,Squashathon Junior,190.54597757191613,1
+Li Yik Wai,35412,RC,190.54597757191613,1
 Lam Sin Lai,35009,Electrify Squash Div 15,189.79999999999998,1
-Lee Hiu Fung Alvin,35423,NEXUS 4,189.79999999999998,1
-Lau Yee Ching,35413,RC,189.79999999999998,1
 Au Wan Man,35208,NEXUS 4,189.79999999999998,1
 Sun Hoi Ting,35410,TKO Junior 2,189.79999999999998,1
+Lau Yee Ching,35413,RC,189.79999999999998,1
+Lee Hiu Fung Alvin,35423,NEXUS 4,189.79999999999998,1
 Chung Lincoln Sing Fun,34125,,189.7277394129308,0
 Leung Thomas Si MIng,35070,Vitality Squash 3,189.62227849963642,1
 Chong Tsz Yuen,35387,United Services Recreation Club 4,189.01498204207286,1
 Wong Hoi Shan,34981,Squash Busters,188.90557845430519,1
 Wei Shi Yuan,35350,Electrify Squash Div 15,188.649054422379,3
-Li Yik Wai,35412,RC,188.5953080380804,1
 Or  Hin Kin,35320,Dream Catchers,188.18,2
 Cheung Oliver Nathaniel Yen Chak,35406,Vitality Squash 3,188.013908942286,2
 Ng Lok Ning Valerie,34137,United Services Recreation Club 4,187.90326833968788,1
@@ -1928,12 +1928,14 @@ Tam Emily,34574,,186.67289050653864,0
 Gupta Kalash,34967,,186.5388477356537,0
 Chui Wai Shing,35303,TKO Junior 2,185.92486660566323,2
 Fung Kwun Shing,33002,,184.62815856785983,0
+Chi Ho Sum,34896,Happy Squash 5,184.55755354496395,3
 Fu Isabelle,35153,Vitality Squash 3,184.48517752212692,1
 Chi Sum Yau,34897,Happy Squash 5,182.42575504076126,4
 Ye Liangliang,35030,Squashathon X,182.20847091086804,1
 Chung Cheuk Hei,34637,,181.80905921061697,0
 Chan Ho Ching,33567,,181.5760481176331,0
 Li Li,34832,,180.96091676837227,0
+Chan Pak Ching Winky,35362,RC,180.86518204207286,2
 Rumjahn Trisha,34197,Squash-On,180.81779579653318,1
 Wong Sung Chit,34216,,179.98080209939425,0
 Cao Rui,34367,TNG 2,179.9570749161513,1
@@ -1954,7 +1956,6 @@ Wu Zhi Xian,35364,HKIS Div 15,175.37640205755125,3
 Ho Matthias Isaac,34357,TNG 3,174.2432959130902,1
 Yu Hoi Yi,34979,NEXUS 4,174.18612308195102,3
 Cheng Chi Yan Jocelyn,34657,,174.1569339969212,0
-Chan Pak Ching Winky,35362,RC,173.00406854093438,3
 Kwong Ching Nam,34686,TNG 2,172.82908844423287,1
 Lau Sai Chak Elson,35110,,172.79575227509838,0
 Wong Hiu Lam,34403,,172.77635059427163,0
@@ -1986,7 +1987,7 @@ Lee Mei Chi,34931,,150.42518205529242,0
 Chun Yuen Man,34954,,149.7140865776109,0
 Ho William Mason,34999,,147.80255037038768,0
 Chiu Norah,34368,Fusion Squash Club 3,147.32678613046636,3
-Leekha Reyansh,35000,HKIS Div 15,146.9000178288712,2
+Leekha Reyansh,35000,HKIS Div 15,146.66209571234276,2
 Li Hoi Ying Kylie,35028,,146.57340477737424,0
 Breton Felix Nicolas,34966,,145.6429045518132,0
 Lin Pinya,34935,,142.07625781064465,0

@@ -2,15 +2,15 @@
   "validator_name": "SummaryValidator",
   "data_type": "summary",
   "is_valid": true,
-  "timestamp": "2025-11-04T17:46:28.104253",
+  "timestamp": "2025-11-05T19:40:45.465424",
   "error_count": 0,
   "warning_count": 0,
   "errors": [],
   "warnings": [],
   "info": [
     "[INFO] dataframe: DataFrame has 9 rows",
-    "[INFO] columns: All required columns present: {'Points', 'Won', 'Lost', 'Played', 'Team'}",
-    "[INFO] null_check: No null values in required columns: {'Points', 'Won', 'Lost', 'Played', 'Team'}",
+    "[INFO] columns: All required columns present: {'Won', 'Team', 'Played', 'Lost', 'Points'}",
+    "[INFO] null_check: No null values in required columns: {'Won', 'Team', 'Played', 'Lost', 'Points'}",
     "[INFO] row_count: Row count 9 within expected range [4, 20]",
     "[INFO] Points: 9 teams have points != (wins * 5) - likely due to bonus points or walkover penalties"
   ],
