@@ -2,15 +2,15 @@
   "validator_name": "PlayersValidator",
   "data_type": "players",
   "is_valid": true,
-  "timestamp": "2025-11-05T18:46:54.360520",
+  "timestamp": "2025-11-07T17:27:05.755810",
   "error_count": 0,
   "warning_count": 0,
   "errors": [],
   "warnings": [],
   "info": [
     "[INFO] dataframe: DataFrame has 127 rows",
-    "[INFO] columns: All required columns present: {'Team', 'HKS No.', 'Order', 'Ranking', 'Player', 'Points'}",
-    "[INFO] null_check: No null values in required columns: {'Player', 'Team'}",
+    "[INFO] columns: All required columns present: {'Team', 'HKS No.', 'Player', 'Order', 'Points', 'Ranking'}",
+    "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
     "[INFO] row_count: Row count 127 within expected range [20, 200]",
     "[INFO] Team: 5 unique teams, avg 10.6 players/team"
   ],

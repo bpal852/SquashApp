@@ -2,24 +2,24 @@
   "validator_name": "RankingValidator",
   "data_type": "ranking",
   "is_valid": true,
-  "timestamp": "2025-11-05T19:30:48.480070",
+  "timestamp": "2025-11-07T18:11:11.214060",
   "error_count": 0,
   "warning_count": 0,
   "errors": [],
   "warnings": [],
   "info": [
-    "[INFO] dataframe: DataFrame has 22 rows",
-    "[INFO] columns: All required columns present: {'Won', 'Name of Player', 'Win Percentage', 'Lost', 'Games Played', 'Team'}",
-    "[INFO] null_check: No null values in required columns: {'Won', 'Name of Player', 'Lost', 'Games Played', 'Team'}",
-    "[INFO] row_count: Row count 22 within expected range [20, 200]",
-    "[INFO] Games Played: 10 players have 0 games (registered but not yet played)",
-    "[INFO] Win Percentage: 6 unbeaten players",
-    "[INFO] Team: 3 unique teams, avg 4.4 players/team"
+    "[INFO] dataframe: DataFrame has 23 rows",
+    "[INFO] columns: All required columns present: {'Team', 'Win Percentage', 'Won', 'Games Played', 'Lost', 'Name of Player'}",
+    "[INFO] null_check: No null values in required columns: {'Team', 'Won', 'Games Played', 'Lost', 'Name of Player'}",
+    "[INFO] row_count: Row count 23 within expected range [20, 200]",
+    "[INFO] Games Played: 7 players have 0 games (registered but not yet played)",
+    "[INFO] Win Percentage: 7 unbeaten players",
+    "[INFO] Team: 2 unique teams, avg 4.6 players/team"
   ],
   "metadata": {
     "league_id": "D00495",
     "year": "2025-2026",
     "division": "Premier Ladies",
-    "row_count": 22
+    "row_count": 23
   }
 }

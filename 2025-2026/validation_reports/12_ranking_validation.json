@@ -2,24 +2,24 @@
   "validator_name": "RankingValidator",
   "data_type": "ranking",
   "is_valid": true,
-  "timestamp": "2025-11-05T19:16:25.518139",
+  "timestamp": "2025-11-07T17:56:27.165157",
   "error_count": 0,
   "warning_count": 0,
   "errors": [],
   "warnings": [],
   "info": [
-    "[INFO] dataframe: DataFrame has 115 rows",
-    "[INFO] columns: All required columns present: {'Won', 'Name of Player', 'Win Percentage', 'Lost', 'Games Played', 'Team'}",
-    "[INFO] null_check: No null values in required columns: {'Won', 'Name of Player', 'Lost', 'Games Played', 'Team'}",
-    "[INFO] row_count: Row count 115 within expected range [20, 200]",
-    "[INFO] Games Played: 30 players have 0 games (registered but not yet played)",
-    "[INFO] Win Percentage: 33 unbeaten players",
+    "[INFO] dataframe: DataFrame has 116 rows",
+    "[INFO] columns: All required columns present: {'Team', 'Win Percentage', 'Won', 'Games Played', 'Lost', 'Name of Player'}",
+    "[INFO] null_check: No null values in required columns: {'Team', 'Won', 'Games Played', 'Lost', 'Name of Player'}",
+    "[INFO] row_count: Row count 116 within expected range [20, 200]",
+    "[INFO] Games Played: 27 players have 0 games (registered but not yet played)",
+    "[INFO] Win Percentage: 28 unbeaten players",
     "[INFO] Team: 6 unique teams, avg 10.5 players/team"
   ],
   "metadata": {
     "league_id": "D00484",
     "year": "2025-2026",
     "division": "12",
-    "row_count": 115
+    "row_count": 116
   }
 }
