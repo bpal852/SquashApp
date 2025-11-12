@@ -4,6 +4,7 @@ import logging
 import os
 import re
 import traceback
+from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 
@@ -138,6 +139,370 @@ clubs = [
     "HKIS",
     "NEXUS",
 ]
+
+
+def infer_club_from_team(team_name: str) -> str:
+    """Infer the club name from a raw team string."""
+    if not isinstance(team_name, str):
+        return "Other"
+
+    normalized = team_name.strip()
+    if not normalized:
+        return "Other"
+
+    if normalized == "HKCC Tuesday Night Rockers":
+        return "Hong Kong Cricket Club"
+
+    lowered = normalized.lower()
+    for club in clubs:
+        if club.lower() in lowered:
+            return club
+
+    return "Other"
+
+
+def parse_games_from_score(score: object, result: str) -> tuple[int, int]:
+    """Return (games_for, games_against) for a single rubber result string."""
+    try:
+        score_str = str(score).strip()
+    except Exception:
+        return 0, 0
+
+    if not score_str:
+        return 0, 0
+
+    if score_str in {"CR", "WO"}:
+        if result == "Win":
+            return 3, 0
+        if result == "Loss":
+            return 0, 3
+        return 0, 0
+
+    if "-" not in score_str:
+        return 0, 0
+
+    try:
+        player_games, opponent_games = map(int, score_str.split("-", 1))
+        return player_games, opponent_games
+    except ValueError:
+        return 0, 0
+
+
+def load_ranking_history(season_base_path: str) -> dict[str, list[pd.DataFrame]]:
+    """Load ranking snapshots for each division keyed by week number."""
+    ranking_dir = Path(season_base_path) / "ranking_df"
+    if not ranking_dir.exists():
+        logging.debug("Ranking directory does not exist for history load: %s", ranking_dir)
+        return {}
+
+    week_dirs = sorted(
+        [p for p in ranking_dir.iterdir() if p.is_dir() and p.name.startswith("week_")],
+        key=lambda p: int(re.search(r"week_(\d+)", p.name).group(1)) if re.search(r"week_(\d+)", p.name) else -1,
+    )
+
+    if not week_dirs:
+        logging.debug("No week_* folders found under %s", ranking_dir)
+        return {}
+
+    history: dict[str, list[pd.DataFrame]] = defaultdict(list)
+
+    for week_dir in week_dirs:
+        match = re.search(r"week_(\d+)", week_dir.name)
+        if not match:
+            continue
+        week_num = int(match.group(1))
+
+        for csv_path in week_dir.glob("*.csv"):
+            try:
+                df = pd.read_csv(csv_path)
+            except Exception as exc:
+                logging.warning("Failed to read ranking snapshot %s: %s", csv_path, exc)
+                continue
+
+            df["_week"] = week_num
+            division = csv_path.stem.replace("_ranking_df", "")
+            history[division].append(df)
+
+    return history
+
+
+def assign_estimated_points_to_df(
+    df: pd.DataFrame, ranking_history: dict[str, list[pd.DataFrame]]
+) -> pd.DataFrame:
+    """Populate Estimated Points per row using cumulative ranking snapshots."""
+    if df.empty or not ranking_history:
+        if "Estimated Points" not in df.columns:
+            df["Estimated Points"] = 0.0
+        return df
+
+    result_df = df.copy()
+    if "Estimated Points" not in result_df.columns:
+        result_df["Estimated Points"] = 0.0
+
+    result_df["Rubber Number"] = pd.to_numeric(result_df["Rubber Number"], errors="coerce")
+
+    for division, week_tables in ranking_history.items():
+        if not week_tables:
+            continue
+
+        division_mask = result_df["Division"].astype(str) == str(division)
+        if not division_mask.any():
+            continue
+
+        division_indices = result_df.index[division_mask]
+        division_df = result_df.loc[division_indices].copy()
+        division_df.sort_values(
+            ["Player Name", "Match Date", "Rubber Number", "Opponent Name", "Team"],
+            inplace=True,
+            kind="mergesort",
+        )
+
+        player_stats: dict[str, list[dict[str, float]]] = defaultdict(list)
+        for table in sorted(week_tables, key=lambda t: t["_week"].iloc[0]):
+            week_num = int(table["_week"].iloc[0])
+            for _, row in table.iterrows():
+                player_stats[row["Name of Player"]].append(
+                    {
+                        "week": week_num,
+                        "games": int(row.get("Games Played", 0)),
+                        "points": float(row.get("Total Game Points", 0)),
+                    }
+                )
+
+        for player_name, stats in player_stats.items():
+            player_subset = division_df[division_df["Player Name"] == player_name]
+            if player_subset.empty:
+                continue
+
+            match_indices = player_subset.index.tolist()
+            pointer = 0
+            prev_games = 0
+            prev_points = 0.0
+
+            for stat in sorted(stats, key=lambda s: s["week"]):
+                games = stat["games"]
+                points = stat["points"]
+                delta_games = games - prev_games
+                delta_points = points - prev_points
+
+                if delta_games <= 0:
+                    prev_games = games
+                    prev_points = points
+                    continue
+
+                slice_indices = match_indices[pointer : pointer + delta_games]
+                if not slice_indices:
+                    break
+
+                if len(slice_indices) < delta_games:
+                    delta_games = len(slice_indices)
+                    slice_indices = match_indices[pointer : pointer + delta_games]
+
+                share = delta_points / delta_games if delta_games else 0.0
+                for idx in slice_indices:
+                    result_df.at[idx, "Estimated Points"] = result_df.at[idx, "Estimated Points"] + share
+
+                pointer += delta_games
+                prev_games = games
+                prev_points = points
+
+    return result_df
+
+
+def prepare_player_results_df(
+    raw_df: pd.DataFrame, season_base_path: str, season_key: str, session_cache: dict
+) -> pd.DataFrame:
+    """Enrich player results with clubs, game counts, and estimated points."""
+    df = raw_df.copy()
+    if df.empty:
+        for column in ["Club Derived", "Games For", "Games Against", "Estimated Points", "HKS No."]:
+            if column not in df.columns:
+                df[column] = []
+        return df
+
+    if "HKS No." not in df.columns:
+        if "HKS_No" in df.columns:
+            df["HKS No."] = pd.to_numeric(df["HKS_No"], errors="coerce")
+        else:
+            df["HKS No."] = pd.NA
+
+    if "Match Date" in df.columns and not pd.api.types.is_datetime64_any_dtype(df["Match Date"]):
+        df["Match Date"] = pd.to_datetime(df["Match Date"], errors="coerce")
+
+    df["Rubber Number"] = pd.to_numeric(df["Rubber Number"], errors="coerce")
+    df["Club Derived"] = df["Team"].astype(str).apply(infer_club_from_team)
+
+    games_parsed = df.apply(lambda r: parse_games_from_score(r.get("Score"), r.get("Result")), axis=1)
+    df["Games For"] = [item[0] for item in games_parsed]
+    df["Games Against"] = [item[1] for item in games_parsed]
+    df["Estimated Points"] = 0.0
+
+    ranking_cache: dict[str, dict[str, list[pd.DataFrame]] | dict] = session_cache.setdefault("ranking_history", {})
+    if season_key not in ranking_cache:
+        ranking_cache[season_key] = load_ranking_history(season_base_path)
+
+    ranking_history = ranking_cache.get(season_key, {})
+    if ranking_history:
+        df = assign_estimated_points_to_df(df, ranking_history)
+    else:
+        logging.debug("No ranking history available for %s; Estimated Points left at zero", season_key)
+
+    return df
+
+
+def build_monthly_player_summary(month_df: pd.DataFrame) -> pd.DataFrame:
+    """Aggregate monthly player statistics for the Player Rankings view."""
+    summary_columns = [
+        "HKS No.",
+        "Name of Player",
+        "Club",
+        "Division",
+        "Games Played",
+        "Won",
+        "Lost",
+        "Total Game Points",
+        "Average Points",
+        "Win Percentage",
+    ]
+
+    if month_df.empty:
+        return pd.DataFrame(columns=summary_columns)
+
+    records: list[dict[str, object]] = []
+
+    for (hks_no, player_name), group in month_df.groupby(["HKS No.", "Player Name"], dropna=False):
+        if "Club Derived" in group:
+            unique_clubs: list[str] = []
+            for value in group["Club Derived"]:
+                text = str(value).strip()
+                if not text or text.lower() == "nan" or text in unique_clubs:
+                    continue
+                unique_clubs.append(text)
+            club_value = ", ".join(sorted(unique_clubs))
+        else:
+            club_value = ""
+
+        if "Division" in group:
+            unique_divisions: list[str] = []
+            for value in group["Division"]:
+                text = str(value).strip()
+                if not text or text.lower() == "nan" or text in unique_divisions:
+                    continue
+                unique_divisions.append(text)
+            division_value = ", ".join(unique_divisions)
+        else:
+            division_value = ""
+
+        games_played = len(group)
+        wins = int((group["Result"] == "Win").sum())
+        losses = int((group["Result"] == "Loss").sum())
+        total_points = float(group["Estimated Points"].sum()) if "Estimated Points" in group else 0.0
+        average_points = total_points / games_played if games_played else 0.0
+        win_percentage = (wins / games_played * 100) if games_played else 0.0
+
+        records.append(
+            {
+                "HKS No.": pd.to_numeric(hks_no, errors="coerce"),
+                "Name of Player": player_name,
+                "Club": club_value,
+                "Division": division_value,
+                "Games Played": games_played,
+                "Won": wins,
+                "Lost": losses,
+                "Total Game Points": total_points,
+                "Average Points": average_points,
+                "Win Percentage": win_percentage,
+            }
+        )
+
+    summary_df = pd.DataFrame(records, columns=summary_columns)
+    return summary_df
+
+
+def build_player_summary_from_matches(match_df: pd.DataFrame, club_filter: str | None = None) -> pd.DataFrame:
+    """Aggregate player statistics from match-level data, optionally scoped to a club."""
+    summary_columns = [
+        "HKS No.",
+        "Name of Player",
+        "Club",
+        "Division",
+        "Games Played",
+        "Won",
+        "Lost",
+        "Total Game Points",
+        "Average Points",
+        "Win Percentage",
+    ]
+
+    if match_df.empty:
+        return pd.DataFrame(columns=summary_columns)
+
+    working_df = match_df.copy()
+    applied_filter = club_filter if club_filter and club_filter != "Overall" else None
+
+    if applied_filter:
+        working_df = working_df[working_df["Club Derived"] == applied_filter]
+        if working_df.empty:
+            return pd.DataFrame(columns=summary_columns)
+
+    group_columns: list[str] = ["HKS No.", "Player Name"]
+    if applied_filter:
+        group_columns.append("Club Derived")
+
+    def summarize_group(group: pd.DataFrame) -> pd.Series:
+        club_values = [
+            str(value).strip()
+            for value in group.get("Club Derived", [])
+            if isinstance(value, str) and value.strip() and value.strip().lower() != "nan"
+        ]
+        unique_clubs = sorted(set(club_values))
+        if applied_filter and applied_filter not in unique_clubs and applied_filter is not None:
+            unique_clubs.append(applied_filter)
+
+        division_values = [
+            str(value).strip()
+            for value in group.get("Division", [])
+            if isinstance(value, str) and value.strip() and value.strip().lower() != "nan"
+        ]
+        unique_divisions = []
+        for value in division_values:
+            if value not in unique_divisions:
+                unique_divisions.append(value)
+
+        games_played = int(len(group))
+        wins = int((group.get("Result") == "Win").sum())
+        losses = int((group.get("Result") == "Loss").sum())
+
+        estimated_points = pd.to_numeric(group.get("Estimated Points"), errors="coerce").fillna(0.0)
+        total_points = float(estimated_points.sum())
+        average_points = total_points / games_played if games_played else 0.0
+        win_percentage = (wins / games_played * 100.0) if games_played else 0.0
+
+        return pd.Series(
+            {
+                "Club": ", ".join(unique_clubs),
+                "Division": ", ".join(unique_divisions),
+                "Games Played": games_played,
+                "Won": wins,
+                "Lost": losses,
+                "Total Game Points": total_points,
+                "Average Points": average_points,
+                "Win Percentage": win_percentage,
+            }
+        )
+
+    aggregated = (
+        working_df.groupby(group_columns, dropna=False)
+        .apply(summarize_group)
+        .reset_index()
+        .rename(columns={"Player Name": "Name of Player"})
+    )
+
+    aggregated = aggregated.drop(columns=["Club Derived"], errors="ignore")
+
+    aggregated["HKS No."] = pd.to_numeric(aggregated.get("HKS No."), errors="coerce")
+
+    return aggregated.reindex(columns=summary_columns)
 
 
 def find_latest_file_for_division(data_folder, division, filename_pattern):
@@ -1117,22 +1482,9 @@ def main():
             st.warning("Player results data is not available.")
             # You can proceed without player results, but you won't be able to display them
 
-        # Define the determine_club function
-        def determine_club(team_name):
-            """
-            Function to determine the club based on the team name.
-            """
-            # Allow for special case
-            if team_name == "HKCC Tuesday Night Rockers":
-                return "Hong Kong Cricket Club"
-            for club in clubs:
-                if club.lower() in team_name.lower():
-                    return club
-            return "Other"  # Assign 'Other' if no club is matched
-
-        # Apply the function to determine the club for each team
-        combined_results_df["Home Club"] = combined_results_df["Home Team"].apply(determine_club)
-        combined_results_df["Away Club"] = combined_results_df["Away Team"].apply(determine_club)
+        # Derive club names for each team using helper
+        combined_results_df["Home Club"] = combined_results_df["Home Team"].apply(infer_club_from_team)
+        combined_results_df["Away Club"] = combined_results_df["Away Team"].apply(infer_club_from_team)
 
         # Sidebar for filter option
         filter_option = st.sidebar.radio("Filter by:", ["Club", "Division"])
@@ -1356,6 +1708,22 @@ def main():
             logging.warning(f"Could not load combined_player_results_df for {selected_season}: {e}")
             combined_player_results_df = pd.DataFrame()
 
+        if not combined_player_results_df.empty:
+            prepared_key = f"prepared_player_results_{selected_season}"
+            cache_store = st.session_state["data"]
+            if prepared_key not in cache_store:
+                prepared_df = prepare_player_results_df(
+                    combined_player_results_df,
+                    season_base_path,
+                    selected_season,
+                    cache_store,
+                )
+                cache_store[prepared_key] = prepared_df
+            else:
+                prepared_df = cache_store[prepared_key]
+
+            combined_player_results_df = prepared_df.copy()
+
         try:
             ratio_results_path = os.path.join(season_base_path, "ratio_results.csv")
             ratio_results_df = pd.read_csv(ratio_results_path)
@@ -1420,33 +1788,46 @@ def main():
         with col2:
             club = st.selectbox("**Select club:**", list_of_clubs, index=default_club_index)
 
-        # Filter rankings by selected month
-        filtered_rankings_df = all_rankings_df.copy()
+        active_match_df = pd.DataFrame()
+        filtered_rankings_df = pd.DataFrame()
+        using_match_data = False
+        using_rankings_fallback = False
 
-        if selected_month != "All Months" and not combined_player_results_df.empty:
-            # Parse the selected month
-            selected_month_period = pd.Period(selected_month, freq="M")
-
-            # Filter player results to selected month
-            month_mask = combined_player_results_df["Match Date"].dt.to_period("M") == selected_month_period
-            players_in_month = combined_player_results_df[month_mask][
-                ["HKS No.", "Player Name", "Team"]
-            ].drop_duplicates()
-
-            logging.info(f"Found {len(players_in_month)} unique players in {selected_month}")
-
-            # Filter rankings to only include players who played in the selected month
-            # Match by HKS No. if available, otherwise by Name
-            if "HKS No." in filtered_rankings_df.columns:
-                filtered_rankings_df = filtered_rankings_df[
-                    filtered_rankings_df["HKS No."].isin(players_in_month["HKS No."])
-                ]
+        if selected_month != "All Months":
+            if combined_player_results_df.empty:
+                st.warning(
+                    "Player results data is not available for monthly breakdown; showing full-season totals instead."
+                )
+                filtered_rankings_df = all_rankings_df.copy()
+                using_rankings_fallback = True
             else:
-                filtered_rankings_df = filtered_rankings_df[
-                    filtered_rankings_df["Name of Player"].isin(players_in_month["Player Name"])
-                ]
+                selected_month_period = pd.Period(selected_month, freq="M")
+                month_mask = combined_player_results_df["Match Date"].dt.to_period("M") == selected_month_period
+                active_match_df = combined_player_results_df.loc[month_mask].copy()
 
-            st.info(f"Showing rankings for players who competed in {selected_month}")
+                if active_match_df.empty:
+                    st.warning(f"No player matches recorded in {selected_month}.")
+                else:
+                    using_match_data = True
+                    st.info(f"Showing aggregated player results for matches played in {selected_month}.")
+        else:
+            if combined_player_results_df.empty:
+                filtered_rankings_df = all_rankings_df.copy()
+                using_rankings_fallback = True
+            else:
+                active_match_df = combined_player_results_df.copy()
+                using_match_data = True
+
+        club_filter_value = None if club == "Overall" else club
+
+        if using_match_data:
+            filtered_rankings_df = build_player_summary_from_matches(active_match_df, club_filter_value)
+            if filtered_rankings_df.empty and club_filter_value:
+                period_label = selected_month if selected_month != "All Months" else "the season"
+                st.warning(f"No player matches recorded for {club} in {period_label}.")
+        else:
+            if not using_rankings_fallback:
+                filtered_rankings_df = build_player_summary_from_matches(active_match_df, club_filter_value)
 
         division_display_col = "Division Display" if "Division Display" in filtered_rankings_df.columns else "Division"
 
@@ -1545,11 +1926,16 @@ def main():
 
         # Filter DataFrame based on selected club
         if club != "Overall":
-            filtered_df = aggregated_df_reduced[aggregated_df_reduced["Club"] == club]
-            # Drop Club column if needed
-            filtered_df = filtered_df.drop(columns="Club", errors="ignore")
+            if "Club" in aggregated_df_reduced.columns:
+                club_mask = aggregated_df_reduced["Club"].fillna("").apply(
+                    lambda value: any(part.strip() == club for part in str(value).split(","))
+                )
+                filtered_df = aggregated_df_reduced[club_mask].copy()
+                filtered_df = filtered_df.drop(columns="Club", errors="ignore")
+            else:
+                filtered_df = aggregated_df_reduced.iloc[0:0].copy()
         else:
-            filtered_df = aggregated_df_reduced
+            filtered_df = aggregated_df_reduced.copy()
 
         # Sort the DataFrame based on user selection
         ascending = True if sort_order == "Ascending" else False
