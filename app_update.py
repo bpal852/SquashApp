@@ -347,6 +347,66 @@ def prepare_player_results_df(
     else:
         logging.debug("No ranking history available for %s; Estimated Points left at zero", season_key)
 
+    # Enrich with "Playing Up" indicators and division display labels using cached registration lookups
+    registration_cache = session_cache.get("player_registration", {}) if session_cache else {}
+    registration_info = registration_cache.get(season_base_path, {}) if registration_cache else {}
+    registered_teams_lookup = registration_info.get("teams", {})
+    registered_divisions_lookup = registration_info.get("divisions", {})
+
+    if registered_teams_lookup and "Team" in df.columns:
+        df["Team"] = df["Team"].astype(str)
+        if "Division" not in df.columns:
+            df["Division"] = pd.NA
+        df["_team_norm"] = df["Team"].str.strip().str.lower()
+
+        def _match_playing_up(row: pd.Series) -> int:
+            player_name = row.get("Player Name")
+            team_norm = row.get("_team_norm", "")
+            if team_norm == "nan":
+                team_norm = ""
+            registered_teams = registered_teams_lookup.get(player_name)
+            if registered_teams:
+                if team_norm and team_norm in registered_teams:
+                    return 0
+                if team_norm and team_norm not in registered_teams:
+                    return 1
+            registered_divisions = registered_divisions_lookup.get(player_name)
+            division_value = row.get("Division")
+            if pd.notna(division_value) and registered_divisions is not None:
+                division_str = str(division_value).strip()
+                if division_str and division_str not in registered_divisions:
+                    return 1
+            return 0
+
+        df["Playing Up"] = df.apply(_match_playing_up, axis=1).astype(int)
+        df.drop(columns="_team_norm", inplace=True)
+
+        def _format_division_label(row: pd.Series):
+            division_value = row.get("Division")
+            if pd.isna(division_value):
+                return pd.NA
+            division_text = str(division_value).strip()
+            if not division_text or division_text.lower() == "nan":
+                return pd.NA
+            return f"{division_text} (Playing Up)" if row.get("Playing Up", 0) else division_text
+
+        df["Division Display"] = df.apply(_format_division_label, axis=1)
+    else:
+        if "Playing Up" not in df.columns:
+            df["Playing Up"] = 0
+        if "Division Display" not in df.columns:
+            df["Division Display"] = df.get("Division")
+
+    # Ensure Playing Up is numeric for downstream aggregations
+    if "Playing Up" in df.columns:
+        df["Playing Up"] = pd.to_numeric(df["Playing Up"], errors="coerce").fillna(0).astype(int)
+
+    logging.debug(
+        "Prepared player results columns: %s | Playing Up total: %s",
+        list(df.columns),
+        int(df.get("Playing Up", pd.Series(dtype=int)).sum()) if "Playing Up" in df.columns else "n/a",
+    )
+
     return df
 
 
@@ -357,6 +417,8 @@ def build_monthly_player_summary(month_df: pd.DataFrame) -> pd.DataFrame:
         "Name of Player",
         "Club",
         "Division",
+        "Division Display",
+        "Playing Up",
         "Games Played",
         "Won",
         "Lost",
@@ -426,6 +488,8 @@ def build_player_summary_from_matches(match_df: pd.DataFrame, club_filter: str |
         "Name of Player",
         "Club",
         "Division",
+        "Division Display",
+        "Playing Up",
         "Games Played",
         "Won",
         "Lost",
@@ -439,6 +503,12 @@ def build_player_summary_from_matches(match_df: pd.DataFrame, club_filter: str |
 
     working_df = match_df.copy()
     applied_filter = club_filter if club_filter and club_filter != "Overall" else None
+
+    logging.debug(
+        "build_player_summary_from_matches incoming columns=%s, rows=%d",
+        list(working_df.columns),
+        len(working_df),
+    )
 
     if applied_filter:
         working_df = working_df[working_df["Club Derived"] == applied_filter]
@@ -459,15 +529,43 @@ def build_player_summary_from_matches(match_df: pd.DataFrame, club_filter: str |
         if applied_filter and applied_filter not in unique_clubs and applied_filter is not None:
             unique_clubs.append(applied_filter)
 
-        division_values = [
-            str(value).strip()
-            for value in group.get("Division", [])
-            if isinstance(value, str) and value.strip() and value.strip().lower() != "nan"
-        ]
-        unique_divisions = []
-        for value in division_values:
-            if value not in unique_divisions:
-                unique_divisions.append(value)
+        division_series = group.get("Division")
+        unique_divisions: list[str] = []
+        if division_series is not None:
+            for value in division_series:
+                text = str(value).strip()
+                if not text or text.lower() == "nan" or text in unique_divisions:
+                    continue
+                unique_divisions.append(text)
+
+        playing_up_series = group.get("Playing Up")
+        if playing_up_series is not None:
+            playing_up_numeric = pd.to_numeric(playing_up_series, errors="coerce").fillna(0).astype(int)
+            playing_up_total = int(playing_up_numeric.sum())
+        else:
+            playing_up_total = 0
+
+        division_display_series = group.get("Division Display")
+        unique_division_displays: list[str] = []
+        if division_display_series is not None:
+            for value in division_display_series:
+                text = str(value).strip()
+                if not text or text.lower() == "nan" or text in unique_division_displays:
+                    continue
+                unique_division_displays.append(text)
+        else:
+            base_iterable = division_series if division_series is not None else []
+            playing_iterable = playing_up_series if playing_up_series is not None else []
+            for base_value, playing_flag in zip(base_iterable, playing_iterable):
+                base_text = str(base_value).strip()
+                if not base_text or base_text.lower() == "nan":
+                    continue
+                label = f"{base_text} (Playing Up)" if bool(playing_flag) else base_text
+                if label not in unique_division_displays:
+                    unique_division_displays.append(label)
+        if not unique_division_displays:
+            # Fall back to division names if no display labels were derived
+            unique_division_displays = unique_divisions.copy()
 
         games_played = int(len(group))
         wins = int((group.get("Result") == "Win").sum())
@@ -482,6 +580,8 @@ def build_player_summary_from_matches(match_df: pd.DataFrame, club_filter: str |
             {
                 "Club": ", ".join(unique_clubs),
                 "Division": ", ".join(unique_divisions),
+                "Division Display": ", ".join(unique_division_displays),
+                "Playing Up": playing_up_total,
                 "Games Played": games_played,
                 "Won": wins,
                 "Lost": losses,
@@ -502,7 +602,10 @@ def build_player_summary_from_matches(match_df: pd.DataFrame, club_filter: str |
 
     aggregated["HKS No."] = pd.to_numeric(aggregated.get("HKS No."), errors="coerce")
 
-    return aggregated.reindex(columns=summary_columns)
+    result = aggregated.reindex(columns=summary_columns)
+    logging.debug("build_player_summary_from_matches result columns: %s", list(result.columns))
+
+    return result
 
 
 def find_latest_file_for_division(data_folder, division, filename_pattern):
@@ -1104,6 +1207,19 @@ def load_player_rankings(season_base_path, divisions_for_season):
         else:
             registered_divisions_lookup = {}
 
+        # Cache registration lookups and raw players data for reuse elsewhere in the app
+        try:
+            session_cache = st.session_state.setdefault("data", {})
+            registration_cache = session_cache.setdefault("player_registration", {})
+            registration_cache[season_base_path] = {
+                "teams": registered_teams_lookup,
+                "divisions": registered_divisions_lookup,
+            }
+            players_cache = session_cache.setdefault("players_df_cache", {})
+            players_cache[season_base_path] = players_df_all.copy()
+        except Exception as cache_exc:
+            logging.debug("Unable to cache player registration lookups: %s", cache_exc)
+
         player_hks_lookup = (
             players_df_all.dropna(subset=["HKS No."])
             .groupby("Name of Player")["HKS No."]
@@ -1447,6 +1563,13 @@ def main():
             st.session_state["data"][f"all_rankings_loaded_{season_key}"] = True
         else:
             all_rankings_df = st.session_state["data"][f"all_rankings_df_{season_key}"]
+            if "Playing Up" not in all_rankings_df.columns or "Division Display" not in all_rankings_df.columns:
+                logging.info("Reloading rankings data to include playing-up metadata for %s", selected_season)
+                all_rankings_df = load_player_rankings(season_base_path, divisions_for_season)
+                if all_rankings_df.empty:
+                    st.error("No player ranking data is available.")
+                    return
+                st.session_state["data"][f"all_rankings_df_{season_key}"] = all_rankings_df
 
     elif selected_section == "Match Results":
         # Load data
@@ -1721,6 +1844,15 @@ def main():
                 cache_store[prepared_key] = prepared_df
             else:
                 prepared_df = cache_store[prepared_key]
+                if "Playing Up" not in prepared_df.columns or "Division Display" not in prepared_df.columns:
+                    logging.info("Prepared player results missing playing-up metadata; rebuilding cache for %s", selected_season)
+                    prepared_df = prepare_player_results_df(
+                        combined_player_results_df,
+                        season_base_path,
+                        selected_season,
+                        cache_store,
+                    )
+                    cache_store[prepared_key] = prepared_df
 
             combined_player_results_df = prepared_df.copy()
 
@@ -1869,6 +2001,8 @@ def main():
                 .reset_index()
             )
 
+        if division_display_col == "Division Display" and "Division" in aggregated_df.columns:
+            aggregated_df = aggregated_df.drop(columns=["Division"], errors="ignore")
         aggregated_df = aggregated_df.rename(columns={division_display_col: "Division"})
         if "Playing Up" in aggregated_df.columns:
             aggregated_df = aggregated_df.rename(columns={"Playing Up": "Played Up"})
