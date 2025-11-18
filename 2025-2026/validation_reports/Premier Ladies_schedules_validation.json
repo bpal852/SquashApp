@@ -2,7 +2,7 @@
   "validator_name": "SchedulesValidator",
   "data_type": "schedules",
   "is_valid": true,
-  "timestamp": "2025-11-17T17:44:05.688534",
+  "timestamp": "2025-11-18T19:20:52.589385",
   "error_count": 0,
   "warning_count": 2,
   "errors": [],
@@ -12,8 +12,8 @@
   ],
   "info": [
     "[INFO] dataframe: DataFrame has 30 rows",
-    "[INFO] columns: All required columns present: {'vs', 'Date', 'Match Week', 'Result', 'Home Team', 'Time', 'Away Team', 'Venue'}",
-    "[INFO] null_check: No null values in required columns: {'Home Team', 'vs', 'Away Team', 'Match Week'}",
+    "[INFO] columns: All required columns present: {'Venue', 'Result', 'Time', 'Home Team', 'Date', 'Match Week', 'Away Team', 'vs'}",
+    "[INFO] null_check: No null values in required columns: {'Away Team', 'Home Team', 'vs', 'Match Week'}",
     "[INFO] row_count: Row count 30 within expected range [10, 500]",
     "[INFO] Match Week: Data spans 1 weeks (weeks 1-10)",
     "[INFO] Result: 4 matches played, 26 upcoming/unplayed"

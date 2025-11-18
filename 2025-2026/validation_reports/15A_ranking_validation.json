@@ -2,24 +2,26 @@
   "validator_name": "RankingValidator",
   "data_type": "ranking",
   "is_valid": true,
-  "timestamp": "2025-11-17T18:31:05.738027",
+  "timestamp": "2025-11-18T20:06:59.461458",
   "error_count": 0,
-  "warning_count": 0,
+  "warning_count": 1,
   "errors": [],
-  "warnings": [],
+  "warnings": [
+    "[WARNING] Name of Player: 1 duplicate player names (same name, different teams?)"
+  ],
   "info": [
-    "[INFO] dataframe: DataFrame has 81 rows",
-    "[INFO] columns: All required columns present: {'Name of Player', 'Lost', 'Won', 'Win Percentage', 'Games Played', 'Team'}",
-    "[INFO] null_check: No null values in required columns: {'Name of Player', 'Lost', 'Won', 'Games Played', 'Team'}",
-    "[INFO] row_count: Row count 81 within expected range [20, 200]",
-    "[INFO] Games Played: 12 players have 0 games (registered but not yet played)",
+    "[INFO] dataframe: DataFrame has 85 rows",
+    "[INFO] columns: All required columns present: {'Lost', 'Won', 'Games Played', 'Win Percentage', 'Name of Player', 'Team'}",
+    "[INFO] null_check: No null values in required columns: {'Lost', 'Won', 'Games Played', 'Name of Player', 'Team'}",
+    "[INFO] row_count: Row count 85 within expected range [20, 200]",
+    "[INFO] Games Played: 16 players have 0 games (registered but not yet played)",
     "[INFO] Win Percentage: 20 unbeaten players",
-    "[INFO] Team: 3 unique teams, avg 10.1 players/team"
+    "[INFO] Team: 4 unique teams, avg 10.6 players/team"
   ],
   "metadata": {
     "league_id": "D00489",
     "year": "2025-2026",
     "division": "15A",
-    "row_count": 81
+    "row_count": 85
   }
 }
