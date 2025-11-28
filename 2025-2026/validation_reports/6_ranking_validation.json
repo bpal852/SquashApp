@@ -2,18 +2,18 @@
   "validator_name": "RankingValidator",
   "data_type": "ranking",
   "is_valid": true,
-  "timestamp": "2025-11-25T11:10:28.446477",
+  "timestamp": "2025-11-27T21:43:45.323291",
   "error_count": 0,
   "warning_count": 0,
   "errors": [],
   "warnings": [],
   "info": [
     "[INFO] dataframe: DataFrame has 132 rows",
-    "[INFO] columns: All required columns present: {'Name of Player', 'Win Percentage', 'Lost', 'Games Played', 'Team', 'Won'}",
-    "[INFO] null_check: No null values in required columns: {'Name of Player', 'Lost', 'Games Played', 'Team', 'Won'}",
+    "[INFO] columns: All required columns present: {'Games Played', 'Lost', 'Name of Player', 'Team', 'Win Percentage', 'Won'}",
+    "[INFO] null_check: No null values in required columns: {'Games Played', 'Lost', 'Name of Player', 'Team', 'Won'}",
     "[INFO] row_count: Row count 132 within expected range [20, 200]",
-    "[INFO] Games Played: 21 players have 0 games (registered but not yet played)",
-    "[INFO] Win Percentage: 30 unbeaten players",
+    "[INFO] Games Played: 19 players have 0 games (registered but not yet played)",
+    "[INFO] Win Percentage: 28 unbeaten players",
     "[INFO] Team: 6 unique teams, avg 11.0 players/team"
   ],
   "metadata": {

@@ -2,22 +2,22 @@
   "validator_name": "PlayersValidator",
   "data_type": "players",
   "is_valid": true,
-  "timestamp": "2025-11-25T12:37:56.316207",
+  "timestamp": "2025-11-27T23:03:07.823773",
   "error_count": 0,
   "warning_count": 0,
   "errors": [],
   "warnings": [],
   "info": [
-    "[INFO] dataframe: DataFrame has 123 rows",
-    "[INFO] columns: All required columns present: {'HKS No.', 'Order', 'Player', 'Points', 'Team', 'Ranking'}",
+    "[INFO] dataframe: DataFrame has 126 rows",
+    "[INFO] columns: All required columns present: {'Team', 'HKS No.', 'Points', 'Player', 'Order', 'Ranking'}",
     "[INFO] null_check: No null values in required columns: {'Player', 'Team'}",
-    "[INFO] row_count: Row count 123 within expected range [20, 200]",
-    "[INFO] Team: 5 unique teams, avg 10.2 players/team"
+    "[INFO] row_count: Row count 126 within expected range [20, 200]",
+    "[INFO] Team: 5 unique teams, avg 10.5 players/team"
   ],
   "metadata": {
     "league_id": "D00488",
     "year": "2025-2026",
     "division": "14",
-    "row_count": 123
+    "row_count": 126
   }
 }

@@ -2,7 +2,7 @@
   "validator_name": "PlayersValidator",
   "data_type": "players",
   "is_valid": true,
-  "timestamp": "2025-11-25T12:41:38.878595",
+  "timestamp": "2025-11-27T23:06:50.357215",
   "error_count": 0,
   "warning_count": 1,
   "errors": [],
@@ -10,18 +10,18 @@
     "[WARNING] Player: 1 duplicate player names"
   ],
   "info": [
-    "[INFO] dataframe: DataFrame has 85 rows",
-    "[INFO] columns: All required columns present: {'HKS No.', 'Order', 'Player', 'Points', 'Team', 'Ranking'}",
+    "[INFO] dataframe: DataFrame has 86 rows",
+    "[INFO] columns: All required columns present: {'Team', 'HKS No.', 'Points', 'Player', 'Order', 'Ranking'}",
     "[INFO] null_check: No null values in required columns: {'Player', 'Team'}",
-    "[INFO] row_count: Row count 85 within expected range [20, 200]",
+    "[INFO] row_count: Row count 86 within expected range [20, 200]",
     "[INFO] Player: Duplicated players: ['Wong Wing Lam']",
-    "[INFO] Team: 4 unique teams, avg 10.6 players/team",
+    "[INFO] Team: 3 unique teams, avg 10.8 players/team",
     "[INFO] Player-HKS: 1 player names have multiple HKS numbers (likely different people with same name)"
   ],
   "metadata": {
     "league_id": "D00489",
     "year": "2025-2026",
     "division": "15A",
-    "row_count": 85
+    "row_count": 86
   }
 }
