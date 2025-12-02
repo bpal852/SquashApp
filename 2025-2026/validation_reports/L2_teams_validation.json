@@ -2,14 +2,14 @@
   "validator_name": "TeamsValidator",
   "data_type": "teams",
   "is_valid": true,
-  "timestamp": "2025-11-25T11:29:34.465575",
+  "timestamp": "2025-12-02T09:36:19.761318",
   "error_count": 0,
   "warning_count": 0,
   "errors": [],
   "warnings": [],
   "info": [
     "[INFO] dataframe: DataFrame has 6 rows",
-    "[INFO] columns: All required columns present: {'Team Name', 'Convenor', 'Home', 'Email'}",
+    "[INFO] columns: All required columns present: {'Convenor', 'Home', 'Email', 'Team Name'}",
     "[INFO] null_check: No null values in required columns: {'Team Name'}",
     "[INFO] row_count: Row count 6 within expected range [4, 20]"
   ],
