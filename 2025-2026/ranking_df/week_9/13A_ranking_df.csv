@@ -11,7 +11,7 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 10,Chong Siu Fung,The Squash Club 3,18.86,132,7,7,0,13A,1.0
 11,Chen Haoyuan,MM Squash,18.0,108,6,6,0,13A,1.0
 12,Chau Yung Lok,North District Sports Association 1,17.4,87,5,5,0,13A,1.0
-13,Tam Rony Kwok Ki,Star River 2,16.5,99,6,3,3,13A,0.5
+13,Tam Rony Kwok Ki,Star River 2,15.86,111,7,3,4,13A,0.42857142857142855
 14,Choi Hiu Yeung,Arctic Circle,15.0,105,7,6,1,13A,0.8571428571428571
 15,Choi Hiu Long,Arctic Circle,14.4,72,5,3,2,13A,0.6
 16,Chan Kwok Wa,Greenfield,14.14,99,7,2,5,13A,0.2857142857142857
@@ -22,11 +22,13 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 21,Lam Wilson Koon Fung,Craigengower Cricket Club,12.86,90,7,4,3,13A,0.5714285714285714
 22,Ho Cheuk Yiu,Squashathon SocGen,12.6,63,5,3,2,13A,0.6
 23,Rambaud- Chanoz Nicolas,Squashathon SocGen,12.5,75,6,1,5,13A,0.16666666666666666
-24,Pang Danny King Wai,Star River 2,10.5,63,6,2,4,13A,0.3333333333333333
-25,Ho Sze Wing,X-Alpha 5,10.2,51,5,3,2,13A,0.6
-26,Young Ki Chun,Greenfield,9.86,69,7,0,7,13A,0.0
-27,Zhou Cheng  Yuan,MM Squash,9.6,48,5,1,4,13A,0.2
-28,Ng Siu Ki,Greenfield,5.0,30,6,1,5,13A,0.16666666666666666
+24,Leung Venus Wing Sze,Star River 2,10.8,54,5,2,3,13A,0.4
+25,Pang Danny King Wai,Star River 2,10.29,72,7,2,5,13A,0.2857142857142857
+26,Ho Sze Wing,X-Alpha 5,10.2,51,5,3,2,13A,0.6
+27,Young Ki Chun,Greenfield,9.86,69,7,0,7,13A,0.0
+28,Zhou Cheng  Yuan,MM Squash,9.6,48,5,1,4,13A,0.2
+29,Chan Edward Cheuk Wah,Star River 2,8.4,42,5,2,3,13A,0.4
+30,Ng Siu Ki,Greenfield,5.0,30,6,1,5,13A,0.16666666666666666
 ,Luk Long Ching,Arctic Circle,25.5,51,2,2,0,13A,1.0
 ,Lo Tin Lai,North District Sports Association 1,24.0,96,4,3,1,13A,0.75
 ,Lai Cheuk Yu Manuel,MM Squash,22.5,45,2,1,1,13A,0.5
@@ -35,19 +37,18 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 ,Leung Kwok Wai,Star River 2,21.0,84,4,3,1,13A,0.75
 ,Chan Thomas Tsz Sau,The Squash Club 3,21.0,63,3,3,0,13A,1.0
 ,Yip Edmund Kin Man,Star River 2,20.25,81,4,2,2,13A,0.5
+,Lo Tien Yue,Craigengower Cricket Club,19.5,78,4,3,1,13A,0.75
 ,Tse Tin Yiu,X-Alpha 5,18.0,72,4,2,2,13A,0.5
 ,Lam Yuk Ying,North District Sports Association 1,18.0,18,1,1,0,13A,1.0
 ,Leung Tsun Man,North District Sports Association 1,18.0,18,1,1,0,13A,1.0
 ,Ali Mohammad Ahmad,MM Squash,18.0,18,1,1,0,13A,1.0
+,Chui Horace,Craigengower Cricket Club,17.25,69,4,3,1,13A,0.75
 ,Ma Tsz Wun,X-Alpha 5,17.25,69,4,2,2,13A,0.5
-,Lo Tien Yue,Craigengower Cricket Club,17.0,51,3,2,1,13A,0.6666666666666666
 ,Tam Ming Wai,The Squash Club 3,16.5,66,4,4,0,13A,1.0
 ,Wong Kwun Hin,X-Alpha 5,16.0,48,3,3,0,13A,1.0
-,Chui Horace,Craigengower Cricket Club,15.0,45,3,2,1,13A,0.6666666666666666
+,Leung Wai Chun Hugo,Craigengower Cricket Club,15.0,45,3,3,0,13A,1.0
 ,Wong Marcus,MM Squash,15.0,60,4,2,2,13A,0.5
-,Leung Wai Chun Hugo,Craigengower Cricket Club,15.0,30,2,2,0,13A,1.0
 ,Law Chu Cheong,North District Sports Association 1,15.0,15,1,1,0,13A,1.0
-,Wong Cho Kit,Craigengower Cricket Club,15.0,15,1,1,0,13A,1.0
 ,Cheung Hoi Ying,The Squash Club 3,15.0,15,1,1,0,13A,1.0
 ,Ang Cheung Yue,The Squash Club 3,14.25,57,4,4,0,13A,1.0
 ,Li Yip Ki,The Squash Club 3,13.5,27,2,2,0,13A,1.0
@@ -55,6 +56,7 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 ,Lee Chak Hei,X-Alpha 5,13.0,39,3,1,2,13A,0.3333333333333333
 ,Yim Ka Chun,Squashathon SocGen,12.0,24,2,2,0,13A,1.0
 ,Lam Wai,Greenfield,12.0,36,3,1,2,13A,0.3333333333333333
+,Wong Cho Kit,Craigengower Cricket Club,12.0,24,2,1,1,13A,0.5
 ,Hui Tak Cheung,Greenfield,12.0,24,2,1,1,13A,0.5
 ,Lai Yiu Wa,Greenfield,12.0,36,3,0,3,13A,0.0
 ,Wong Wai Ling Helen,Arctic Circle,11.25,45,4,3,1,13A,0.75
@@ -65,7 +67,6 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 ,Cheung Brian Sheung Yan,Arctic Circle,9.75,39,4,1,3,13A,0.25
 ,Chan Tsz Ngo,X-Alpha 5,9.0,27,3,2,1,13A,0.6666666666666666
 ,Lee Kin Ping,Squashathon SocGen,9.0,18,2,1,1,13A,0.5
-,Leung Venus Wing Sze,Star River 2,9.0,36,4,1,3,13A,0.25
 ,Lee Yui Hin,North District Sports Association 1,9.0,9,1,0,1,13A,0.0
 ,Chiu Shing Chi,Squashathon SocGen,9.0,9,1,0,1,13A,0.0
 ,Tang Wai Lam,North District Sports Association 1,9.0,9,1,0,1,13A,0.0
@@ -74,16 +75,16 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 ,Ku Desmond Yuk Yan,Greenfield,7.5,15,2,0,2,13A,0.0
 ,Chan Simon,Craigengower Cricket Club,7.0,21,3,1,2,13A,0.3333333333333333
 ,Lee Chak Long,X-Alpha 5,6.75,27,4,1,3,13A,0.25
-,Chan Edward Cheuk Wah,Star River 2,6.0,24,4,1,3,13A,0.25
 ,Hong Xue Yan,Squashathon SocGen,6.0,6,1,0,1,13A,0.0
 ,Chow Pui Ching,X-Alpha 5,6.0,24,4,0,4,13A,0.0
 ,Ip Laam,X-Alpha 5,5.0,15,3,0,3,13A,0.0
-,Li Zong Xiang,Star River 2,4.0,12,3,1,2,13A,0.3333333333333333
 ,Ho Hok Leung,Squashathon SocGen,4.0,12,3,0,3,13A,0.0
 ,Lau Ted Hei Yuen,Greenfield,4.0,12,3,0,3,13A,0.0
 ,Keung Olive Man Yee,Star River 2,3.75,15,4,1,3,13A,0.25
+,Li Zong Xiang,Star River 2,3.0,12,4,1,3,13A,0.25
 ,Chiu Yee Lai,North District Sports Association 1,3.0,3,1,0,1,13A,0.0
 ,Jain Shlok,Squashathon SocGen,3.0,3,1,0,1,13A,0.0
+,So Stephanie Yuen Ting,Craigengower Cricket Club,3.0,3,1,0,1,13A,0.0
 ,Chau Cheung Chung,Greenfield,3.0,3,1,0,1,13A,0.0
 ,Tsang Patrick Kai Chi,Craigengower Cricket Club,3.0,3,1,0,1,13A,0.0
 ,Lau Hon Chu,Greenfield,3.0,9,3,0,3,13A,0.0
@@ -97,7 +98,6 @@ Position,Name of Player,Team,Average Points,Total Game Points,Games Played,Won,L
 ,Wong Ho Yi,MM Squash,0.0,0,1,0,1,13A,0.0
 ,Wong Tsz Hei,Greenfield,0.0,0,0,0,0,13A,0.0
 ,Leung Wai Ki,North District Sports Association 1,0.0,0,0,0,0,13A,0.0
-,So Stephanie Yuen Ting,Craigengower Cricket Club,0.0,0,0,0,0,13A,0.0
 ,Kwok Wai Ho,The Squash Club 3,0.0,0,0,0,0,13A,0.0
 ,Ng Tsz Chun,Star River 2,0.0,0,0,0,0,13A,0.0
 ,Man Kwan Wun,Craigengower Cricket Club,0.0,0,0,0,0,13A,0.0
