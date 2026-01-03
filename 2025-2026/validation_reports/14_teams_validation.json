@@ -2,14 +2,16 @@
   "validator_name": "TeamsValidator",
   "data_type": "teams",
   "is_valid": true,
-  "timestamp": "2025-12-11T23:59:39.059033",
+  "timestamp": "2026-01-02T17:13:10.607254",
   "error_count": 0,
-  "warning_count": 0,
+  "warning_count": 1,
   "errors": [],
-  "warnings": [],
+  "warnings": [
+    "[WARNING] Email: 12 emails missing @ symbol"
+  ],
   "info": [
     "[INFO] dataframe: DataFrame has 12 rows",
-    "[INFO] columns: All required columns present: {'Email', 'Convenor', 'Home', 'Team Name'}",
+    "[INFO] columns: All required columns present: {'Team Name', 'Convenor', 'Email', 'Home'}",
     "[INFO] null_check: No null values in required columns: {'Team Name'}",
     "[INFO] row_count: Row count 12 within expected range [4, 20]"
   ],
