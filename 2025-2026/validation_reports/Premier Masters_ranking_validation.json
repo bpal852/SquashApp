@@ -2,24 +2,24 @@
   "validator_name": "RankingValidator",
   "data_type": "ranking",
   "is_valid": true,
-  "timestamp": "2026-01-15T12:17:20.761047",
+  "timestamp": "2026-01-26T14:38:28.075073",
   "error_count": 0,
   "warning_count": 0,
   "errors": [],
   "warnings": [],
   "info": [
-    "[INFO] dataframe: DataFrame has 38 rows",
-    "[INFO] columns: All required columns present: {'Won', 'Win Percentage', 'Lost', 'Name of Player', 'Team', 'Games Played'}",
-    "[INFO] null_check: No null values in required columns: {'Won', 'Lost', 'Name of Player', 'Team', 'Games Played'}",
-    "[INFO] row_count: Row count 38 within expected range [20, 200]",
+    "[INFO] dataframe: DataFrame has 39 rows",
+    "[INFO] columns: All required columns present: {'Lost', 'Team', 'Name of Player', 'Games Played', 'Won', 'Win Percentage'}",
+    "[INFO] null_check: No null values in required columns: {'Lost', 'Team', 'Name of Player', 'Games Played', 'Won'}",
+    "[INFO] row_count: Row count 39 within expected range [20, 200]",
     "[INFO] Games Played: 7 players have 0 games (registered but not yet played)",
     "[INFO] Win Percentage: 6 unbeaten players",
-    "[INFO] Team: 4 unique teams, avg 7.6 players/team"
+    "[INFO] Team: 4 unique teams, avg 7.8 players/team"
   ],
   "metadata": {
     "league_id": "D00491",
     "year": "2025-2026",
     "division": "Premier Masters",
-    "row_count": 38
+    "row_count": 39
   }
 }
