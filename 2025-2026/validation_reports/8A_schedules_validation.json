@@ -2,22 +2,22 @@
   "validator_name": "SchedulesValidator",
   "data_type": "schedules",
   "is_valid": true,
-  "timestamp": "2026-01-26T14:55:40.811591",
+  "timestamp": "2026-02-20T18:55:41.745549",
   "error_count": 0,
   "warning_count": 3,
   "errors": [],
   "warnings": [
     "[WARNING] Date: Expected type datetime, got object",
-    "[WARNING] Result: 40 results have unexpected format",
+    "[WARNING] Result: 49 results have unexpected format",
     "[WARNING] Date: 56 rows have invalid dates"
   ],
   "info": [
     "[INFO] dataframe: DataFrame has 84 rows",
-    "[INFO] columns: All required columns present: {'vs', 'Match Week', 'Away Team', 'Home Team', 'Date', 'Time', 'Venue', 'Result'}",
-    "[INFO] null_check: No null values in required columns: {'vs', 'Match Week', 'Home Team', 'Away Team'}",
+    "[INFO] columns: All required columns present: {'Home Team', 'Result', 'Match Week', 'Time', 'vs', 'Date', 'Away Team', 'Venue'}",
+    "[INFO] null_check: No null values in required columns: {'Match Week', 'Away Team', 'Home Team', 'vs'}",
     "[INFO] row_count: Row count 84 within expected range [10, 500]",
     "[INFO] Match Week: Data spans 1 weeks (weeks 1-21)",
-    "[INFO] Result: 40 matches played, 44 upcoming/unplayed"
+    "[INFO] Result: 49 matches played, 35 upcoming/unplayed"
   ],
   "metadata": {
     "league_id": "D00479",

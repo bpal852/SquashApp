@@ -2,22 +2,24 @@
   "validator_name": "PlayersValidator",
   "data_type": "players",
   "is_valid": true,
-  "timestamp": "2026-01-26T15:20:28.854500",
+  "timestamp": "2026-02-20T19:20:29.489432",
   "error_count": 0,
-  "warning_count": 0,
+  "warning_count": 1,
   "errors": [],
-  "warnings": [],
+  "warnings": [
+    "[WARNING] Order: Team \"Hong Kong Football Club JSA\" has non-sequential orders: [2, 3, 4, 5, 6, 7, 8, 9]"
+  ],
   "info": [
-    "[INFO] dataframe: DataFrame has 91 rows",
-    "[INFO] columns: All required columns present: {'Ranking', 'Player', 'Order', 'HKS No.', 'Points', 'Team'}",
+    "[INFO] dataframe: DataFrame has 90 rows",
+    "[INFO] columns: All required columns present: {'Player', 'Order', 'Ranking', 'Team', 'HKS No.', 'Points'}",
     "[INFO] null_check: No null values in required columns: {'Player', 'Team'}",
-    "[INFO] row_count: Row count 91 within expected range [20, 200]",
-    "[INFO] Team: 5 unique teams, avg 10.1 players/team"
+    "[INFO] row_count: Row count 90 within expected range [20, 200]",
+    "[INFO] Team: 5 unique teams, avg 10.0 players/team"
   ],
   "metadata": {
     "league_id": "D00498",
     "year": "2025-2026",
     "division": "L4",
-    "row_count": 91
+    "row_count": 90
   }
 }
