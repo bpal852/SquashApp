@@ -2,22 +2,24 @@
   "validator_name": "PlayersValidator",
   "data_type": "players",
   "is_valid": true,
-  "timestamp": "2026-03-11T09:57:41.084315",
+  "timestamp": "2026-03-23T00:08:31.526440",
   "error_count": 0,
-  "warning_count": 0,
+  "warning_count": 1,
   "errors": [],
-  "warnings": [],
+  "warnings": [
+    "[WARNING] Order: Team \"Star River 2\" has non-sequential orders: [1, 3, 4, 5, 6, 7, 8, 9, 10]"
+  ],
   "info": [
-    "[INFO] dataframe: DataFrame has 94 rows",
-    "[INFO] columns: All required columns present: {'Order', 'Player', 'Ranking', 'Points', 'HKS No.', 'Team'}",
+    "[INFO] dataframe: DataFrame has 93 rows",
+    "[INFO] columns: All required columns present: {'Points', 'Order', 'Player', 'Team', 'HKS No.', 'Ranking'}",
     "[INFO] null_check: No null values in required columns: {'Player', 'Team'}",
-    "[INFO] row_count: Row count 94 within expected range [20, 200]",
-    "[INFO] Team: 5 unique teams, avg 10.4 players/team"
+    "[INFO] row_count: Row count 93 within expected range [20, 200]",
+    "[INFO] Team: 4 unique teams, avg 10.3 players/team"
   ],
   "metadata": {
     "league_id": "D00485",
     "year": "2025-2026",
     "division": "13A",
-    "row_count": 94
+    "row_count": 93
   }
 }
