@@ -7,8 +7,8 @@ from datetime import datetime
 from collections import Counter, defaultdict
 
 # Set parameters
-year = "2024-2025"
-num_simulations = 9999
+year = "2025-2026"
+num_simulations = 999
 home_advantage_factor = 0.05
 unpredictability_factor = 0
 
@@ -170,8 +170,8 @@ def simulate_league(df_fixtures, summary_df, num_simulations, max_rubbers, combi
         league_table['Lost'] += league_table['Simulated Lost']
         league_table['Points'] += league_table['Simulated Points']
 
-        # Sort the league table based on Points, with Won and Rubbers For as tiebreakers
-        league_table.sort_values(by=['Points', 'Won', 'Rubbers For'], ascending=[False, False, False], inplace=True)
+        # Sort the league table based on Points, with Won as tiebreaker
+        league_table.sort_values(by=['Points', 'Won'], ascending=[False, False], inplace=True)
         league_table.reset_index(drop=True, inplace=True)
 
         # Track the final position of each team in this simulation
@@ -263,12 +263,10 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 # Define the divisions you want to run projections for
 divisions = [
-    "Premier Main", "2", "3", "4", "5", "6", "7A", "7B", "8A", "8B", "9", "10", "11", "12",
-    "13A", "13B", "14", "15A", "15B", "Premier Masters", "M2", "M3", "M4",
+    "Premier Main", "2", "3", "4", "5", "6", "7", "8A", "8B", "9", "10", "11", "12",
+    "13A", "13B", "13C", "14", "15A", "15B", "Premier Masters", "M2", "M3", "M4",
     "Premier Ladies", "L2", "L3", "L4"
 ]
-
-wednesday = ["7A", "7B"]
 
 # Base directories (ensure they match the ones used in the data gathering script)
 base_directories = {
