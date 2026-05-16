@@ -2,17 +2,17 @@
   "validator_name": "SummaryValidator",
   "data_type": "summary",
   "is_valid": true,
-  "timestamp": "2026-04-22T16:25:26.984144",
+  "timestamp": "2026-05-15T13:36:29.454442",
   "error_count": 0,
   "warning_count": 0,
   "errors": [],
   "warnings": [],
   "info": [
     "[INFO] dataframe: DataFrame has 5 rows",
-    "[INFO] columns: All required columns present: {'Lost', 'Played', 'Points', 'Team', 'Won'}",
-    "[INFO] null_check: No null values in required columns: {'Lost', 'Played', 'Points', 'Team', 'Won'}",
+    "[INFO] columns: All required columns present: {'Points', 'Played', 'Won', 'Team', 'Lost'}",
+    "[INFO] null_check: No null values in required columns: {'Points', 'Played', 'Won', 'Team', 'Lost'}",
     "[INFO] row_count: Row count 5 within expected range [4, 20]",
-    "[INFO] Points: 4 teams have points != (wins * 5) - likely due to bonus points or walkover penalties"
+    "[INFO] Points: 5 teams have points != (wins * 5) - likely due to bonus points or walkover penalties"
   ],
   "metadata": {
     "league_id": "D00495",

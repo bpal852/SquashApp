@@ -2,26 +2,27 @@
   "validator_name": "PlayersValidator",
   "data_type": "players",
   "is_valid": true,
-  "timestamp": "2026-04-22T16:57:16.123465",
+  "timestamp": "2026-05-05T17:20:17.838290",
   "error_count": 0,
-  "warning_count": 1,
+  "warning_count": 2,
   "errors": [],
   "warnings": [
+    "[WARNING] Order: Team \"Bravo D13\" has non-sequential orders: [2, 3, 4, 5, 6, 7]",
     "[WARNING] Player: 1 duplicate player names"
   ],
   "info": [
-    "[INFO] dataframe: DataFrame has 89 rows",
-    "[INFO] columns: All required columns present: {'Player', 'Points', 'Team', 'Ranking', 'HKS No.', 'Order'}",
-    "[INFO] null_check: No null values in required columns: {'Player', 'Team'}",
-    "[INFO] row_count: Row count 89 within expected range [20, 200]",
+    "[INFO] dataframe: DataFrame has 88 rows",
+    "[INFO] columns: All required columns present: {'Player', 'HKS No.', 'Ranking', 'Team', 'Points', 'Order'}",
+    "[INFO] null_check: No null values in required columns: {'Team', 'Player'}",
+    "[INFO] row_count: Row count 88 within expected range [20, 200]",
     "[INFO] Player: Duplicated players: ['Lam Tsz Ching']",
-    "[INFO] Team: 5 unique teams, avg 9.9 players/team",
+    "[INFO] Team: 5 unique teams, avg 9.8 players/team",
     "[INFO] Player-HKS: 1 player names have multiple HKS numbers (likely different people with same name)"
   ],
   "metadata": {
     "league_id": "D00487",
     "year": "2025-2026",
     "division": "13C",
-    "row_count": 89
+    "row_count": 88
   }
 }
