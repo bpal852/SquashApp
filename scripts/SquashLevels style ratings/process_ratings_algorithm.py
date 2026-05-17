@@ -54,8 +54,8 @@ def get_base_rating(division_str):
 # ------------------------------------------------------------------
 GLICKO_BASE_RATING = 1500.0
 DISPLAY_OFFSET = 4000.0
-# Scale chosen so a 22K SquashLevels spread maps to roughly 400 Glicko points.
-DISPLAY_SCALE = 55.0
+# Scale calibrated so a 4-division gap (~800 display pts) maps to ~76% expected win.
+DISPLAY_SCALE = 4.0
 GLICKO_SCALE = 173.7178
 GLICKO_Q = math.log(10) / 400
 MAX_RD = 350.0
