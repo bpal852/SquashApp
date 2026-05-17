@@ -61,7 +61,7 @@ GLICKO_Q = math.log(10) / 400
 MAX_RD = 350.0
 MIN_RD = 20.0
 ESTABLISHED_RD = 80.0
-NEW_PLAYER_RD = 180.0
+NEW_PLAYER_RD = 350.0
 DEFAULT_VOLATILITY = 0.06
 MIN_VOLATILITY = 0.01
 MAX_VOLATILITY = 0.5
@@ -192,49 +192,8 @@ def process_ratings_algorithm(base_folder=None, current_season="2025-2026", prev
     logging.info("=" * 70)
     logging.info("PROCESSING PLAYER RATINGS (GLICKO-2)")
     logging.info("=" * 70)
-    logging.info(f"Loading final ratings from {previous_season} season...")
 
-    previous_ratings_csv = previous_season_folder / "ratio_results.csv"
     player_data = {}
-
-    if os.path.exists(previous_ratings_csv):
-        df_prev = pd.read_csv(previous_ratings_csv)
-        logging.info(f"Loaded {len(df_prev)} players from previous season")
-        for _, row in df_prev.iterrows():
-            hks = row.get("HKS_No")
-            if pd.isna(hks):
-                continue
-            key = int(hks)
-            final_rating_display = row.get("Final Rating", 1000.0)
-            glicko_rating = display_to_glicko(final_rating_display)
-            rd_value = row.get("Glicko RD", ESTABLISHED_RD)
-            if pd.isna(rd_value):
-                rd_value = ESTABLISHED_RD
-            rd_value = max(MIN_RD, min(float(rd_value), MAX_RD))
-            volatility_value = row.get("Glicko Volatility", DEFAULT_VOLATILITY)
-            if pd.isna(volatility_value):
-                volatility_value = DEFAULT_VOLATILITY
-            volatility_value = max(MIN_VOLATILITY, min(float(volatility_value), MAX_VOLATILITY))
-            prior_matches = row.get("Matches Played", 0)
-            if pd.isna(prior_matches):
-                prior_matches = 0
-            prior_teams_raw = str(row.get("Teams", "")).strip()
-            prior_teams = set()
-            if prior_teams_raw:
-                prior_teams = {team.strip() for team in prior_teams_raw.split(",") if team.strip()}
-            player_data[key] = {
-                "player": str(row.get("Player", "")).strip(),
-                "rating": float(glicko_rating),
-                "rd": float(rd_value),
-                "volatility": float(volatility_value),
-                "matches_played": int(prior_matches),
-                "teams": prior_teams,
-                "last_period": -OFFSEASON_PERIODS - 1,
-            }
-        logging.info(f"Initialized {len(player_data)} returning players")
-    else:
-        logging.warning(f"Previous season ratings not found at {previous_ratings_csv}")
-        logging.warning("Will use division-based initial ratings for all players")
 
     current_init_csv = current_season_folder / "all_initial_ratings.csv"
     if os.path.exists(current_init_csv):
@@ -266,13 +225,17 @@ def process_ratings_algorithm(base_folder=None, current_season="2025-2026", prev
     else:
         logging.info(f"No initial ratings file found at {current_init_csv}")
 
-    results_csv = current_season_folder / "combined_player_results_df.csv"
-    logging.info(f"Loading match results from {results_csv}")
-    df = pd.read_csv(results_csv)
+    prev_results_csv = previous_season_folder / "combined_player_results_df.csv"
+    curr_results_csv = current_season_folder / "combined_player_results_df.csv"
+    logging.info(f"Loading match results from {prev_results_csv} and {curr_results_csv}")
+    df = pd.concat(
+        [pd.read_csv(prev_results_csv), pd.read_csv(curr_results_csv)],
+        ignore_index=True,
+    )
     df.rename(columns={"HKS No.": "HKS_No", "Opponent HKS No.": "Opponent_HKS_No"}, inplace=True)
     df["HKS_No"] = pd.to_numeric(df["HKS_No"], errors="coerce")
     df["Opponent_HKS_No"] = pd.to_numeric(df["Opponent_HKS_No"], errors="coerce")
-    df["Match Date"] = pd.to_datetime(df["Match Date"], dayfirst=True, errors="coerce")
+    df["Match Date"] = pd.to_datetime(df["Match Date"], errors="coerce")
     df = df.dropna(subset=["Match Date"])
     df = df.sort_values(["Match Date", "Division", "Team", "Rubber Number"]).reset_index(drop=True)
 
@@ -301,204 +264,210 @@ def process_ratings_algorithm(base_folder=None, current_season="2025-2026", prev
     matches_processed = 0
     match_entries = []
 
-    for period_id in sorted(df_wins["Period"].unique()):
-        period_rows = df_wins[df_wins["Period"] == period_id].sort_values("Match Date")
-        period_players = set()
-        period_entries = []
+    for epoch in range(4):
+        for player_record in player_data.values():
+            player_record["last_period"] = None
+        match_entries = []
+        matches_processed = 0
 
-        for idx, row in period_rows.iterrows():
-            winner_hks = row.get("HKS_No")
-            loser_hks = row.get("Opponent_HKS_No")
-            if pd.isna(winner_hks) or pd.isna(loser_hks):
-                continue
-            winner_key = int(winner_hks)
-            loser_key = int(loser_hks)
-            winner_name = str(row.get("Player Name", "")).strip()
-            loser_name = str(row.get("Opponent Name", "")).strip()
-            winner_team = str(row.get("Team", "")).strip()
-            loser_team = str(row.get("Opponent Team", "")).strip()
-            division = row.get("Division", "")
+        for period_id in sorted(df_wins["Period"].unique()):
+            period_rows = df_wins[df_wins["Period"] == period_id].sort_values("Match Date")
+            period_players = set()
+            period_entries = []
 
-            def ensure_player(key, name, team):
-                if key not in player_data:
-                    initial_display = get_base_rating(division)
-                    initial_rating = display_to_glicko(initial_display)
-                    player_data[key] = {
-                        "player": name,
-                        "rating": float(initial_rating),
-                        "rd": float(NEW_PLAYER_RD),
-                        "volatility": DEFAULT_VOLATILITY,
-                        "matches_played": 0,
-                        "teams": {team} if team else set(),
-                        "last_period": period_id - 1,
+            for idx, row in period_rows.iterrows():
+                winner_hks = row.get("HKS_No")
+                loser_hks = row.get("Opponent_HKS_No")
+                if pd.isna(winner_hks) or pd.isna(loser_hks):
+                    continue
+                winner_key = int(winner_hks)
+                loser_key = int(loser_hks)
+                winner_name = str(row.get("Player Name", "")).strip()
+                loser_name = str(row.get("Opponent Name", "")).strip()
+                winner_team = str(row.get("Team", "")).strip()
+                loser_team = str(row.get("Opponent Team", "")).strip()
+                division = row.get("Division", "")
+
+                def ensure_player(key, name, team):
+                    if key not in player_data:
+                        initial_display = get_base_rating(division)
+                        initial_rating = display_to_glicko(initial_display)
+                        player_data[key] = {
+                            "player": name,
+                            "rating": float(initial_rating),
+                            "rd": float(NEW_PLAYER_RD),
+                            "volatility": DEFAULT_VOLATILITY,
+                            "matches_played": 0,
+                            "teams": {team} if team else set(),
+                            "last_period": period_id - 1,
+                        }
+                        logging.info(
+                            f"New player: '{name}' (HKS {key}) initialized to {initial_display:.1f} for division {division}"
+                        )
+                    else:
+                        player_record = player_data[key]
+                        if team:
+                            player_record["teams"].add(team)
+                        if not player_record["player"] and name:
+                            player_record["player"] = name
+                        if player_record["last_period"] is None:
+                            player_record["last_period"] = period_id - 1
+
+                ensure_player(winner_key, winner_name, winner_team)
+                ensure_player(loser_key, loser_name, loser_team)
+
+                period_players.add(winner_key)
+                period_players.add(loser_key)
+
+                winner_score, loser_score = score_to_fraction(row.get("Score", ""))
+                period_entries.append(
+                    {
+                        "index": idx,
+                        "winner_key": winner_key,
+                        "loser_key": loser_key,
+                        "winner_score": winner_score,
+                        "loser_score": loser_score,
+                        "date": row.get("Match Date"),
                     }
-                    logging.info(
-                        f"New player: '{name}' (HKS {key}) initialized to {initial_display:.1f} for division {division}"
-                    )
-                else:
-                    player_record = player_data[key]
-                    if team:
-                        player_record["teams"].add(team)
-                    if not player_record["player"] and name:
-                        player_record["player"] = name
-                    if player_record["last_period"] is None:
-                        player_record["last_period"] = period_id - 1
+                )
 
-            ensure_player(winner_key, winner_name, winner_team)
-            ensure_player(loser_key, loser_name, loser_team)
-
-            period_players.add(winner_key)
-            period_players.add(loser_key)
-
-            winner_score, loser_score = score_to_fraction(row.get("Score", ""))
-            period_entries.append(
-                {
-                    "index": idx,
-                    "winner_key": winner_key,
-                    "loser_key": loser_key,
-                    "winner_score": winner_score,
-                    "loser_score": loser_score,
-                    "date": row.get("Match Date"),
-                }
-            )
-
-        if not period_entries:
-            continue
-
-        period_snapshot = {}
-        for key in period_players:
-            record = player_data[key]
-            if record["last_period"] is None:
-                record["last_period"] = period_id - 1
-            gap_periods = period_id - record["last_period"] - 1
-            if gap_periods > 0:
-                inflate_rd_for_inactivity(record, gap_periods)
-            period_snapshot[key] = {
-                "rating": record["rating"],
-                "rd": record["rd"],
-                "volatility": record["volatility"],
-                "matches_played": record["matches_played"],
-            }
-
-        player_matches = defaultdict(list)
-        player_match_counts = defaultdict(int)
-        period_play_counts = defaultdict(int)
-        period_match_entries = []
-
-        for entry in period_entries:
-            player_matches[entry["winner_key"]].append(
-                (entry["loser_key"], entry["winner_score"])
-            )
-            player_matches[entry["loser_key"]].append(
-                (entry["winner_key"], entry["loser_score"])
-            )
-            player_match_counts[entry["winner_key"]] += 1
-            player_match_counts[entry["loser_key"]] += 1
-
-            winner_pre = glicko_to_display(period_snapshot[entry["winner_key"]]["rating"])
-            loser_pre = glicko_to_display(period_snapshot[entry["loser_key"]]["rating"])
-
-            period_play_counts[entry["winner_key"]] += 1
-            period_play_counts[entry["loser_key"]] += 1
-            winner_post_matches = period_snapshot[entry["winner_key"]]["matches_played"] + period_play_counts[entry["winner_key"]]
-            loser_post_matches = period_snapshot[entry["loser_key"]]["matches_played"] + period_play_counts[entry["loser_key"]]
-
-            match_entry = {
-                "index": entry["index"],
-                "winner_key": entry["winner_key"],
-                "loser_key": entry["loser_key"],
-                "winner_pre_rating": winner_pre,
-                "loser_pre_rating": loser_pre,
-                "winner_post_rating": None,
-                "loser_post_rating": None,
-                "winner_post_matches": winner_post_matches,
-                "loser_post_matches": loser_post_matches,
-                "winner_score": entry["winner_score"],
-                "loser_score": entry["loser_score"],
-            }
-            period_match_entries.append(match_entry)
-            match_entries.append(match_entry)
-
-        updates = {}
-        for key in period_players:
-            snapshot = period_snapshot[key]
-            matches = player_matches.get(key, [])
-            mu = rating_to_mu(snapshot["rating"])
-            phi = rd_to_phi(snapshot["rd"])
-            sigma = snapshot["volatility"]
-
-            if not matches:
-                phi = math.sqrt(phi ** 2 + sigma ** 2)
-                updates[key] = {
-                    "rating": snapshot["rating"],
-                    "rd": min(phi_to_rd(phi), MAX_RD),
-                    "volatility": sigma,
-                    "matches_played": snapshot["matches_played"],
-                }
+            if not period_entries:
                 continue
 
-            v_inv = 0.0
-            delta_sum = 0.0
-            for opponent_key, actual_score in matches:
-                opponent_snapshot = period_snapshot[opponent_key]
-                mu_j = rating_to_mu(opponent_snapshot["rating"])
-                phi_j = rd_to_phi(opponent_snapshot["rd"])
-                g_phi_j = g(phi_j)
-                expected = _stable_logistic(g_phi_j * (mu - mu_j))
-                v_inv += (g_phi_j ** 2) * expected * (1.0 - expected)
-                delta_sum += g_phi_j * (actual_score - expected)
+            period_snapshot = {}
+            for key in period_players:
+                record = player_data[key]
+                if record["last_period"] is None:
+                    record["last_period"] = period_id - 1
+                gap_periods = period_id - record["last_period"] - 1
+                if gap_periods > 0:
+                    inflate_rd_for_inactivity(record, gap_periods)
+                period_snapshot[key] = {
+                    "rating": record["rating"],
+                    "rd": record["rd"],
+                    "volatility": record["volatility"],
+                    "matches_played": record["matches_played"],
+                }
 
-            if v_inv == 0:
+            player_matches = defaultdict(list)
+            player_match_counts = defaultdict(int)
+            period_play_counts = defaultdict(int)
+            period_match_entries = []
+
+            for entry in period_entries:
+                player_matches[entry["winner_key"]].append(
+                    (entry["loser_key"], entry["winner_score"])
+                )
+                player_matches[entry["loser_key"]].append(
+                    (entry["winner_key"], entry["loser_score"])
+                )
+                player_match_counts[entry["winner_key"]] += 1
+                player_match_counts[entry["loser_key"]] += 1
+
+                winner_pre = glicko_to_display(period_snapshot[entry["winner_key"]]["rating"])
+                loser_pre = glicko_to_display(period_snapshot[entry["loser_key"]]["rating"])
+
+                period_play_counts[entry["winner_key"]] += 1
+                period_play_counts[entry["loser_key"]] += 1
+                winner_post_matches = period_snapshot[entry["winner_key"]]["matches_played"] + period_play_counts[entry["winner_key"]]
+                loser_post_matches = period_snapshot[entry["loser_key"]]["matches_played"] + period_play_counts[entry["loser_key"]]
+
+                match_entry = {
+                    "index": entry["index"],
+                    "winner_key": entry["winner_key"],
+                    "loser_key": entry["loser_key"],
+                    "winner_pre_rating": winner_pre,
+                    "loser_pre_rating": loser_pre,
+                    "winner_post_rating": None,
+                    "loser_post_rating": None,
+                    "winner_post_matches": winner_post_matches,
+                    "loser_post_matches": loser_post_matches,
+                    "winner_score": entry["winner_score"],
+                    "loser_score": entry["loser_score"],
+                }
+                period_match_entries.append(match_entry)
+                match_entries.append(match_entry)
+
+            updates = {}
+            for key in period_players:
+                snapshot = period_snapshot[key]
+                matches = player_matches.get(key, [])
+                mu = rating_to_mu(snapshot["rating"])
+                phi = rd_to_phi(snapshot["rd"])
+                sigma = snapshot["volatility"]
+
+                if not matches:
+                    phi = math.sqrt(phi ** 2 + sigma ** 2)
+                    updates[key] = {
+                        "rating": snapshot["rating"],
+                        "rd": min(phi_to_rd(phi), MAX_RD),
+                        "volatility": sigma,
+                        "matches_played": snapshot["matches_played"],
+                    }
+                    continue
+
+                v_inv = 0.0
+                delta_sum = 0.0
+                for opponent_key, actual_score in matches:
+                    opponent_snapshot = period_snapshot[opponent_key]
+                    mu_j = rating_to_mu(opponent_snapshot["rating"])
+                    phi_j = rd_to_phi(opponent_snapshot["rd"])
+                    g_phi_j = g(phi_j)
+                    expected = _stable_logistic(g_phi_j * (mu - mu_j))
+                    v_inv += (g_phi_j ** 2) * expected * (1.0 - expected)
+                    delta_sum += g_phi_j * (actual_score - expected)
+
+                if v_inv == 0:
+                    updates[key] = {
+                        "rating": snapshot["rating"],
+                        "rd": snapshot["rd"],
+                        "volatility": sigma,
+                        "matches_played": snapshot["matches_played"] + player_match_counts.get(key, 0),
+                    }
+                    continue
+
+                v = 1.0 / v_inv
+                delta_sum *= PERFORMANCE_SCALE
+                delta = v * delta_sum
+                sigma_prime = update_volatility(phi, sigma, delta, v)
+                sigma_prime = max(MIN_VOLATILITY, min(sigma_prime, MAX_VOLATILITY))
+                phi_star = math.sqrt(phi ** 2 + sigma_prime ** 2)
+                phi_prime = 1.0 / math.sqrt((1.0 / (phi_star ** 2)) + (1.0 / v))
+                mu_prime = mu + (phi_prime ** 2) * delta_sum
+
                 updates[key] = {
-                    "rating": snapshot["rating"],
-                    "rd": snapshot["rd"],
-                    "volatility": sigma,
+                    "rating": mu_to_rating(mu_prime),
+                    "rd": min(max(phi_to_rd(phi_prime), MIN_RD), MAX_RD),
+                    "volatility": sigma_prime,
                     "matches_played": snapshot["matches_played"] + player_match_counts.get(key, 0),
                 }
-                continue
 
-            v = 1.0 / v_inv
-            delta_sum *= PERFORMANCE_SCALE
-            delta = v * delta_sum
-            sigma_prime = update_volatility(phi, sigma, delta, v)
-            sigma_prime = max(MIN_VOLATILITY, min(sigma_prime, MAX_VOLATILITY))
-            phi_star = math.sqrt(phi ** 2 + sigma_prime ** 2)
-            phi_prime = 1.0 / math.sqrt((1.0 / (phi_star ** 2)) + (1.0 / v))
-            mu_prime = mu + (phi_prime ** 2) * delta_sum
+            for key, update in updates.items():
+                player_record = player_data[key]
+                player_record["rating"] = update["rating"]
+                player_record["rd"] = update["rd"]
+                player_record["volatility"] = update["volatility"]
+                player_record["matches_played"] = update["matches_played"]
+                player_record["last_period"] = period_id
 
-            updates[key] = {
-                "rating": mu_to_rating(mu_prime),
-                "rd": min(max(phi_to_rd(phi_prime), MIN_RD), MAX_RD),
-                "volatility": sigma_prime,
-                "matches_played": snapshot["matches_played"] + player_match_counts.get(key, 0),
+            updated_display_cache = {
+                key: glicko_to_display(update["rating"])
+                for key, update in updates.items()
             }
 
-        for key, update in updates.items():
-            player_record = player_data[key]
-            player_record["rating"] = update["rating"]
-            player_record["rd"] = update["rd"]
-            player_record["volatility"] = update["volatility"]
-            player_record["matches_played"] = update["matches_played"]
-            player_record["last_period"] = period_id
+            for entry in period_match_entries:
+                winner_key = entry["winner_key"]
+                loser_key = entry["loser_key"]
+                entry["winner_post_rating"] = updated_display_cache.get(
+                    winner_key,
+                    glicko_to_display(player_data[winner_key]["rating"]),
+                )
+                entry["loser_post_rating"] = updated_display_cache.get(
+                    loser_key,
+                    glicko_to_display(player_data[loser_key]["rating"]),
+                )
 
-        updated_display_cache = {
-            key: glicko_to_display(update["rating"])
-            for key, update in updates.items()
-        }
-
-        for entry in period_match_entries:
-            winner_key = entry["winner_key"]
-            loser_key = entry["loser_key"]
-            entry["winner_post_rating"] = updated_display_cache.get(
-                winner_key,
-                glicko_to_display(player_data[winner_key]["rating"]),
-            )
-            entry["loser_post_rating"] = updated_display_cache.get(
-                loser_key,
-                glicko_to_display(player_data[loser_key]["rating"]),
-            )
-
-        matches_processed += len(period_entries)
+            matches_processed += len(period_entries)
 
     if matches_processed == 0:
         logging.warning("No matches processed after filtering")
