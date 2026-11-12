@@ -23,7 +23,7 @@ import pandas as pd
 # Config / Paths / Logging
 # ---------------------------
 
-DEFAULT_SEASON = "2025-2026"  # single source of truth (overridable via --season)
+DEFAULT_SEASON = "2026-2027"  # overridable via --season
 
 def setup_logging() -> logging.Logger:
     logging.basicConfig(
@@ -56,7 +56,7 @@ def load_divisions_for_season(season: str) -> Dict[str, int]:
     with path.open("r", encoding="utf-8-sig") as f:
         data = json.load(f)
 
-    # Handle new format: {"season": "2025-2026", "divisions": [...]}
+    # Handle new format: {"season": "2026-2027", "divisions": [...]}
     if isinstance(data, dict) and "divisions" in data:
         data = data["divisions"]
 
@@ -188,7 +188,7 @@ def load_latest_awaiting_per_division(season: str, write_combined: bool = True) 
 
 def parse_args() -> argparse.Namespace:
     ap = argparse.ArgumentParser(description="Show latest awaiting results across all divisions.")
-    ap.add_argument("--season", default=DEFAULT_SEASON, help="Season string, e.g. 2025-2026")
+    ap.add_argument("--season", default=DEFAULT_SEASON, help="Season string, e.g. 2026-2027")
     ap.add_argument("--no-write", action="store_true", help="Do not write the combined CSV artifact")
     return ap.parse_args()
 

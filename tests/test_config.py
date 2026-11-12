@@ -100,7 +100,7 @@ class TestBaseConfig:
         config = BaseConfig()
         assert config.BASE_URL == "https://www.hksquash.org.hk/public/index.php/leagues"
         assert config.PAGES_ID == "25"
-        assert config.SEASON_YEAR == "2025-2026"
+        assert config.SEASON_YEAR == "2026-2027"
         assert config.WAIT_TIME == 30
         assert config.ENABLE_VALIDATION is True
 
@@ -109,7 +109,7 @@ class TestBaseConfig:
         config = BaseConfig()
         assert len(config.DIVISIONS) > 0
         assert "2" in config.DIVISIONS
-        assert config.DIVISIONS["2"]["id"] == 473
+        assert config.DIVISIONS["2"]["id"] == 521
 
     def test_get_enabled_divisions(self):
         """Test getting enabled divisions."""
@@ -188,7 +188,7 @@ class TestDevelopmentConfig:
         assert len(enabled) == 3
         assert "2" in enabled
         assert "6" in enabled
-        assert "10" in enabled
+        assert "10A" in enabled
 
 
 class TestTestingConfig:
@@ -218,7 +218,7 @@ class TestProductionConfig:
         # Should have all divisions enabled
         enabled = config.get_enabled_divisions()
 
-        # Production season currently ships with 27 enabled divisions (2025/26).
+        # The current production season enables all configured divisions.
         # Use a conservative minimum so the test still guards against accidental
         # configuration loss without hard-coding the exact season count.
         assert len(enabled) >= 25

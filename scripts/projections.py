@@ -7,7 +7,7 @@ from datetime import datetime
 from collections import Counter, defaultdict
 
 # Set parameters
-year = "2025-2026"
+year = "2026-2027"
 num_simulations = 999
 home_advantage_factor = 0.05
 unpredictability_factor = 0

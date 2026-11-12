@@ -53,9 +53,9 @@ def get_base_rating(division_str):
 # Glicko-2 configuration
 # ------------------------------------------------------------------
 GLICKO_BASE_RATING = 1500.0
+# Anchor: a display rating of DISPLAY_OFFSET maps to Glicko 1500.
+# The log transform means expected score = d_a/(d_a+d_b), matching SquashLevels.
 DISPLAY_OFFSET = 4000.0
-# Scale calibrated so a 4-division gap (~800 display pts) maps to ~76% expected win.
-DISPLAY_SCALE = 4.0
 GLICKO_SCALE = 173.7178
 GLICKO_Q = math.log(10) / 400
 MAX_RD = 350.0
@@ -73,11 +73,11 @@ PERFORMANCE_SCALE = 0.6
 
 
 def display_to_glicko(display_rating):
-    return GLICKO_BASE_RATING + (float(display_rating) - DISPLAY_OFFSET) / DISPLAY_SCALE
+    return GLICKO_BASE_RATING + GLICKO_SCALE * math.log(float(display_rating) / DISPLAY_OFFSET)
 
 
 def glicko_to_display(glicko_rating):
-    return DISPLAY_OFFSET + (glicko_rating - GLICKO_BASE_RATING) * DISPLAY_SCALE
+    return DISPLAY_OFFSET * math.exp((glicko_rating - GLICKO_BASE_RATING) / GLICKO_SCALE)
 
 
 def rating_to_mu(rating):
@@ -179,7 +179,7 @@ def score_to_fraction(score_str):
     return win_fraction, 1.0 - win_fraction
 
 
-def process_ratings_algorithm(base_folder=None, current_season="2025-2026", previous_season="2024-2025"):
+def process_ratings_algorithm(base_folder=None, current_season="2026-2027", previous_season="2025-2026"):
     """Process ratings using a fortnightly Glicko-2 update."""
     if base_folder is None:
         base_folder = Path(__file__).parent.parent.parent
@@ -187,6 +187,8 @@ def process_ratings_algorithm(base_folder=None, current_season="2025-2026", prev
         base_folder = Path(base_folder)
 
     previous_season_folder = base_folder / "previous_seasons" / previous_season
+    if not previous_season_folder.exists():
+        previous_season_folder = base_folder / previous_season
     current_season_folder = base_folder / current_season
 
     logging.info("=" * 70)

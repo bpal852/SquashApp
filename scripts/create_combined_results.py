@@ -15,7 +15,7 @@ REPO_ROOT = Path(os.getenv("SQUASHAPP_ROOT", Path(__file__).resolve().parents[1]
 # parents[1] assumes this file lives at: <repo>/scripts/this_file.py
 # If you ever move it deeper, bump the parents[...] number appropriately.
 
-current_season = "2025-2026"
+current_season = "2026-2027"
 out_dir = REPO_ROOT / current_season
 out_dir.mkdir(parents=True, exist_ok=True)
 

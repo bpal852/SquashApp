@@ -9,7 +9,7 @@ import glob
 
 # --- Paths & season ---
 BASE_DIR = Path(__file__).resolve().parent
-current_season = "2025-2026"  # or import from a central config
+current_season = "2026-2027"
 
 # find the repo root (walk up until we see config/divisions)
 REPO_ROOT = next((p for p in [BASE_DIR, *BASE_DIR.parents] if (p / "config" / "divisions").exists()), BASE_DIR)

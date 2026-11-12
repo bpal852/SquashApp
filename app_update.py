@@ -33,7 +33,7 @@ st.set_page_config(page_title="HK Squash App", page_icon="🇭🇰", layout="wid
 today = pd.Timestamp(datetime.now().date())
 
 # Define the season
-current_season = "2025-2026"
+current_season = "2026-2027"
 
 # Define the base directory
 base_directory = os.path.dirname(os.path.abspath(__file__))

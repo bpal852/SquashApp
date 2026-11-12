@@ -1,12 +1,12 @@
 """
 check_missing_csv_files.py
 
-Searches for missing or empty CSV files across all subfolders of the 2025-2026 season
-directory. Division names are loaded from config/divisions/2025-2026.json.
+Searches for missing or empty CSV files across all subfolders of the 2026-2027 season
+directory. Division names are loaded from config/divisions/2026-2027.json.
 
 Structure handled:
-  - Standard:  2025-2026/{category}/week_x/{division}_{suffix}.csv
-  - Nested:    2025-2026/{category}/{subcategory}/week_x/{division}_{suffix}.csv
+    - Standard:  2026-2027/{category}/week_x/{division}_{suffix}.csv
+    - Nested:    2026-2027/{category}/{subcategory}/week_x/{division}_{suffix}.csv
                e.g. team_win_percentage_breakdown/Away/week_1/
 
 A CSV is considered "empty" if it contains no data rows (only a header, or is 0 bytes).
@@ -173,8 +173,8 @@ def main():
     script_dir = Path(__file__).resolve().parent
     root_dir = script_dir.parent
 
-    config_path = root_dir / "config" / "divisions" / "2025-2026.json"
-    season_dir = root_dir / "2025-2026"
+    config_path = root_dir / "config" / "divisions" / "2026-2027.json"
+    season_dir = root_dir / "2026-2027"
 
     # ------------------------------------------------------------------
     # Validate paths
@@ -201,7 +201,7 @@ def main():
         print()
 
     # ------------------------------------------------------------------
-    # Walk top-level category folders inside 2025-2026/
+    # Walk top-level category folders inside 2026-2027/
     # ------------------------------------------------------------------
     IGNORED_FOLDERS = {
         "played_every_game",

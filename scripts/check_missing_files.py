@@ -2,12 +2,12 @@ import os
 
 def main():
     base_directory = os.path.dirname(os.path.abspath(__file__))
-    current_season = "2025-2026"  # or import from a config
+    current_season = "2026-2027"
     base_folder = os.path.join(base_directory, current_season, "players_df")
 
     divisions = [
-        "Premier Main", "2", "3", "4", "5", "6", "7", "8A", "8B", "9", "10", "11", "12",
-        "13A", "13B", "13C", "14", "15A", "15B", "Premier Masters", "M2", "M3", "M4",
+        "Premier Main", "2", "3", "4", "5", "6", "7A", "7B", "8A", "8B", "9", "10A", "10B", "11", "12",
+        "13A", "13B", "14A", "14B", "15A", "15B", "Premier Masters", "M2", "M3", "M4",
         "Premier Ladies", "L2", "L3", "L4"
     ]
 
